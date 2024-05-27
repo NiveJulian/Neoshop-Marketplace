@@ -9,7 +9,7 @@ function App() {
         <Route path="/" element={ ejemplo: <LandingPage />} />
         
       </Routes> */}
-       Homee
+       Home
       </div>
   )
 }
