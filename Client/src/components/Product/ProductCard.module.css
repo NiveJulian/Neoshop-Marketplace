@@ -1,0 +1,10 @@
+.tarjeta{
+    position:relative;
+      width: 200px;
+      height: 200px;
+      padding: 10px;
+       border: 1px solid;
+      border-radius: 10px; 
+      margin: 20px; 
+      overflow: hidden;
+}
