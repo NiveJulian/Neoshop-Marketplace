@@ -1,4 +1,4 @@
-export default function ProductCard() {
+export default function ProductCard({allItems}) {
   return (
     <>
       ProductCard
