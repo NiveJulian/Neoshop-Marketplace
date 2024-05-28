@@ -1,6 +1,6 @@
 import "./navbar.css";
 
-function Navbar() {
+export default function Navbar() {
   return (
     <div className="search-box">
         <input placeholder="Search" type="search" />
@@ -11,7 +11,6 @@ function Navbar() {
     </div>
   );
 }
-export default Navbar;
 
 
 
