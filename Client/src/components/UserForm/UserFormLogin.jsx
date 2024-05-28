@@ -1,7 +1,10 @@
-export default function UserFormLogin() {
+export default function UserFormLogin({ title }) {
   return (
     <div className="w-full max-w-xs">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 className="text-center mb-4 text-3xl text-primary border-b-2 p-2">
+          <strong>{title}</strong>
+        </h1>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -29,9 +32,6 @@ export default function UserFormLogin() {
             type="password"
             placeholder="******************"
           />
-          {/* <p className="text-red-500 text-xs italic">
-            Please choose a password.
-          </p> */}
         </div>
         <div className="flex items-center justify-between">
           <button
@@ -42,10 +42,26 @@ export default function UserFormLogin() {
           </button>
           <a
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="/singup"
+            href="/signup"
           >
-            SingUp
+            Sign Up
           </a>
+        </div>
+        <div className="mt-6 flex flex-col items-center gap-2">
+          <button
+            className="w-full bg-gray-100 hover:bg-gray-300 text-gray-700 hover:text-white font-bold py-2 px-4 rounded flex items-center justify-center"
+            type="button"
+          >
+            <img src="google-icon.png" alt="Google" className="w-5 h-5 mr-2" />
+            Sign in with Google
+          </button>
+          <button
+            className="w-full bg-gray-100 hover:bg-gray-300 text-gray-700 hover:text-white font-bold py-2 px-4 rounded flex items-center justify-center"
+            type="button"
+          >
+            <img src="facebook-icon.png" alt="Facebook" className="w-6 h-5 mr-2" />
+            Sign in with Facebook
+          </button>
         </div>
       </form>
       {/* <p className="text-center text-gray-500 text-xs">

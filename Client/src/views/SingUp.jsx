@@ -4,8 +4,8 @@ import UserFormRegister from "../components/UserForm/UserFormRegister";
 export default function SingUp() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-1/2 hidden shadow-md lg:inline-flex h-full text-white">
-        <div className="w-[450px] h-full bg-primary px-10 flex flex-col gap-6 justify-center">
+      <div className="w-1/2 hidden lg:inline-flex h-full text-white">
+        <div className="w-[450px] shadow-md shadow-gray-400 h-full bg-primary px-10 flex flex-col gap-6 justify-center">
           <Link to="/">
             {/* <img src={'#'} alt="logoImg" className="w-28" /> */}
             Logo
@@ -14,7 +14,9 @@ export default function SingUp() {
             <h1 className="font-titleFont text-2xl font-bold">
               ¡Regístrate y accede a tus tiendas favoritas!
             </h1>
-            <p className="text-base">Disfruta de las mejores ofertas y precios en un solo lugar.</p>
+            <p className="text-base">
+              Disfruta de las mejores ofertas y precios en un solo lugar.
+            </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
             <span className="text-green-500 mt-1">
@@ -25,7 +27,8 @@ export default function SingUp() {
                 Empieza rápido con NeoShop
               </span>
               <br />
-              Accede fácilmente a todas tus tiendas favoritas y descubre nuevas ofertas cada día.
+              Accede fácilmente a todas tus tiendas favoritas y descubre nuevas
+              ofertas cada día.
             </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
@@ -49,22 +52,23 @@ export default function SingUp() {
                 Confiado por compradores en línea
               </span>
               <br />
-              Únete a miles de usuarios que ya disfrutan de las ventajas de NeoShop.
+              Únete a miles de usuarios que ya disfrutan de las ventajas de
+              NeoShop.
             </p>
           </div>
           <div className="flex items-center justify-between mt-10">
             <Link to="/">
-              <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+              <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-secondary cursor-pointer duration-300">
                 © NeoShop
               </p>
             </Link>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-secondary cursor-pointer duration-300">
               Términos
             </p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-secondary cursor-pointer duration-300">
               Privacidad
             </p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-secondary cursor-pointer duration-300">
               Seguridad
             </p>
           </div>

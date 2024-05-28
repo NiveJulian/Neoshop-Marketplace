@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import  { useState } from "react";
+import { 
+  useDispatch, 
+  // useSelector 
+} from "react-redux";
+
 import validationRegister from "./validationRegister"; // Importa tu función de validación
+import { register } from "../../Redux/Actions/Actions";
 
 export default function UserFormRegister({ title = "Register" }) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     lastname: "",
@@ -31,9 +38,17 @@ export default function UserFormRegister({ title = "Register" }) {
     validationRegister({ ...formData, [name]: value }, errors, setErrors);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+      dispatch(register(formData))
+      console.log("Form data submitted:", formData);
+  };
+
   return (
-    <form className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-center mb-4 text-gray-900">{title}</h1>
+    <form className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md" onSubmit={handleSubmit}>
+      <h1 className="text-center mb-4 text-3xl text-primary border-b-2">
+        <strong>{title}</strong>
+      </h1>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
@@ -198,12 +213,20 @@ export default function UserFormRegister({ title = "Register" }) {
           )}
         </div>
       </div>
-      <a
-        className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-        href="/login"
-      >
-        Sing In
-      </a>
+      <div className="flex items-center justify-between">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+        >
+          Register
+        </button>
+        <a
+          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          href="/login"
+        >
+          Sing In
+        </a>
+      </div>
     </form>
   );
 }
