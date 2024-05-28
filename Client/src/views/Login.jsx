@@ -1,9 +1,9 @@
-import React from 'react'
+import UserFormLogin from "../components/UserForm/UserFormLogin";
 
-const Login = () => {
+export default function Login() {
   return (
-    <div>Login</div>
+    <div className="w-screen flex justify-center items-center align-middle mt-8">
+      <UserFormLogin />
+    </div>
   )
 }
-
-export default Login
