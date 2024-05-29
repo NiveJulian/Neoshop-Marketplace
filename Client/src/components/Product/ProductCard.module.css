@@ -1,7 +1,7 @@
 .tarjeta{
     position:relative;
       width: 200px;
-      height: 300px;
+      height: 200px;
       padding: 10px;
        /* border: 1px solid; */
       border-radius: 10px; 
@@ -12,6 +12,6 @@
 
 .imagen_borde {
   width: 80%;
-  height: 60%;
+  height: 80%;
   border-radius: 10px;
 }

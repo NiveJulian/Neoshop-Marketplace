@@ -52,7 +52,7 @@ const LandingPage = () => {
             We have a wide variety of products that you will love.
           </p>
 
-          <a href="/home" className="cta-button">
+          <a href="/login" className="cta-button">
             Go to the store
           </a>
         </section>
@@ -62,8 +62,8 @@ const LandingPage = () => {
           <div className="testimonials-container">
             <div className="testimonial">
               <p>
-                "Excellent service and high quality products. Highly
-                recommended!"
+                Excellent service and high quality products. Highly
+                recommended!
               </p>
               <p className="testimonial-author">- Juan Pérez</p>
             </div>
