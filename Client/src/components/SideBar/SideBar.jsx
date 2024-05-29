@@ -18,7 +18,7 @@ const Sidebar = () => {
                 {isOpen ? '→' : '←'}
             </button>
             <div className={style.content}>
-                <h2>Sidebar Content</h2>
+                <h2>Filter by</h2>
                 <Filter/>
             </div>
         </div>

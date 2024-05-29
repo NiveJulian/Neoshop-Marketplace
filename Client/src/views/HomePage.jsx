@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductList from '../components/ProductList/ProductList'
 import { getAllProducts, renderCondition } from '../Redux/Actions/Actions';
 import Sidebar from '../components/SideBar/SideBar';
-import Filter from '../components/Filter/Filter';
 import style from "./HomePage.module.css";
 
 const HomePage = () => {
@@ -34,7 +33,7 @@ const HomePage = () => {
 
   return (
     <div>
-      HomePage
+                
       <div><Sidebar/></div>
       <div className={style.mainContent}>{renderProducts()}</div>
     </div>
