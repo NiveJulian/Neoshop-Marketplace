@@ -1,9 +1,9 @@
-import './App.css'
 import { Routes, Route } from "react-router-dom";
 import HomePage from './views/HomePage'
 import LandingPage from './views/LandingPage'
 import Login from './views/Login'
 import ProductDetail from './views/ProductDetail'
+import SingUp from './views/SingUp';
 
 function App() {
 
@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SingUp />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
