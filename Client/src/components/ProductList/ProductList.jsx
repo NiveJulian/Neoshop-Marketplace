@@ -6,10 +6,10 @@ export default function ProductList({ allProducts }) {
     <div className={style.contenedor}>
       {allProducts.map(product => (
         <ProductCard 
-        key={product.id} 
-        id={product.id}
+        key={product.id_product} 
+        id={product.id_product}
         name={product.name}
-        description={product.description}
+        img_product= {product.img_product[0]}
         price={product.price} />
       ))}
     </div>

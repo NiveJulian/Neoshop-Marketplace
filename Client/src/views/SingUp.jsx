@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import UserFormLogin from "../components/UserForm/UserFormLogin";
+import UserFormRegister from "../components/UserForm/UserFormRegister";
 
-export default function Login() {
+export default function SingUp() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lg:inline-flex h-full text-white">
@@ -75,8 +75,8 @@ export default function Login() {
         </div>
       </div>
       <div className="w-full lg:w-1/2 h-full flex items-center justify-center">
-        <UserFormLogin title={"Login"} />
+        <UserFormRegister />
       </div>
     </div>
-  )
+  );
 }
