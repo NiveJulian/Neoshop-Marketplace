@@ -5,6 +5,7 @@ import logo from "../assets/images/logoSinFondo.png";
 
 const LandingPage = () => {
   return (
+    
     <div className="container">
       <nav className="navbar">
         <div className="navbar-logo">
@@ -12,7 +13,7 @@ const LandingPage = () => {
         </div>
         <div className="navbar-links"></div>
       </nav>
-
+      <div>  </div>
       <header className="banner">
         <video autoPlay muted loop id="background-video">
           <source src={bgVideo} type="video/mp4" />
