@@ -1,0 +1,42 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -230px;
+    height: 100%;
+    width: 250px;
+    transform: translateX(75%);
+    transition: transform 0.3s ease-in-out;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.open {
+    transform: translateX(0);
+}
+
+.toggleButton {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: left 0.3s ease-in-out;
+}
+
+.sidebarOpenToggleButton {
+    right: -30px;
+}
+
+.content {
+    margin-top: 50px;
+}
+
+.toggleButton:hover {
+    background-color: #555;
+}
