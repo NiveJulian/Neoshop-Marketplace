@@ -1,0 +1,4 @@
+.mainContent {
+    padding: 20px;
+    margin-left: 110px; /* Asegúrate de que el contenido principal no se solape con la sidebar */
+}
