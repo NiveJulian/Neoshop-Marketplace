@@ -62,8 +62,8 @@ const LandingPage = () => {
           <div className="testimonials-container">
             <div className="testimonial">
               <p>
-                "Excellent service and high quality products. Highly
-                recommended!"
+                Excellent service and high quality products. Highly
+                recommended!
               </p>
               <p className="testimonial-author">- Juan Pérez</p>
             </div>
