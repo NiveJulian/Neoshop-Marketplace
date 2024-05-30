@@ -1,43 +1,29 @@
-import React, { useEffect } from 'react'
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ProductList from '../components/ProductList/ProductList'
-import { getAllProducts, renderCondition } from '../Redux/Actions/Actions';
-import Sidebar from '../components/SideBar/SideBar';
-import style from "./HomePage.module.css";
+import { getAllProducts } from "../Redux/Actions/Actions";
+import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
+import Nav from "../components/Nav/Nav";
 
 const HomePage = () => {
-
   const dispatch = useDispatch();
-  const allProducts = useSelector ((state)=>state.allProducts);
-  const filteredProducts= useSelector ((state)=>state.filteredProducts);
-  const condition = useSelector((state) => state.condition);
+  const allProducts = useSelector((state) => state.allProducts);
 
-  useEffect (()=>{
-    dispatch (getAllProducts());
-  },[dispatch])
-
-
-  const renderProducts = () => {
-    switch (condition) {
-      case "allProducts":
-        return <ProductList allProducts={allProducts} />;
-      case "filteredProducts":
-        return <ProductList allProducts={filteredProducts} />;
-
-      default:
-        return <ProductList allProducts={allProducts}  />; 
-    }
-  };
-
-
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   return (
-    <div>
-                
-      <div><Sidebar/></div>
-      <div className={style.mainContent}>{renderProducts()}</div>
+    <div className="text-center gap-4">
+      <div className="flex m-3 shadow-sm">
+        <Nav />
+      </div>
+
+      <h1 className="mb-7 text-4xl font-bold pb-2 text-details hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
+        Recent products
+      </h1>
+      <CardHomeList allProducts={allProducts} />
     </div>
   );
-}
+};
 
 export default HomePage;

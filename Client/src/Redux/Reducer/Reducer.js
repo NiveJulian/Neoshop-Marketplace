@@ -1,33 +1,51 @@
-import { CLEAR_FILTERED_PRODUCTS, GET_ALL, SET_CONDITION, SHOW_CATEGORY } from "../Actions/Actions";
+import {
+  CLEAR_FILTERED_PRODUCTS,
+  GET_ALL,
+  SET_CONDITION,
+  SHOW_CATEGORY,
+  REGISTER_SUCCESS,
+  LOGIN_SUCCESS,
+} from "../Actions/Actions";
 
+const initialState = {
+  allProducts: [],
+  filteredProducts: [],
+  condition: "allProducts",
+  isAuth: false,
+  registering: false,
+  registerError: null,
+};
 
-const initialState= {
- allProducts:[],
- filteredProducts:[],
- condition: "allProducts"  
-}
+const rootReducer = (state = initialState, action) => {
+  const { type, payload } = action; // destructuring del parámetro action
 
-const rootReducer= (state=initialState, action)=>{
+  switch (type) {
+    case GET_ALL:
+      return { ...state, allProducts: payload };
 
-    const {type, payload}= action; //destructuring del parametro action
+    case SHOW_CATEGORY:
+      return {
+        ...state,
+        filteredProducts: state.allProducts.filter((product) =>
+          product.category.includes(payload)
+        ),
+      };
 
-    switch (type) {
-        case GET_ALL:
-            return {...state,  allProducts: payload}
+    case CLEAR_FILTERED_PRODUCTS:
+      return { ...state, filteredProducts: [] };
 
-        case SHOW_CATEGORY:
-            return {...state, filteredProducts: state.allProducts.filter(product => product.category.includes(payload))}
+    case SET_CONDITION:
+      return { ...state, condition: payload };
 
-        case CLEAR_FILTERED_PRODUCTS:
-            return {...state, filteredProducts:[]};    
-        
-        case SET_CONDITION:
-            return {...state, condition:payload}    
-        
-    
-        default:
-            return state;
-    }
-}
+    case REGISTER_SUCCESS:
+      return { ...state, registering: true };
+
+    case LOGIN_SUCCESS:
+      return { ...state, isAuth: true };
+
+    default:
+      return state;
+  }
+};
 
 export default rootReducer;

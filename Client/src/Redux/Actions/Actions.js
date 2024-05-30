@@ -4,13 +4,28 @@ export const GET_ALL = "GET_ALL";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_CONDITION = "SET_CONDITION";
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+
+
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
+export const login = (formData) => async(dispatch) => {
+    const endpoint = 'http://localhost:3001/user/'
+
+    try {
+        const response = await axios.post(`${endpoint}`, formData);
+
+        if(response.status === 200){
+            dispatch({type: LOGIN_SUCCESS})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const register = (formData) => async(dispatch) => {
-    const endpoint = 'http://localhost:3001/'
+    const endpoint = 'http://localhost:3001/user/'
 
     try {
         const response = await axios.post(`${endpoint}`, formData);

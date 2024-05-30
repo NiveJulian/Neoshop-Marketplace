@@ -4,6 +4,8 @@ import LandingPage from './views/LandingPage'
 import Login from './views/Login'
 import ProductDetail from './views/ProductDetail'
 import SingUp from './views/SingUp';
+import { Store } from "./views/Store";
+import { Products } from "./views/Products";
 
 function App() {
 
@@ -14,7 +16,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SingUp />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/store/:id" element={<ProductDetail />} />
         </Routes>
       </div>
   )
