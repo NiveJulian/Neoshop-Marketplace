@@ -5,10 +5,13 @@ import {
   SHOW_CATEGORY,
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
+  GET_ALL_STORE,
+  GET_PRODUCT_BY_ID,
 } from "../Actions/Actions";
 
 const initialState = {
   allProducts: [],
+  product: {},
   filteredProducts: [],
   condition: "allProducts",
   isAuth: false,
@@ -17,12 +20,18 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  const { type, payload } = action; // destructuring del parámetro action
+  const { type, payload } = action;
 
   switch (type) {
     case GET_ALL:
       return { ...state, allProducts: payload };
-
+    case GET_ALL_STORE:
+      return { ...state, store: payload };
+    case GET_PRODUCT_BY_ID:
+      return {
+        ...state,
+        product: payload,
+      };
     case SHOW_CATEGORY:
       return {
         ...state,
