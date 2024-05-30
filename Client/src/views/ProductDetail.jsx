@@ -18,18 +18,6 @@ const product = {
   available: true,
   average_mark: 4.5,
   status: "Nuevo",
-  specifics: {
-    screen: 'OLED 6,33" 1080x1920 Full HD',
-    cpu: 'Snapdragon 8 gen 1',
-    ram: '12gb',
-    storage: '512gb',
-    weight: '150gr',
-    size: '160x50x10',
-    cameras: '50mp + 10mp',
-    battery: '2000mAh',
-    android: '14',
-    connections: '5G, Wifi 6, Bluetooth 4.0',
-  }
 };
 
 const seller = {
@@ -39,37 +27,19 @@ const seller = {
   average_mark: 4.5,
 };
 
-const reviews = [
-  'Marcos: "Me encantó" 5 / 5',
-  'Juan: "Muy buen producto" 4 / 5',
-  'Candela: "Es casi perfecto!" 4.5 / 5',
-  'María: "Excelente!" 5 / 5',
-];
-
 const ProductDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [customQuantity, setCustomQuantity] = useState('');
-  const [isCustomQuantity, setIsCustomQuantity] = useState(false);
-  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? product?.images.length - 1 : prevIndex - 1
     );
   };
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === product?.images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -99,21 +69,26 @@ const ProductDetail = () => {
     setCurrentImageIndex(index);
   };
 
-  const formatVentasText = (ventas) => {
-    return ventas >= 10000 ? 'más de 10 mil ventas' : `${ventas} ventas`;
-  };
+  // const formatVentasText = (ventas) => {
+  //   return ventas >= 10000 ? 'más de 10 mil ventas' : `${ventas} ventas`;
+  // };
 
   return (
-    <div className="detail-container">
-      <div className="detail-content">
-        <div>
-          <div className="image-container">
-            <button onClick={handlePrevImage}>&lt;</button>
-            <img src={product.images[currentImageIndex]} alt={`Product Image ${currentImageIndex + 1}`} />
-            <button onClick={handleNextImage}>&gt;</button>
-          </div>
-          <div className="thumbnail-container">
-            {product.images.map((image, index) => (
+    <>
+      <Nav />
+      <div className="detail-container mt-8 mb-8">
+        <div className="detail-content">
+          <div>
+            <div className="image-container">
+              <button onClick={handlePrevImage}>&lt;</button>
+              <img
+                src={product?.img_product}
+                alt={`Product Image ${currentImageIndex + 1}`}
+              />
+              <button onClick={handleNextImage}>&gt;</button>
+            </div>
+            <div className="thumbnail-container">
+              {/* {product?.img_product?.map((image, index) => (
               <img
                 key={index}
                 src={image}
@@ -123,16 +98,8 @@ const ProductDetail = () => {
               />
             ))}
           </div>
-          <div className="description-container">
-            <p className="product-description">{product.description}</p>
-            <ul className="specifications-list">
-            <p className='spec-title'>Características</p>
-              {Object.entries(product.specifics).map(([key, value]) => (
-                <li key={key}>
-                  <span className="spec-name">{key}:</span> <span className="spec-value">{value}</span>
-                </li>
-              ))}
-            </ul>
+          <div>
+
           </div>
         </div>
 
@@ -148,28 +115,14 @@ const ProductDetail = () => {
             </p>
           </div>
           <p className="product-price">${product.price}</p>
-          <div>
           <div className="product-quantity">
             <label htmlFor="quantity-select">Cantidad: </label>
-            <select id="quantity-select" value={isCustomQuantity ? "more" : selectedQuantity} onChange={handleQuantityChange}>
-              {[...Array(Math.min(10, product.quantity)).keys()].map(i => (
+            <select id="quantity-select" value={selectedQuantity} onChange={handleQuantityChange}>
+              {[...Array(product.quantity).keys()].map(i => (
                 <option key={i + 1} value={i + 1}>{i + 1}</option>
               ))}
-              {product.quantity > 10 && <option value="more">Más de 10</option>}
             </select>
             <span className="total-available">({product.quantity} disponibles)</span>
-          </div>
-          {isCustomQuantity && (
-              <input
-                className='product-quantity-custom'
-                type="number"
-                value={customQuantity}
-                onChange={handleCustomQuantityChange}
-                min="1"
-                max={product.quantity}
-                placeholder={`Máx ${product.quantity}`}
-              />
-            )}
           </div>
           <button className='buy-button'>Comprar</button>
           <p className='brand'>Vendedor:</p>
@@ -178,14 +131,15 @@ const ProductDetail = () => {
             <p className='seller-name'>{seller.name}</p>
             <div className='seller-stats'>
               <p className='seller-stats-text'>{formatVentasText(seller.ventas)}</p>
-              <p className='seller-stats-text'>reputación: {seller.average_mark} / 5</p>
+              <p className='seller-stats-text'>{seller.average_mark} / 5</p>
             </div>
             <button className='seller-button'>Ir a la tienda</button>
           </div>
-          <div className="review-container">
-            <p className="review-text">{reviews[currentReviewIndex]}</p>
-          </div>
         </div>
+      </div>
+
+      <div className="description-container">
+        <p className="product-description">{product.description}</p>
       </div>
     </div>
   );
