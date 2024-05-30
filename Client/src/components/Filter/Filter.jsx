@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { categoryFilter, clearFilteredProducts, renderCondition } from "../../Redux/Actions/Actions";
+import style from "./Filter.module.css"
 
 export default function Filter() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export default function Filter() {
   };
 
   return (
-    <div>
+    <div className={style.font}>
       <h4>FILTER BY GENRES</h4>
       <select onChange={handleCategoryChange}>
         <option value="All">All</option>
