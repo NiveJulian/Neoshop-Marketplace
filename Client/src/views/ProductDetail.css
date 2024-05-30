@@ -124,6 +124,24 @@
     color: #333;
   }
 
+  .product-quantity-custom {
+    margin-left: 85px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    color: #333;
+    font-size: 1em;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .product-quantity-custom:hover,
+  .product-quantity-custom:focus {
+    border-color: rgb(255, 130, 0);
+  }
+
   .product-price {
     font-size: 2em;
   }

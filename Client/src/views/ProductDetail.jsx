@@ -49,6 +49,8 @@ const reviews = [
 const ProductDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [customQuantity, setCustomQuantity] = useState('');
+  const [isCustomQuantity, setIsCustomQuantity] = useState(false);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
   useEffect(() => {
@@ -72,7 +74,25 @@ const ProductDetail = () => {
   };
 
   const handleQuantityChange = (event) => {
-    setSelectedQuantity(event.target.value);
+    const value = event.target.value;
+    if (value === "more") {
+      setIsCustomQuantity(true);
+      setSelectedQuantity('');
+    } else {
+      setIsCustomQuantity(false);
+      setSelectedQuantity(Number(value));
+    }
+  };
+
+  const handleCustomQuantityChange = (event) => {
+    const value = event.target.value;
+    if (!isNaN(value) && value > 0 && value <= product.quantity) {
+      setCustomQuantity(Number(value));
+      setSelectedQuantity(Number(value));
+    } else if (value === '') {
+      setCustomQuantity('');
+      setSelectedQuantity('');
+    }
   };
 
   const handleThumbnailClick = (index) => {
@@ -128,14 +148,28 @@ const ProductDetail = () => {
             </p>
           </div>
           <p className="product-price">${product.price}</p>
+          <div>
           <div className="product-quantity">
             <label htmlFor="quantity-select">Cantidad: </label>
-            <select id="quantity-select" value={selectedQuantity} onChange={handleQuantityChange}>
-              {[...Array(product.quantity).keys()].map(i => (
+            <select id="quantity-select" value={isCustomQuantity ? "more" : selectedQuantity} onChange={handleQuantityChange}>
+              {[...Array(Math.min(10, product.quantity)).keys()].map(i => (
                 <option key={i + 1} value={i + 1}>{i + 1}</option>
               ))}
+              {product.quantity > 10 && <option value="more">Más de 10</option>}
             </select>
             <span className="total-available">({product.quantity} disponibles)</span>
+          </div>
+          {isCustomQuantity && (
+              <input
+                className='product-quantity-custom'
+                type="number"
+                value={customQuantity}
+                onChange={handleCustomQuantityChange}
+                min="1"
+                max={product.quantity}
+                placeholder={`Máx ${product.quantity}`}
+              />
+            )}
           </div>
           <button className='buy-button'>Comprar</button>
           <p className='brand'>Vendedor:</p>
