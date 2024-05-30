@@ -18,7 +18,7 @@ export const products = [
     {    
       id_product: 2,
       name: "Playstation 5",
-      img_product: ["https://nextgames.com.ar/img/Public/1040/producto-ps5-slim-lectora-3327.jpg"] ,
+      img_product: ["https://static-catalog.tiendamia.com/marketplace_images/production/product_74958_mirakl_image_4_large.jpg"] ,
       description: "Videogame Console",
       category: ["Tecnholgy"],
       date_creation:  "2024-05-25",

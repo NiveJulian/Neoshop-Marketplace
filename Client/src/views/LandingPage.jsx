@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./LandingPage.css";
 import imagen from "../assets/images/imagen.webp";
 import imagen2 from "../assets/images/imagen2.webp";
@@ -52,7 +52,7 @@ const LandingPage = () => {
             We have a wide variety of products that you will love.
           </p>
 
-          <a href="/login" className="cta-button">
+          <a href="/home" className="cta-button">
             Go to the store
           </a>
         </section>
@@ -98,5 +98,5 @@ const LandingPage = () => {
     </div>
   );
 };
-
+   
 export default LandingPage;

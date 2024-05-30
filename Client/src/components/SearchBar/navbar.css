@@ -1,19 +1,27 @@
 .search-box {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
   }
   
   input[type="search"] {
-    padding: 10px;
-    width: 200px;
+    padding: 5px;
+    width: auto;
     margin-right: 10px;
+    border: 1px solid #bfbfbf;
+    border-radius: 23px;
+    box-shadow: 0 2px 0 1px rgba(255, 255, 255, .7);
+  }
+
+  input[type="search"]:hover{
+    transition: all 1 ease-in;
+    background-color: #ebeaeac7;
   }
   
   button[type="submit"] {
-    padding: 10px 20px;
+    padding: 10px;
     background-color: #f6971a;
     border: none;
     cursor: pointer;
+    border-radius: 100%;
   }
   
