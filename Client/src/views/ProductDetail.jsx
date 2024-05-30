@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./ProductDetail.css";
 
 const product = {
@@ -18,6 +18,18 @@ const product = {
   available: true,
   average_mark: 4.5,
   status: "Nuevo",
+  specifics: {
+    screen: 'OLED 6,33" 1080x1920 Full HD',
+    cpu: 'Snapdragon 8 gen 1',
+    ram: '12gb',
+    storage: '512gb',
+    weight: '150gr',
+    size: '160x50x10',
+    cameras: '50mp + 10mp',
+    battery: '2000mAh',
+    android: '14',
+    connections: '5G, Wifi 6, Bluetooth 4.0',
+  }
 };
 
 const seller = {
@@ -27,9 +39,25 @@ const seller = {
   average_mark: 4.5,
 };
 
+const reviews = [
+  'Marcos: "Me encantó" 5 / 5',
+  'Juan: "Muy buen producto" 4 / 5',
+  'Candela: "Es casi perfecto!" 4.5 / 5',
+  'María: "Excelente!" 5 / 5',
+];
+
 const ProductDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -75,8 +103,16 @@ const ProductDetail = () => {
               />
             ))}
           </div>
-          <div>
-
+          <div className="description-container">
+            <p className="product-description">{product.description}</p>
+            <ul className="specifications-list">
+            <p className='spec-title'>Características</p>
+              {Object.entries(product.specifics).map(([key, value]) => (
+                <li key={key}>
+                  <span className="spec-name">{key}:</span> <span className="spec-value">{value}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -108,15 +144,14 @@ const ProductDetail = () => {
             <p className='seller-name'>{seller.name}</p>
             <div className='seller-stats'>
               <p className='seller-stats-text'>{formatVentasText(seller.ventas)}</p>
-              <p className='seller-stats-text'>{seller.average_mark} / 5</p>
+              <p className='seller-stats-text'>reputación: {seller.average_mark} / 5</p>
             </div>
             <button className='seller-button'>Ir a la tienda</button>
           </div>
+          <div className="review-container">
+            <p className="review-text">{reviews[currentReviewIndex]}</p>
+          </div>
         </div>
-      </div>
-
-      <div className="description-container">
-        <p className="product-description">{product.description}</p>
       </div>
     </div>
   );
