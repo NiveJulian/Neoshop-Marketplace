@@ -99,7 +99,7 @@ const ProductDetail = () => {
           <div className="info-container">
             <p className="product-date">publicado: {product?.date_creation}</p>
             <h1 className="product-name">{product?.name}</h1>
-            <p className="brand">de: {product?.category}</p>
+            <p className="brand">Category: {product?.category}</p>
             <div className="content-flex">
               <p className="product-average-mark">
                 {product?.average_mark} / 5
