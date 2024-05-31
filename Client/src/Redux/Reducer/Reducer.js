@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   allProducts: [],
+  product: {},
   filteredProducts: [],
   newProducts: [],
   condition: "allProducts",
@@ -19,7 +20,7 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  const { type, payload } = action; // destructuring del parámetro action
+  const { type, payload } = action;
 
   switch (type) {
     case GET_ALL:

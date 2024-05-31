@@ -17,7 +17,7 @@
     background-color: #ebeaeac7;
   }
   
-  button[type="submit"] {
+  .search-button {
     padding: 10px;
     background-color: #f6971a;
     border: none;

@@ -1,8 +1,6 @@
 import { useState } from "react";
 import "./LandingPage.css";
-import imagen from "../assets/images/imagen.webp";
-import imagen2 from "../assets/images/imagen2.webp";
-import imagen3 from "../assets/images/imagen3.webp";
+
 import bgVideo from "../assets/videos/video2.mp4";
 import axios from "axios";
 

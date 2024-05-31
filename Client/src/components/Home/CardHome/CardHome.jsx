@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const CardHome = ({
   id_product,
@@ -20,7 +21,7 @@ export const CardHome = ({
         href={`/product/${id_product}`}
         className="absolute opacity-0 top-0 right-0 left-0 bottom-0"
       ></a>
-      
+
       <div className="relative mb-4 rounded-2xl">
         <img
           className="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
@@ -56,12 +57,12 @@ export const CardHome = ({
         </div>
 
         <a
-          className="flex justify-center items-center bg-red-700 bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-          href={`/store/${id_store}`}
+          className="flex justify-center items-center bg-secondary bg-opacity-30 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
+          href={`/product/${id_product}`}
           target="_self"
           rel="noopener noreferrer"
         >
-          Read article
+          Ver articulo
           <svg
             className="ml-2 w-6 h-6"
             fill="none"
@@ -81,16 +82,20 @@ export const CardHome = ({
       <div className="flex justify-between items-center w-full pb-4 mb-auto">
         <div className="flex items-center">
           <div className="pr-3">
-            <img
-              className="h-12 w-12 rounded-full object-cover"
-              src={img_product}
-              alt=""
-            />
+            <Link to={`/store/${id_store}`}>
+              <img
+                className="h-12 w-12 rounded-full object-cover"
+                src={img_product}
+                alt=""
+              />
+            </Link>
           </div>
           <div className="flex flex-1">
             <div className="">
               <p className="text-sm font-semibold ">{name}</p>
-              <p className="text-sm text-gray-500">Published on {date_creation}</p>
+              <p className="text-sm text-gray-500">
+                Published on {date_creation}
+              </p>
             </div>
           </div>
         </div>
