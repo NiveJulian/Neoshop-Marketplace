@@ -152,7 +152,8 @@ export const store = [
     address_cp: "90210",
     address_country: "USA",
     address_city: "Beverly Hills",
-    logo: "https://i.pinimg.com/originals/d9/bb/48/d9bb48c52123cd7b1304979b7c6cb9bc.jpg"
+    logo: "https://i.pinimg.com/originals/d9/bb/48/d9bb48c52123cd7b1304979b7c6cb9bc.jpg",
+    quantity_review:3000,
   },
   {
     id: 2,
@@ -160,7 +161,8 @@ export const store = [
     address_cp: "10001",
     address_country: "USA",
     address_city: "New York",
-    logo: "https://marketplace.canva.com/EAFAEOunkG0/1/0/1600w/canva-morado-moderno-tecnolog%C3%ADa-y-videojuegos-logo-2xfRaIEdz2Y.jpg"
+    logo: "https://marketplace.canva.com/EAFAEOunkG0/1/0/1600w/canva-morado-moderno-tecnolog%C3%ADa-y-videojuegos-logo-2xfRaIEdz2Y.jpg",
+    quantity_review:4000,
   },
   {
     id: 3,
@@ -168,7 +170,8 @@ export const store = [
     address_cp: "WC2N 5DU",
     address_country: "UK",
     address_city: "London",
-    logo: "https://w7.pngwing.com/pngs/617/346/png-transparent-circle-logo-brand-ibm-text-logo-technology.png"
+    logo: "https://w7.pngwing.com/pngs/617/346/png-transparent-circle-logo-brand-ibm-text-logo-technology.png",
+    quantity_review:5000,
   },
   {
     id: 4,
@@ -176,6 +179,7 @@ export const store = [
     address_cp: "75001",
     address_country: "France",
     address_city: "Paris",
-    logo: "https://www.designevo.com/res/templates/thumb_small/tech-square-line-structure-crypto.webp"
+    logo: "https://www.designevo.com/res/templates/thumb_small/tech-square-line-structure-crypto.webp",
+    quantity_review:7000,
   },
 ]

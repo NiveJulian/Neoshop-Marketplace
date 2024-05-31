@@ -3,6 +3,7 @@ import { products, store } from "./FakeBd";
 export const GET_ALL = "GET_ALL";
 export const GET_ALL_STORE = "GET_ALL_STORE";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
+export const GET_SELLER_BY_ID = "GET_SELLER_BY_ID";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_CONDITION = "SET_CONDITION";
@@ -55,6 +56,20 @@ export const getAllProducts = () => {
     };
 };
 
+export const getProductById = (id) => {
+  const productById = products.find((product) => product.id_product === id);
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: GET_PRODUCT_BY_ID,
+        payload: productById,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 export const getAllSellers = () => {
     const allSellers = store;
   
@@ -71,19 +86,21 @@ export const getAllSellers = () => {
     };
 };
 
-export const getProductById = (id) => {
-    const productById = products.find((product) => product.id_product === id);
-    return async (dispatch) => {
-      try {
-        return dispatch({
-          type: GET_PRODUCT_BY_ID,
-          payload: productById,
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+export const getSellerById = (id) => {
+  const sellerById = store.find((seller) => seller.id === id);
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: GET_SELLER_BY_ID,
+        payload: sellerById,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 };
+
+
 
 export const categoryFilter = (category) => ({
     type: SHOW_CATEGORY,

@@ -1,25 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList.jsx";
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
-import Filter from "../components/Filter/Filter";
-
-
-const seller = {
-    name: "MotoMoto",
-    image: "https://lojarcell.vteximg.com.br/arquivos/ids/162373/banner-marcas-motorola-mobile-min.png?v=637493652503570000",
-    ventas: 11000,
-    average_mark: 4.5,
-    adress_cp: "1653",
-    adress_country: "Argentina",
-    adress_city: "Buenos Aires",
-    date_creation: "10 / 02 / 2024",
-    quantity_review: 3000,
-  };
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { getSellerById } from "../Redux/Actions/Actions.js";
+// import Filter from "../components/Filter/Filter";
 
 const StoreDetail = () => {
     const allProducts = useSelector((state) => state.allProducts);
+    const {id} = useParams()
+    const dispatch = useDispatch()
+    const seller = useSelector(state => state.seller)
+
+    useEffect(() => {
+      dispatch(getSellerById(Number(id)))
+    }, [dispatch, id])
+    
 
     const formatVentasText = (ventas) => {
         return ventas >= 10000 ? 'más de 10 mil ventas' : `${ventas} ventas`;
@@ -31,7 +29,7 @@ const StoreDetail = () => {
         <div className='detail-container'>
             <div className='detail-content'>
                 <div className='seller-container'>
-                    <img className='seller-image' src={seller.image} alt={`Imagen del vendedor ${seller.name}`} />                   
+                    <img className='seller-image' src={seller.logo} alt={`Imagen del vendedor ${seller.name}`} />                   
                     <div className='seller-stats'>
                         <p className='seller-name'>{seller.name}</p>
                         <p className='seller-stats-text'>{formatVentasText(seller.ventas)}</p>

@@ -7,12 +7,14 @@ import {
   LOGIN_SUCCESS,
   GET_ALL_STORE,
   GET_PRODUCT_BY_ID,
+  GET_SELLER_BY_ID,
 } from "../Actions/Actions";
 
 const initialState = {
   allProducts: [],
   product: {},
   store: [],
+  seller: {},
   filteredProducts: [],
   condition: "allProducts",
   isAuth: false,
@@ -32,6 +34,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         product: payload,
+      };
+    case GET_SELLER_BY_ID:
+      return {
+        ...state,
+        seller: payload,
       };
     case SHOW_CATEGORY:
       return {
