@@ -2,7 +2,10 @@ import axios from "axios";
 import { products, store } from "./FakeBd";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
+export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
+export const GET_ALL_STORE = "GET_ALL_STORE";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
+export const SHOW_STORE = "SHOW_STORE";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_CONDITION = "SET_CONDITION";
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -70,18 +73,54 @@ export const getNewProducts= ()=>{
    }
 }
 
+export const getAllSellers = () => {
+    const allSellers = store;
+  
+    return async (dispatch) => {
+      try {
+        console.log(allSellers)
+        return dispatch({
+          type: GET_ALL_STORE,
+          payload: allSellers,
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+};
+
+export const getProductById = (id) => {
+    const productById = products.find((product) => product.id_product === id);
+    return async (dispatch) => {
+      try {
+        return dispatch({
+          type: GET_PRODUCT_BY_ID,
+          payload: productById,
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+};
+
 export const categoryFilter = (category) => ({
     type: SHOW_CATEGORY,
     payload: category,
 });
 
+export const storeFilter = (store) => ({
+    type: SHOW_STORE,
+    payload: store,
+})
+
 export const clearFilteredProducts = () => ({
     type: CLEAR_FILTERED_PRODUCTS
-})
+});
   
 export const renderCondition = (condition) => ({
     type: SET_CONDITION,
-})  
+    payload:condition,
+});  
 
 
 //    const groupProductsByStore = (products, stores) => {

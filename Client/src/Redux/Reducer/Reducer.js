@@ -6,6 +6,7 @@ import {
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
   GET_NEW,
+  SHOW_STORE,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -30,12 +31,21 @@ const rootReducer = (state = initialState, action) => {
       return {...state, newProducts:payload};  
 
     case SHOW_CATEGORY:
+      
       return {
         ...state,
         filteredProducts: state.allProducts.filter((product) =>
-          product.category.includes(payload)
+          product.categories.some((cat) =>cat.name ===payload)
         ),
       };
+
+     case SHOW_STORE:
+     
+      return {
+        ...state,
+        filteredProducts: state.allProducts.filter ((product) => 
+        product.store.name.includes(payload))
+      } 
 
     case CLEAR_FILTERED_PRODUCTS:
       return { ...state, filteredProducts: [] };
