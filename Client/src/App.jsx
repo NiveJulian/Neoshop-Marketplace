@@ -4,6 +4,7 @@ import LandingPage from "./views/LandingPage";
 import Login from "./views/Login";
 import ProductDetail from "./views/ProductDetail";
 import SingUp from "./views/SingUp";
+import StoreDetail from "./views/StoreDetail";
 import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
@@ -26,7 +27,7 @@ function App() {
         <Route path="/store" element={<Store />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/store/:id" element={<ProductDetail />} />
+        <Route path="/store/:id" element={<StoreDetail />} />
       </Routes>
     </div>
   );
