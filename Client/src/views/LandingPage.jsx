@@ -1,84 +1,112 @@
+import { useState } from "react";
+import "./LandingPage.css";
+
 import bgVideo from "../assets/videos/video2.mp4";
-import Nav from "../components/Nav/Nav";
+import axios from "axios";
 
 const LandingPage = () => {
+  const postFakeApi = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/"
+      );
+    
+    } catch (error) {
+      console.error("Error al hacer el fake POST:", error);
+    }
+  };
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = [imagen, imagen2, imagen3];
+
+  const handlePrevClick = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextClick = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800">
-      <Nav />
-      <header className="relative w-full h-[31vh] flex flex-col items-center justify-center overflow-hidden">
-        <video autoPlay muted loop className="absolute inset-0 w-full h-full object-cover">
-          <source src={bgVideo} type="video/mp4" />
-        </video>
-        <div className="relative z-10 text-center text-white px-6">
-          <h1 className="text-4xl font-bold mb-4">Welcome to Neo Shop</h1>
-          <p className="text-lg font-semibold mb-6">
-            Our project aims to create an innovative marketplace allowing users
-            to create personalized stores, securely make purchases, and settle
-            payments through the page.
-          </p>
-          <button
-            className="px-6 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 hover:translate-y-[-10%] hover:scale-110 active:translate-y-5 active:scale-90"
-            onClick={() => (window.location.href = "/home")}
-          >
-            <strong>Go to Store</strong>
-          </button>
-        </div>
+    <div className="landing-container">
+      <video className="background-video" autoPlay loop muted>
+        <source src={bgVideo} type="video/mp4" />
+      </video>
+
+      <header className="header">
+        <h1 className="title">Welcome to Neo Shop</h1>
+        <p className="subtitle">Find the best buy and sell products</p>
       </header>
 
-      <section id="features" className="py-12 px-6 bg-white">
-        <h2 className="text-3xl font-bold mb-8 text-center">Why Choose Neo Shop?</h2>
-        <div className="flex flex-wrap justify-center gap-6">
-          <div className="bg-gray-100 rounded-lg p-6 max-w-sm shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Personalized Stores</h3>
-            <p>
-              Create and customize your store with ease using our intuitive tools.
-            </p>
+      <main className="main-content">
+        <section className="hero-section">
+          <div className="carousel">
+            <button className="carousel-button left" onClick={handlePrevClick}>
+              {"🡨"}
+            </button>
+            <img
+              src={images[currentIndex]}
+              alt="Imagen Principal"
+              className="hero-image"
+            />
+            <button className="carousel-button right" onClick={handleNextClick}>
+              {"🡪"}
+            </button>
           </div>
-          <div className="bg-gray-100 rounded-lg p-6 max-w-sm shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Secure Transactions</h3>
-            <p>
-              Enjoy safe and secure purchases with our robust payment system.
-            </p>
-          </div>
-          <div className="bg-gray-100 rounded-lg p-6 max-w-sm shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Easy Integration</h3>
-            <p>
-              Integrate with various platforms and services effortlessly.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="testimonials" className="py-12 px-6 bg-gray-100">
-        <h2 className="text-3xl font-bold mb-8 text-center">Customer Testimonials</h2>
-        <div className="bg-white rounded-lg p-6 max-w-2xl mx-auto shadow-lg mb-6">
-          <p className="mb-4">
-            Neo Shop made it so easy to set up my online store. The process was
-            seamless and secure!
+          <h2 className="hero-title">Discover our offers</h2>
+          <p className="hero-description">
+            We have a wide variety of products that you will love.
           </p>
-          <p className="font-bold">- Happy Customer</p>
-        </div>
-        <div className="bg-white rounded-lg p-6 max-w-2xl mx-auto shadow-lg">
-          <p className="mb-4">
-            A fantastic platform that allows for customization and secure transactions. Highly recommend!
-          </p>
-          <p className="font-bold">- Satisfied User</p>
-        </div>
-      </section>
 
-      <footer id="github" className="w-full py-4 bg-gray-800 text-white text-center">
-        <button
-          className="px-6 py-2 bg-gray-900 border border-white rounded-lg transition-colors duration-300 hover:bg-gray-700"
-          onClick={() =>
-            (window.location.href =
-              "https://github.com/Proyecto-final-organization")
-          }
+          <a href="/home" className="cta-button" onClick={postFakeApi}>
+            Go to the store
+          </a>
+        </section>
+
+        <section className="testimonials-section">
+          <h3 className="testimonials-title">What our clients say</h3>
+          <div className="testimonials-container">
+            <div className="testimonial">
+              <p>
+                Excellent service and high quality products. Highly
+                recommended!
+              </p>
+              <p className="testimonial-author">- Juan Pérez</p>
+            </div>
+            <div className="testimonial">
+              <p>"The best shopping experience I have had online."</p>
+              <p className="testimonial-author">- Ana Gómez</p>
+            </div>
+            <div className="testimonial">
+              <p>"Great variety of products and fast deliveries."</p>
+              <p className="testimonial-author">- Carlos Martínez</p>
+            </div>
+            <div className="testimonial">
+              <p>"Very competitive prices and excellent customer service."</p>
+              <p className="testimonial-author">- Laura Sánchez</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <p>
+          &copy; 2024. Developed by NeoShop Team. All of the code is open
+          source.
+        </p>
+        <a
+          href="https://github.com/Proyecto-final-organization"
+          className="github-link"
         >
-          <strong>Go to GitHub</strong>
-        </button>
+          Visit our GitHub
+        </a>
       </footer>
     </div>
   );
 };
-
+   
 export default LandingPage;

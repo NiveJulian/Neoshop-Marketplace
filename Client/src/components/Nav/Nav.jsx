@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
 import Navbar from "../SearchBar/navbar";
+import { useState } from "react";
+import UserFormLogin from "../UserForm/UserFormLogin";
 
 export default function Nav() {
+  const [showLogin, setShowLogin] = useState(false)
+
+  function handleShowLogin(){
+    setShowLogin(true)
+  }
+  function handleOnClose(){
+    setShowLogin(false)
+  }
+
   return (
-    <div className="w-full overflow-y-auto:fixed z-50">
+    <div className="w-full z-50 shadow-xl">
       <div className="flex items-center justify-between px-2 py-2 bg-primary shadow-md">
         <div className="flex items-center gap-4 m-1">
           <Link
@@ -47,10 +58,32 @@ export default function Nav() {
             Store
           </Link>
         </div>
+        <div>
+          <Navbar className="flex items-center justify-center" />
+        </div>
         <div className="flex items-center gap-4">
-          <Navbar />
           <Link
-            to={"/login"}
+            to={"/home"}
+            className="border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-full w-auto p-2 text-gray-300 flex items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+              />
+            </svg>
+          </Link>
+          <button
+            type="button"
+            onClick={() => handleShowLogin()}
             className="border hover:shadow-lg border-gray-300 hover:border-secondary hover:text-secondary text-gray-300 rounded-full w-auto p-2 flex items-center"
           >
             <svg
@@ -67,8 +100,9 @@ export default function Nav() {
                 d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
               />
             </svg>
-          </Link>
-          <button className="hover:shadow-lg border-gray-300 hover:border-secondary hover:text-secondary text-gray-300 ">
+          </button>
+          {showLogin && <UserFormLogin title={'Login'} onClose={handleOnClose} />}
+          <button className="hover:shadow-lg mr-2 border-gray-300 hover:border-secondary hover:text-secondary text-gray-300 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

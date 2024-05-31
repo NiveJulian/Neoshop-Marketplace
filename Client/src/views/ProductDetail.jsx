@@ -181,6 +181,7 @@ const ProductDetail = () => {
               <p className='seller-stats-text'>reputación: {seller.average_mark} / 5</p>
             </div>
             <button className='seller-button'>Ir a la tienda</button>
+          </div> */}
           </div>
           <div className="review-container">
             <p className="review-text">{reviews[currentReviewIndex]}</p>
