@@ -5,11 +5,13 @@ import {
   SHOW_CATEGORY,
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
+  GET_NEW,
 } from "../Actions/Actions";
 
 const initialState = {
   allProducts: [],
   filteredProducts: [],
+  newProducts: [],
   condition: "allProducts",
   isAuth: false,
   registering: false,
@@ -22,6 +24,9 @@ const rootReducer = (state = initialState, action) => {
   switch (type) {
     case GET_ALL:
       return { ...state, allProducts: payload };
+
+    case GET_NEW:
+      return {...state, newProducts:payload};  
 
     case SHOW_CATEGORY:
       return {

@@ -1,10 +1,10 @@
 import axios from "axios";
 import { products } from "./FakeBd";
 export const GET_ALL = "GET_ALL";
+export const GET_NEW = "GET_NEW";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_CONDITION = "SET_CONDITION";
-
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 
 
@@ -39,13 +39,29 @@ export const register = (formData) => async(dispatch) => {
 }
 
 export const getAllProducts= ()=>{
-    const allProducts = products ;
+    const endpoint = "http://localhost:3001/product/" ;
     return async (dispatch) => {
        try {
-        //   let response= await axios.get(endpoint)
+        let response= await axios.get(endpoint)
                return dispatch({
                    type: GET_ALL,
-                   payload: allProducts
+                   payload: response.data,
+               });
+               
+       } catch (error) {
+         console.log(error.message);  
+       }
+   }
+}
+
+export const getNewProducts= ()=>{
+    const fakeProducts= products;
+    return async (dispatch) => {
+       try {
+        // let response= await axios.get(endpoint)
+               return dispatch({
+                   type: GET_NEW,
+                   payload: fakeProducts,
                });
                
        } catch (error) {

@@ -4,8 +4,20 @@ import imagen from "../assets/images/imagen.webp";
 import imagen2 from "../assets/images/imagen2.webp";
 import imagen3 from "../assets/images/imagen3.webp";
 import bgVideo from "../assets/videos/video2.mp4";
+import axios from "axios";
 
 const LandingPage = () => {
+  const postFakeApi = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/"
+      );
+    
+    } catch (error) {
+      console.error("Error al hacer el fake POST:", error);
+    }
+  };
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [imagen, imagen2, imagen3];
 
@@ -52,7 +64,7 @@ const LandingPage = () => {
             We have a wide variety of products that you will love.
           </p>
 
-          <a href="/home" className="cta-button">
+          <a href="/home" className="cta-button" onClick={postFakeApi}>
             Go to the store
           </a>
         </section>

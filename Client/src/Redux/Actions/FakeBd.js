@@ -127,4 +127,14 @@ export const products = [
         id_discounts: 4,
         id_store: 4,
       },
+      {
+        name: "Boston Celtics Hat",
+        img_product:["https://images.footballfanatics.com/boston-celtics/mens-mitchell-and-ness-kelly-green-boston-celtics-hardwood-classics-1997-nba-all-star-weekend-top-star-snapback-hat_pi4678000_ff_4678252-43ecb4d1dcb74ec82965_full.jpg?_hv=2&w=600"],
+        description: "Men's Mitchell & Ness Kelly Green Boston Celtics Hardwood Classic",
+        categoryName: ["Clothes"] ,
+        price: 100,
+        quantity: 1,
+        fromStore: "Falavella",
+        brand: "NBA",
+      }
   ];

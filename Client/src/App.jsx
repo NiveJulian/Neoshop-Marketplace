@@ -6,8 +6,13 @@ import ProductDetail from './views/ProductDetail'
 import SingUp from './views/SingUp';
 import { Store } from "./views/Store";
 import { Products } from "./views/Products";
+import axios from "axios";
 
 function App() {
+
+
+  // Llamar a la función para "postear" los productos falsos
+ 
 
   return (
       <div>

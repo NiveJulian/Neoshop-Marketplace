@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../Redux/Actions/Actions";
+import { getAllProducts, getNewProducts } from "../Redux/Actions/Actions";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
 import Nav from "../components/Nav/Nav";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.allProducts);
+  const newProducts = useSelector((state) => state.newProducts);
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getNewProducts());
   }, [dispatch]);
 
   return (
@@ -20,7 +20,7 @@ const HomePage = () => {
       <h1 className="mb-7 text-4xl font-bold pb-2 text-details hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
         Recent products
       </h1>
-      <CardHomeList allProducts={allProducts} />
+      <CardHomeList allProducts={newProducts} />
     </div>
   );
 };
