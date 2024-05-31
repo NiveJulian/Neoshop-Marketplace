@@ -8,12 +8,13 @@ import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllProducts } from "./Redux/Actions/Actions";
+import { getAllProducts, getAllSellers } from "./Redux/Actions/Actions";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getAllSellers())
   }, [dispatch]);
   return (
     <div>

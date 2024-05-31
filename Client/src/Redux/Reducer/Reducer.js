@@ -12,6 +12,7 @@ import {
 const initialState = {
   allProducts: [],
   product: {},
+  store: [],
   filteredProducts: [],
   condition: "allProducts",
   isAuth: false,
