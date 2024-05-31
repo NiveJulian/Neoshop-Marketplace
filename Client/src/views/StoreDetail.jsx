@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getNewProducts } from "../Redux/Actions/Actions.js";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList.jsx";
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
-import Filter from "../components/Filter/Filter";
-
+import Sidebar from "../components/SideBar/SideBar.jsx";
 
 const seller = {
     name: "MotoMoto",
@@ -19,7 +20,12 @@ const seller = {
   };
 
 const StoreDetail = () => {
-    const allProducts = useSelector((state) => state.allProducts);
+    const dispatch = useDispatch();
+    const newProducts = useSelector((state) => state.newProducts);
+  
+    useEffect(() => {
+      dispatch(getNewProducts());
+    }, [dispatch]);
 
     const formatVentasText = (ventas) => {
         return ventas >= 10000 ? 'más de 10 mil ventas' : `${ventas} ventas`;
@@ -28,7 +34,9 @@ const StoreDetail = () => {
     return ( 
         <div>
         <Nav/>
+        <Sidebar />
         <div className='detail-container'>
+            
             <div className='detail-content'>
                 <div className='seller-container'>
                     <img className='seller-image' src={seller.image} alt={`Imagen del vendedor ${seller.name}`} />                   
@@ -47,7 +55,7 @@ const StoreDetail = () => {
                     Products
                 </div>
                 <div className="mt-8">
-                <CardHomeList allProducts={allProducts} />
+                <CardHomeList allProducts={newProducts} />
                 </div>                          
             </div>
         </div>
