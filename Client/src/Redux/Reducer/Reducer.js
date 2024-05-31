@@ -8,6 +8,8 @@ import {
   GET_ALL_STORE,
   GET_PRODUCT_BY_ID,
   GET_SELLER_BY_ID,
+  GET_NEW,
+  SHOW_STORE,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -16,6 +18,7 @@ const initialState = {
   store: [],
   seller: {},
   filteredProducts: [],
+  newProducts: [],
   condition: "allProducts",
   isAuth: false,
   registering: false,
@@ -40,13 +43,26 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         seller: payload,
       };
+
+    case GET_NEW:
+      return {...state, newProducts:payload};  
+
     case SHOW_CATEGORY:
+      
       return {
         ...state,
         filteredProducts: state.allProducts.filter((product) =>
-          product.category.includes(payload)
+          product.categories.some((cat) =>cat.name ===payload)
         ),
       };
+
+     case SHOW_STORE:
+     
+      return {
+        ...state,
+        filteredProducts: state.allProducts.filter ((product) => 
+        product.store.name.includes(payload))
+      } 
 
     case CLEAR_FILTERED_PRODUCTS:
       return { ...state, filteredProducts: [] };

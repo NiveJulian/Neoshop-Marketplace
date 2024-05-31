@@ -1,7 +1,20 @@
+import axios from "axios";
 import bgVideo from "../assets/videos/video2.mp4";
 import Nav from "../components/Nav/Nav";
 
 const LandingPage = () => {
+
+  const postFakeApi = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/"
+      );
+    
+    } catch (error) {
+      console.error("Error al hacer el fake POST:", error);
+    }
+  };
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800">
       <Nav />
@@ -21,6 +34,12 @@ const LandingPage = () => {
             onClick={() => (window.location.href = "/home")}
           >
             <strong>Go to Store</strong>
+          </button>
+          <button
+            className="px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 hover:translate-y-[-10%] hover:scale-110 active:translate-y-5 active:scale-90"
+            onClick={(postFakeApi)}
+          >
+            <strong>post products</strong>
           </button>
         </div>
       </header>

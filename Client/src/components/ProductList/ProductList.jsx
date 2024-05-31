@@ -1,4 +1,4 @@
-import ProductCard from "../Product/ProductCard";
+import {ProductCard} from "../Product/ProductCard";
 import style from './ProductList.module.css'; // Asegúrate de que este archivo CSS exista y esté correcto
 
 export default function ProductList({ allProducts }) {
