@@ -10,13 +10,12 @@ const HomePage = () => {
   return (
     <div>
       <Nav />
+      <h1 className="mb-7 mt-2 ml-3 text-xl font-bold pb-2 text-gray-400 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
+        Recent products
+      </h1>
       <div className="mt-8">
         <CardHomeList allProducts={allProducts} />
       </div>
-      <h1 className="mb-7 text-4xl font-bold pb-2 text-details hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
-        Recent products
-      </h1>
-      <CardHomeList allProducts={allProducts} />
     </div>
   );
 };
