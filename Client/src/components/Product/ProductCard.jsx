@@ -1,8 +1,5 @@
-import { Link } from "react-router-dom";
-import style from "./ProductCard.module.css"; // Asegúrate de que este archivo CSS exista y esté correcto
-
 export const ProductCard = ({
-  id_product,
+  id,
   name,
   img_product,
   date_creation,
@@ -16,119 +13,55 @@ export const ProductCard = ({
   id_store,
 }) => {
   return (
-    <article className="bg-white p-2 mb-4 shadow transition duration-300 group transform hover:-translate-y-1 hover:shadow-lg rounded-xl cursor-pointer border relative max-w-xs">
-    <a
-      target="_self"
-      href={`/product/${id_product}`}
-      className="absolute opacity-0 top-0 right-0 left-0 bottom-0"
-    ></a>
-
-    <div className="relative mb-3 rounded-xl">
-      <img
-        className="max-h-32 rounded-xl w-full  object-contain transition-transform duration-300 transform group-hover:scale-105"
-        src={img_product}
-        alt=""
-      />
-
-      {/* Esquinero con listón "Nuevo" */}
-      <div className="absolute top-0 right-0">
-        <div className="relative">
-          <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-15 bg-red-500 text-white text-center text-xs font-bold px-4 py-1 shadow-lg">
-            NEW
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute bottom-2 left-2 inline-flex items-center rounded-lg bg-white p-1 shadow-md">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="h-4 w-4 text-red-700"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+    <article className="w-64 h-full rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6">
+      <a href={`/product/${id}`}>
+        <div className="relative flex items-end overflow-hidden rounded-xl">
+          <img
+            src={img_product}
+            alt={name}
+            className="w-64 h-64"
           />
-        </svg>
-        <span className="ml-1 text-xs text-slate-400">{quantity}</span>
-      </div>
-
-      <a
-        className="flex justify-center items-center bg-secondary bg-opacity-30 z-10 absolute top-0 left-0 w-full h-full text-white rounded-xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-lg group-hover:opacity-100"
-        href={`/product/${id_product}`}
-        target="_self"
-        rel="noopener noreferrer"
-      >
-        Ver articulo
-        <svg
-          className="ml-2 w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M13 5l7 7-7 7M5 5l7 7-7 7"
-          ></path>
-        </svg>
-      </a>
-    </div>
-    <div className="flex justify-between items-center w-full pb-2 mb-auto">
-      <div className="flex items-center">
-        <div className="pr-2">
-          <Link to={`/store/${id_store}`}>
-            <img
-              className="h-10 w-10 rounded-full object-cover"
-              src={img_product}
-              alt=""
-            />
-          </Link>
-        </div>
-        <div className="flex flex-1">
-          <div className="">
-            <p className="text-xs font-semibold ">{name}</p>
-            <p className="text-xs text-gray-500">
-              Published on {date_creation}
-            </p>
+          <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-yellow-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+            <span className="ml-1 text-sm text-slate-400">4.9</span>
           </div>
         </div>
-      </div>
-      <div className="flex justify-end">
-        <div className="text-xs flex items-center text-gray-500 ">
-          2 Days ago
-          <svg
-            className="ml-1 w-3 h-3"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
+
+        <div className="mt-1 p-2">
+          <h2 className="text-slate-700">{name}</h2>
+          <p className="mt-1 text-sm text-slate-400">{date_creation}</p>
+
+          <div className="mt-3 flex items-end justify-between">
+            <p className="text-lg font-bold text-blue-500">${price}</p>
+
+            <div className="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-4 w-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
+
+              <button className="text-sm">Add to cart</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <h3 className="font-medium text-lg leading-7">
-      <a
-        href="/blog/slug"
-        className="block relative group-hover:text-red-700 transition-colors duration-200 "
-      >
-        Instant Help at Your Fingertips
       </a>
-    </h3>
-    <div></div>
-  </article>
+    </article>
   );
 };

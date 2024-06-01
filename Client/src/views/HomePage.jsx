@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getNewProducts } from "../Redux/Actions/Actions";
+import { getNewProducts } from "../Redux/Actions/Actions";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
 import Nav from "../components/Nav/Nav";
 

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import style from "./Sidebar.module.css";
+import { useState } from "react";
 import Filter from "../Filter/FilterCat";
 import FilterStore from "../Filter/FilterStore";
 

@@ -1,9 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./views/HomePage";
 import LandingPage from "./views/LandingPage";
-import Login from "./views/Login";
 import ProductDetail from "./views/ProductDetail";
-import SingUp from "./views/SingUp";
 import StoreDetail from "./views/StoreDetail";
 import { Store } from "./views/Store";
 import { Products } from "./views/Products";

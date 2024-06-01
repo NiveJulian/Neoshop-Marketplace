@@ -17,6 +17,7 @@ export default function UserFormRegister({ title = "Register", onClose }) {
     state: "",
     postalCode: "",
     email: "",
+    nro_document: "",
   });
 
   const [errors, setErrors] = useState({
@@ -27,6 +28,8 @@ export default function UserFormRegister({ title = "Register", onClose }) {
     state: "",
     postalCode: "",
     email: "",
+    nro_document: "",
+
   });
 
   const handleChange = (e) => {
@@ -197,6 +200,30 @@ export default function UserFormRegister({ title = "Register", onClose }) {
             />
             {errors.postalCode && (
               <p className="text-red-500 text-xs italic">{errors.postalCode}</p>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-email"
+            >
+              DNI
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                errors.dni ? "border-red-500" : "border-gray-200"
+              }`}
+              id="grid-nro_document"
+              type="text"
+              placeholder="12345678"
+              name="dni"
+              value={formData.nro_document}
+              onChange={handleChange}
+            />
+            {errors.dni && (
+              <p className="text-red-500 text-xs italic">{errors.dni}</p>
             )}
           </div>
         </div>
