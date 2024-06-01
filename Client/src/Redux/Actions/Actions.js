@@ -3,6 +3,7 @@ import { products, store } from "./FakeBd";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
+export const GET_SELLER_BY_ID = "GET_SELLER_BY_ID";
 export const GET_ALL_STORE = "GET_ALL_STORE";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const SHOW_STORE = "SHOW_STORE";
@@ -10,110 +11,122 @@ export const SHOW_ABC = "SHOW_ABC";
 export const SHOW_PRICE = "SHOW_PRICE";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_CONDITION = "SET_CONDITION";
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const login = (email, password) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/user/";
 
-export const login = (formData) => async(dispatch) => {
-    const endpoint = 'http://localhost:3001/user/'
+  try {
+    const response = await axios.post(`${endpoint}`, email, password);
 
-    try {
-        const response = await axios.post(`${endpoint}`, formData);
-
-        if(response.status === 200){
-            dispatch({type: LOGIN_SUCCESS})
-        }
-    } catch (error) {
-        console.log(error)
+    if (response.status === 200) {
+      dispatch({ type: LOGIN_SUCCESS });
     }
-}
-
-export const register = (formData) => async(dispatch) => {
-    const endpoint = 'http://localhost:3001/user/'
-
-    try {
-        const response = await axios.post(`${endpoint}`, formData);
-
-        if(response.status === 201){
-            dispatch({type: REGISTER_SUCCESS})
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const getAllProducts= ()=>{
-    const endpoint = "http://localhost:3001/product/" ;
-    return async (dispatch) => {
-       try {
-        let response= await axios.get(endpoint)
-               return dispatch({
-                   type: GET_ALL,
-                   payload: response.data,
-               });
-               
-       } catch (error) {
-         console.log(error.message);  
-       }
-   }
-}
-
-export const getNewProducts= ()=>{
-    const fakeProducts= products;
-    return async (dispatch) => {
-       try {
-        // let response= await axios.get(endpoint)
-               return dispatch({
-                   type: GET_NEW,
-                   payload: fakeProducts,
-               });
-               
-       } catch (error) {
-         console.log(error.message);  
-       }
-   }
-}
-
-export const getAllSellers = () => {
-    const allSellers = store;
-  
-    return async (dispatch) => {
-      try {
-        console.log(allSellers)
-        return dispatch({
-          type: GET_ALL_STORE,
-          payload: allSellers,
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+export const register = (formData) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/user/";
+
+  try {
+    const response = await axios.post(`${endpoint}`, formData);
+
+    if (response.status === 200) {
+      dispatch({ type: REGISTER_SUCCESS });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllProducts = () => {
+  const endpoint = "http://localhost:3001/product/";
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(endpoint);
+      return dispatch({
+        type: GET_ALL,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 export const getProductById = (id) => {
-    const productById = products.find((product) => product.id_product === id);
-    return async (dispatch) => {
-      try {
-        return dispatch({
-          type: GET_PRODUCT_BY_ID,
-          payload: productById,
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+  const endpoint = 'http://localhost:3001/product/'
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${endpoint}/${id}`)
+      console.log(response)
+      return dispatch({
+        type: GET_PRODUCT_BY_ID,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getNewProducts = () => {
+  const fakeProducts = products;
+  return async (dispatch) => {
+    try {
+      // let response= await axios.get(endpoint)
+      return dispatch({
+        type: GET_NEW,
+        payload: fakeProducts,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getAllSellers = () => {
+  const allSellers = store;
+
+  return async (dispatch) => {
+    try {
+      console.log(allSellers);
+      return dispatch({
+        type: GET_ALL_STORE,
+        payload: allSellers,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getSellerById = (id) => {
+  const sellerById = store.find((seller) => seller.id === id);
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: GET_SELLER_BY_ID,
+        payload: sellerById,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 };
 
 export const categoryFilter = (category) => ({
-    type: SHOW_CATEGORY,
-    payload: category,
+  type: SHOW_CATEGORY,
+  payload: category,
 });
 
 export const storeFilter = (store) => ({
-    type: SHOW_STORE,
-    payload: store,
-})
+  type: SHOW_STORE,
+  payload: store,
+});
 
 export const orderProductsAbc = (vector) => ({
     type: SHOW_ABC,
@@ -126,14 +139,13 @@ export const orderProductsPrice = (price) => ({
 })
 
 export const clearFilteredProducts = () => ({
-    type: CLEAR_FILTERED_PRODUCTS
+  type: CLEAR_FILTERED_PRODUCTS,
 });
-  
-export const renderCondition = (condition) => ({
-    type: SET_CONDITION,
-    payload:condition,
-});  
 
+export const renderCondition = (condition) => ({
+  type: SET_CONDITION,
+  payload: condition,
+});
 
 //    const groupProductsByStore = (products, stores) => {
 //     // Crear un diccionario para las tiendas
@@ -141,7 +153,7 @@ export const renderCondition = (condition) => ({
 //       acc[store.id] = { ...store, products: [] };
 //       return acc;
 //     }, {});
-  
+
 //     // Asociar productos a sus respectivas tiendas
 //     products.forEach(product => {
 //       const storeId = product.id_store;
@@ -149,8 +161,7 @@ export const renderCondition = (condition) => ({
 //         storesDict[storeId].products.push(product);
 //       }
 //     });
-  
+
 //     // Convertir el diccionario a un array de tiendas
 //     return Object.values(storesDict);
 //   };
-  

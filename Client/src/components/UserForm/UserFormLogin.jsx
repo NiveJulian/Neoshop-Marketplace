@@ -1,6 +1,8 @@
 import { useState } from "react";
 import validationLogin from "./validationLogin"; // Importa tu función de validación
 import UserFormRegister from "./UserFormRegister";
+import { useDispatch } from "react-redux";
+import { login } from "../../Redux/Actions/Actions";
 
 export default function UserFormLogin({ title, onClose }) {
   const [formData, setFormData] = useState({
@@ -11,8 +13,8 @@ export default function UserFormLogin({ title, onClose }) {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch()
   const [showRegistro, setShowRegistro] = useState(false);
-
   function handleChangeRegister() {
     setShowRegistro(true);
   }
@@ -22,11 +24,11 @@ export default function UserFormLogin({ title, onClose }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+    setFormData((prevState) => {
+      const newFormData = { ...prevState, [name]: value };
+      validationLogin(newFormData, errors, setErrors);
+      return newFormData;
     });
-    validationLogin({ ...formData, [name]: value }, errors, setErrors);
   };
 
   const handleSubmit = (e) => {
@@ -35,10 +37,15 @@ export default function UserFormLogin({ title, onClose }) {
     const noErrors = Object.keys(errors).every((key) => errors[key] === "");
 
     if (noErrors) {
-      console.log("Form data submitted:", formData);
+      const {email, password} = formData;
+
+      try {
+        dispatch(login(email,password))
+      } catch (error) {
+        console.log(error.message)
+      }
     }
   };
-
   return (
     <>
       {showRegistro ? (

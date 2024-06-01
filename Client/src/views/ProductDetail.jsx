@@ -37,11 +37,9 @@ const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
-  // const store = useSelector(state => state.store)
-
-  console.log(id);
+  
   useEffect(() => {
-    dispatch(getProductById(Number(id)));
+    dispatch(getProductById(id));
   }, [dispatch, id]);
 
   const handlePrevImage = () => {

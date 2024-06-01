@@ -1,10 +1,8 @@
 import {ProductCard} from "../Product/ProductCard";
-import style from './ProductList.module.css'; // Asegúrate de que este archivo CSS exista y esté correcto
-
 export default function ProductList({ allProducts }) {
   return (
-    <div className={style.contenedor}>
-      {allProducts.map(product => (
+    <div className="flex flex-wrap justify-between flex-row gap-4">
+      {allProducts?.map(product => (
         <ProductCard 
         key={product.id_product} 
         id={product.id_product}

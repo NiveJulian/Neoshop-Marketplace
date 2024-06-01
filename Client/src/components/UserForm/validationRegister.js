@@ -1,5 +1,5 @@
 const validationRegister = (
-  { name, lastname, password, city, state, postalCode, email },
+  { name, lastname, password, city, state, postalCode, email, dni },
   errors,
   setErrors
 ) => {
@@ -67,6 +67,14 @@ const validationRegister = (
     newErrors.email = "El correo electrónico no es válido";
   } else {
     newErrors.email = "";
+  }
+
+  if (!dni) {
+    newErrors.dni = "El DNI está vacío";
+  } else if (!/^\d{8,10}$/.test(dni)) {
+    newErrors.dni = "El DNI debe ser un número de 8 a 10 cifras";
+  } else {
+    newErrors.dni = "";
   }
 
   setErrors(newErrors);

@@ -5,6 +5,9 @@ import {
   SHOW_CATEGORY,
   REGISTER_SUCCESS,
   LOGIN_SUCCESS,
+  GET_ALL_STORE,
+  GET_PRODUCT_BY_ID,
+  GET_SELLER_BY_ID,
   GET_NEW,
   SHOW_STORE,
   SHOW_ABC,
@@ -14,6 +17,8 @@ import {
 const initialState = {
   allProducts: [],
   product: {},
+  store: [],
+  seller: {},
   filteredProducts: [],
   newProducts: [],
   condition: "allProducts",
@@ -28,6 +33,18 @@ const rootReducer = (state = initialState, action) => {
   switch (type) {
     case GET_ALL:
       return { ...state, allProducts: payload };
+    case GET_ALL_STORE:
+      return { ...state, store: payload };
+    case GET_PRODUCT_BY_ID:
+      return {
+        ...state,
+        product: payload,
+      };
+    case GET_SELLER_BY_ID:
+      return {
+        ...state,
+        seller: payload,
+      };
 
     case GET_NEW:
       return {...state, newProducts:payload};  

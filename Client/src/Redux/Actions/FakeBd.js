@@ -140,37 +140,41 @@ export const products = [
       }
   ];
 
-  export const store = [
-    {
-      id: 1,
-      name: "Tech Haven",
-      address_cp: "90210",
-      address_country: "USA",
-      address_city: "Beverly Hills",
-      logo: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Ftechhaven.bn%2F&psig=AOvVaw2POZiVmMk2C6ZnoQs8I9Hi&ust=1717187035368000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMjdkbaatoYDFQAAAAAdAAAAABAE"
-    },
-    {
-      id: 2,
-      name: "Gadget World",
-      address_cp: "10001",
-      address_country: "USA",
-      address_city: "New York",
-      logo: "https://play.google.com/store/apps/details?id=ecommerce_360.android.app&hl=es"
-    },
-    {
-      id: 3,
-      name: "Fashion Hub",
-      address_cp: "WC2N 5DU",
-      address_country: "UK",
-      address_city: "London",
-      logo: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fthefashionhub%2F&psig=AOvVaw2rXieBCHDfPiR4YSsazj_G&ust=1717187119673000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjvlNSatoYDFQAAAAAdAAAAABAE"
-    },
-    {
-      id: 4,
-      name: "Eco Mart",
-      address_cp: "75001",
-      address_country: "France",
-      address_city: "Paris",
-      logo: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fp%2FEco-Mart-100068599925175%2F%3Flocale%3Dis_IS&psig=AOvVaw1ph2okzNB6n1klm1bEsUvL&ust=1717187144107000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNCHkOCatoYDFQAAAAAdAAAAABAE"
-    }
-  ]
+export const store = [
+  {
+    id: 1,
+    name: "Tech Haven",
+    address_cp: "90210",
+    address_country: "USA",
+    address_city: "Beverly Hills",
+    logo: "https://i.pinimg.com/originals/d9/bb/48/d9bb48c52123cd7b1304979b7c6cb9bc.jpg",
+    quantity_review: 3000,
+  },
+  {
+    id: 2,
+    name: "Gadget World",
+    address_cp: "10001",
+    address_country: "USA",
+    address_city: "New York",
+    logo: "https://marketplace.canva.com/EAFAEOunkG0/1/0/1600w/canva-morado-moderno-tecnolog%C3%ADa-y-videojuegos-logo-2xfRaIEdz2Y.jpg",
+    quantity_review: 4000,
+  },
+  {
+    id: 3,
+    name: "Fashion Hub",
+    address_cp: "WC2N 5DU",
+    address_country: "UK",
+    address_city: "London",
+    logo: "https://w7.pngwing.com/pngs/617/346/png-transparent-circle-logo-brand-ibm-text-logo-technology.png",
+    quantity_review: 5000,
+  },
+  {
+    id: 4,
+    name: "Eco Mart",
+    address_cp: "75001",
+    address_country: "France",
+    address_city: "Paris",
+    logo: "https://www.designevo.com/res/templates/thumb_small/tech-square-line-structure-crypto.webp",
+    quantity_review: 7000,
+  },
+];
