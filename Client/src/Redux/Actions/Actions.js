@@ -13,11 +13,11 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
-export const login = (email, password) => async (dispatch) => {
-  const endpoint = "http://localhost:3001/user/";
+export const login = (formData) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/login/";
 
   try {
-    const response = await axios.post(`${endpoint}`, email, password);
+    const response = await axios.post(`${endpoint}`, formData);
 
     if (response.status === 200) {
       dispatch({ type: LOGIN_SUCCESS });

@@ -8,6 +8,7 @@ import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts, getAllSellers } from "./Redux/Actions/Actions";
+import SingUp from "./views/SingUp";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,8 +20,8 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SingUp />} /> */}
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/signup" element={<SingUp />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/store" element={<Store />} />
         <Route path="/products" element={<Products />} />
