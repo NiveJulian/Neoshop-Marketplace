@@ -6,6 +6,8 @@ export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const GET_ALL_STORE = "GET_ALL_STORE";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const SHOW_STORE = "SHOW_STORE";
+export const SHOW_ABC = "SHOW_ABC";
+export const SHOW_PRICE = "SHOW_PRICE";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_CONDITION = "SET_CONDITION";
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -111,6 +113,16 @@ export const categoryFilter = (category) => ({
 export const storeFilter = (store) => ({
     type: SHOW_STORE,
     payload: store,
+})
+
+export const orderProductsAbc = (vector) => ({
+    type: SHOW_ABC,
+    payload: vector,
+})
+
+export const orderProductsPrice = (price) => ({
+    type: SHOW_PRICE,
+    payload: price,
 })
 
 export const clearFilteredProducts = () => ({
