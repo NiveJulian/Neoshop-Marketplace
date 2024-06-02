@@ -1,13 +1,20 @@
 import Nav from '../components/Nav/Nav'
 import Sidebar from '../components/SideBar/SideBar'
 import ProductList from '../components/ProductList/ProductList'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllProducts } from '../Redux/Actions/Actions'
+import { useEffect } from 'react'
 
 
 export const Products = () => {
+  const dispatch = useDispatch();
   const allProducts= useSelector((state) => state.allProducts);
   const filteredProducts= useSelector((state) => state.filteredProducts);
   const condition = useSelector((state) => state.condition);
+
+  useEffect(() => {
+    dispatch(getAllProducts()) 
+  }, [dispatch]);
 
   const renderProducts = () => {
     switch (condition) {

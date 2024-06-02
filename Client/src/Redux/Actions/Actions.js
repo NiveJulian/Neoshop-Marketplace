@@ -24,6 +24,7 @@ export const login = (formData) => async (dispatch) => {
 
     if (response.status === 200) {
       dispatch({ type: LOGIN_SUCCESS });
+      
     }
   } catch (error) {
     console.log(error);
