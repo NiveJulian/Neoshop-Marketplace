@@ -4,6 +4,7 @@ import style from "./FilterCat.module.css"
 
 export default function Filter() {
   const dispatch = useDispatch();
+  
 
   const handleCategoryChange = (event) => {
     const categories = event.target.value; 

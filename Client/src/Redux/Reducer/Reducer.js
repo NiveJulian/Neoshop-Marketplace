@@ -12,6 +12,8 @@ import {
   GET_NEW,
   SHOW_STORE,
   GET_USER_BY_ID,
+  SHOW_ABC,
+  SHOW_PRICE,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -77,10 +79,37 @@ const rootReducer = (state = initialState, action) => {
     case SHOW_STORE:
       return {
         ...state,
-        filteredProducts: state.allProducts.filter((product) =>
-          product.store.name.includes(payload)
-        ),
-      };
+        filteredProducts: state.allProducts.filter ((product) => 
+        product.store.name.includes(payload))
+      }
+      
+    case SHOW_ABC:
+      const sortedProducts = [...state.allProducts].sort((a, b) => {
+        if (action.payload === "AZ") {
+          return a.name.localeCompare(b.name);
+        } else if (action.payload === "ZA") {
+          return b.name.localeCompare(a.name);
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        filteredProducts: sortedProducts,
+      }; 
+
+    case SHOW_PRICE:
+      const priceProducts = [...state.allProducts].sort ((a,b) =>{
+        if (payload === "menor") {
+          return a.price - b.price;
+      } else if (payload === "mayor") {
+          return b.price - a.price;
+      }
+      return 0; // No hay ordenamiento
+      })
+      return {
+        ...state,
+        filteredProducts: priceProducts,
+      };  
 
     case CLEAR_FILTERED_PRODUCTS:
       return { ...state, filteredProducts: [] };
