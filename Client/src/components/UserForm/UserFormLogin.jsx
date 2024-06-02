@@ -3,6 +3,7 @@ import validationLogin from "./validationLogin";
 import { useDispatch } from "react-redux";
 import { login } from "../../Redux/Actions/Actions";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function UserFormLogin({ title, onClose }) {
   const [formData, setFormData] = useState({
@@ -30,14 +31,19 @@ export default function UserFormLogin({ title, onClose }) {
     const noErrors = Object.keys(errors).every((key) => errors[key] === "");
 
     if (noErrors) {
-
       try {
         dispatch(login(formData));
+        toast.success("Login successful!");
+        setTimeout(() => {
+          onClose()
+        }, 2000);
       } catch (error) {
+        toast.error("Login failed. Please try again.");
         console.log(error.message);
       }
     }
   };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <form
@@ -108,7 +114,7 @@ export default function UserFormLogin({ title, onClose }) {
             Sign In
           </button>
           <Link
-            to={'/signup'}
+            to="/signup"
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
           >
             Sign Up

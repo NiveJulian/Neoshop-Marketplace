@@ -7,17 +7,20 @@ import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllProducts, getAllSellers } from "./Redux/Actions/Actions";
+import { getAllProducts, getAllSellers, getUserById } from "./Redux/Actions/Actions";
 import SingUp from "./views/SingUp";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
-    dispatch(getAllSellers())
+    dispatch(getAllSellers());
+    dispatch(getUserById("c88dcdca-ede8-4fe4-af06-84cae9d17360"))
   }, [dispatch]);
   return (
     <div>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         {/* <Route path="/login" element={<Login />} /> */}

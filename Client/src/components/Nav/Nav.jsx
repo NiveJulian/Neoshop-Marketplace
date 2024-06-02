@@ -2,15 +2,20 @@ import { Link } from "react-router-dom";
 import Navbar from "../SearchBar/navbar";
 import { useState } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
+import { useSelector } from "react-redux";
+import User from "../Users/User";
 
 export default function Nav() {
-  const [showLogin, setShowLogin] = useState(false)
+  const user = useSelector((state) => state.user);
 
-  function handleShowLogin(){
-    setShowLogin(true)
+  const isAuth = useSelector((state) => state.isAuth);
+  const [showLogin, setShowLogin] = useState(false);
+
+  function handleShowLogin() {
+    setShowLogin(true);
   }
-  function handleOnClose(){
-    setShowLogin(false)
+  function handleOnClose() {
+    setShowLogin(false);
   }
 
   return (
@@ -101,7 +106,15 @@ export default function Nav() {
               />
             </svg>
           </button>
-          {showLogin && <UserFormLogin title={'Login'} onClose={handleOnClose} />}
+          {showLogin && (
+            <>
+              {isAuth ? (
+                <User user={user} onClose={handleOnClose} />
+              ) : (
+                <UserFormLogin title={"Login"} onClose={handleOnClose} />
+              )}
+            </>
+          )}
           <button className="hover:shadow-lg mr-2 border-gray-300 hover:border-secondary hover:text-secondary text-gray-300 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"

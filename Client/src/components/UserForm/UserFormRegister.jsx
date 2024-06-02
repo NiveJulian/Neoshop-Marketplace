@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import validationRegister from "./validationRegister"; // Importa tu función de validación
 import { register } from "../../Redux/Actions/Actions";
+import toast from "react-hot-toast";
 
 export default function UserFormRegister({ title = "Register" }) {
   const dispatch = useDispatch();
@@ -37,8 +38,14 @@ export default function UserFormRegister({ title = "Register" }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(register(formData));
-    console.log("Form data submitted:", formData);
+    try {
+      dispatch(register(formData));
+
+      toast.success("Register successful!");
+      console.log("Form data submitted:", formData);
+    } catch (error) {
+      toast.error("Register failed. Please try again.")
+    }
   };
 
   return (
@@ -210,7 +217,9 @@ export default function UserFormRegister({ title = "Register" }) {
               onChange={handleChange}
             />
             {errors.nro_document && (
-              <p className="text-red-500 text-xs italic">{errors.nro_document}</p>
+              <p className="text-red-500 text-xs italic">
+                {errors.nro_document}
+              </p>
             )}
           </div>
         </div>
