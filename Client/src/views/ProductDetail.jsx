@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "./ProductDetail.css";
 import Nav from '../components/Nav/Nav';
@@ -84,9 +84,9 @@ const ProductDetail = () => {
     setCurrentImageIndex(index);
   };
 
-  // const formatVentasText = (ventas) => {
-  //   return ventas >= 10000 ? 'más de 10 mil ventas' : `${ventas} ventas`;
-  // };
+  const formatVentasText = (ventas) => {
+    return ventas >= 10000 ? 'más de 10 mil ventas' : `${ventas} ventas`;
+  };
 
   return (
     <div>

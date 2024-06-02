@@ -33,6 +33,8 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   const { type, payload } = action;
+  let sortedProducts;
+  let priceProducts;
 
   switch (type) {
     case REGISTER_SUCCESS:
@@ -46,13 +48,16 @@ const rootReducer = (state = initialState, action) => {
 
     case GET_ALL:
       return { ...state, allProducts: payload };
+
     case GET_ALL_STORE:
       return { ...state, store: payload };
+
     case GET_PRODUCT_BY_ID:
       return {
         ...state,
         product: payload,
       };
+
     case GET_SELLER_BY_ID:
       return {
         ...state,
@@ -79,15 +84,16 @@ const rootReducer = (state = initialState, action) => {
     case SHOW_STORE:
       return {
         ...state,
-        filteredProducts: state.allProducts.filter ((product) => 
-        product.store.name.includes(payload))
-      }
-      
+        filteredProducts: state.allProducts.filter((product) =>
+          product.store.name.includes(payload)
+        ),
+      };
+
     case SHOW_ABC:
-      const sortedProducts = [...state.allProducts].sort((a, b) => {
-        if (action.payload === "AZ") {
+       sortedProducts = [...state.allProducts].sort((a, b) => {
+        if (payload === "AZ") {
           return a.name.localeCompare(b.name);
-        } else if (action.payload === "ZA") {
+        } else if (payload === "ZA") {
           return b.name.localeCompare(a.name);
         }
         return 0;
@@ -95,21 +101,21 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         filteredProducts: sortedProducts,
-      }; 
+      };
 
     case SHOW_PRICE:
-      const priceProducts = [...state.allProducts].sort ((a,b) =>{
+       priceProducts = [...state.allProducts].sort((a, b) => {
         if (payload === "menor") {
           return a.price - b.price;
-      } else if (payload === "mayor") {
+        } else if (payload === "mayor") {
           return b.price - a.price;
-      }
-      return 0; // No hay ordenamiento
-      })
+        }
+        return 0; // No hay ordenamiento
+      });
       return {
         ...state,
         filteredProducts: priceProducts,
-      };  
+      };
 
     case CLEAR_FILTERED_PRODUCTS:
       return { ...state, filteredProducts: [] };
