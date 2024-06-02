@@ -1,23 +1,31 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getNewProducts } from "../Redux/Actions/Actions.js";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList.jsx";
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { getSellerById } from "../Redux/Actions/Actions.js";
-// import Filter from "../components/Filter/Filter";
+import Sidebar from "../components/SideBar/SideBar.jsx";
+
+const seller = {
+    name: "MotoMoto",
+    image: "https://lojarcell.vteximg.com.br/arquivos/ids/162373/banner-marcas-motorola-mobile-min.png?v=637493652503570000",
+    ventas: 11000,
+    average_mark: 4.5,
+    adress_cp: "1653",
+    adress_country: "Argentina",
+    adress_city: "Buenos Aires",
+    date_creation: "10 / 02 / 2024",
+    quantity_review: 3000,
+  };
 
 const StoreDetail = () => {
-    const allProducts = useSelector((state) => state.allProducts);
-    const {id} = useParams()
-    const dispatch = useDispatch()
-    const seller = useSelector(state => state.seller)
-
+    const dispatch = useDispatch();
+    const newProducts = useSelector((state) => state.newProducts);
+  
     useEffect(() => {
-      dispatch(getSellerById(Number(id)))
-    }, [dispatch, id])
-    
+      dispatch(getNewProducts());
+    }, [dispatch]);
 
     const formatVentasText = (ventas) => {
         return ventas >= 10000 ? 'más de 10 mil ventas' : `${ventas} ventas`;
@@ -26,7 +34,9 @@ const StoreDetail = () => {
     return ( 
         <div>
         <Nav/>
+        <Sidebar />
         <div className='detail-container'>
+            
             <div className='detail-content'>
                 <div className='seller-container'>
                     <img className='seller-image' src={seller.logo} alt={`Imagen del vendedor ${seller.name}`} />                   
@@ -45,7 +55,7 @@ const StoreDetail = () => {
                     Products
                 </div>
                 <div className="mt-8">
-                <CardHomeList allProducts={allProducts} />
+                <CardHomeList allProducts={newProducts} />
                 </div>                          
             </div>
         </div>

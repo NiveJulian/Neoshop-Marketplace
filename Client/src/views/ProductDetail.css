@@ -44,7 +44,7 @@
     font-family: Arial, sans-serif;
   }
   
-  .detail-content {
+  .detail-cont {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
@@ -80,6 +80,7 @@
   }
   
   .info-container {
+    max-width: 400px;
     flex: 1;
     padding: 20px;
     border: 1px solid #ddd;
@@ -202,7 +203,7 @@
     text-align: center;
   }
   
-  .seller-container {
+  .seller-cont {
     flex: 1;
     padding: 20px;
     border: 1px solid #ddd;
@@ -211,7 +212,7 @@
     align-items: flex-start;
   }
 
-  .seller-name {
+  .sellers-name {
     font-size: 1.5em;
   }
 
@@ -220,12 +221,12 @@
     border-radius: 10px;
   }
 
-  .seller-stats {
+  .sellers-stats {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
   }
-  .seller-stats-text {
+  .sellers-stats-text {
     font-size: 1em;
     color: rgb(150, 150, 150);
   }
