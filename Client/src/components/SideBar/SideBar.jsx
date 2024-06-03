@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Filter from "../Filter/FilterCat";
 import FilterStore from "../Filter/FilterStore";
 import { OrderAbc } from "../Filter/OrderAbc";
 import { OrderPrice } from "../Filter/OrderPrice";
@@ -16,7 +15,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex items-start justify-left w-screen mt-8 mb-6 fixed">
+    <div className="flex items-start w-64 mt-8 mb-6 fixed z-50">
       {/* <!-- Component Start --> */}
       {/* Condición para mostrar la primera o la segunda sidebar */}
       {expanded ? (

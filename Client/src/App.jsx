@@ -19,7 +19,8 @@ function App() {
     dispatch(getAllSellers());
     dispatch(getAllBrands());
     dispatch(getAllCategories());
-    dispatch(getUserById("353a74b0-a53c-4ba2-8f94-8acd88b72e99"))
+    dispatch(isAuthenticated(jwtToken));
+    
   }, [dispatch]);
   return (
     <div>
