@@ -6,6 +6,7 @@ import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
 import Sidebar from "../components/SideBar/SideBar.jsx";
+import Categories from "../components/Categories/Categories.jsx";
 
 const seller = {
     name: "MotoMoto",
@@ -51,6 +52,7 @@ const StoreDetail = () => {
                         <p>{seller.quantity_review} reviews totales</p>
                     </div>
                 </div>
+                <Categories/>
                 <div className="banner">
                     Products
                 </div>
