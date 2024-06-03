@@ -49,7 +49,7 @@ export default function UserFormRegister({ title = "Register" }) {
   };
 
   return (
-    <div className="w-full h-full md:top-0 md:left-0 md:z-50 md:bg-opacity-50 md:w-screen md:h-screen">
+    <div className="flex md:top-0 md:left-0 md:z-50 md:bg-opacity-50 md:w-screen md:h-screen">
       <form
         className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}

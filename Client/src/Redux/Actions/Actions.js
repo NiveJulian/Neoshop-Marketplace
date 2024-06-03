@@ -1,5 +1,6 @@
 import axios from "axios";
 import { products } from "./FakeBd";
+import { deleteSessionToken } from "../../components/delCookie";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -26,13 +27,10 @@ export const login = (formData) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
-    console.log(response)
+    console.log(response);
 
     if (response.data.correctLogin) {
-      dispatch({ type: LOGIN_SUCCESS, payload: true });
-      localStorage.setItem("isAuth", "true");
-    } else {
-      localStorage.setItem("isAuth", "false");
+      dispatch({ type: LOGIN_SUCCESS });
     }
   } catch (error) {
     localStorage.setItem("isAuth", "false");
@@ -58,14 +56,10 @@ export const register = (formData) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    // Aquí puedes realizar cualquier otra limpieza necesaria antes de desloguearte,
-    // como por ejemplo limpiar el estado de usuario u otras variables de sesión.
-
-    // Actualizar el estado de isAuth a false
     dispatch({ type: LOGIN_SUCCESS, payload: false });
+    deleteSessionToken();
 
-    // Limpiar el token de autenticación almacenado en localStorage
-    localStorage.setItem("isAuth", "false");
+    document.location.href = "/";
   } catch (error) {
     console.log(error);
   }
@@ -88,24 +82,22 @@ export const getUserById = (id) => {
 
 //
 
-// export const isAuthenticated = () => async (dispatch) => {
-//   try {
-//     const response = await axios.get('http://localhost:3001/auth-check', {
-//       withCredentials: true,
-//     });
+export const isAuthenticated = (jwtToken) => async (dispatch) => {
+  try {
+    const response = await axios.post("http://localhost:3001/login/auth", {
+      token: jwtToken,
+    });
 
-//     if (response.status === 200 && response.data.isAuth) {
-//       dispatch({ type: IS_AUTH, payload: true });
-//       localStorage.setItem('isAuth', 'true');
-//     } else {
-//       dispatch({ type: IS_AUTH, payload: false });
-//       localStorage.setItem('isAuth', 'false');
-//     }
-//   } catch (error) {
-//     dispatch({ type: IS_AUTH, payload: false });
-//     localStorage.setItem('isAuth', 'false');
-//   }
-// };
+    if (response.status === 200) {
+      dispatch({ type: IS_AUTH, payload: response.data });
+    } else {
+      dispatch({ type: IS_AUTH, payload: false });
+    }
+  } catch (error) {
+    dispatch({ type: IS_AUTH, payload: false });
+    localStorage.setItem("isAuth", "false");
+  }
+};
 
 //PRODUCTS
 export const getAllProducts = () => {
@@ -129,7 +121,6 @@ export const getProductById = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${endpoint}/id/${id}`);
-      console.log(response);
       dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: response.data,
@@ -171,20 +162,21 @@ export const getNewProducts = () => {
   };
 };
 
-export const getProductByName= (name)=>{
-  const endpoint= `http://localhost:3001/product/name/${name}`
-  return async (dispatch)=>{
-      try {
-          let response=await axios.get(endpoint)
-          return dispatch({
-              type: GET_PRODUCT_BY_NAME,
-              payload: response.data,
-          })
-      } catch (error) {
-          console.log(error.message);   
-      }
-  }
- }
+export const getProductByName = (name) => {
+  const endpoint = `http://localhost:3001/product/name/${name}`;
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(endpoint);
+      dispatch({
+        type: GET_PRODUCT_BY_NAME,
+        payload: response.data,
+      });
+      return response.data
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const getAllSellers = () => {
   const endpoint = "http://localhost:3001/store/";

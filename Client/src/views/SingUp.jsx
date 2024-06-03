@@ -73,7 +73,7 @@ export default function SingUp() {
           </div>
         </div>
       </div>
-      <div className="w-full lg:w-1/2 h-full flex items-center justify-center">
+      <div className="w-full md:w-1/2 h-full flex items-center justify-center">
         <UserFormRegister />
       </div>
     </div>

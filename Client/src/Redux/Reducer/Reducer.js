@@ -27,7 +27,7 @@ const initialState = {
   namedProducts: [],
   newProducts: [],
   condition: "allProducts",
-  isAuth: localStorage.getItem("isAuth") === "true",
+  isAuth: false,
   registering: false,
   registerError: null,
   loginError: null,
@@ -46,22 +46,19 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, isAuth: payload };
 
     case IS_AUTH:
-      return { ...state, isAuth: payload };
+      return { ...state, isAuth: true, user: payload };
 
     case GET_ALL:
       return { ...state, allProducts: payload };
 
-
     case GET_ALL_STORE:
       return { ...state, store: payload };
-
 
     case GET_PRODUCT_BY_ID:
       return {
         ...state,
         product: payload,
       };
-
 
     case GET_SELLER_BY_ID:
       return {
@@ -73,7 +70,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         namedProducts: payload,
-      }  
+      };
 
     case GET_USER_BY_ID:
       return {
@@ -84,7 +81,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_NEW:
       return { ...state, newProducts: payload };
 
-    case SHOW_CATEGORY: 
+    case SHOW_CATEGORY:
       return {
         ...state,
         filteredProducts: state.allProducts.filter((product) =>
@@ -92,7 +89,7 @@ const rootReducer = (state = initialState, action) => {
         ),
       };
 
-     case SHOW_STORE:
+    case SHOW_STORE:
       return {
         ...state,
         filteredProducts: state.allProducts.filter((product) =>
@@ -101,7 +98,7 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case SHOW_ABC:
-       sortedProducts = [...state.allProducts].sort((a, b) => {
+      sortedProducts = [...state.allProducts].sort((a, b) => {
         if (payload === "AZ") {
           return a.name.localeCompare(b.name);
         } else if (payload === "ZA") {
@@ -115,7 +112,7 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case SHOW_PRICE:
-       priceProducts = [...state.allProducts].sort((a, b) => {
+      priceProducts = [...state.allProducts].sort((a, b) => {
         if (payload === "menor") {
           return a.price - b.price;
         } else if (payload === "mayor") {

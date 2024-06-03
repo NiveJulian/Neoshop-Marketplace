@@ -15,7 +15,7 @@ export default function Paginate({ productsPerPage, totalProducts, page, current
                 e.preventDefault();
                 page(number);
               }} 
-              href={`#${number}`} 
+              href={`#${number}`}   
               className="text-xl font-normal font-fantasy text-aliceblue no-underline hover:text-blue-400"
             >
               {number}
