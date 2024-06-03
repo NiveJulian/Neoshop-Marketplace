@@ -1,5 +1,5 @@
 import axios from "axios";
-import { products, store } from "./FakeBd";
+import { products } from "./FakeBd";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -17,7 +17,7 @@ export const IS_AUTH = "IS_AUTH";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
-
+// LOGIN
 export const login = (formData) => async (dispatch) => {
   const endpoint = "http://localhost:3001/login/";
 
@@ -28,12 +28,12 @@ export const login = (formData) => async (dispatch) => {
 
     if (response.status === 200 && response.data.correctLogin) {
       dispatch({ type: LOGIN_SUCCESS, payload: true });
-      localStorage.setItem('isAuth', 'true');
+      localStorage.setItem("isAuth", "true");
     } else {
-      localStorage.setItem('isAuth', 'false');
+      localStorage.setItem("isAuth", "false");
     }
   } catch (error) {
-    localStorage.setItem('isAuth', 'false');
+    localStorage.setItem("isAuth", "false");
   }
 };
 
@@ -63,7 +63,7 @@ export const logout = () => async (dispatch) => {
     dispatch({ type: LOGIN_SUCCESS, payload: false });
 
     // Limpiar el token de autenticación almacenado en localStorage
-    localStorage.setItem('isAuth', 'false');
+    localStorage.setItem("isAuth", "false");
   } catch (error) {
     console.log(error);
   }
@@ -84,6 +84,8 @@ export const getUserById = (id) => {
   };
 };
 
+//
+
 // export const isAuthenticated = () => async (dispatch) => {
 //   try {
 //     const response = await axios.get('http://localhost:3001/auth-check', {
@@ -103,11 +105,12 @@ export const getUserById = (id) => {
 //   }
 // };
 
+//PRODUCTS
 export const getAllProducts = () => {
   const endpoint = "http://localhost:3001/product/";
   return async (dispatch) => {
     try {
-      let response = await axios.get(endpoint);
+      let response = await axios.get(`${endpoint}`);
       return dispatch({
         type: GET_ALL,
         payload: response.data,
@@ -119,12 +122,30 @@ export const getAllProducts = () => {
 };
 
 export const getProductById = (id) => {
-  const endpoint = "http://localhost:3001/product/";
+  const endpoint = "http://localhost:3001/product";
+
   return async (dispatch) => {
     try {
-      let response = await axios.get(`${endpoint}/${id}`);
+      const response = await axios.get(`${endpoint}/id/${id}`);
       console.log(response);
-      return dispatch({
+      dispatch({
+        type: GET_PRODUCT_BY_ID,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getProductByName = (name) => {
+  const endpoint = "http://localhost:3001/product";
+
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${endpoint}/name/${name}`);
+      console.log(response);
+      dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: response.data,
       });
@@ -138,7 +159,6 @@ export const getNewProducts = () => {
   const fakeProducts = products;
   return async (dispatch) => {
     try {
-      // let response= await axios.get(endpoint)
       return dispatch({
         type: GET_NEW,
         payload: fakeProducts,
@@ -150,14 +170,14 @@ export const getNewProducts = () => {
 };
 
 export const getAllSellers = () => {
-  const allSellers = store;
+  const endpoint = "http://localhost:3001/store/";
 
   return async (dispatch) => {
     try {
-      // console.log(allSellers);
+      const response = await axios.get(`${endpoint}`);
       return dispatch({
         type: GET_ALL_STORE,
-        payload: allSellers,
+        payload: response.data,
       });
     } catch (error) {
       console.log(error.message);
@@ -166,12 +186,14 @@ export const getAllSellers = () => {
 };
 
 export const getSellerById = (id) => {
-  const sellerById = store.find((seller) => seller.id === id);
+  const endpoint = "http://localhost:3001/store";
+
   return async (dispatch) => {
     try {
-      return dispatch({
+      const response = await axios.get(`${endpoint}/${id}`);
+      dispatch({
         type: GET_SELLER_BY_ID,
-        payload: sellerById,
+        payload: response.data,
       });
     } catch (error) {
       console.log(error.message);
@@ -179,15 +201,7 @@ export const getSellerById = (id) => {
   };
 };
 
-export const categoryFilter = (category) => ({
-  type: SHOW_CATEGORY,
-  payload: category,
-});
-
-export const storeFilter = (store) => ({
-  type: SHOW_STORE,
-  payload: store,
-});
+//
 
 // export const filterProducts = () => {
 // const endpoint = "http://localhost:3001/product/filter/";
@@ -205,15 +219,25 @@ export const storeFilter = (store) => ({
 // };
 // };
 
+//FILTER
+export const categoryFilter = (category) => ({
+  type: SHOW_CATEGORY,
+  payload: category,
+});
+export const storeFilter = (store) => ({
+  type: SHOW_STORE,
+  payload: store,
+});
+
 export const orderProductsAbc = (vector) => ({
-    type: SHOW_ABC,
-    payload: vector,
-})
+  type: SHOW_ABC,
+  payload: vector,
+});
 
 export const orderProductsPrice = (price) => ({
-    type: SHOW_PRICE,
-    payload: price,
-})
+  type: SHOW_PRICE,
+  payload: price,
+});
 
 export const clearFilteredProducts = () => ({
   type: CLEAR_FILTERED_PRODUCTS,

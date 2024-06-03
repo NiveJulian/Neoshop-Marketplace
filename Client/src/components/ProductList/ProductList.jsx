@@ -7,7 +7,7 @@ export default function ProductList({ allProducts }) {
         key={product.id_product} 
         id={product.id_product}
         name={product.name}
-        img_product= {product.img_product[0]}
+        img_product= {product.img_product}
         price={product.price} />
       ))}
     </div>

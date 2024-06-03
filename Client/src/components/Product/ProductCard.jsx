@@ -17,7 +17,7 @@ export const ProductCard = ({
       <a href={`/product/${id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
           <img
-            src={img_product}
+            src={img_product ? img_product : "neoshoplogo.jpeg"}
             alt={name}
             className="w-64 h-64"
           />

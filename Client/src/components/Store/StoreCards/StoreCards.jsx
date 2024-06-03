@@ -13,7 +13,7 @@ export default function StoreCards({
       to={`/store/${id}`}
       className="relative max-w-64 h-full overflow-hidden rounded-lg shadow-lg hover:shadow-2xl m-4"
     >
-      <img src={logo} alt="Store" className="w-64 h-64 object-cover" />
+      <img src={logo ? logo : "neoshoplogo.jpeg"} alt="Store" className="w-64 h-64 object-cover" />
 
       <div className="absolute top-0 right-0 text-white">
         {/* Aquí puedes agregar puntuaciones u otro contenido */}

@@ -5,8 +5,8 @@ export default function StoreList({allSellers}) {
     <div className="flex flex-wrap justify-between flex-row">
       {allSellers?.map((store) => (
         <StoreCards
-          key={store.id}
-          id={store.id}
+          key={store.id_store}
+          id={store.id_store}
           name={store.name}
           address_cp={store.address_cp}
           address_country={store.address_country}
