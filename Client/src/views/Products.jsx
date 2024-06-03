@@ -10,6 +10,7 @@ export const Products = () => {
   const dispatch = useDispatch();
   const allProducts= useSelector((state) => state.allProducts);
   const filteredProducts= useSelector((state) => state.filteredProducts);
+  const namedProducts= useSelector ((state) => state.namedProducts)
   const condition = useSelector((state) => state.condition);
 
   useEffect(() => {
@@ -22,6 +23,8 @@ export const Products = () => {
         return <ProductList allProducts={allProducts} />;
       case "filteredProducts":
         return <ProductList allProducts={filteredProducts} />;
+      case "namedProducts":
+        return <ProductList allProducts={namedProducts} />;  
 
       default:
         return <ProductList allProducts={allProducts}  />; 

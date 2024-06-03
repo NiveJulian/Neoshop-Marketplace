@@ -12,6 +12,7 @@ import {
   SHOW_STORE,
   SHOW_ABC,
   SHOW_PRICE,
+  GET_PRODUCT_BY_NAME,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
   store: [],
   seller: {},
   filteredProducts: [],
+  namedProducts: [],
   newProducts: [],
   condition: "allProducts",
   isAuth: false,
@@ -33,24 +35,32 @@ const rootReducer = (state = initialState, action) => {
   switch (type) {
     case GET_ALL:
       return { ...state, allProducts: payload };
+
     case GET_ALL_STORE:
       return { ...state, store: payload };
+
     case GET_PRODUCT_BY_ID:
       return {
         ...state,
         product: payload,
       };
+
     case GET_SELLER_BY_ID:
       return {
         ...state,
         seller: payload,
       };
 
+    case GET_PRODUCT_BY_NAME:
+      return {
+        ...state,
+        namedProducts: payload,
+      }  
+
     case GET_NEW:
       return {...state, newProducts:payload};  
 
-    case SHOW_CATEGORY:
-      
+    case SHOW_CATEGORY: 
       return {
         ...state,
         filteredProducts: state.allProducts.filter((product) =>
@@ -59,7 +69,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
      case SHOW_STORE:
-     
       return {
         ...state,
         filteredProducts: state.allProducts.filter ((product) => 

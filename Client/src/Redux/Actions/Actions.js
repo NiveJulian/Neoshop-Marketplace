@@ -3,6 +3,7 @@ import { products, store } from "./FakeBd";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
+export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_SELLER_BY_ID = "GET_SELLER_BY_ID";
 export const GET_ALL_STORE = "GET_ALL_STORE";
 export const GET_PRODUCT_FILTER = "GET_PRODUCT_FILTER";
@@ -89,6 +90,21 @@ export const getNewProducts = () => {
     }
   };
 };
+
+export const getProductByName= (name)=>{
+  const endpoint= `http://localhost:3001/product/name/${name}`
+  return async (dispatch)=>{
+      try {
+          let response=await axios.get(endpoint)
+          return dispatch({
+              type: GET_PRODUCT_BY_NAME,
+              payload: response.data,
+          })
+      } catch (error) {
+          console.log(error.message);   
+      }
+  }
+ }
 
 export const getAllSellers = () => {
   const allSellers = store;
