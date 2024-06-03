@@ -39,13 +39,13 @@ export const register = (formData) => async(dispatch) => {
 }
 
 export const getAllProducts= ()=>{
-    const endpoint = "http://localhost:3001/product/" ;
+    const endpoint = {products} ;
     return async (dispatch) => {
        try {
-        let response= await axios.get(endpoint)
+        // let response= await axios.get(endpoint)
                return dispatch({
                    type: GET_ALL,
-                   payload: response.data,
+                   payload: endpoint,
                });
                
        } catch (error) {
