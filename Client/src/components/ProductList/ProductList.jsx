@@ -28,7 +28,7 @@ export default function ProductList({ allProducts }) {
         currentPage={currentPage}
       />
       </div>
-      <div className="flex flex-wrap justify-between flex-row gap-4">
+      <div className="max-w-screen grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
         {currentProducts?.map((product) => (
           <ProductCard 
             key={product.id_product} 

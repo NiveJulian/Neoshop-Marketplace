@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllSellers());
-    dispatch(getUserById("c88dcdca-ede8-4fe4-af06-84cae9d17360"))
+    dispatch(getUserById("353a74b0-a53c-4ba2-8f94-8acd88b72e99"))
   }, [dispatch]);
   return (
     <div>

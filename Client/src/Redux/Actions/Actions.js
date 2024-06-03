@@ -26,8 +26,9 @@ export const login = (formData) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
+    console.log(response)
 
-    if (response.status === 200 && response.data.correctLogin) {
+    if (response.data.correctLogin) {
       dispatch({ type: LOGIN_SUCCESS, payload: true });
       localStorage.setItem("isAuth", "true");
     } else {
@@ -75,7 +76,7 @@ export const getUserById = (id) => {
   return async (dispatch) => {
     try {
       let response = await axios.get(`${endpoint}/${id}`);
-      return dispatch({
+      dispatch({
         type: GET_USER_BY_ID,
         payload: response.data,
       });
@@ -139,22 +140,22 @@ export const getProductById = (id) => {
   };
 };
 
-export const getProductByName = (name) => {
-  const endpoint = "http://localhost:3001/product";
+// export const getProductByName = (name) => {
+//   const endpoint = "http://localhost:3001/product";
 
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(`${endpoint}/name/${name}`);
-      console.log(response);
-      dispatch({
-        type: GET_PRODUCT_BY_ID,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-};
+//   return async (dispatch) => {
+//     try {
+//       const response = await axios.get(`${endpoint}/name/${name}`);
+//       console.log(response);
+//       dispatch({
+//         type: GET_PRODUCT_BY_ID,
+//         payload: response.data,
+//       });
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   };
+// };
 
 export const getNewProducts = () => {
   const fakeProducts = products;
