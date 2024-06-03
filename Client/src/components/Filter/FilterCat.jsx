@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { categoryFilter, clearFilteredProducts, renderCondition } from "../../Redux/Actions/Actions";
+import {  clearFilteredProducts, renderCondition } from "../../Redux/Actions/Actions";
 import style from "./FilterCat.module.css"
 
 export default function Filter() {

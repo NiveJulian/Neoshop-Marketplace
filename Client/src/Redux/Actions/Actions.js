@@ -7,6 +7,8 @@ export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_SELLER_BY_ID = "GET_SELLER_BY_ID";
 export const GET_ALL_STORE = "GET_ALL_STORE";
+export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
+export const GET_ALL_BRANDS = "GET_ALL_BRANDS";
 export const GET_PRODUCT_FILTER = "GET_PRODUCT_FILTER";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const SHOW_STORE = "SHOW_STORE";
@@ -130,22 +132,6 @@ export const getProductById = (id) => {
   };
 };
 
-// export const getProductByName = (name) => {
-//   const endpoint = "http://localhost:3001/product";
-
-//   return async (dispatch) => {
-//     try {
-//       const response = await axios.get(`${endpoint}/name/${name}`);
-//       console.log(response);
-//       dispatch({
-//         type: GET_PRODUCT_BY_ID,
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-// };
 
 export const getNewProducts = () => {
   const fakeProducts = products;
@@ -209,33 +195,66 @@ export const getSellerById = (id) => {
   };
 };
 
+export const getAllCategories = () => {
+  const endpoint = "http://localhost:3001/category";
+
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${endpoint}`);
+      return dispatch({
+        type: GET_ALL_CATEGORIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getAllBrands = () => {
+  const endpoint = "http://localhost:3001/brand";
+
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${endpoint}`);
+      return dispatch({
+        type: GET_ALL_BRANDS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+
 //
 
-// export const filterProducts = () => {
-// const endpoint = "http://localhost:3001/product/filter/";
-// return async (dispatch) => {
-//   try {
-//     let response = await axios.get(endpoint)
-//     console.log(response)
-//     return dispatch({
-//       type: GET_PRODUCT_FILTER,
-//       payload: response.data,
-//     });
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
-// };
+export const filterProducts = (filters) => {
+const endpoint = "http://localhost:3001/product/filter";
+return async (dispatch) => {
+  try {
+    const queryString = new URLSearchParams(filters).toString();
+    const response = await axios.get(`${endpoint}?${queryString}`);
+    return dispatch({
+      type: GET_PRODUCT_FILTER,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+};
 
 //FILTER
-export const categoryFilter = (category) => ({
-  type: SHOW_CATEGORY,
-  payload: category,
-});
-export const storeFilter = (store) => ({
-  type: SHOW_STORE,
-  payload: store,
-});
+// export const categoryFilter = (category) => ({
+//   type: SHOW_CATEGORY,
+//   payload: category,
+// });
+// export const storeFilter = (store) => ({
+//   type: SHOW_STORE,
+//   payload: store,
+// });
 
 export const orderProductsAbc = (vector) => ({
   type: SHOW_ABC,

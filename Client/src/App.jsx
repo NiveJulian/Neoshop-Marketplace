@@ -7,7 +7,7 @@ import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllProducts, getAllSellers, isAuthenticated } from "./Redux/Actions/Actions";
+import { getAllBrands, getAllCategories, getAllProducts, getAllSellers, isAuthenticated } from "./Redux/Actions/Actions";
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
@@ -17,7 +17,9 @@ function App() {
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllSellers());
-    dispatch(isAuthenticated(jwtToken))
+    dispatch(getAllBrands());
+    dispatch(getAllCategories());
+    dispatch(getUserById("353a74b0-a53c-4ba2-8f94-8acd88b72e99"))
   }, [dispatch]);
   return (
     <div>
