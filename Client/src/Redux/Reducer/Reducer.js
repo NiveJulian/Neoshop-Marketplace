@@ -14,6 +14,7 @@ import {
   GET_USER_BY_ID,
   SHOW_ABC,
   SHOW_PRICE,
+  GET_PRODUCT_BY_NAME,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
   seller: {},
   user: {},
   filteredProducts: [],
+  namedProducts: [],
   newProducts: [],
   condition: "allProducts",
   isAuth: localStorage.getItem("isAuth") === "true",
@@ -49,8 +51,10 @@ const rootReducer = (state = initialState, action) => {
     case GET_ALL:
       return { ...state, allProducts: payload };
 
+
     case GET_ALL_STORE:
       return { ...state, store: payload };
+
 
     case GET_PRODUCT_BY_ID:
       return {
@@ -58,11 +62,18 @@ const rootReducer = (state = initialState, action) => {
         product: payload,
       };
 
+
     case GET_SELLER_BY_ID:
       return {
         ...state,
         seller: payload,
       };
+
+    case GET_PRODUCT_BY_NAME:
+      return {
+        ...state,
+        namedProducts: payload,
+      }  
 
     case GET_USER_BY_ID:
       return {
@@ -73,7 +84,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_NEW:
       return { ...state, newProducts: payload };
 
-    case SHOW_CATEGORY:
+    case SHOW_CATEGORY: 
       return {
         ...state,
         filteredProducts: state.allProducts.filter((product) =>
@@ -81,7 +92,7 @@ const rootReducer = (state = initialState, action) => {
         ),
       };
 
-    case SHOW_STORE:
+     case SHOW_STORE:
       return {
         ...state,
         filteredProducts: state.allProducts.filter((product) =>

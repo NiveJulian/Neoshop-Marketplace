@@ -1,21 +1,28 @@
 import { Link } from "react-router-dom";
-import Navbar from "../SearchBar/navbar";
+import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector } from "react-redux";
 import User from "../Users/User";
+import { useDispatch } from "react-redux";
+import { renderCondition } from "../../Redux/Actions/Actions";
 
 export default function Nav() {
   const user = useSelector((state) => state.user);
 
   const isAuth = useSelector((state) => state.isAuth);
   const [showLogin, setShowLogin] = useState(false);
+  const dispatch = useDispatch();
 
   function handleShowLogin() {
     setShowLogin(true);
   }
-  function handleOnClose() {
-    setShowLogin(false);
+  function handleOnClose(){
+    setShowLogin(false)
+  }
+
+  function handleProducts (){
+    dispatch(renderCondition("allProducts"))
   }
 
   return (
@@ -25,6 +32,7 @@ export default function Nav() {
           <Link
             to={"/products"}
             className="border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 text-gray-300 flex items-center"
+            onClick={handleProducts}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +72,7 @@ export default function Nav() {
           </Link>
         </div>
         <div>
-          <Navbar className="flex items-center justify-center" />
+          <SearchBar className="flex items-center justify-center" />
         </div>
         <div className="flex items-center gap-4">
           <Link

@@ -3,22 +3,22 @@
   justify-content: center;
   list-style-type: none;
   padding: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Color blanco con 50% de opacidad */
+  background-color: rgba(0, 0, 0, 0.192); /* Color blanco con 50% de opacidad */
   border-radius: 5px; /* Añade bordes redondeados */
-  max-width:fit-content; /* Establece el ancho máximo al 90% del contenedor padre */
+  max-width: fit-content; /* Establece el ancho máximo al 90% del contenedor padre */
   margin: auto; /* Centra la caja horizontalmente */
-  margin-top: 110px
+  margin-top: 60px;
 }
 
-.actualPage{
-  margin-right:200px;
+.actualPage {
+  margin-right: 200px;
   background-color: rgba(0, 0, 0, 0.5); 
-  max-width:fit-content;
+  max-width: fit-content;
   font-size: 16px; /* Tamaño de fuente más grande */
-  font-weight:normal; /* Texto en negrita */
-  font-family:fantasy;
-  text-decoration:none; /* Elimina el subrayado predeterminado */
-  color:  aliceblue;
+  font-weight: normal; /* Texto en negrita */
+  font-family: fantasy;
+  text-decoration: none; /* Elimina el subrayado predeterminado */
+  color: aliceblue;
   border-radius: 5px;
 }
 
@@ -26,38 +26,26 @@
   margin-right: 20px;
 }
 
-
 .pagination li:last-child {
-  margin-right: 0
+  margin-right: 0;
 }
 
 .pagination a {
   font-size: 16px; /* Tamaño de fuente más grande */
-  font-weight:normal; /* Texto en negrita */
-  font-family:fantasy;
-  text-decoration:none; /* Elimina el subrayado predeterminado */
-  color:  aliceblue; /* Color del texto */
+  font-weight: normal; /* Texto en negrita */
+  font-family: fantasy;
+  text-decoration: none; /* Elimina el subrayado predeterminado */
+  color: aliceblue; /* Color del texto */
+  cursor: pointer; /* Asegura que el cursor cambie al pasar sobre los enlaces */
+  position: relative; /* Permite que el pseudo-elemento esté posicionado correctamente */
 }
 
 .pagination a:hover {
   color: rgba(0, 200, 255, 0.724); /* Cambia el color del texto al pasar el mouse sobre él */
 }
 
-
 .pagination li.current-page a {
-  color: rgba(5, 80, 101, 0.724); /* Color para resaltar el número de la página actual */
+  color: rgba(146, 64, 7, 0.724); /* Color para resaltar el número de la página actual */
   font-weight: bold;
 }
 
-.pagination li.current-page a::before {
-  content: ""; /* Agrega contenido al pseudo-elemento */
-  position: absolute; /* Establece la posición absoluta para que se pueda posicionar dentro del elemento padre */
-  width: 10px; /* Establece el ancho del círculo */
-  height: 10px; /* Establece la altura del círculo */
-  border-radius: 50%; /* Hace que el borde sea redondeado para formar un círculo */
-  background-color: rgba(0, 200, 255, 0.724); /* Establece el color de fondo del círculo */
-  top: -5px; /* Ajusta la posición superior para centrar el círculo verticalmente */
-  left: 50%; /* Ajusta la posición izquierda para centrar el círculo horizontalmente */
-  transform: translateX(-50%); /* Centra horizontalmente el círculo */
-  z-index: 1; /* Asegura que el círculo esté encima del número de página */
-}
