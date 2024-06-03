@@ -7,7 +7,7 @@ import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllProducts, getAllSellers, getUserById } from "./Redux/Actions/Actions";
+import { getAllBrands, getAllCategories, getAllProducts, getAllSellers, getUserById } from "./Redux/Actions/Actions";
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 
@@ -16,6 +16,8 @@ function App() {
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllSellers());
+    dispatch(getAllBrands());
+    dispatch(getAllCategories());
     dispatch(getUserById("353a74b0-a53c-4ba2-8f94-8acd88b72e99"))
   }, [dispatch]);
   return (

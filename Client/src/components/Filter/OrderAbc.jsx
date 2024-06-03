@@ -22,7 +22,7 @@ export const OrderAbc = () => {
 
   return (
     <div className={style.font}>
-    <select value={selectedOrder} onChange={handleOrder}>
+    <select className={style.select} value={selectedOrder} onChange={handleOrder}>
       <option value="AZ">AZ</option>
       <option value="ZA">ZA</option>
     </select>

@@ -22,7 +22,7 @@ export const OrderPrice = () => {
 
   return (
     <div className={style.font}>
-    <select value={selectedOption} onChange={handlerPrice}>
+    <select className={style.select} value={selectedOption} onChange={handlerPrice}>
       <option value="menor">Menor precio</option>
       <option value="mayor">Mayor precio</option>
     </select>

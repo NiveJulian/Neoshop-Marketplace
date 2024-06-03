@@ -205,7 +205,7 @@ const Sidebar = () => {
           </a>
           <div className="w-full px-2">
             <div className="flex flex-col items-center w-full mt-3 border-t border-gray-300">
-              <a
+              {/* <a
                 className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
                 href="#"
               >
@@ -225,21 +225,21 @@ const Sidebar = () => {
                 </svg>
                 
                 <Filter/>
-              </a>
+              </a> */}
               <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
+                className="flex items-center w-full h-16 px-3 mt-8 "
                 href="#"
               >
               <FilterStore/>
               </a>
               <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
+                className="flex items-center w-full h-8 px-3 mt-8 rounded hover:bg-gray-300"
                 href="#"
               >
                <OrderAbc/>
               </a>
               <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
+                className="flex items-center w-full h-8 px-3 mt-4 rounded hover:bg-gray-300"
                 href="#"
               >
               <OrderPrice/>
