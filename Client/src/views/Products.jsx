@@ -34,7 +34,7 @@ export const Products = () => {
   return (
     <div className="max-w-screen text-center gap-4">
     <div className="shadow-sm">
-      <Nav />
+      <Nav color={"primary"} />
     </div>
     <div className="flex justify-center text-center mt-4">
       <h1 className="mb-7 text-4xl font-bold pb-2 text-details hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">

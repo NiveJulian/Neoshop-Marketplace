@@ -129,14 +129,15 @@ const ProductDetail = () => {
                     key={index}
                     src={image}
                     alt={`Thumbnail ${index + 1}`}
-                    className={`thumbnail ${
+                    className={`thumbnail border border-gray-300 ${
                       currentImageIndex === index ? "selected" : ""
-                    }`}
+                    } `}
                     onClick={() => handleThumbnailClick(index)}
                   />
                 ))
               ) : (
                 <img
+                className="w-24 h-auto object-cover border border-gray-300"
                   src={
                     product?.img_product
                       ? product?.img_product

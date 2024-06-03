@@ -14,7 +14,8 @@ const HomePage = () => {
 
   return (
     <div>
-      <Nav />
+      <Nav color={"primary"} />
+
       <h1 className="mb-7 mt-2 ml-3 text-xl font-bold pb-2 text-gray-400 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
         Recent products
       </h1>

@@ -105,6 +105,7 @@ export const getAllProducts = () => {
   return async (dispatch) => {
     try {
       let response = await axios.get(`${endpoint}`);
+      console.log(response)
       return dispatch({
         type: GET_ALL,
         payload: response.data,
