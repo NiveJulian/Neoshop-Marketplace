@@ -4,7 +4,7 @@ import Paginate from "../Paginate/Paginate";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 6;
+  const productsPerPage = 8;
 
   // Calcular los índices de inicio y fin de la página actual
   const indexOfLastProduct = currentPage * productsPerPage;

@@ -1,3 +1,5 @@
+// Paginate.js
+
 export default function Paginate({
   productsPerPage,
   totalProducts,
@@ -9,6 +11,18 @@ export default function Paginate({
   for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
     pageNumbers.push(i);
   }
+
+  const handleNextPage = () => {
+    if (currentPage < pageNumbers.length) {
+      page(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      page(currentPage - 1);
+    }
+  };
 
   return (
     <nav className="pagination">
@@ -24,7 +38,11 @@ export default function Paginate({
         <ul className="flex items-center -mx-[6px]">
           <li className="px-1">
             <a
-              href="javascript:void(0)"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handlePrevPage();
+              }}
               className="
             w-9
             h-9
@@ -71,7 +89,11 @@ export default function Paginate({
           ))}
           <li className="px-[6px]">
             <a
-              href="javascript:void(0)"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNextPage();
+              }}
               className="
             w-9
             h-9

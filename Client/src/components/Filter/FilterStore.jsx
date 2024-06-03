@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filterProducts, renderCondition } from '../../Redux/Actions/Actions';
 import style from "./FilterCat.module.css";
 
-export default function FilterStore () {
+export default function FilterStore() {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.store);
- const brands = useSelector((state) => state.brands); // Asumiendo que tienes un estado de brand en Redux
-  const categories = useSelector((state) => state.categories); // Asumiendo que tienes un estado de categories en Redux
+  const brands = useSelector((state) => state.brands);
+  const categories = useSelector((state) => state.categories);
 
   const [filters, setFilters] = useState({
     store: '',
@@ -19,7 +19,18 @@ export default function FilterStore () {
     maxPoint: ''
   });
 
- 
+  const [dropdown, setDropdown] = useState({
+    store: false,
+    brand: false,
+    category: false,
+  });
+
+  const toggleDropdown = (dropdownType) => {
+    setDropdown({
+      ...dropdown,
+      [dropdownType]: !dropdown[dropdownType],
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,12 +42,9 @@ export default function FilterStore () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Filtrar los filtros que no estén vacíos
     const filteredFilters = Object.fromEntries(
       Object.entries(filters).filter(([key, value]) => value !== '')
     );
-
     dispatch(filterProducts(filteredFilters));
     dispatch(renderCondition("filteredProducts"));
   };
@@ -44,34 +52,112 @@ export default function FilterStore () {
   return (
     <div className={style.font}>
       <form onSubmit={handleSubmit}>
-        <select className={style.select} name="store" value={filters.store} onChange={handleChange}>
-          <option value="">Select Store</option>
-          {stores.map((store) => (
-            <option key={store.id} value={store.name}>{store.name}</option>
-          ))}
-        </select>
+        <div className="relative mb-3 justify-center items-center">
+          <button
+            type="button"
+            className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-2 py-2 text-stone-800"
+            onClick={() => toggleDropdown('store')}
+          >
+            {filters.store || 'Select Store'}
+            <i className="fas fa-angle-down pl-3 text-stone-700"></i>
+          </button>
+          {dropdown.store && (
+            <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+              <ul className="text-gray-700">
+                {stores.map((store) => (
+                  <li key={store.id}>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300"
+                      onClick={() => {
+                        setFilters({ ...filters, store: store.name });
+                        toggleDropdown('store');
+                      }}
+                    >
+                      {store.name}
+                      {filters.store === store.name && (
+                        <i className="fas fa-check pl-4 text-green-400"></i>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
 
-        <select className={style.select} name="brand" value={filters.brand} onChange={handleChange}>
-          <option value="">Select Brand</option>
-          {brands.map((brand) => (
-            <option key={brand.id} value={brand.name}>{brand.name}</option>
-          ))}
-        </select>
+        <div className="relative mb-3">
+          <button
+            type="button"
+            className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
+            onClick={() => toggleDropdown('brand')}
+          >
+            {filters.brand || 'Select Brand'}
+            <i className="fas fa-angle-down pl-3 text-stone-700"></i>
+          </button>
+          {dropdown.brand && (
+            <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+              <ul className="text-gray-700">
+                {brands.map((brand) => (
+                  <li key={brand.id}>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300"
+                      onClick={() => {
+                        setFilters({ ...filters, brand: brand.name });
+                        toggleDropdown('brand');
+                      }}
+                    >
+                      {brand.name}
+                      {filters.brand === brand.name && (
+                        <i className="fas fa-check pl-4 text-green-400"></i>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
 
-        <select className={style.select} name="categories" value={filters.category} onChange={handleChange}>
-          <option value="">Select Categories</option>
-          {categories.map((categories) => (
-            <option key={categories.id} value={categories.name}>{categories.name}</option>
-          ))}
-        </select>
-        <button type="submit" className="m-2 bg-gray-400 rounded hover:bg-gray-300">FILTER</button>
+        <div className="relative mb-3">
+          <button
+            type="button"
+            className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
+            onClick={() => toggleDropdown('category')}
+          >
+            {filters.category || 'Select Category'}
+            <i className="fas fa-angle-down pl-3 text-stone-700"></i>
+          </button>
+          {dropdown.category && (
+            <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+              <ul className="text-gray-700">
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300"
+                      onClick={() => {
+                        setFilters({ ...filters, category: category.name });
+                        toggleDropdown('category');
+                      }}
+                    >
+                      {category.name}
+                      {filters.category === category.name && (
+                        <i className="fas fa-check pl-4 text-green-400"></i>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <button type="submit" className="bg-gray-200 rounded px-2 py-2 hover:bg-gray-100 hover:text-gray-600">
+          FILTER
+        </button>
       </form>
     </div>
   );
-};
-
-
-        {/* <input type="number" name="minPrice" value={filters.minPrice} onChange={handleChange} placeholder="Min Price" />
-        <input type="number" name="maxPrice" value={filters.maxPrice} onChange={handleChange} placeholder="Max Price" />
-        <input type="number" name="minPoint" value={filters.minPoint} onChange={handleChange} placeholder="Min Point" />
-        <input type="number" name="maxPoint" value={filters.maxPoint} onChange={handleChange} placeholder="Max Point" /> */}
+}
