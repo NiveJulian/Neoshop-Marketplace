@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterProducts, renderCondition } from '../../Redux/Actions/Actions';
 import style from "./FilterCat.module.css";
@@ -52,7 +52,7 @@ export default function FilterStore() {
   return (
     <div className={style.font}>
       <form onSubmit={handleSubmit}>
-        <div className="relative mb-3 justify-center items-center">
+        <div className="relative mb-3">
           <button
             type="button"
             className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-2 py-2 text-stone-800"
@@ -62,7 +62,7 @@ export default function FilterStore() {
             <i className="fas fa-angle-down pl-3 text-stone-700"></i>
           </button>
           {dropdown.store && (
-            <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+            <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
               <ul className="text-gray-700">
                 {stores.map((store) => (
                   <li key={store.id}>
@@ -96,7 +96,7 @@ export default function FilterStore() {
             <i className="fas fa-angle-down pl-3 text-stone-700"></i>
           </button>
           {dropdown.brand && (
-            <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+            <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
               <ul className="text-gray-700">
                 {brands.map((brand) => (
                   <li key={brand.id}>
@@ -130,7 +130,7 @@ export default function FilterStore() {
             <i className="fas fa-angle-down pl-3 text-stone-700"></i>
           </button>
           {dropdown.category && (
-            <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+            <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
               <ul className="text-gray-700">
                 {categories.map((category) => (
                   <li key={category.id}>
