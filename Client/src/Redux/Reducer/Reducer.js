@@ -15,6 +15,7 @@ import {
   SHOW_ABC,
   SHOW_PRICE,
   GET_PRODUCT_BY_NAME,
+  ISNT_AUTH,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -47,6 +48,9 @@ const rootReducer = (state = initialState, action) => {
 
     case IS_AUTH:
       return { ...state, isAuth: true, user: payload };
+
+    case ISNT_AUTH:
+      return { ...state, isAuth: false};
 
     case GET_ALL:
       return { ...state, allProducts: payload };

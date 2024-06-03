@@ -16,6 +16,7 @@ export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const SET_CONDITION = "SET_CONDITION";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const IS_AUTH = "IS_AUTH";
+export const ISNT_AUTH = "ISNT_AUTH";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
@@ -87,15 +88,13 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
     const response = await axios.post("http://localhost:3001/login/auth", {
       token: jwtToken,
     });
-
-    if (response.status === 200) {
+    if (response.data) {
       dispatch({ type: IS_AUTH, payload: response.data });
     } else {
-      dispatch({ type: IS_AUTH, payload: false });
+      dispatch({ type: ISNT_AUTH });
     }
   } catch (error) {
-    dispatch({ type: IS_AUTH, payload: false });
-    localStorage.setItem("isAuth", "false");
+    dispatch({ type: ISNT_AUTH});
   }
 };
 
@@ -105,7 +104,6 @@ export const getAllProducts = () => {
   return async (dispatch) => {
     try {
       let response = await axios.get(`${endpoint}`);
-      console.log(response)
       return dispatch({
         type: GET_ALL,
         payload: response.data,
