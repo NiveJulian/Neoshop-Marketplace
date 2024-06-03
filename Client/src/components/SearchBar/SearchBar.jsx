@@ -17,8 +17,8 @@ export default function SearchBar() {
       });
     } else {
       setSearchResults([]);
-      dispatch(getAllProducts()); // Obtener todos los productos cuando el campo de búsqueda está vacío
-      dispatch(renderCondition("allProducts")); // Renderizar todos los productos
+      dispatch(getAllProducts()); 
+      dispatch(renderCondition("allProducts"));
     }
   };
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { products } from "./FakeBd";
 import { deleteSessionToken } from "../../components/delCookie";
+import toast from "react-hot-toast";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -30,8 +31,7 @@ export const login = (formData) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
-    console.log(response);
-
+    toast.loading('Waiting...')
     if (response.data.correctLogin) {
       dispatch({ type: LOGIN_SUCCESS });
     }
@@ -48,6 +48,7 @@ export const register = (formData) => async (dispatch) => {
 
     if (response.status === 200) {
       dispatch({ type: REGISTER_SUCCESS });
+      toast.loading('Waiting...')
       setTimeout(() => {
         location.href = "/";
       }, 2000);
@@ -60,6 +61,7 @@ export const register = (formData) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_SUCCESS, payload: false });
+    toast.loading('Waiting...')
     deleteSessionToken();
 
     document.location.href = "/";

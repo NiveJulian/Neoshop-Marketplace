@@ -43,8 +43,7 @@ export default function User({ user, onClose }) {
           </div>
         </div>
         <div className="border-b">
-          <Link href="/account/campaigns">
-            <a className="px-4 py-2 hover:bg-gray-100 flex">
+          <Link href="/account/campaigns" className="px-4 py-2 hover:bg-gray-100 flex">
               <div className="text-green-600">
                 <svg
                   fill="none"
@@ -64,10 +63,8 @@ export default function User({ user, onClose }) {
                 </p>
                 <p className="text-xs text-gray-500">{user.city}</p>
               </div>
-            </a>
           </Link>
-          <Link href="/account/donations">
-            <a className="px-4 py-2 hover:bg-gray-100 flex">
+          <Link href="/account/donations" className="px-4 py-2 hover:bg-gray-100 flex">
               <div className="text-gray-800">
                 <svg
                   fill="none"
@@ -87,7 +84,6 @@ export default function User({ user, onClose }) {
                 </p>
                 <p className="text-xs text-gray-500">{user.state}</p>
               </div>
-            </a>
           </Link>
         </div>
 
