@@ -7,8 +7,7 @@ export default function SingUp() {
       <div className="w-1/2 hidden lg:inline-flex h-full text-white">
         <div className="w-[450px] shadow-md shadow-gray-400 h-full bg-primary px-10 flex flex-col gap-6 justify-center">
           <Link to="/">
-            {/* <img src={'#'} alt="logoImg" className="w-28" /> */}
-            Logo
+            <img src={'neoshoplogo.jpeg'} alt="logoImg" className="w-10 h-10 rounded-full" />
           </Link>
           <div className="flex flex-col gap-1 -mt-1">
             <h1 className="font-titleFont text-2xl font-bold">
@@ -74,7 +73,7 @@ export default function SingUp() {
           </div>
         </div>
       </div>
-      <div className="w-full lg:w-1/2 h-full flex items-center justify-center">
+      <div className="w-full md:w-1/2 h-full flex items-center justify-center">
         <UserFormRegister />
       </div>
     </div>

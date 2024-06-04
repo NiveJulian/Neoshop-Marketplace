@@ -1,13 +1,10 @@
 import { useState } from "react";
-import {
-  useDispatch,
-  // useSelector
-} from "react-redux";
-
+import { useDispatch } from "react-redux";
 import validationRegister from "./validationRegister"; // Importa tu función de validación
 import { register } from "../../Redux/Actions/Actions";
+import toast from "react-hot-toast";
 
-export default function UserFormRegister({ title = "Register", onClose }) {
+export default function UserFormRegister({ title = "Register" }) {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
@@ -17,8 +14,8 @@ export default function UserFormRegister({ title = "Register", onClose }) {
     state: "",
     postalCode: "",
     email: "",
+    nro_document: "",
   });
-
   const [errors, setErrors] = useState({
     name: "",
     lastname: "",
@@ -27,6 +24,7 @@ export default function UserFormRegister({ title = "Register", onClose }) {
     state: "",
     postalCode: "",
     email: "",
+    nro_document: "",
   });
 
   const handleChange = (e) => {
@@ -40,23 +38,22 @@ export default function UserFormRegister({ title = "Register", onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(register(formData));
-    console.log("Form data submitted:", formData);
+    try {
+      dispatch(register(formData));
+
+      toast.success("Register successful!");
+      console.log("Form data submitted:", formData);
+    } catch (error) {
+      toast.error("Register failed. Please try again.")
+    }
   };
 
   return (
-    <div className="fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-800 bg-opacity-50 md:w-screen md:h-screen">
+    <div className="flex md:top-0 md:left-0 md:z-50 md:bg-opacity-50 md:w-screen md:h-screen">
       <form
-        className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md"
+        className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}
       >
-        <button
-          type="button"
-          className="flex top-2 right-2 text-3xl z-50 text-gray-800 hover:text-gray-600"
-          onClick={onClose}
-        >
-          &times;
-        </button>
         <h1 className="text-center mb-4 text-3xl text-primary border-b-2">
           <strong>{title}</strong>
         </h1>
@@ -204,6 +201,32 @@ export default function UserFormRegister({ title = "Register", onClose }) {
           <div className="w-full px-3">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-nro_document"
+            >
+              nro_document
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                errors.nro_document ? "border-red-500" : "border-gray-200"
+              }`}
+              id="grid-nro_document"
+              type="text"
+              placeholder="12345678"
+              name="nro_document"
+              value={formData.nro_document} // Asegúrate de que el valor está en el campo 'nro_document'
+              onChange={handleChange}
+            />
+            {errors.nro_document && (
+              <p className="text-red-500 text-xs italic">
+                {errors.nro_document}
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="grid-email"
             >
               Email
@@ -231,12 +254,6 @@ export default function UserFormRegister({ title = "Register", onClose }) {
           >
             Register
           </button>
-          <a
-            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="/login"
-          >
-            Sing In
-          </a>
         </div>
       </form>
     </div>

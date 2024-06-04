@@ -1,5 +1,5 @@
 const validationRegister = (
-  { name, lastname, password, city, state, postalCode, email },
+  { name, lastname, password, city, state, postalCode, email, nro_document },
   errors,
   setErrors
 ) => {
@@ -67,6 +67,14 @@ const validationRegister = (
     newErrors.email = "El correo electrónico no es válido";
   } else {
     newErrors.email = "";
+  }
+
+  if (!nro_document) {
+    newErrors.nro_document = "El nro_document está vacío";
+  } else if (!/^\d{8,10}$/.test(nro_document)) {
+    newErrors.nro_document = "El nro_document debe ser un número de 8 a 10 cifras";
+  } else {
+    newErrors.nro_document = "";
   }
 
   setErrors(newErrors);

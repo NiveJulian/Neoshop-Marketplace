@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import style from "./Sidebar.module.css";
-import Filter from "../Filter/Filter";
+import { useState } from "react";
+import FilterStore from "../Filter/FilterStore";
+import { OrderAbc } from "../Filter/OrderAbc";
+import { OrderPrice } from "../Filter/OrderPrice";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
@@ -14,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex items-start justify-left w-screen mt-8 mb-6 fixed">
+    <div className="flex items-start w-64 mt-auto mb-6 fixed z-30">
       {/* <!-- Component Start --> */}
       {/* Condición para mostrar la primera o la segunda sidebar */}
       {expanded ? (
@@ -39,10 +41,10 @@ const Sidebar = () => {
               />
             </svg>
           </a>
-          <div className="flex flex-col items-center mt-3 border-t border-gray-300">
+          <div className="flex flex-col items-center mt-3 border-gray-300">
             <a
               className="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-300"
-              href="#"
+              href="/"
             >
               <svg
                 className="w-6 h-6 stroke-current"
@@ -79,7 +81,7 @@ const Sidebar = () => {
               </svg>
             </a>
             <a
-              className="flex items-center justify-center w-12 h-12 mt-2 bg-gray-300 rounded"
+              className="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-300"
               href="#"
             >
               <svg
@@ -117,66 +119,6 @@ const Sidebar = () => {
               </svg>
             </a>
           </div>
-          <div className="flex flex-col items-center mt-2 border-t border-gray-300">
-            <a
-              className="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-300"
-              href="#"
-            >
-              <svg
-                className="w-6 h-6 stroke-current"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-            </a>
-            <a
-              className="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-300"
-              href="#"
-            >
-              <svg
-                className="w-6 h-6 stroke-current"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                />
-              </svg>
-            </a>
-            <a
-              className="relative flex items-center justify-center w-12 h-12 mt-2 hover:bg-gray-300"
-              href="#"
-            >
-              <svg
-                className="w-6 h-6 stroke-current"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                />
-              </svg>
-              <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-indigo-500 rounded-full"></span>
-            </a>
-          </div>
         </div>
       ) : (
         <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center w-40 h-full overflow-hidden bg-orange-400 rounded">
@@ -202,149 +144,25 @@ const Sidebar = () => {
             <span className="text-sm font-bolder">Filters & Orders</span>
           </a>
           <div className="w-full px-2">
-            <div className="flex flex-col items-center w-full mt-3 border-t border-gray-300">
+            <div className="flex flex-col items-center w-full mt-3 border-gray-300">
+              
               <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
+                className="flex flex-col items-center mt-3 border-gray-300"
                 href="#"
               >
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-                <span className="ml-2 text-sm font-medium">Dasboard</span>
+              <FilterStore/>
               </a>
               <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
+                className="flex flex-col items-center mt-2 border-gray-300"
                 href="#"
               >
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <span className="ml-2 text-sm font-medium">Search</span>
+               <OrderAbc/>
               </a>
               <a
-                className="flex items-center w-full h-12 px-3 mt-2 bg-gray-300 rounded"
+                className="flex flex-col items-center mt-2 border-gray-300"
                 href="#"
               >
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <span className="ml-2 text-sm font-medium">Insights</span>
-              </a>
-              <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
-                href="#"
-              >
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                  />
-                </svg>
-                <span className="ml-2 text-sm font-medium">Docs</span>
-              </a>
-            </div>
-            <div className="flex flex-col items-center w-full mt-2 border-t border-gray-300">
-              <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
-                href="#"
-              >
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className="ml-2 text-sm font-medium">Products</span>
-              </a>
-              <a
-                className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
-                href="#"
-              >
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                  />
-                </svg>
-                <span className="ml-2 text-sm font-medium">Settings</span>
-              </a>
-              <a
-                className="relative flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300"
-                href="#"
-              >
-                <svg
-                  className="w-6 h-6 stroke-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                  />
-                </svg>
-                <span className="ml-2 text-sm font-medium">Messages</span>
-                <span className="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-indigo-500 rounded-full"></span>
+              <OrderPrice/>
               </a>
             </div>
           </div>

@@ -1,25 +1,44 @@
 import { Link } from "react-router-dom";
-import Navbar from "../SearchBar/navbar";
+import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
+import { useSelector } from "react-redux";
+import User from "../Users/User";
+import { useDispatch } from "react-redux";
+import { renderCondition } from "../../Redux/Actions/Actions";
 
-export default function Nav() {
-  const [showLogin, setShowLogin] = useState(false)
+export default function Nav({ color }) {
+  const user = useSelector((state) => state.user);
 
-  function handleShowLogin(){
-    setShowLogin(true)
+  const isAuth = useSelector((state) => state.isAuth);
+  const [showLogin, setShowLogin] = useState(false);
+  const dispatch = useDispatch();
+
+  function handleShowLogin() {
+    setShowLogin(true);
   }
-  function handleOnClose(){
-    setShowLogin(false)
+  function handleOnClose() {
+    setShowLogin(false);
+  }
+
+  function handleProducts() {
+    dispatch(renderCondition("allProducts"));
   }
 
   return (
     <div className="w-full z-50 shadow-xl">
-      <div className="flex items-center justify-between px-2 py-2 bg-primary shadow-md">
+      <div
+        className={`flex items-center justify-between px-2 py-2 shadow-md bg-${color}`}
+      >
         <div className="flex items-center gap-4 m-1">
           <Link
             to={"/products"}
-            className="border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 text-gray-300 flex items-center"
+            className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+              color === "primary"
+                ? "text-gray-200 border-gray-200"
+                : "text-gray-600 border-gray-600"
+            }`}
+            onClick={handleProducts}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -35,11 +54,15 @@ export default function Nav() {
                 d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
               />
             </svg>
-            Product
+            Products
           </Link>
           <Link
             to={"/store"}
-            className="border hover:shadow-lg border-gray-300 hover:border-secondary hover:text-secondary text-gray-300 rounded-lg w-auto p-2 flex items-center"
+            className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+              color === "primary"
+                ? "text-gray-200 border-gray-200"
+                : "text-gray-600 border-gray-600"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -59,12 +82,14 @@ export default function Nav() {
           </Link>
         </div>
         <div>
-          <Navbar className="flex items-center justify-center" />
+          <SearchBar className="flex items-center justify-center" />
         </div>
         <div className="flex items-center gap-4">
           <Link
             to={"/home"}
-            className="border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-full w-auto p-2 text-gray-300 flex items-center"
+            className={`hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+              color === "primary" ? "text-gray-200" : "text-gray-600"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +109,9 @@ export default function Nav() {
           <button
             type="button"
             onClick={() => handleShowLogin()}
-            className="border hover:shadow-lg border-gray-300 hover:border-secondary hover:text-secondary text-gray-300 rounded-full w-auto p-2 flex items-center"
+            className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+              color === "primary" ? "text-gray-200 border-gray-200" : "text-gray-600 border-gray-200"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -101,8 +128,20 @@ export default function Nav() {
               />
             </svg>
           </button>
-          {showLogin && <UserFormLogin title={'Login'} onClose={handleOnClose} />}
-          <button className="hover:shadow-lg mr-2 border-gray-300 hover:border-secondary hover:text-secondary text-gray-300 ">
+          {showLogin && (
+            <>
+              {isAuth ? (
+                <User user={user} onClose={handleOnClose} />
+              ) : (
+                <UserFormLogin title={"Login"} onClose={handleOnClose} />
+              )}
+            </>
+          )}
+          <button className={`hover:shadow-lg mr-2 border-gray-600 hover:border-secondary hover:text-secondary ${
+            color === "primary"
+            ? "text-gray-200"
+            : "text-gray-600"
+          }`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

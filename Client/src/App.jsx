@@ -1,27 +1,34 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./views/HomePage";
 import LandingPage from "./views/LandingPage";
-import Login from "./views/Login";
 import ProductDetail from "./views/ProductDetail";
-import SingUp from "./views/SingUp";
 import StoreDetail from "./views/StoreDetail";
 import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllProducts } from "./Redux/Actions/Actions";
+import { getAllBrands, getAllCategories, getAllProducts, getAllSellers, isAuthenticated } from "./Redux/Actions/Actions";
+import SingUp from "./views/SingUp";
+import { Toaster } from "react-hot-toast";
+import jwtToken from "./components/getCookie";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getAllSellers());
+    dispatch(getAllBrands());
+    dispatch(getAllCategories());
+    dispatch(isAuthenticated(jwtToken));
+    
   }, [dispatch]);
   return (
     <div>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SingUp />} /> */}
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/signup" element={<SingUp />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/store" element={<Store />} />
         <Route path="/products" element={<Products />} />
