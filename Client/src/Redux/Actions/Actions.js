@@ -6,6 +6,7 @@ export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
+export const GET_PRODUCT_BY_STORE = "GET_PRODUCT_BY_STORE";
 export const GET_SELLER_BY_ID = "GET_SELLER_BY_ID";
 export const GET_ALL_STORE = "GET_ALL_STORE";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
@@ -134,7 +135,6 @@ export const getProductById = (id) => {
   };
 };
 
-
 export const getNewProducts = () => {
   const fakeProducts = products;
   return async (dispatch) => {
@@ -165,12 +165,30 @@ export const getProductByName = (name) => {
   };
 };
 
+export const getProductByStore = (store) => {
+  const endpoint = `http://localhost:3001/product/store/${store}`;
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(endpoint);
+      console.log(response);
+      dispatch({
+        type: GET_PRODUCT_BY_STORE,
+        payload: response.data,
+      });
+      return response.data
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 export const getAllSellers = () => {
   const endpoint = "http://localhost:3001/store/";
 
   return async (dispatch) => {
     try {
       const response = await axios.get(`${endpoint}`);
+      console.log(response);
       return dispatch({
         type: GET_ALL_STORE,
         payload: response.data,

@@ -16,7 +16,8 @@ import {
   ISNT_AUTH,
   GET_PRODUCT_FILTER,
   GET_ALL_CATEGORIES,
-  GET_ALL_BRANDS
+  GET_ALL_BRANDS,
+  GET_PRODUCT_BY_STORE,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
   user: {},
   filteredProducts: [],
   namedProducts: [],
+  productsByStore: [],
   newProducts: [],
   condition: "allProducts",
   isAuth: false,
@@ -53,7 +55,7 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, isAuth: true, user: payload };
 
     case ISNT_AUTH:
-      return { ...state, isAuth: false};
+      return { ...state, isAuth: false };
 
     case GET_ALL:
       return { ...state, allProducts: payload };
@@ -62,10 +64,10 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, store: payload };
 
     case GET_ALL_CATEGORIES:
-      return { ...state, categories: payload}; 
-      
+      return { ...state, categories: payload };
+
     case GET_ALL_BRANDS:
-      return {...state, brands: payload}  
+      return { ...state, brands: payload };
 
     case GET_PRODUCT_BY_ID:
       return {
@@ -84,15 +86,19 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         namedProducts: payload,
       };
-
+    case GET_PRODUCT_BY_STORE:
+      return {
+        ...state,
+        productsByStore: payload,
+      };
     case GET_USER_BY_ID:
       return {
         ...state,
         user: payload,
       };
 
-     case GET_PRODUCT_FILTER:
-      return { ...state, filteredProducts: payload}; 
+    case GET_PRODUCT_FILTER:
+      return { ...state, filteredProducts: payload };
 
     case GET_NEW:
       return { ...state, newProducts: payload };
@@ -105,7 +111,7 @@ const rootReducer = (state = initialState, action) => {
     //     ),
     //   };
 
-   //  case SHOW_STORE:
+    //  case SHOW_STORE:
     //   return {
     //     ...state,
     //     filteredProducts: state.allProducts.filter((product) =>
@@ -125,7 +131,7 @@ const rootReducer = (state = initialState, action) => {
           return 0;
         });
       } else {
-       sortedProducts = [...state.allProducts].sort((a, b) => {
+        sortedProducts = [...state.allProducts].sort((a, b) => {
           if (payload === "AZ") {
             return a.name.localeCompare(b.name);
           } else if (payload === "ZA") {
@@ -139,30 +145,30 @@ const rootReducer = (state = initialState, action) => {
         filteredProducts: sortedProducts,
       };
 
-      case SHOW_PRICE:
-        if (state.filteredProducts.length !== 0) {
-          priceProducts = [...state.filteredProducts].sort((a, b) => {
-            if (payload === "menor") {
-              return a.price - b.price;
-            } else if (payload === "mayor") {
-              return b.price - a.price;
-            }
-            return 0; // No hay ordenamiento
-          });
-        } else {
-         priceProducts = [...state.allProducts].sort((a, b) => {
-            if (payload === "menor") {
-              return a.price - b.price;
-            } else if (payload === "mayor") {
-              return b.price - a.price;
-            }
-            return 0; // No hay ordenamiento
-          });
-        }
-        return {
-          ...state,
-          filteredProducts: priceProducts,
-        };
+    case SHOW_PRICE:
+      if (state.filteredProducts.length !== 0) {
+        priceProducts = [...state.filteredProducts].sort((a, b) => {
+          if (payload === "menor") {
+            return a.price - b.price;
+          } else if (payload === "mayor") {
+            return b.price - a.price;
+          }
+          return 0; // No hay ordenamiento
+        });
+      } else {
+        priceProducts = [...state.allProducts].sort((a, b) => {
+          if (payload === "menor") {
+            return a.price - b.price;
+          } else if (payload === "mayor") {
+            return b.price - a.price;
+          }
+          return 0; // No hay ordenamiento
+        });
+      }
+      return {
+        ...state,
+        filteredProducts: priceProducts,
+      };
 
     case CLEAR_FILTERED_PRODUCTS:
       return { ...state, filteredProducts: [] };

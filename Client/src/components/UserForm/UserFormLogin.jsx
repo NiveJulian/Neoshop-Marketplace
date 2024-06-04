@@ -118,7 +118,7 @@ export default function UserFormLogin({ title, onClose }) {
             to="/signup"
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
           >
-            Sign Up
+            Register
           </Link>
         </div>
         <div className="mt-6 flex justify-center gap-2 items-center flex-col">

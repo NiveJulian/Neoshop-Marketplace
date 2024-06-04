@@ -63,18 +63,18 @@ export const CardHome = ({
               />
             </Link>
           </div>
-          <div className="flex flex-1">
+          
+        </div>
+        <div className="flex justify-end">
+        
+        </div>
+      </div>
+      <h3 className="flex font-medium text-xl leading-8">
+      <div className="flex flex-1">
             <div className="">
               <p className="text-sm font-semibold ">{name}</p>
               <p className="text-sm text-gray-500">
-                Published on {date_creation}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-end">
-          <div className="text-sm flex items-center text-gray-500 ">
-            2 Days ago
+                Published on {date_creation}2 Days ago
             <svg
               className="ml-1 w-4 h-4"
               fill="none"
@@ -89,16 +89,17 @@ export const CardHome = ({
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               ></path>
             </svg>
+              </p>
+            </div>
           </div>
-        </div>
-      </div>
-      <h3 className="font-medium text-xl leading-8">
-        <Link
+          <div className="text-sm flex items-center text-gray-500 ">        
+          </div>
+        {/* <Link
           to={`/product/${id_product}`}
           className="block relative group-hover:text-red-700 transition-colors duration-200 "
         >
           Instant Help at Your Fingertips
-        </Link>
+        </Link> */}
       </h3>
     </article>
   );

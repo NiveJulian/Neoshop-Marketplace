@@ -36,8 +36,8 @@ export const Products = () => {
       <div className="shadow-sm">
         <Nav color={"primary"} />
       </div>
-      <div className="flex flex-col justify-center items-center mt-4 mb-8">
-        <h1 className="mb-7 text-4xl font-bold pb-2 text-details hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
+      <div className="flex justify-center text-center mt-4 mb-8">
+        <h1 className="mb-7 text-4xl font-bold pb-2 text-gray-300 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
           Products
         </h1>
         {/* <Categories/>  */}

@@ -2,7 +2,7 @@ import StoreCards from "../StoreCards/StoreCards";
 
 export default function StoreList({allSellers}) {
   return (
-    <div className="flex flex-wrap justify-between flex-row">
+    <div className="flex flex-wrap justify-center items-center flex-row">
       {allSellers?.map((store) => (
         <StoreCards
           key={store.id_store}

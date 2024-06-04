@@ -1,24 +1,32 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getNewProducts, getSellerById } from "../Redux/Actions/Actions.js";
-import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList.jsx";
+import { getNewProducts, getProductByStore, getSellerById } from "../Redux/Actions/Actions.js";
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
 import { useParams } from "react-router-dom";
-// import Categories from "../components/Categories/Categories.jsx";
-
+import ListCardProductByStore from "../components/ProductByStore/ListCardProductByStore.jsx";
 
 const StoreDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const newProducts = useSelector((state) => state.newProducts);
-  const seller = useSelector((state) => state.seller);
+  // const newProducts = useSelector((state) => state.newProducts);
+  const productsByStore = useSelector((state) => state.productsByStore);
+  const {seller} = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getSellerById(id));
     dispatch(getNewProducts());
   }, [dispatch, id]);
+
+  useEffect(() => {
+      dispatch(getProductByStore(seller.name))
+  }, [dispatch, seller.name])
+  
+
+  // const formatVentasText = (ventas) => {
+  //   return ventas >= 10000 ? "más de 10 mil ventas" : `${ventas} ventas`;
+  // };
 
   return (
     <div>
@@ -27,7 +35,7 @@ const StoreDetail = () => {
         <div className="detail-content">
           <div className="seller-container">
             <img
-              className="seller-image"
+              className="seller-image w-32 h-32 rounded-full object-fill border border-gray-300 shadow-lg"
               src={seller?.logo ? seller?.logo : 'neoshoplogo.jpeg' }
               alt={`Imagen del vendedor ${seller.name}`}
             />
@@ -50,7 +58,7 @@ const StoreDetail = () => {
           {/* <Categories/> */}
           <div className="banner">Products</div>
           <div className="mt-8">
-            <CardHomeList allProducts={newProducts} />
+            <ListCardProductByStore productByStore={productsByStore} />
           </div>
         </div>
       </div>
