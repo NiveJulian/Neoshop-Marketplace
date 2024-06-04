@@ -6,16 +6,23 @@ import logo3 from "../assets/images/logo3.jpg";
 import logo4 from "../assets/images/logo4.png";
 import logo5 from "../assets/images/logo5.jpg";
 import Testimonials from "../components/Testimonials/Testimonials";
+import { useNavigate } from "react-router-dom";
 
 const logos = [logo1, logo2, logo3, logo4, logo5];
 
+
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   const postFakeApi = async () => {
     try {
       await axios.post("http://localhost:3001/");
+      
+      
     } catch (error) {
       console.error("Error al hacer el fake POST:", error);
     }
+    
   };
 
   return (
@@ -46,16 +53,19 @@ const LandingPage = () => {
           </p>
           <button
             className="px-6 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 active:translate-y-[5%] hover:shadow-sm active:shadow-2xl"
-            onClick={() => (window.location.href = "/home") (postFakeApi)}
+            onClick={() =>{
+              postFakeApi();
+              navigate("/home");
+               }}
           >
             <strong>Go to Store</strong>
           </button>
-          <button
+          {/* <button
             className="px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 active:translate-y-[5%] hover:shadow-sm active:shadow-2xl"
             onClick={postFakeApi}
           >
             <strong>post products</strong>
-          </button>
+          </button> */}
         </div>
       </header>
 

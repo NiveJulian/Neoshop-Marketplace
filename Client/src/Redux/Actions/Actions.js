@@ -137,12 +137,13 @@ export const getProductById = (id) => {
 };
 
 export const getNewProducts = () => {
-  const fakeProducts = products;
+  const endpoint = "http://localhost:3001/product/latest";
   return async (dispatch) => {
     try {
+      const response= await axios.get(endpoint);
       return dispatch({
         type: GET_NEW,
-        payload: fakeProducts,
+        payload: response.data,
       });
     } catch (error) {
       console.log(error.message);
