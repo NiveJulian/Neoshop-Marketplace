@@ -27,8 +27,9 @@ export default function FilterStore() {
 
   const toggleDropdown = (dropdownType) => {
     setDropdown({
-      ...dropdown,
-      [dropdownType]: !dropdown[dropdownType],
+      store: dropdownType === 'store' ? !dropdown.store : false,
+      brand: dropdownType === 'brand' ? !dropdown.brand : false,
+      category: dropdownType === 'category' ? !dropdown.category : false,
     });
   };
 
