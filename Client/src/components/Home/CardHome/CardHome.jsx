@@ -1,9 +1,4 @@
-import React from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import getStoreById from "../../../../../../2-NeoShop-back/src/controllers/storeControllers/getStoreById";
-import { getProductByStore } from "../../../Redux/Actions/Actions";
-
 export const CardHome = ({
   id_product,
   name,
@@ -12,18 +7,13 @@ export const CardHome = ({
   date_creation,
   quantity,
   price,
+  storeName,
   available,
   id_review,
   id_discounts,
-  store,
 }) => {
-  const dispatch = useDispatch();
   
-  useEffect(() => {
-    
-      dispatch(getProductByStore(store.name));
-  }, [dispatch, store.name])
-
+  
   return (
     <article className="bg-white h-full p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative">
       <div className="relative flex mb-4 rounded-2xl">

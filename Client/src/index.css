@@ -3,98 +3,59 @@
 @tailwind utilities;
 
 @keyframes float {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    50% {
-      transform: translateY(-20px) translateX(10px);
-    }
-    100% {
-      transform: translateY(0) translateX(0);
-    }
+  0% {
+    transform: translateY(0) translateX(0);
   }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
 
-  .dropdown-list {
-    max-height: 200px; /* Ajusta esta altura según tus necesidades */
-    overflow-y: auto;
-  }
-  
-  .floating-logos {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .floating-logo {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    overflow: hidden;
-    animation: float 5s ease-in-out infinite;
-  }
-  
-  .floating-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .floating-logo:nth-child(1) {
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-  }
-  
-  .floating-logo:nth-child(2) {
-    top: 20%;
-    left: 50%;
-    animation-delay: 1s;
-  }
-  
-  .floating-logo:nth-child(3) {
-    top: 30%;
-    left: 80%;
-    animation-delay: 2s;
-  }
-  
-  .floating-logo:nth-child(4) {
-    top: 50%;
-    left: 20%;
-    animation-delay: 3s;
-  }
-  
-  .floating-logo:nth-child(5) {
-    top: 60%;
-    left: 70%;
-    animation-delay: 4s;
-  }
-  
-  :root {
+.floating-logo {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  animation: float 5s ease-in-out infinite;
+}
+
+.header-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+
+:root {
   --primary-color: #1a73e8; /* Cambia esto por tu color primario */
 }
 
 @keyframes lights {
-    0% {
-      filter: brightness(40%) contrast(120%);
-    }
-    50% {
-      filter: brightness(60%) contrast(80%);
-    }
-    100% {
-      filter: brightness(40%) contrast(120%);
-    }
+  0% {
+    filter: brightness(40%) contrast(120%);
   }
-  
-  .header-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom right, #1a73e8, #60a5fa, #bbdefb, #60a5fa, #1a73e8);
-    animation: lights 10s ease-in-out infinite alternate;
+  50% {
+    filter: brightness(60%) contrast(80%);
   }
+  100% {
+    filter: brightness(40%) contrast(120%);
+  }
+}
+
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, #1a73e8, #60a5fa, #bbdefb, #60a5fa, #1a73e8);
+  animation: lights 10s ease-in-out infinite alternate;
+}
   
   
   /* TestimonialCard.css */

@@ -11,6 +11,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getNewProducts());
   }, [dispatch]);
+
   console.log(newProducts);
 
   return (

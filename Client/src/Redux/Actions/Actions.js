@@ -1,5 +1,4 @@
 import axios from "axios";
-import { products } from "./FakeBd";
 import { deleteSessionToken } from "../../components/delCookie";
 import toast from "react-hot-toast";
 export const GET_ALL = "GET_ALL";
