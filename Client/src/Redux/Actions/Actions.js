@@ -166,8 +166,8 @@ export const getProductByName = (name) => {
   };
 };
 
-export const getProductByStore = (store) => {
-  const endpoint = `http://localhost:3001/product/store/${store}`;
+export const getProductByStore = (id) => {
+  const endpoint = `http://localhost:3001/product/allProductsStore/${id}`;
   return async (dispatch) => {
     try {
       let response = await axios.get(endpoint);

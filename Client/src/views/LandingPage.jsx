@@ -2,23 +2,9 @@ import axios from "axios";
 import Nav from "../components/Nav/Nav";
 import Testimonials from "../components/Testimonials/Testimonials";
 import { useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
 
 const LandingPage = () => {
   const store = useSelector(state => state.store);
-  const floatingLogosRef = useRef(null);
-
-  useEffect(() => {
-    const floatingLogos = floatingLogosRef.current;
-    if (floatingLogos) {
-      const floatInterval = setInterval(() => {
-        floatingLogos.style.animation = "none"; // Detener la animación actual
-        floatingLogos.offsetHeight; // Truco para reiniciar la animación
-        floatingLogos.style.animation = "slide 20s linear infinite"; // Iniciar la animación de desplazamiento
-      }, 5000); // Tiempo de espera igual al tiempo de la animación de flotación
-      return () => clearInterval(floatInterval); // Limpiar el intervalo al desmontar
-    }
-  }, []);
 
   const postFakeApi = async () => {
     try {
@@ -35,7 +21,7 @@ const LandingPage = () => {
         {/* Fondo de animaciones */}
         <div className="header-background"></div>
         {/* Marcas flotantes */}
-        <div ref={floatingLogosRef} className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
           <div className="floating-logos">
             {store.map((store, index) => (
               <div key={index} className="floating-logo">

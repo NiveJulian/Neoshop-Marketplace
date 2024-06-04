@@ -7,7 +7,8 @@ export const CardHome = ({
   date_creation,
   quantity,
   price,
-  storeName,
+  store,
+  idStore,
   available,
   id_review,
   id_discounts,
@@ -56,10 +57,10 @@ export const CardHome = ({
       <div className="flex justify-between items-center w-full pb-4 mb-auto">
         <div className="flex items-center">
           <div className="pr-3">
-            <Link to={`/store/${store.name}`}>
+            <Link to={`/store/${idStore}`}>
               <img
                 className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
-                src={img_product}
+                src={store.logo}
                 alt=""
               />
             </Link>
