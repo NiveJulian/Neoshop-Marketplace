@@ -3,72 +3,77 @@
 @tailwind utilities;
 
 @keyframes float {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    50% {
-      transform: translateY(-20px) translateX(10px);
-    }
-    100% {
-      transform: translateY(0) translateX(0);
-    }
+  0% {
+    transform: translateY(0) translateX(0);
   }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
 
-  .dropdown-list {
-    max-height: 200px; /* Ajusta esta altura según tus necesidades */
-    overflow-y: auto;
-  }
-  
-  .floating-logos {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .floating-logo {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    overflow: hidden;
-    animation: float 5s ease-in-out infinite;
-  }
-  
-  .floating-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .floating-logo:nth-child(1) {
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-  }
-  
-  .floating-logo:nth-child(2) {
-    top: 20%;
-    left: 50%;
-    animation-delay: 1s;
-  }
-  
-  .floating-logo:nth-child(3) {
-    top: 30%;
-    left: 80%;
-    animation-delay: 2s;
-  }
-  
-  .floating-logo:nth-child(4) {
-    top: 50%;
-    left: 20%;
-    animation-delay: 3s;
-  }
-  
-  .floating-logo:nth-child(5) {
-    top: 60%;
-    left: 70%;
-    animation-delay: 4s;
-  }
+.floating-logos {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Asegura que los logos estén detrás del texto de bienvenida */
+}
+
+.floating-logo {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  animation: float 5s ease-in-out infinite;
+}
+
+.floating-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.floating-logo:nth-child(1) {
+  top: 5%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.floating-logo:nth-child(2) {
+  top: 15%;
+  left: 60%;
+  animation-delay: 1s;
+}
+
+.floating-logo:nth-child(3) {
+  top: 25%;
+  left: 85%;
+  animation-delay: 2s;
+}
+
+.floating-logo:nth-child(4) {
+  top: 55%;
+  left: 10%;
+  animation-delay: 3s;
+}
+
+.floating-logo:nth-child(5) {
+  top: 65%;
+  left: 75%;
+  animation-delay: 4s;
+}
+
+.header-content {
+  position: relative;
+  z-index: 10; /* Asegura que el texto de bienvenida esté frente a los logos */
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+
   
   :root {
   --primary-color: #1a73e8; /* Cambia esto por tu color primario */
@@ -98,6 +103,12 @@
   
   
   /* TestimonialCard.css */
+
+  .dropdown-list {
+    max-height: 200px; /* Ajusta esta altura según tus necesidades */
+    overflow-y: auto;
+  }
+  
 
 .testimonial-card {
     opacity: 0;

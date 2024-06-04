@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import getStoreById from "../../../../../../2-NeoShop-back/src/controllers/storeControllers/getStoreById";
+
 import { getProductByStore } from "../../../Redux/Actions/Actions";
 
 export const CardHome = ({
@@ -19,10 +19,11 @@ export const CardHome = ({
 }) => {
   const dispatch = useDispatch();
   
-  useEffect(() => {
+  // useEffect(() => {
     
-      dispatch(getProductByStore(store.name));
-  }, [dispatch, store.name])
+  //     dispatch(getStoreById(store.name));
+      
+  // }, [dispatch, store.name])
 
   return (
     <article className="bg-white h-full p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative">
@@ -66,10 +67,10 @@ export const CardHome = ({
       <div className="flex justify-between items-center w-full pb-4 mb-auto">
         <div className="flex items-center">
           <div className="pr-3">
-            <Link to={`/store/${store.name}`}>
+            <Link to={`/store/${store.id_store}`}>
               <img
                 className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
-                src={img_product}
+                src={store.logo}
                 alt=""
               />
             </Link>

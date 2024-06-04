@@ -7,12 +7,14 @@ import logo4 from "../assets/images/logo4.png";
 import logo5 from "../assets/images/logo5.jpg";
 import Testimonials from "../components/Testimonials/Testimonials";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const logos = [logo1, logo2, logo3, logo4, logo5];
 
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const store = useSelector((state) => state.store);
 
   const postFakeApi = async () => {
     try {
@@ -35,9 +37,9 @@ const LandingPage = () => {
         {/* Marcas flotantes */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
           <div className="floating-logos">
-            {logos.map((logo, index) => (
+            {store.map((store, index) => (
               <div key={index} className="floating-logo">
-                <img src={logo} alt={`logo ${index}`} />
+                <img src={store.logo} alt={`logo ${index}`} />
               </div>
             ))}
           </div>
