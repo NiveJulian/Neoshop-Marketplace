@@ -4,7 +4,7 @@ import UserFormRegister from "../components/UserForm/UserFormRegister";
 export default function SingUp() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-1/2 hidden lg:inline-flex h-full text-white">
+      <div className="w-1/2 hidden lg:inline-flex h-screen text-white">
         <div className="w-[450px] shadow-md shadow-gray-400 h-full bg-primary px-10 flex flex-col gap-6 justify-center">
           <Link to="/">
             <img src={'neoshoplogo.jpeg'} alt="logoImg" className="w-10 h-10 rounded-full" />
@@ -73,7 +73,7 @@ export default function SingUp() {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-1/2 h-full flex items-center justify-center">
+      <div className="w-full md:w-1/2 h-screen flex items-center justify-center">
         <UserFormRegister />
       </div>
     </div>

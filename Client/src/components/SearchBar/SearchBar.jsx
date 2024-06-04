@@ -35,7 +35,6 @@ export default function SearchBar() {
         toast.error('No products found.'); // Mensaje de error cuando no se encuentran productos
       } else {
         dispatch(renderCondition("namedProducts"));
-       
       }
     });
   };

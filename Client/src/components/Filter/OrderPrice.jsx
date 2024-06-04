@@ -30,12 +30,12 @@ export const OrderPrice = () => {
         <i className="fas fa-angle-down pl-3 text-stone-700"></i>
       </button>
       {dropdown && (
-        <div className="relative z-50 mt-1 w-full rounded-md bg-gray-300 shadow-lg">
+        <div className="absolute z-10 w-full left-full text-center rounded-md shadow-lg">
           <ul className="text-gray-700">
             <li>
               <button
                 type="button"
-                className={`flex w-full items-center justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOption === "menor" ? "text-green-500 bg-green-50" : ""}`}
+                className={`flex w-full items-center justify-between px-2 py-2 hover:bg-stone-500 hover:text-gray-300 ${selectedOption === "menor" ? "text-white bg-secondary" : ""}`}
                 onClick={() => handlePrice("menor")}
               >
                 Menor precio
@@ -47,7 +47,7 @@ export const OrderPrice = () => {
             <li>
               <button
                 type="button"
-                className={`flex w-full items-center justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOption === "mayor" ? "text-green-500 bg-green-50" : ""}`}
+                className={`flex w-full items-center bg-gray-100 justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOption === "mayor" ? "text-white bg-secondary" : ""}`}
                 onClick={() => handlePrice("mayor")}
               >
                 Mayor precio

@@ -49,18 +49,18 @@ export default function UserFormRegister({ title = "Register" }) {
   };
 
   return (
-    <div className="flex md:top-0 md:left-0 md:z-50 md:bg-opacity-50 md:w-screen md:h-screen">
+    <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen">
       <form
-        className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md"
+        className="max-w-sm p-4 h-auto bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}
       >
         <h1 className="text-center mb-4 text-3xl text-primary border-b-2">
           <strong>{title}</strong>
         </h1>
-        <div className="flex flex-wrap -mx-3 mb-2">
-          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div className="flex flex-wrap -mx-6 mb-1">
+          <div className="w-full md:w-1/2 px-3 mb-1 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-first-name"
             >
               First Name
@@ -82,7 +82,7 @@ export default function UserFormRegister({ title = "Register" }) {
           </div>
           <div className="w-full md:w-1/2 px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-last-name"
             >
               Last Name
@@ -103,10 +103,10 @@ export default function UserFormRegister({ title = "Register" }) {
             )}
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-2">
+        <div className="flex flex-wrap -mx-6 mb-1">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-password"
             >
               Password
@@ -127,10 +127,10 @@ export default function UserFormRegister({ title = "Register" }) {
             )}
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div className="flex flex-wrap -mx-6 mb-1">
+          <div className="w-full md:w-1/3 px-3 mb-1 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-city"
             >
               City
@@ -150,9 +150,9 @@ export default function UserFormRegister({ title = "Register" }) {
               <p className="text-red-500 text-xs italic">{errors.city}</p>
             )}
           </div>
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <div className="w-full md:w-1/3 px-3 mb-1 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-state"
             >
               State
@@ -174,9 +174,9 @@ export default function UserFormRegister({ title = "Register" }) {
               )}
             </div>
           </div>
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <div className="w-full md:w-1/3 px-3 mb-1 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-zip"
             >
               Postal Code
@@ -197,10 +197,10 @@ export default function UserFormRegister({ title = "Register" }) {
             )}
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="flex flex-wrap -mx-6 mb-1">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-nro_document"
             >
               nro_document
@@ -223,10 +223,10 @@ export default function UserFormRegister({ title = "Register" }) {
             )}
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="flex flex-wrap -mx-6 mb-1">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-email"
             >
               Email

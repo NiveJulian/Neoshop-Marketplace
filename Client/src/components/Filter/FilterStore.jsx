@@ -27,8 +27,9 @@ export default function FilterStore() {
 
   const toggleDropdown = (dropdownType) => {
     setDropdown({
-      ...dropdown,
-      [dropdownType]: !dropdown[dropdownType],
+      store: dropdownType === 'store' ? !dropdown.store : false,
+      brand: dropdownType === 'brand' ? !dropdown.brand : false,
+      category: dropdownType === 'category' ? !dropdown.category : false,
     });
   };
 
@@ -50,12 +51,12 @@ export default function FilterStore() {
   };
 
   return (
-    <div className={style.font}>
+    <div className="text-sm">
       <form onSubmit={handleSubmit}>
         <div className="relative mb-3">
           <button
             type="button"
-            className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-2 py-2 text-stone-800"
+            className="flex w-full min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-2 py-2 text-stone-800"
             onClick={() => toggleDropdown('store')}
           >
             {filters.store || 'Select Store'}
@@ -89,16 +90,16 @@ export default function FilterStore() {
         <div className="relative mb-3">
           <button
             type="button"
-            className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
+            className="flex w-full min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
             onClick={() => toggleDropdown('brand')}
           >
-            {filters.brand || 'Select Brand'}
+            {filters?.brand || 'Select Brand'}
             <i className="fas fa-angle-down pl-3 text-stone-700"></i>
           </button>
-          {dropdown.brand && (
+          {dropdown?.brand && (
             <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
               <ul className="text-gray-700">
-                {brands.map((brand) => (
+                {brands?.map((brand) => (
                   <li key={brand.id}>
                     <button
                       type="button"
@@ -123,7 +124,7 @@ export default function FilterStore() {
         <div className="relative mb-3">
           <button
             type="button"
-            className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
+            className="flex w-full min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
             onClick={() => toggleDropdown('category')}
           >
             {filters.category || 'Select Category'}
@@ -154,7 +155,7 @@ export default function FilterStore() {
           )}
         </div>
 
-        <button type="submit" className="bg-gray-200 rounded px-2 py-2 hover:bg-gray-100 hover:text-gray-600">
+        <button type="submit" className="bg-gray-200 w-full text-gray-500 rounded px-2 py-2 hover:bg-gray-100 hover:text-gray-600">
           FILTER
         </button>
       </form>

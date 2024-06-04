@@ -20,22 +20,22 @@ export const OrderAbc = () => {
   };
 
   return (
-    <div className="relative mb-3">
+    <div className="flex w-full text-center">
       <button
         type="button"
-        className="flex min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-2 py-4 text-stone-800"
+        className="w-full text-sm min-h-[3rem] text-center rounded-md bg-stone-100 px-2 py-2 text-stone-800"
         onClick={toggleDropdown}
       >
         {selectedOrder === "AZ" ? "A-Z" : "Z-A"}
-        <i className="fas fa-angle-down pl-3 text-stone-700"></i>
+        <i className="fas fa-angle-down text-stone-700"></i>
       </button>
       {dropdown && (
-        <div className="absolute z-10 mt-1 w-20 text-center rounded-md bg-white shadow-lg">
+        <div className="absolute z-10 mt-1 w-full left-full text-center rounded-md bg-white shadow-lg">
           <ul className="text-gray-700">
             <li>
               <button
                 type="button"
-                className={`flex w-full items-center justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOrder === "AZ" ? "text-secondary bg-green-50" : ""}`}
+                className={`w-full text-center px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOrder === "AZ" ? "text-white bg-secondary" : ""}`}
                 onClick={() => handleOrder("AZ")}
               >
                 A-Z
@@ -47,7 +47,7 @@ export const OrderAbc = () => {
             <li>
               <button
                 type="button"
-                className={`flex w-full items-center justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOrder === "ZA" ? "text-secondary bg-green-50" : ""}`}
+                className={`w-full text-center px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOrder === "ZA" ? "text-white bg-secondary" : ""}`}
                 onClick={() => handleOrder("ZA")}
               >
                 Z-A
