@@ -201,7 +201,7 @@ const ProductDetail = () => {
             <div className="seller-cont">
               <img
                 className="seller-image"
-                src={seller.image}
+                src={seller.logo}
                 alt={`Imagen del vendedor ${seller.name}`}
               />
               <p className="sellers-name">{seller.name}</p>

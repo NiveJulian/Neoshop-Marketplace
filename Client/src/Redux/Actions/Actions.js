@@ -6,6 +6,7 @@ export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
+export const GET_PRODUCT_BY_STORE = "GET_PRODUCT_BY_STORE";
 export const GET_SELLER_BY_ID = "GET_SELLER_BY_ID";
 export const GET_ALL_STORE = "GET_ALL_STORE";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
@@ -16,6 +17,7 @@ export const SHOW_STORE = "SHOW_STORE";
 export const SHOW_ABC = "SHOW_ABC";
 export const SHOW_PRICE = "SHOW_PRICE";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
+export const CLEAR_PRODUCTS_STORE = "CLEAR_PRODUCTS_STORE";
 export const SET_CONDITION = "SET_CONDITION";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const IS_AUTH = "IS_AUTH";
@@ -134,7 +136,6 @@ export const getProductById = (id) => {
   };
 };
 
-
 export const getNewProducts = () => {
   const fakeProducts = products;
   return async (dispatch) => {
@@ -165,12 +166,30 @@ export const getProductByName = (name) => {
   };
 };
 
+export const getProductByStore = (store) => {
+  const endpoint = `http://localhost:3001/product/store/${store}`;
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(endpoint);
+      console.log(response);
+      dispatch({
+        type: GET_PRODUCT_BY_STORE,
+        payload: response.data,
+      });
+      return response.data
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 export const getAllSellers = () => {
   const endpoint = "http://localhost:3001/store/";
 
   return async (dispatch) => {
     try {
       const response = await axios.get(`${endpoint}`);
+      console.log(response);
       return dispatch({
         type: GET_ALL_STORE,
         payload: response.data,
@@ -238,9 +257,11 @@ return async (dispatch) => {
   try {
     const queryString = new URLSearchParams(filters).toString();
     const response = await axios.get(`${endpoint}?${queryString}`);
+    console.log(response.data);
     return dispatch({
       type: GET_PRODUCT_FILTER,
       payload: response.data,
+      
     });
   } catch (error) {
     console.log(error.message);
@@ -271,6 +292,10 @@ export const orderProductsPrice = (price) => ({
 export const clearFilteredProducts = () => ({
   type: CLEAR_FILTERED_PRODUCTS,
 });
+
+export const clearProductsByStore = () =>({
+  type: CLEAR_PRODUCTS_STORE,
+})
 
 export const renderCondition = (condition) => ({
   type: SET_CONDITION,

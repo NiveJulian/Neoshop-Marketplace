@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getNewProducts, getSellerById } from "../Redux/Actions/Actions.js";
-import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList.jsx";
+import { useEffect, useState } from "react";
+import { getNewProducts, getProductByStore, getSellerById } from "../Redux/Actions/Actions.js";
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
 // import Sidebar from "../components/SideBar/SideBar.jsx";
 import { useParams } from "react-router-dom";
+import ListCardProductByStore from "../components/ProductByStore/ListCardProductByStore.jsx";
 
 // const seller = {
 //   name: "MotoMoto",
@@ -24,17 +24,40 @@ import { useParams } from "react-router-dom";
 const StoreDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const newProducts = useSelector((state) => state.newProducts);
-  const seller = useSelector((state) => state.seller);
+  // const newProducts = useSelector((state) => state.newProducts);
+  const productsByStore = useSelector((state) => state.productsByStore);
+  const {seller} = useSelector((state) => state);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getSellerById(id));
-    dispatch(getNewProducts());
+    setLoading(true);
+    dispatch(getSellerById(id)).then(() => {
+      // Marcar como completado cuando la carga haya terminado
+      setLoading(false);
+    });
+    
+    // dispatch(getNewProducts());
   }, [dispatch, id]);
 
-  const formatVentasText = (ventas) => {
-    return ventas >= 10000 ? "más de 10 mil ventas" : `${ventas} ventas`;
-  };
+  useEffect(() => {
+    setLoading(true);
+      dispatch(getProductByStore(seller.name)).then(() => {
+        // Marcar como completado cuando la carga haya terminado
+        setLoading(false);
+      });
+  }, [dispatch, seller.name])
+  
+
+  // const formatVentasText = (ventas) => {
+  //   return ventas >= 10000 ? "más de 10 mil ventas" : `${ventas} ventas`;
+  // };
+
+  if (loading) {
+    return(<div>
+      Loading...
+    </div>
+    )
+  }
 
   return (
     <div>
@@ -44,7 +67,7 @@ const StoreDetail = () => {
         <div className="detail-content">
           <div className="seller-container">
             <img
-              className="seller-image"
+              className="seller-image w-32 h-32 rounded-full object-fill border border-gray-300 shadow-lg"
               src={seller?.logo ? seller?.logo : 'neoshoplogo.jpeg' }
               alt={`Imagen del vendedor ${seller.name}`}
             />
@@ -67,7 +90,7 @@ const StoreDetail = () => {
           </div>
           <div className="banner">Products</div>
           <div className="mt-8">
-            <CardHomeList allProducts={newProducts} />
+            <ListCardProductByStore productByStore={productsByStore} />
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ const LandingPage = () => {
           </p>
           <button
             className="px-6 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 active:translate-y-[5%] hover:shadow-sm active:shadow-2xl"
-            onClick={() => (window.location.href = "/home")}
+            onClick={() => (window.location.href = "/home") (postFakeApi)}
           >
             <strong>Go to Store</strong>
           </button>
