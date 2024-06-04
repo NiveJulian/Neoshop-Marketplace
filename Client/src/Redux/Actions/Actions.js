@@ -188,6 +188,7 @@ export const getAllSellers = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${endpoint}`);
+      console.log(response);
       return dispatch({
         type: GET_ALL_STORE,
         payload: response.data,

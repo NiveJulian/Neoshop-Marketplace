@@ -50,7 +50,7 @@ const StoreDetail = () => {
         <div className="detail-content">
           <div className="seller-container">
             <img
-              className="seller-image"
+              className="seller-image w-32 h-32 rounded-full object-fill border border-gray-300 shadow-lg"
               src={seller?.logo ? seller?.logo : 'neoshoplogo.jpeg' }
               alt={`Imagen del vendedor ${seller.name}`}
             />

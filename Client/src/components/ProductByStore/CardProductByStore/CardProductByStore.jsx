@@ -13,7 +13,7 @@ export default function CardProductByStore({
   id_store,
 }) {
   return (
-    <article className="h-full w-56 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6">
+    <article className="h-fulll w-64 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6">
       <a href={`/product/${id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
           <img
@@ -41,7 +41,7 @@ export default function CardProductByStore({
           <div className="mt-3 flex items-end justify-between">
             <p className="text-lg font-bold text-blue-500">${price}</p>
 
-            <div className="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+            {/* <div className="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -58,7 +58,7 @@ export default function CardProductByStore({
               </svg>
 
               <button className="text-sm">Add to cart</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </a>
