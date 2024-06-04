@@ -94,6 +94,12 @@
   
   /* TestimonialCard.css */
 
+  .dropdown-list {
+    max-height: 200px; /* Ajusta esta altura según tus necesidades */
+    overflow-y: auto;
+  }
+  
+
 .testimonial-card {
     opacity: 0;
     transform: translateX(-100%);

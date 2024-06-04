@@ -64,7 +64,7 @@ export default function FilterStore() {
           </button>
           {dropdown.store && (
             <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
-              <ul className="text-gray-700">
+              <ul className="text-gray-700 dropdown-list">
                 {stores.map((store) => (
                   <li key={store.id}>
                     <button
@@ -98,7 +98,7 @@ export default function FilterStore() {
           </button>
           {dropdown?.brand && (
             <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
-              <ul className="text-gray-700">
+              <ul className="text-gray-700 dropdown-list">
                 {brands?.map((brand) => (
                   <li key={brand.id}>
                     <button
@@ -132,7 +132,7 @@ export default function FilterStore() {
           </button>
           {dropdown.category && (
             <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
-              <ul className="text-gray-700">
+              <ul className="text-gray-700 dropdown-list">
                 {categories.map((category) => (
                   <li key={category.id}>
                     <button
