@@ -11,8 +11,12 @@ import { getAllBrands, getAllCategories, getAllProducts, getAllSellers, isAuthen
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
+import axios from "axios";
 
 function App() {
+ 
+
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
@@ -20,8 +24,13 @@ function App() {
     dispatch(getAllBrands());
     dispatch(getAllCategories());
     dispatch(isAuthenticated(jwtToken));
+   
+    
     
   }, [dispatch]);
+
+ 
+ 
   return (
     <div>
       <Toaster position="top-right" reverseOrder={false} />

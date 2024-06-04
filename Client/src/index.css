@@ -13,6 +13,11 @@
       transform: translateY(0) translateX(0);
     }
   }
+
+  .dropdown-list {
+    max-height: 200px; /* Ajusta esta altura según tus necesidades */
+    overflow-y: auto;
+  }
   
   .floating-logos {
     position: relative;

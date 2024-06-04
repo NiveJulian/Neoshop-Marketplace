@@ -200,7 +200,7 @@ const ProductDetail = () => {
             <p className="brand">Vendedor:</p>
             <div className="seller-cont">
               <img
-                className="seller-image rounded-lg w-screen object-fill h-16"
+                className="seller-image"
                 src={seller.logo}
                 alt={`Imagen del vendedor ${seller.name}`}
               />
