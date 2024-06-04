@@ -2,9 +2,11 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { getProductByName, renderCondition, getAllProducts } from "../../Redux/Actions/Actions";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -33,6 +35,7 @@ export default function SearchBar() {
         toast.error('No products found.'); // Mensaje de error cuando no se encuentran productos
       } else {
         dispatch(renderCondition("namedProducts"));
+       
       }
     });
   };
@@ -65,6 +68,7 @@ export default function SearchBar() {
                 setSearchResults([]);
                 dispatch(getProductByName(result.name));
                 dispatch(renderCondition("namedProducts"));
+                navigate('/products');
               }}
             >
               {result.name}

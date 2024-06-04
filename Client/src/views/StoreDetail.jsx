@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getNewProducts, getProductByStore, getSellerById } from "../Redux/Actions/Actions.js";
-import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList.jsx";
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
