@@ -32,7 +32,7 @@ export const Products = () => {
   };
 
   return (
-    <div className="max-w-screen text-center gap-4">
+    <div className="max-w-screen text-center bg-gray-100 gap-4">
       <div className="shadow-sm">
         <Nav color={"primary"} />
       </div>

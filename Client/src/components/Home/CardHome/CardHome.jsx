@@ -19,7 +19,7 @@ export const CardHome = ({
       <div className="relative mb-4 rounded-2xl">
         <Link to={`/product/${id_product}`}>
           <img
-            className="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
+            className="max-h-80 rounded-2xl w-64 object-cover transition-transform duration-300 transform group-hover:scale-105"
             src={img_product}
             alt=""
           />

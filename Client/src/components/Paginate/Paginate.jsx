@@ -29,8 +29,6 @@ export default function Paginate({
       <div
         className="
             inline-flex
-            border border-[#e4e4e4]
-            bg-white
             p-4
             rounded-xl
             "

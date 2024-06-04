@@ -2,23 +2,19 @@ import { useState } from "react";
 import FilterStore from "../Filter/FilterStore";
 import { OrderAbc } from "../Filter/OrderAbc";
 import { OrderPrice } from "../Filter/OrderPrice";
-import SearchBar from "../SearchBar/SearchBar";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
+  const [filterStoreActive, setFilterStoreActive] = useState(false);
+  const [orderAbcActive, setOrderAbcActive] = useState(false);
+  const [orderPriceActive, setOrderPriceActive] = useState(false);
 
   const toggleSidebar = () => {
-    if (expanded) {
-      setExpanded(false); // Contraer la barra si está expandida
-    } else {
-      setExpanded(true); // Expandir la barra si está contraída
-    }
+    setExpanded(!expanded); // Alternar el estado de expansión
   };
 
   return (
     <div className="flex items-start w-64 mt-auto mb-6 fixed z-30">
-      {/* <!-- Component Start --> */}
-      {/* Condición para mostrar la primera o la segunda sidebar */}
       {expanded ? (
         <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center px-2 w-16 h-full overflow-hidden bg-orange-400 rounded">
           <a
@@ -121,7 +117,7 @@ const Sidebar = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center w-40 h-full overflow-hidden bg-orange-400 rounded">
+        <div className="relative flex flex-col transition-all ease-in-out text-gray-100 items-center w-40 h-full overflow-visible bg-orange-400 rounded">
           <a
             className="flex items-center w-full mt-3 justify-center"
             href="#"
@@ -145,36 +141,33 @@ const Sidebar = () => {
           </a>
           <div className="w-full px-2">
             <div className="flex flex-col items-center w-full mt-3 border-gray-300">
-              
               <a
                 className="flex flex-col items-center mt-3 border-gray-300"
                 href="#"
               >
-              <FilterStore/>
+                <FilterStore />
+              </a>
+              <a
+                className="flex flex-col w-full items-center mt-2 border-gray-300"
+                href="#"
+              >
+                <OrderAbc />
               </a>
               <a
                 className="flex flex-col items-center mt-2 border-gray-300"
                 href="#"
               >
-               <OrderAbc/>
-              </a>
-              <a
-                className="flex flex-col items-center mt-2 border-gray-300"
-                href="#"
-              >
-              <OrderPrice/>
+                <OrderPrice />
               </a>
             </div>
           </div>
         </div>
       )}
-      {/* <!-- Component End  --> */}
     </div>
   );
 };
 
 export default Sidebar;
-
 {
   /* <div className={`${style.sidebar} ${isOpen ? style.open : ''}`}>
 <button

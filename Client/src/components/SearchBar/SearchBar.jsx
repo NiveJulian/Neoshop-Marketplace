@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { getProductByName, renderCondition, getAllProducts } from "../../Redux/Actions/Actions";
+import toast from "react-hot-toast";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
@@ -24,12 +25,16 @@ export default function SearchBar() {
 
   const handleSearch = () => {
     if (!name.trim()) {
-      alert("No se ingresó ningún nombre");
+      toast.error('Please enter a search term.'); // Mensaje de error para campo de búsqueda vacío
       return; // Detener la ejecución si el campo de búsqueda está vacío
     }
-    dispatch(getProductByName(name)); // Realiza la acción que busca por nombre
-    console.log(name);
-    dispatch(renderCondition("namedProducts"));
+    dispatch(getProductByName(name)).then((results) => {
+      if (results.length === 0) {
+        toast.error('No products found.'); // Mensaje de error cuando no se encuentran productos
+      } else {
+        dispatch(renderCondition("namedProducts"));
+      }
+    });
   };
 
   return (
@@ -42,15 +47,15 @@ export default function SearchBar() {
           value={name}
           onChange={handleChange}
         />
-        <button className="rounded-full bg-secondary p-3" type="submit" onClick={handleSearch}>
+        <button className="rounded-full bg-secondary p-3" type="button" onClick={handleSearch}>
           🔎
         </button>
       </div>
 
       {/* Cuadro emergente de resultados de búsqueda */}
-      {searchResults.length > 0 && (
+      {searchResults?.length > 0 && (
         <div className="absolute top-full mt-2 w-full bg-gray-400 border border-gray-200 rounded-md shadow-lg z-10">
-          {searchResults.map((result) => (
+          {searchResults?.map((result) => (
             <div
               key={result.id}
               className="px-4 py-2 text-white hover:bg-gray-500 cursor-pointer"
