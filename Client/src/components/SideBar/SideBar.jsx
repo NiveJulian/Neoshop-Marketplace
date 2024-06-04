@@ -2,10 +2,12 @@ import { useState } from "react";
 import FilterStore from "../Filter/FilterStore";
 import { OrderAbc } from "../Filter/OrderAbc";
 import { OrderPrice } from "../Filter/OrderPrice";
-import SearchBar from "../SearchBar/SearchBar";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
+  const [filterStoreActive, setFilterStoreActive] = useState(false);
+  const [orderAbcActive, setOrderAbcActive] = useState(false);
+  const [orderPriceActive, setOrderPriceActive] = useState(false);
 
   const toggleSidebar = () => {
     setExpanded(!expanded); // Alternar el estado de expansión
@@ -146,7 +148,7 @@ const Sidebar = () => {
                 <FilterStore />
               </a>
               <a
-                className="flex flex-col items-center mt-2 border-gray-300"
+                className="flex flex-col w-full items-center mt-2 border-gray-300"
                 href="#"
               >
                 <OrderAbc />
