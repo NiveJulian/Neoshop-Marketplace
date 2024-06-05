@@ -17,6 +17,7 @@ export const SHOW_STORE = "SHOW_STORE";
 export const SHOW_ABC = "SHOW_ABC";
 export const SHOW_PRICE = "SHOW_PRICE";
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
+export const CLEAR_PRODUCTS_STORE = "CLEAR_PRODUCTS_STORE";
 export const SET_CONDITION = "SET_CONDITION";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const IS_AUTH = "IS_AUTH";
@@ -136,12 +137,13 @@ export const getProductById = (id) => {
 };
 
 export const getNewProducts = () => {
-  const fakeProducts = products;
+  const endpoint = "http://localhost:3001/product/latest";
   return async (dispatch) => {
     try {
+      const response= await axios.get(endpoint);
       return dispatch({
         type: GET_NEW,
-        payload: fakeProducts,
+        payload: response.data,
       });
     } catch (error) {
       console.log(error.message);
@@ -256,9 +258,11 @@ return async (dispatch) => {
   try {
     const queryString = new URLSearchParams(filters).toString();
     const response = await axios.get(`${endpoint}?${queryString}`);
+    console.log(response.data);
     return dispatch({
       type: GET_PRODUCT_FILTER,
       payload: response.data,
+      
     });
   } catch (error) {
     console.log(error.message);
@@ -289,6 +293,10 @@ export const orderProductsPrice = (price) => ({
 export const clearFilteredProducts = () => ({
   type: CLEAR_FILTERED_PRODUCTS,
 });
+
+export const clearProductsByStore = () =>({
+  type: CLEAR_PRODUCTS_STORE,
+})
 
 export const renderCondition = (condition) => ({
   type: SET_CONDITION,

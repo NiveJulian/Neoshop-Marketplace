@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getNewProducts, getProductByStore, getSellerById } from "../Redux/Actions/Actions.js";
 import "./StoreDetail.css";
 
@@ -13,20 +13,37 @@ const StoreDetail = () => {
   // const newProducts = useSelector((state) => state.newProducts);
   const productsByStore = useSelector((state) => state.productsByStore);
   const {seller} = useSelector((state) => state);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getSellerById(id));
-    dispatch(getNewProducts());
+    setLoading(true);
+    dispatch(getSellerById(id)).then(() => {
+      // Marcar como completado cuando la carga haya terminado
+      setLoading(false);
+    });
+    
+    // dispatch(getNewProducts());
   }, [dispatch, id]);
 
   useEffect(() => {
-      dispatch(getProductByStore(seller.name))
+    setLoading(true);
+      dispatch(getProductByStore(seller.name)).then(() => {
+        // Marcar como completado cuando la carga haya terminado
+        setLoading(false);
+      });
   }, [dispatch, seller.name])
   
 
   // const formatVentasText = (ventas) => {
   //   return ventas >= 10000 ? "más de 10 mil ventas" : `${ventas} ventas`;
   // };
+
+  if (loading) {
+    return(<div>
+      Loading...
+    </div>
+    )
+  }
 
   return (
     <div>

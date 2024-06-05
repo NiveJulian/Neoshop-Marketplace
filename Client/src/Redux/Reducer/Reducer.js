@@ -18,6 +18,7 @@ import {
   GET_ALL_CATEGORIES,
   GET_ALL_BRANDS,
   GET_PRODUCT_BY_STORE,
+  CLEAR_PRODUCTS_STORE,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -172,6 +173,9 @@ const rootReducer = (state = initialState, action) => {
 
     case CLEAR_FILTERED_PRODUCTS:
       return { ...state, filteredProducts: [] };
+
+    case CLEAR_PRODUCTS_STORE:
+      return {...state, productsByStore:[] }  
 
     case SET_CONDITION:
       return { ...state, condition: payload };

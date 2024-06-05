@@ -11,6 +11,7 @@ export const CardHomeList = ({ allProducts }) => {
           name={product.name}
           img_product={product.img_product[0]}
           price={product.price} 
+          store={product.store}
         />
       ))}
     </div>

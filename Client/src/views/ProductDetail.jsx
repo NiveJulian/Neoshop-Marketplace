@@ -150,7 +150,7 @@ const ProductDetail = () => {
             <div className="description-container">
               <p className="product-description">{product.description}</p>
               <ul className="specifications-list">
-                <p className="spec-title">Características</p>
+                <p className="spec-title">Characterístics</p>
                 {/* {Object.entries(product.specifics).map(([key, value]) => (
                   <li key={key}>
                     <span className="spec-name">{key}:</span>{" "}
@@ -162,7 +162,7 @@ const ProductDetail = () => {
           </div>
 
           <div className="info-container">
-            <p className="product-date">publicado: {product?.date_creation}</p>
+            <p className="product-date">Published: {product?.date_creation}</p>
             <h1 className="product-name">{product?.name}</h1>
             <p className="brand">Category: {product?.category}</p>
             <div className="content-flex">
@@ -180,7 +180,7 @@ const ProductDetail = () => {
             </div>
             <p className="product-price">${product?.price}</p>
             <div className="product-quantity">
-              <label htmlFor="quantity-select">Cantidad: </label>
+              <label htmlFor="quantity-select">quantity: </label>
               <select
                 id="quantity-select"
                 value={selectedQuantity}
@@ -193,15 +193,15 @@ const ProductDetail = () => {
                 ))}
               </select>
               <span className="total-available">
-                ({product?.quantity} disponibles)
+                ({product?.quantity} available)
               </span>
             </div>
-            <button className="buy-button">Comprar</button>
-            <p className="brand">Vendedor:</p>
+            <button className="buy-button">Add to cart</button>
+            <p className="brand">Seller:</p>
             <div className="seller-cont">
               <img
                 className="seller-image"
-                src={seller.image}
+                src={seller.logo}
                 alt={`Imagen del vendedor ${seller.name}`}
               />
               <p className="sellers-name">{seller.name}</p>
@@ -210,14 +210,14 @@ const ProductDetail = () => {
                   {formatVentasText(seller.ventas)}
                 </p>
                 <p className="sellers-stats-text">
-                  reputación: {seller.average_mark} / 5
+                  Scrore: {seller.average_mark} / 5
                 </p>
               </div>
               <Link
                 to={`/store/${product.storeIdStore}`}
                 className="seller-button"
               >
-                Ir a la tienda
+                Go to Store
               </Link>
             </div>
             <div className="review-container">
