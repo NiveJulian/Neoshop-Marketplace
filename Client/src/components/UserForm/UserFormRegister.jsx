@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import validationRegister from "./validationRegister"; // Importa tu función de validación
 import { register } from "../../Redux/Actions/Actions";
@@ -16,6 +16,7 @@ export default function UserFormRegister({ title = "Register" }) {
     email: "",
     nro_document: "",
   });
+
   const [errors, setErrors] = useState({
     name: "",
     lastname: "",
@@ -27,23 +28,54 @@ export default function UserFormRegister({ title = "Register" }) {
     nro_document: "",
   });
 
+  const [touched, setTouched] = useState({
+    name: false,
+    lastname: false,
+    password: false,
+    city: false,
+    state: false,
+    postalCode: false,
+    email: false,
+    nro_document: false,
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
-    validationRegister({ ...formData, [name]: value }, errors, setErrors);
   };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched({
+      ...touched,
+      [name]: true,
+    });
+  };
+
+  const memoizedErrors = useMemo(() => {
+    return validationRegister(formData);
+  }, [formData]);
+
+  useEffect(() => {
+    if (Object.keys(memoizedErrors).length > 0) {
+      setErrors(memoizedErrors);
+    }
+  }, [memoizedErrors]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      dispatch(register(formData));
-
-      console.log("Form data submitted:", formData);
-    } catch (error) {
-      toast.error("Register failed. Please try again.")
+    if (Object.keys(memoizedErrors).length === 0) {
+      try {
+        dispatch(register(formData));
+        console.log("Form data submitted:", formData);
+      } catch (error) {
+        toast.error("Register failed. Please try again.");
+      }
+    } else {
+      toast.error("Please fix the errors before submitting.");
     }
   };
 
@@ -53,10 +85,10 @@ export default function UserFormRegister({ title = "Register" }) {
         className="max-w-sm p-4 h-auto bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-center mb-4 text-3xl text-primary border-b-2">
+        <h1 className="text-center mx-4 mb-4 text-3xl text-primary border-b-2">
           <strong>{title}</strong>
         </h1>
-        <div className="flex flex-wrap -mx-6 mb-1">
+        <div className="flex flex-wrap mx-2 mb-1">
           <div className="w-full md:w-1/2 px-3 mb-1 md:mb-0">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
@@ -66,7 +98,7 @@ export default function UserFormRegister({ title = "Register" }) {
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                errors.name ? "border-red-500" : "border-gray-200"
+                touched.name && errors.name ? "border-red-500" : "border-gray-200"
               }`}
               id="grid-first-name"
               type="text"
@@ -74,8 +106,9 @@ export default function UserFormRegister({ title = "Register" }) {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.name && (
+            {touched.name && errors.name && (
               <p className="text-red-500 text-xs italic">{errors.name}</p>
             )}
           </div>
@@ -88,7 +121,7 @@ export default function UserFormRegister({ title = "Register" }) {
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                errors.lastname ? "border-red-500" : "border-gray-200"
+                touched.lastname && errors.lastname ? "border-red-500" : "border-gray-200"
               }`}
               id="grid-last-name"
               type="text"
@@ -96,13 +129,14 @@ export default function UserFormRegister({ title = "Register" }) {
               name="lastname"
               value={formData.lastname}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.lastname && (
+            {touched.lastname && errors.lastname && (
               <p className="text-red-500 text-xs italic">{errors.lastname}</p>
             )}
           </div>
         </div>
-        <div className="flex flex-wrap -mx-6 mb-1">
+        <div className="flex flex-wrap mx-2 mb-1">
           <div className="w-full px-3">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
@@ -112,7 +146,7 @@ export default function UserFormRegister({ title = "Register" }) {
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                errors.password ? "border-red-500" : "border-gray-200"
+                touched.password && errors.password ? "border-red-500" : "border-gray-200"
               }`}
               id="grid-password"
               type="password"
@@ -120,14 +154,15 @@ export default function UserFormRegister({ title = "Register" }) {
               name="password"
               value={formData.password}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.password && (
+            {touched.password && errors.password && (
               <p className="text-red-500 text-xs italic">{errors.password}</p>
             )}
           </div>
         </div>
-        <div className="flex flex-wrap -mx-6 mb-1">
-          <div className="w-full md:w-1/3 px-3 mb-1 md:mb-0">
+        <div className="flex flex-wrap mx-2 mb-1">
+          <div className="w-full md:w-1/2 px-3 mb-1 md:mb-0">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-city"
@@ -135,94 +170,73 @@ export default function UserFormRegister({ title = "Register" }) {
               City
             </label>
             <input
-              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                errors.city ? "border-red-500" : "border-gray-200"
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                touched.city && errors.city ? "border-red-500" : "border-gray-200"
               }`}
               id="grid-city"
               type="text"
-              placeholder="Albuquerque"
+              placeholder="City"
               name="city"
               value={formData.city}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.city && (
+            {touched.city && errors.city && (
               <p className="text-red-500 text-xs italic">{errors.city}</p>
             )}
           </div>
-          <div className="w-full md:w-1/3 px-3 mb-1 md:mb-0">
+          <div className="w-full md:w-1/2 px-3">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-state"
             >
               State
             </label>
-            <div className="relative">
-              <input
-                className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                  errors.state ? "border-red-500" : "border-gray-200"
-                }`}
-                id="grid-state"
-                type="text"
-                placeholder="New Mexico"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-              />
-              {errors.state && (
-                <p className="text-red-500 text-xs italic">{errors.state}</p>
-              )}
-            </div>
-          </div>
-          <div className="w-full md:w-1/3 px-3 mb-1 md:mb-0">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
-              htmlFor="grid-zip"
-            >
-              Postal Code
-            </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                errors.postalCode ? "border-red-500" : "border-gray-200"
+                touched.state && errors.state ? "border-red-500" : "border-gray-200"
               }`}
-              id="grid-zip"
+              id="grid-state"
               type="text"
-              placeholder="90210"
-              name="postalCode"
-              value={formData.postalCode}
+              placeholder="State"
+              name="state"
+              value={formData.state}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.postalCode && (
-              <p className="text-red-500 text-xs italic">{errors.postalCode}</p>
+            {touched.state && errors.state && (
+              <p className="text-red-500 text-xs italic">{errors.state}</p>
             )}
           </div>
+          
         </div>
-        <div className="flex flex-wrap -mx-6 mb-1">
+        
+        <div className="flex flex-wrap mx-2 mb-1">
           <div className="w-full px-3">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-nro_document"
             >
-              nro_document
+              Document Number
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                errors.nro_document ? "border-red-500" : "border-gray-200"
+                touched.nro_document && errors.nro_document ? "border-red-500" : "border-gray-200"
               }`}
               id="grid-nro_document"
               type="text"
-              placeholder="12345678"
+              placeholder="12345378"
               name="nro_document"
-              value={formData.nro_document} // Asegúrate de que el valor está en el campo 'nro_document'
+              value={formData.nro_document}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.nro_document && (
-              <p className="text-red-500 text-xs italic">
-                {errors.nro_document}
-              </p>
+            {touched.nro_document && errors.nro_document && (
+              <p className="text-red-500 text-xs italic">{errors.nro_document}</p>
             )}
           </div>
         </div>
-        <div className="flex flex-wrap -mx-6 mb-1">
+        <div className="flex flex-wrap mx-2 mb-1">
           <div className="w-full px-3">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
@@ -232,7 +246,7 @@ export default function UserFormRegister({ title = "Register" }) {
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                errors.email ? "border-red-500" : "border-gray-200"
+                touched.email && errors.email ? "border-red-500" : "border-gray-200"
               }`}
               id="grid-email"
               type="email"
@@ -240,8 +254,9 @@ export default function UserFormRegister({ title = "Register" }) {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.email && (
+            {touched.email && errors.email && (
               <p className="text-red-500 text-xs italic">{errors.email}</p>
             )}
           </div>

@@ -1,9 +1,5 @@
-const validationRegister = (
-  { name, lastname, password, city, state, postalCode, email, nro_document },
-  errors,
-  setErrors
-) => {
-  let newErrors = { ...errors };
+const validationRegister = ({ name, lastname, password, city, state, postalCode, email, nro_document }) => {
+  let newErrors = {};
 
   if (!name || !name.trim()) {
     newErrors.name = "El nombre está vacío";
@@ -77,7 +73,7 @@ const validationRegister = (
     newErrors.nro_document = "";
   }
 
-  setErrors(newErrors);
+  return newErrors;
 };
 
 export default validationRegister;
