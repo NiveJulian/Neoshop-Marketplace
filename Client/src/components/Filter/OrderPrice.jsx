@@ -38,7 +38,7 @@ export const OrderPrice = () => {
                 className={`flex w-full items-center justify-between px-2 py-2 hover:bg-stone-500 hover:text-gray-300 ${selectedOption === "menor" ? "text-white bg-secondary" : ""}`}
                 onClick={() => handlePrice("menor")}
               >
-                Menor precio
+                Min Price
                 {selectedOption === "menor" && (
                   <i className="fas fa-check pl-4 text-green-400"></i>
                 )}
@@ -50,7 +50,7 @@ export const OrderPrice = () => {
                 className={`flex w-full items-center bg-gray-100 justify-between px-4 py-2 hover:bg-stone-500 hover:text-stone-300 ${selectedOption === "mayor" ? "text-white bg-secondary" : ""}`}
                 onClick={() => handlePrice("mayor")}
               >
-                Mayor precio
+                Max Price
                 {selectedOption === "mayor" && (
                   <i className="fas fa-check pl-4 text-green-400"></i>
                 )}

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   const store = useSelector((state) => state.store);
 
   const postFakeApi = async () => {
