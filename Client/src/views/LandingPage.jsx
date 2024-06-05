@@ -2,9 +2,10 @@ import axios from "axios";
 import Nav from "../components/Nav/Nav";
 import Testimonials from "../components/Testimonials/Testimonials";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
-  const store = useSelector(state => state.store);
+  const store = useSelector((state) => state.store);
 
   const postFakeApi = async () => {
     try {
@@ -24,9 +25,13 @@ const LandingPage = () => {
         <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
           <div className="floating-logos">
             {store.map((store, index) => (
-              <div key={index} className="floating-logo">
+              <Link
+                key={index}
+                className="floating-logo"
+                to={`/store/${store.id_store}`}
+              >
                 <img src={store.logo} alt={`logo ${index}`} />
-              </div>
+              </Link>
             ))}
           </div>
         </div>

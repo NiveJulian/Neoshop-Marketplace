@@ -14,11 +14,21 @@
   }
 }
 
+@keyframes slide {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .floating-logos {
   position: relative;
   width: 100%;
   height: 100%;
-  z-index: 1; /* Asegura que los logos estén detrás del texto de bienvenida */
+  z-index: 1;
+  animation: slide 20s linear infinite;
 }
 
 .floating-logo {

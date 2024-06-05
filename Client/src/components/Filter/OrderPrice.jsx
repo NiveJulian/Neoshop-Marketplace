@@ -30,8 +30,8 @@ export const OrderPrice = () => {
         <i className="fas fa-angle-down pl-3 text-stone-700"></i>
       </button>
       {dropdown && (
-        <div className="absolute z-10 w-full left-full text-center rounded-md shadow-lg">
-          <ul className="text-gray-700">
+        <div className="absolute z-10 mt-1 left-full top-0 ml-2 w-48 rounded-md bg-white shadow-lg">
+          <ul className="text-gray-700 dropdown-list">
             <li>
               <button
                 type="button"
