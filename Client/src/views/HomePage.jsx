@@ -12,8 +12,6 @@ const HomePage = () => {
     dispatch(getNewProducts());
   }, [dispatch]);
 
-  console.log(newProducts);
-
   return (
     <div>
       <Nav color={"primary"} />

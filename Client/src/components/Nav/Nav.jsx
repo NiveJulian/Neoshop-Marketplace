@@ -6,12 +6,20 @@ import { useSelector } from "react-redux";
 import User from "../Users/User";
 import { useDispatch } from "react-redux";
 import { renderCondition } from "../../Redux/Actions/Actions";
+import CartItem from "../ProductCart/CartItem/CartItem";
 
 export default function Nav({ color }) {
   const user = useSelector((state) => state.user);
   const isAuth = useSelector((state) => state.isAuth);
+  const cartItems = useSelector((state) => state.cartItems);
+
   const [showLogin, setShowLogin] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
+
+  const toggleCart = () => {
+    setShowCart(!showCart);
+  };
 
   function handleShowLogin() {
     setShowLogin(true);
@@ -25,10 +33,31 @@ export default function Nav({ color }) {
     dispatch(renderCondition("allProducts"));
   }
 
+  const calculateTotal = () => {
+    // Calcular el subtotal basado en el precio y la cantidad de cada producto en el carrito
+    const total = cartItems.reduce((acc, product) => {
+      const price = parseFloat(product.price);
+      const quantity = product.cartQuantity || 1;
+      return acc + (isNaN(price) ? 0 : price * quantity);
+    }, 0);
+
+    // Redondear el total a dos decimales
+    return total.toFixed(2);
+  };
+
   return (
     <div className="w-full z-50 shadow-xl">
-      <div className={`flex items-center justify-between px-2 py-2 shadow-md bg-${color}`}>
-        <div>
+      <div
+        className={`flex items-center justify-between px-2 py-2 shadow-md bg-${color}`}
+      >
+        <div className="flex gap-2 justify-center items-center">
+          <Link to={"/"}>
+            <img
+              src="neoshoplogo.jpeg"
+              className="rounded-lg w-10 h-10"
+              alt="neoshologo"
+            />
+          </Link>
           <SearchBar className="flex items-center justify-center" />
         </div>
         <div className="flex items-center gap-4">
@@ -149,8 +178,10 @@ export default function Nav({ color }) {
               )}
             </>
           )}
+          <div className="tooltip">
             <button
-              className={`hover:shadow-lg mr-2 border-gray-600 hover:border-secondary hover:text-secondary ${
+              onClick={() => toggleCart()}
+              className={`px-2 py-2 hover:border rounded-lg hover:border-secondary hover:text-secondary ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
             >
@@ -169,6 +200,27 @@ export default function Nav({ color }) {
                 />
               </svg>
             </button>
+            <div className="tooltiptext">Cart</div>
+          </div>
+          <div className="relative">
+            {showCart && (
+              <div className="absolute w-96 z-10 top-8 right-0 bg-white rounded-lg p-4 shadow-lg">
+                {cartItems.map((product, index) => (
+                  <CartItem key={index} product={product} />
+                ))}
+                {/* Total del carrito */}
+                <div className="mt-4 float-right">
+                  <h3 className="text-lg font-semibold">Total:</h3>
+                  <p className="text-gray-500">${calculateTotal()}</p>
+                </div>
+                <div className="mt-4 float-left">
+                  <button className="border p-2 hover:text-secondary hover:border-secondary hover:shadow-lg active:translate-y-[5%] rounded-md active:shadow-xl">
+                    Continue with the purchase
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

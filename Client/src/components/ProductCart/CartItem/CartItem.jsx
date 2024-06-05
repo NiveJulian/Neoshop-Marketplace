@@ -18,6 +18,9 @@ function CartItem({ product }) {
     dispatch(removeFromCart(product.id_product));
   };
 
+  // Calcular el subtotal del producto
+  const subtotal = (parseFloat(product.price) * cartQuantity).toFixed(2);
+
   return (
     <div className="flex items-center border rounded-lg px-2 py-2">
       <img
@@ -36,6 +39,9 @@ function CartItem({ product }) {
         className="w-16 border rounded-md p-1 text-center mr-4"
         min="1"
       />
+      <div>
+        <p className="text-gray-500">Subtotal: ${subtotal}</p>
+      </div>
       <button
         onClick={handleRemove}
         className="text-red-500 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)] hover:text-red-400"
