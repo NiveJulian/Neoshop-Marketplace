@@ -41,7 +41,6 @@ export default function UserFormRegister({ title = "Register" }) {
     try {
       dispatch(register(formData));
 
-      toast.success("Register successful!");
       console.log("Form data submitted:", formData);
     } catch (error) {
       toast.error("Register failed. Please try again.")

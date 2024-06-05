@@ -32,11 +32,14 @@ export const login = (formData) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
-    toast.loading('Waiting...')
+    toast.loading("Waiting...");
     if (response.data.correctLogin) {
+      toast.success("Login successful!");
+
       dispatch({ type: LOGIN_SUCCESS });
     }
   } catch (error) {
+    toast.error("Error al ingresar")
     localStorage.setItem("isAuth", "false");
   }
 };
@@ -46,15 +49,21 @@ export const register = (formData) => async (dispatch) => {
 
   try {
     const response = await axios.post(`${endpoint}`, formData);
-
+    
+    toast.loading("Waiting...");
     if (response.status === 200) {
+      toast.success("Register successful!");
+
       dispatch({ type: REGISTER_SUCCESS });
-      toast.loading('Waiting...')
       setTimeout(() => {
         location.href = "/";
       }, 2000);
+    }else{
+      toast.error("Error while registering")
     }
   } catch (error) {
+    toast.error("Error while registering")
+
     console.log(error);
   }
 };
@@ -62,7 +71,7 @@ export const register = (formData) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_SUCCESS, payload: false });
-    toast.loading('Waiting...')
+    toast.loading("Waiting...");
     deleteSessionToken();
 
     document.location.href = "/";
@@ -99,7 +108,7 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
       dispatch({ type: ISNT_AUTH });
     }
   } catch (error) {
-    dispatch({ type: ISNT_AUTH});
+    dispatch({ type: ISNT_AUTH });
   }
 };
 
@@ -139,7 +148,7 @@ export const getNewProducts = () => {
   const endpoint = "http://localhost:3001/product/latest";
   return async (dispatch) => {
     try {
-      const response= await axios.get(endpoint);
+      const response = await axios.get(endpoint);
       return dispatch({
         type: GET_NEW,
         payload: response.data,
@@ -159,7 +168,7 @@ export const getProductByName = (name) => {
         type: GET_PRODUCT_BY_NAME,
         payload: response.data,
       });
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
@@ -176,7 +185,7 @@ export const getProductByStore = (id) => {
         type: GET_PRODUCT_BY_STORE,
         payload: response.data,
       });
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
@@ -248,25 +257,23 @@ export const getAllBrands = () => {
   };
 };
 
-
 //
 
 export const filterProducts = (filters) => {
-const endpoint = "http://localhost:3001/product/filter";
-return async (dispatch) => {
-  try {
-    const queryString = new URLSearchParams(filters).toString();
-    const response = await axios.get(`${endpoint}?${queryString}`);
-    console.log(response.data);
-    return dispatch({
-      type: GET_PRODUCT_FILTER,
-      payload: response.data,
-      
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+  const endpoint = "http://localhost:3001/product/filter";
+  return async (dispatch) => {
+    try {
+      const queryString = new URLSearchParams(filters).toString();
+      const response = await axios.get(`${endpoint}?${queryString}`);
+      console.log(response.data);
+      return dispatch({
+        type: GET_PRODUCT_FILTER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 };
 
 //FILTER
@@ -293,9 +300,9 @@ export const clearFilteredProducts = () => ({
   type: CLEAR_FILTERED_PRODUCTS,
 });
 
-export const clearProductsByStore = () =>({
+export const clearProductsByStore = () => ({
   type: CLEAR_PRODUCTS_STORE,
-})
+});
 
 export const renderCondition = (condition) => ({
   type: SET_CONDITION,

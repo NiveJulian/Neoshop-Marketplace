@@ -34,7 +34,6 @@ export default function UserFormLogin({ title, onClose }) {
       try {
         dispatch(login(formData));
 
-        toast.success("Login successful!");
         setTimeout(() => {
           window.location.reload()
         }, 2000);
