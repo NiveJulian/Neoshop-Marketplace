@@ -151,8 +151,7 @@
   background-color: #FF8200;
   color: #dfdfdf;
   text-align: center;
-  border-radius: 6px;
-  padding: 3px 8px; /* Ajustar el padding */
+  border-radius: 6px; /* Ajustar el padding */
   position: absolute;
   z-index: 1;
   top: 125%; /* Posiciona el tooltip debajo del elemento */

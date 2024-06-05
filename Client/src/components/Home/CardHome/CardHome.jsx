@@ -61,7 +61,6 @@ export const CardHome = ({
               <img
                 className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
                 src={store.logo}
-                src={store.logo}
                 alt=""
               />
             </Link>

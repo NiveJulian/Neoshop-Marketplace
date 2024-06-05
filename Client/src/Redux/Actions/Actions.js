@@ -23,6 +23,11 @@ export const IS_AUTH = "IS_AUTH";
 export const ISNT_AUTH = "ISNT_AUTH";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
+
+
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -94,8 +99,6 @@ export const getUserById = (id) => {
     }
   };
 };
-
-//
 
 export const isAuthenticated = (jwtToken) => async (dispatch) => {
   try {
@@ -198,7 +201,6 @@ export const getAllSellers = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${endpoint}`);
-      console.log(response);
       return dispatch({
         type: GET_ALL_STORE,
         payload: response.data,
@@ -257,7 +259,7 @@ export const getAllBrands = () => {
   };
 };
 
-//
+//FILTER
 
 export const filterProducts = (filters) => {
   const endpoint = "http://localhost:3001/product/filter";
@@ -275,16 +277,6 @@ export const filterProducts = (filters) => {
     }
   };
 };
-
-//FILTER
-// export const categoryFilter = (category) => ({
-//   type: SHOW_CATEGORY,
-//   payload: category,
-// });
-// export const storeFilter = (store) => ({
-//   type: SHOW_STORE,
-//   payload: store,
-// });
 
 export const orderProductsAbc = (vector) => ({
   type: SHOW_ABC,
@@ -309,21 +301,19 @@ export const renderCondition = (condition) => ({
   payload: condition,
 });
 
-//    const groupProductsByStore = (products, stores) => {
-//     // Crear un diccionario para las tiendas
-//     const storesDict = stores.reduce((acc, store) => {
-//       acc[store.id] = { ...store, products: [] };
-//       return acc;
-//     }, {});
+//CARRITO
 
-//     // Asociar productos a sus respectivas tiendas
-//     products.forEach(product => {
-//       const storeId = product.id_store;
-//       if (storesDict[storeId]) {
-//         storesDict[storeId].products.push(product);
-//       }
-//     });
+export const addToCart = (product) => ({
+  type: ADD_TO_CART,
+  payload: product
+});
 
-//     // Convertir el diccionario a un array de tiendas
-//     return Object.values(storesDict);
-//   };
+export const removeFromCart = (productId) => ({
+  type: REMOVE_FROM_CART,
+  payload: productId
+});
+
+export const updateCartItemQuantity = (productId, quantity) => ({
+  type: UPDATE_CART_ITEM_QUANTITY,
+  payload: { productId, quantity }
+});
