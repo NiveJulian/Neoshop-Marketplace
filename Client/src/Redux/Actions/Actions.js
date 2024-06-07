@@ -41,12 +41,28 @@ export const login = (formData) => async (dispatch) => {
     if (response.data.correctLogin) {
       toast.success("Login successful!");
 
-      dispatch({ type: LOGIN_SUCCESS });
+      dispatch({ type: LOGIN_SUCCESS, payload: response.data.user });
     }
   } catch (error) {
-    toast.error("Error al ingresar")
+    toast.error("Error al ingresar");
     localStorage.setItem("isAuth", "false");
   }
+};
+
+// LOGIN WITH GOOGLE
+export const loginWithGoogle = (user) => async (dispatch) => {
+  try {
+    dispatch({ type: LOGIN_SUCCESS, payload: user });
+  } catch (error) {
+    toast.error("Error al ingresar");
+    console.log(error.message);
+  }
+};
+
+// LOGOUT
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("authToken");
+  dispatch({ type: ISNT_AUTH });
 };
 
 export const register = (formData) => async (dispatch) => {
@@ -69,18 +85,6 @@ export const register = (formData) => async (dispatch) => {
   } catch (error) {
     toast.error("Error while registering")
 
-    console.log(error);
-  }
-};
-
-export const logout = () => async (dispatch) => {
-  try {
-    dispatch({ type: LOGIN_SUCCESS, payload: false });
-    toast.loading("Waiting...");
-    deleteSessionToken();
-
-    document.location.href = "/";
-  } catch (error) {
     console.log(error);
   }
 };

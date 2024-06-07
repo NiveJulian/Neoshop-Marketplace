@@ -56,13 +56,13 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, registering: true };
 
     case LOGIN_SUCCESS:
-      return { ...state, isAuth: payload };
+      return { ...state, isAuth: payload, user: payload };
 
     case IS_AUTH:
       return { ...state, isAuth: true, user: payload };
 
     case ISNT_AUTH:
-      return { ...state, isAuth: false };
+      return { ...state, isAuth: false, user: {} };
 
     case GET_ALL:
       return { ...state, allProducts: payload };

@@ -1,32 +1,61 @@
 import { createUserWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, updatePassword } from "firebase/auth";
 import { auth } from "./firebase";
+import store from "../Redux/Store/Store";
+import { loginWithGoogle } from "../Redux/Actions/Actions";
 
 export const doCreateUserWithEmailAndPassword = async (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const doSignInWithEmailAndPassowrd = async (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const doSignInWithGoogle = async() => {
+export const doSignInWithGoogle = async () => {
+  try {
     const provider = new GoogleAuthProvider();
-    const result = signInWithPopup(auth, provider)
-    //result.user
-    return result;
+    const result = await signInWithPopup(auth, provider);
+    const token = await result.user.getIdToken();
+
+    // Envía el token al backend
+    const response = await fetch("http://localhost:3001/login/auth/google", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: token }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+
+      const userInfo = {
+        uid: result.user.uid,
+        email: result.user.email,
+        name: result.user.displayName,
+      };
+
+      store.dispatch(loginWithGoogle(userInfo));
+      localStorage.setItem("authToken", token);
+      window.location.href = "/Home";
+    } else {
+      throw new Error("Error al enviar el token al backend");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 };
 
-export const doSignWithFacebook = async() => {
-    const provider = new FacebookAuthProvider();
-    const result = signInWithPopup(auth, provider);
-    //result.user
-    return result;
+export const doSignWithFacebook = async () => {
+  const provider = new FacebookAuthProvider();
+  const result = signInWithPopup(auth, provider);
+  return result;
 };
 
 export const doSignOut = () => {
-    return auth.signOut();
+  return auth.signOut();
 };
-
 // Funciones en caso de usarse despues: PasswordReset, PasswordChange, EmailVerification
 
 // export const doPasswordReset = (email) => {
