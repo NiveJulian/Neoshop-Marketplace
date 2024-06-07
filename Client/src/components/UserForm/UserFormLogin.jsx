@@ -4,8 +4,11 @@ import { useDispatch } from "react-redux";
 import { login } from "../../Redux/Actions/Actions";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { doSignInWithEmailAndPassowrd, doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 
 export default function UserFormLogin({ title, onClose }) {
+  const [isSigningIn, setIsSigningIn] = useState(false)
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,16 +28,18 @@ export default function UserFormLogin({ title, onClose }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     validationLogin(formData, errors, setErrors);
     const noErrors = Object.keys(errors).every((key) => errors[key] === "");
-
+    if(!isSigningIn) {
+      setIsSigningIn(true)
+      await doSignInWithEmailAndPassowrd(formData.email, formData.password)
+    }
     if (noErrors) {
       try {
         dispatch(login(formData));
 
-        toast.success("Login successful!");
         setTimeout(() => {
           window.location.reload()
         }, 2000);
@@ -44,6 +49,26 @@ export default function UserFormLogin({ title, onClose }) {
       }
     }
   };
+
+  const onFacebookSignIn = (e) => {
+    e.preventDefault();
+    if(!isSigningIn) {
+      setIsSigningIn(true)
+      doSignWithFacebook().catch(err => {
+        setIsSigningIn(false)
+      })
+    }
+  }
+
+  const onGoogleSignIn = (e) => {
+    e.preventDefault();
+    if(!isSigningIn) {
+      setIsSigningIn(true)
+      doSignInWithGoogle().catch(err => {
+        setIsSigningIn(false)
+      })
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
@@ -122,7 +147,9 @@ export default function UserFormLogin({ title, onClose }) {
           </Link>
         </div>
         <div className="mt-6 flex justify-center gap-2 items-center flex-col">
-          <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+          <button
+            onClick={(e) => { onGoogleSignIn(e) }} 
+            className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
             <div className="relative flex items-center space-x-4 justify-center">
               <img
                 src="https://tailus.io/sources/blocks/social/preview/images/google.svg"
@@ -149,7 +176,10 @@ export default function UserFormLogin({ title, onClose }) {
               </span>
             </div>
           </button>
-          <button className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+          <button 
+            onClick={(e) => { onFacebookSignIn(e) }}
+            className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
+            >
             <div className="relative flex items-center space-x-4 justify-center">
               <img
                 src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"

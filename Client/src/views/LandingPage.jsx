@@ -1,16 +1,8 @@
 import axios from "axios";
 import Nav from "../components/Nav/Nav";
-import logo1 from "../assets/images/logo1.png";
-import logo2 from "../assets/images/logo2.jpg";
-import logo3 from "../assets/images/logo3.jpg";
-import logo4 from "../assets/images/logo4.png";
-import logo5 from "../assets/images/logo5.jpg";
 import Testimonials from "../components/Testimonials/Testimonials";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-const logos = [logo1, logo2, logo3, logo4, logo5];
-
+import { Link, useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -19,12 +11,9 @@ const LandingPage = () => {
   const postFakeApi = async () => {
     try {
       await axios.post("http://localhost:3001/");
-      
-      
     } catch (error) {
       console.error("Error al hacer el fake POST:", error);
     }
-    
   };
 
   return (
@@ -32,21 +21,23 @@ const LandingPage = () => {
       <Nav />
       <header className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-primary">
         {/* Fondo de animaciones */}
-
         <div className="header-background"></div>
         {/* Marcas flotantes */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
           <div className="floating-logos">
             {store.map((store, index) => (
-              <div key={index} className="floating-logo">
+              <Link
+                key={index}
+                className="floating-logo"
+                to={`/store/${store.id_store}`}
+              >
                 <img src={store.logo} alt={`logo ${index}`} />
-              </div>
+              </Link>
             ))}
           </div>
         </div>
-
         {/* Contenido de bienvenida */}
-        <div className="relative z-10 text-center text-white px-6">
+        <div className="header-content">
           <h1 className="text-4xl font-bold mb-4">Welcome to Neo Shop</h1>
           <p className="text-lg font-semibold mb-6">
             Our project aims to create an innovative marketplace allowing users
@@ -55,22 +46,18 @@ const LandingPage = () => {
           </p>
           <button
             className="px-6 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 active:translate-y-[5%] hover:shadow-sm active:shadow-2xl"
-            onClick={() =>{
-              postFakeApi();
-              navigate("/home");
-               }}
+            onClick={() => (window.location.href = "/home")}
           >
             <strong>Go to Store</strong>
           </button>
-          {/* <button
+          <button
             className="px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 active:translate-y-[5%] hover:shadow-sm active:shadow-2xl"
             onClick={postFakeApi}
           >
-            <strong>post products</strong>
-          </button> */}
+            <strong>Post Products</strong>
+          </button>
         </div>
       </header>
-
       <section id="features" className="py-12 px-6 bg-gray-100 shadow-md mt-6">
         <h2 className="text-3xl font-bold mb-8 text-center">
           Why Choose Neo Shop?
@@ -143,11 +130,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-
       <section id="testimonials" className="py-6 px-6">
         <Testimonials />
       </section>
-
       <footer
         id="github"
         className="w-full py-4 bg-gray-800 text-white text-center"

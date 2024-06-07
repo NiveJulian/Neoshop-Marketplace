@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../Redux/Actions/Actions";
+import { doSignOut } from "../../firebase/auth";
 
 export default function User({ user, onClose }) {
   const dispatch = useDispatch();
@@ -89,7 +90,7 @@ export default function User({ user, onClose }) {
 
         <div className="">
           <button
-            onClick={() => handleLogout()}
+            onClick={() => handleLogout().then(doSignOut())}
             className="w-full px-4 py-2 pb-4 hover:bg-gray-100 flex"
           >
             <p className="text-sm font-medium text-gray-800 leading-none">

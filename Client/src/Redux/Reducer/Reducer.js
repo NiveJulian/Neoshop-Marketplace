@@ -19,6 +19,9 @@ import {
   GET_ALL_BRANDS,
   GET_PRODUCT_BY_STORE,
   CLEAR_PRODUCTS_STORE,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_CART_ITEM_QUANTITY,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -29,6 +32,7 @@ const initialState = {
   brands: [],
   seller: {},
   user: {},
+  cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
   filteredProducts: [],
   namedProducts: [],
   productsByStore: [],
@@ -44,6 +48,8 @@ const rootReducer = (state = initialState, action) => {
   const { type, payload } = action;
   let sortedProducts;
   let priceProducts;
+  let updatedCartItems;
+  let existingProductIndex;
 
   switch (type) {
     case REGISTER_SUCCESS:
@@ -87,11 +93,13 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         namedProducts: payload,
       };
+
     case GET_PRODUCT_BY_STORE:
       return {
         ...state,
         productsByStore: payload,
       };
+
     case GET_USER_BY_ID:
       return {
         ...state,
@@ -103,22 +111,6 @@ const rootReducer = (state = initialState, action) => {
 
     case GET_NEW:
       return { ...state, newProducts: payload };
-
-    // case SHOW_CATEGORY:
-    //   return {
-    //     ...state,
-    //     filteredProducts: state.allProducts.filter((product) =>
-    //       product.categories.some((cat) => cat.name === payload)
-    //     ),
-    //   };
-
-    //  case SHOW_STORE:
-    //   return {
-    //     ...state,
-    //     filteredProducts: state.allProducts.filter((product) =>
-    //       product.store.name.includes(payload)
-    //     ),
-    //   };
 
     case SHOW_ABC:
       sortedProducts = [];
@@ -175,10 +167,57 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, filteredProducts: [] };
 
     case CLEAR_PRODUCTS_STORE:
-      return {...state, productsByStore:[] }  
+      return { ...state, productsByStore: [] };
 
     case SET_CONDITION:
       return { ...state, condition: payload };
+
+    case ADD_TO_CART:
+      // Verificar si el producto ya está en el carrito
+      existingProductIndex = state.cartItems.findIndex(
+        (item) => item.id_product === payload.id_product
+      );
+      if (existingProductIndex >= 0) {
+        // Si ya está en el carrito, aumentar la cantidad
+        updatedCartItems = state.cartItems.map((item, index) =>
+          index === existingProductIndex
+            ? { ...item, cartQuantity: (item.cartQuantity || 1) + 1 }
+            : item
+        );
+      } else {
+        // Si no está en el carrito, agregarlo con cantidad inicial de 1
+        updatedCartItems = [
+          ...state.cartItems,
+          { ...payload, cartQuantity: 1 },
+        ];
+      }
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      return {
+        ...state,
+        cartItems: updatedCartItems,
+      };
+
+    case REMOVE_FROM_CART:
+      updatedCartItems = state.cartItems.filter(
+        (item) => item.id_product !== payload
+      );
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      return {
+        ...state,
+        cartItems: updatedCartItems,
+      };
+
+    case UPDATE_CART_ITEM_QUANTITY:
+      updatedCartItems = state.cartItems.map((item) =>
+        item.id_product === payload.productId
+          ? { ...item, cartQuantity: payload.quantity }
+          : item
+      );
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      return {
+        ...state,
+        cartItems: updatedCartItems,
+      };
 
     default:
       return state;

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { products } from "./FakeBd";
 import { deleteSessionToken } from "../../components/delCookie";
 import toast from "react-hot-toast";
 export const GET_ALL = "GET_ALL";
@@ -24,6 +23,11 @@ export const IS_AUTH = "IS_AUTH";
 export const ISNT_AUTH = "ISNT_AUTH";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
+
+
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -33,11 +37,14 @@ export const login = (formData) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
-    toast.loading('Waiting...')
+    toast.loading("Waiting...");
     if (response.data.correctLogin) {
+      toast.success("Login successful!");
+
       dispatch({ type: LOGIN_SUCCESS });
     }
   } catch (error) {
+    toast.error("Error al ingresar")
     localStorage.setItem("isAuth", "false");
   }
 };
@@ -47,15 +54,21 @@ export const register = (formData) => async (dispatch) => {
 
   try {
     const response = await axios.post(`${endpoint}`, formData);
-
+    
+    toast.loading("Waiting...");
     if (response.status === 200) {
+      toast.success("Register successful!");
+
       dispatch({ type: REGISTER_SUCCESS });
-      toast.loading('Waiting...')
       setTimeout(() => {
         location.href = "/";
       }, 2000);
+    }else{
+      toast.error("Error while registering")
     }
   } catch (error) {
+    toast.error("Error while registering")
+
     console.log(error);
   }
 };
@@ -63,7 +76,7 @@ export const register = (formData) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_SUCCESS, payload: false });
-    toast.loading('Waiting...')
+    toast.loading("Waiting...");
     deleteSessionToken();
 
     document.location.href = "/";
@@ -87,8 +100,6 @@ export const getUserById = (id) => {
   };
 };
 
-//
-
 export const isAuthenticated = (jwtToken) => async (dispatch) => {
   try {
     const response = await axios.post("http://localhost:3001/login/auth", {
@@ -100,7 +111,7 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
       dispatch({ type: ISNT_AUTH });
     }
   } catch (error) {
-    dispatch({ type: ISNT_AUTH});
+    dispatch({ type: ISNT_AUTH });
   }
 };
 
@@ -140,7 +151,7 @@ export const getNewProducts = () => {
   const endpoint = "http://localhost:3001/product/latest";
   return async (dispatch) => {
     try {
-      const response= await axios.get(endpoint);
+      const response = await axios.get(endpoint);
       return dispatch({
         type: GET_NEW,
         payload: response.data,
@@ -160,15 +171,15 @@ export const getProductByName = (name) => {
         type: GET_PRODUCT_BY_NAME,
         payload: response.data,
       });
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
   };
 };
 
-export const getProductByStore = (store) => {
-  const endpoint = `http://localhost:3001/product/store/${store}`;
+export const getProductByStore = (id) => {
+  const endpoint = `http://localhost:3001/product/allProductsStore/${id}`;
   return async (dispatch) => {
     try {
       let response = await axios.get(endpoint);
@@ -177,7 +188,7 @@ export const getProductByStore = (store) => {
         type: GET_PRODUCT_BY_STORE,
         payload: response.data,
       });
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
@@ -190,7 +201,6 @@ export const getAllSellers = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${endpoint}`);
-      console.log(response);
       return dispatch({
         type: GET_ALL_STORE,
         payload: response.data,
@@ -249,36 +259,24 @@ export const getAllBrands = () => {
   };
 };
 
-
-//
+//FILTER
 
 export const filterProducts = (filters) => {
-const endpoint = "http://localhost:3001/product/filter";
-return async (dispatch) => {
-  try {
-    const queryString = new URLSearchParams(filters).toString();
-    const response = await axios.get(`${endpoint}?${queryString}`);
-    console.log(response.data);
-    return dispatch({
-      type: GET_PRODUCT_FILTER,
-      payload: response.data,
-      
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
+  const endpoint = "http://localhost:3001/product/filter";
+  return async (dispatch) => {
+    try {
+      const queryString = new URLSearchParams(filters).toString();
+      const response = await axios.get(`${endpoint}?${queryString}`);
+      console.log(response.data);
+      return dispatch({
+        type: GET_PRODUCT_FILTER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 };
-};
-
-//FILTER
-// export const categoryFilter = (category) => ({
-//   type: SHOW_CATEGORY,
-//   payload: category,
-// });
-// export const storeFilter = (store) => ({
-//   type: SHOW_STORE,
-//   payload: store,
-// });
 
 export const orderProductsAbc = (vector) => ({
   type: SHOW_ABC,
@@ -294,30 +292,28 @@ export const clearFilteredProducts = () => ({
   type: CLEAR_FILTERED_PRODUCTS,
 });
 
-export const clearProductsByStore = () =>({
+export const clearProductsByStore = () => ({
   type: CLEAR_PRODUCTS_STORE,
-})
+});
 
 export const renderCondition = (condition) => ({
   type: SET_CONDITION,
   payload: condition,
 });
 
-//    const groupProductsByStore = (products, stores) => {
-//     // Crear un diccionario para las tiendas
-//     const storesDict = stores.reduce((acc, store) => {
-//       acc[store.id] = { ...store, products: [] };
-//       return acc;
-//     }, {});
+//CARRITO
 
-//     // Asociar productos a sus respectivas tiendas
-//     products.forEach(product => {
-//       const storeId = product.id_store;
-//       if (storesDict[storeId]) {
-//         storesDict[storeId].products.push(product);
-//       }
-//     });
+export const addToCart = (product) => ({
+  type: ADD_TO_CART,
+  payload: product
+});
 
-//     // Convertir el diccionario a un array de tiendas
-//     return Object.values(storesDict);
-//   };
+export const removeFromCart = (productId) => ({
+  type: REMOVE_FROM_CART,
+  payload: productId
+});
+
+export const updateCartItemQuantity = (productId, quantity) => ({
+  type: UPDATE_CART_ITEM_QUANTITY,
+  payload: { productId, quantity }
+});

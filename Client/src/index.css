@@ -14,11 +14,21 @@
   }
 }
 
+@keyframes slide {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .floating-logos {
   position: relative;
   width: 100%;
   height: 100%;
-  z-index: 1; /* Asegura que los logos estén detrás del texto de bienvenida */
+  z-index: 1;
+  animation: slide 20s linear infinite;
 }
 
 .floating-logo {
@@ -110,6 +120,12 @@
   }
   
 
+  .dropdown-list {
+    max-height: 200px; /* Ajusta esta altura según tus necesidades */
+    overflow-y: auto;
+  }
+  
+
 .testimonial-card {
     opacity: 0;
     transform: translateX(-100%);
@@ -121,3 +137,43 @@
     transform: translateX(0);
   }
   
+
+/* NAV */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 80px; /* Reducir el ancho del tooltip */
+  background-color: #FF8200;
+  color: #dfdfdf;
+  text-align: center;
+  border-radius: 6px; /* Ajustar el padding */
+  position: absolute;
+  z-index: 1;
+  top: 125%; /* Posiciona el tooltip debajo del elemento */
+  left: 50%;
+  margin-left: -40px; /* Usa margen negativo para centrar el tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px; /* Ajustar el tamaño de la fuente */
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%; /* En el borde superior del tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #FF8200 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

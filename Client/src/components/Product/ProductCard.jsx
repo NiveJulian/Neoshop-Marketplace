@@ -11,6 +11,7 @@ export const ProductCard = ({
   id_review,
   id_discounts,
   id_store,
+  onAddToCart
 }) => {
   return (
     <article className="w-64 h-full rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6">
@@ -33,6 +34,8 @@ export const ProductCard = ({
             <span className="ml-1 text-sm text-slate-400">4.9</span>
           </div>
         </div>
+      </a>
+
 
         <div className="mt-1 p-2">
           <h2 className="text-slate-700">{name}</h2>
@@ -41,7 +44,7 @@ export const ProductCard = ({
           <div className="mt-3 flex items-end justify-between">
             <p className="text-lg font-bold text-blue-500">${price}</p>
 
-            <div className="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+            <div onClick={() => onAddToCart()} className="flex cursor-pointer items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -61,7 +64,6 @@ export const ProductCard = ({
             </div>
           </div>
         </div>
-      </a>
     </article>
   );
 };

@@ -139,7 +139,7 @@ const Sidebar = () => {
             </svg>
             <span className="text-sm font-bolder">Filters & Orders</span>
           </a>
-          <div className="w-full px-2">
+          <div className="w-full px-4 py-2">
             <div className="flex flex-col items-center w-full mt-3 border-gray-300">
               <a
                 className="flex flex-col items-center mt-3 border-gray-300"

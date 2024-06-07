@@ -1,6 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { getNewProducts, getProductByStore, getSellerById } from "../Redux/Actions/Actions.js";
+import {
+  getProductByStore,
+  getSellerById,
+} from "../Redux/Actions/Actions.js";
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
@@ -12,37 +15,26 @@ const StoreDetail = () => {
   const { id } = useParams();
   // const newProducts = useSelector((state) => state.newProducts);
   const productsByStore = useSelector((state) => state.productsByStore);
-  const {seller} = useSelector((state) => state);
+  const seller = useSelector((state) => state.seller);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     dispatch(getSellerById(id)).then(() => {
-      // Marcar como completado cuando la carga haya terminado
       setLoading(false);
     });
-    
+    dispatch(getProductByStore(id))
+
     // dispatch(getNewProducts());
   }, [dispatch, id]);
 
-  useEffect(() => {
-    setLoading(true);
-      dispatch(getProductByStore(seller.name)).then(() => {
-        // Marcar como completado cuando la carga haya terminado
-        setLoading(false);
-      });
-  }, [dispatch, seller.name])
-  
 
   // const formatVentasText = (ventas) => {
   //   return ventas >= 10000 ? "más de 10 mil ventas" : `${ventas} ventas`;
   // };
 
   if (loading) {
-    return(<div>
-      Loading...
-    </div>
-    )
+    return <div>Loading...</div>;
   }
 
   return (
@@ -53,7 +45,7 @@ const StoreDetail = () => {
           <div className="seller-container">
             <img
               className="seller-image w-32 h-32 rounded-full object-fill border border-gray-300 shadow-lg"
-              src={seller?.logo ? seller?.logo : 'neoshoplogo.jpeg' }
+              src={seller?.logo ? seller?.logo : "neoshoplogo.jpeg"}
               alt={`Imagen del vendedor ${seller.name}`}
             />
             <div className="seller-stats">

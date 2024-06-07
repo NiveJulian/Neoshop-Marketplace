@@ -1,9 +1,4 @@
-import React from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
-import { getProductByStore } from "../../../Redux/Actions/Actions";
-
 export const CardHome = ({
   id_product,
   name,
@@ -12,18 +7,12 @@ export const CardHome = ({
   date_creation,
   quantity,
   price,
+  store,
+  idStore,
   available,
   id_review,
   id_discounts,
-  store,
 }) => {
-  const dispatch = useDispatch();
-  
-  // useEffect(() => {
-    
-  //     dispatch(getStoreById(store.name));
-      
-  // }, [dispatch, store.name])
 
   return (
     <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64">
@@ -66,7 +55,7 @@ export const CardHome = ({
       <div className="flex justify-between items-center w-full pb-4 mb-auto">
         <div className="flex items-center">
           <div className="pr-3">
-            <Link to={`/store/${store.id_store}`}>
+            <Link to={`/store/${idStore}`}>
               <img
                 className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
                 src={store.logo}
