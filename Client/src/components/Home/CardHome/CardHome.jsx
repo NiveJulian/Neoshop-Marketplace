@@ -16,7 +16,7 @@ export const CardHome = ({
   
   
   return (
-    <article className="bg-white h-full p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative">
+    <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64">
       <div className="relative flex mb-4 rounded-2xl">
         <Link to={`/product/${id_product}`} className="justify-center items-center">
           <img
@@ -57,7 +57,7 @@ export const CardHome = ({
       <div className="flex justify-between items-center w-full pb-4 mb-auto">
         <div className="flex items-center">
           <div className="pr-3">
-            <Link to={`/store/${idStore}`}>
+            <Link to={`/store/${store.id_store}`}>
               <img
                 className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
                 src={store.logo}

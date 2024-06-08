@@ -12,6 +12,7 @@ import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
 import axios from "axios";
+import { PayDetail } from "./views/PayDetail";
 
 function App() {
  
@@ -43,6 +44,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/store/:id" element={<StoreDetail />} />
+        <Route path="/pay" element={<PayDetail/>} />
       </Routes>
     </div>
   );
