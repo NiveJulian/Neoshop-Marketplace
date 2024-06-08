@@ -22,19 +22,24 @@ export const IS_AUTH = "IS_AUTH";
 export const ISNT_AUTH = "ISNT_AUTH";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
+import { deleteSessionToken } from "../../components/delCookie";
+import { auth } from "../../firebase/firebase";
+// import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
   const endpoint = "http://localhost:3001/login/";
-
   try {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
+    console.log(response);
+    console.log(response);
     toast.loading("Waiting...");
     if (response.data.correctLogin) {
       toast.success("Login successful!");
@@ -42,6 +47,7 @@ export const login = (formData) => async (dispatch) => {
       dispatch({ type: LOGIN_SUCCESS, payload: response.data.user });
     }
   } catch (error) {
+    console.log(error);
     toast.error("Error al ingresar");
     localStorage.setItem("isAuth", "false");
   }
@@ -53,10 +59,70 @@ export const loginWithGoogle = (userInfo) => ({
   payload: userInfo,
 });
 
+// export const doSignInWithGoogle = () => async (dispatch) => {
+//   try {
+//     const auth = getAuth();
+//     const provider = new GoogleAuthProvider();
+//     const result = await signInWithPopup(auth, provider);
+//     const token = await result.user.getIdToken();
+
+//     // Send the token to the backend
+//     const response = await fetch("http://localhost:3001/login/auth/google", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ token: token }),
+//     });
+
+//     if (response.ok) {
+//       const userInfo = {
+//         uid: result.user.uid,
+//         email: result.user.email,
+//         name: result.user.displayName,
+//       };
+
+//       dispatch(loginWithGoogle(userInfo));
+//       localStorage.setItem("authToken", token);
+//       localStorage.setItem("isAuth", "true")
+//       // Assuming you want to redirect to "/home" only on successful login
+//       window.location.href = "/home";
+//     } else {
+//       throw new Error("Error al enviar el token al backend");
+//     }
+//   } catch (error) {
+//     console.error("Error:", error);
+//     toast.error("Login failed. Please try again.");
+//   }
+// };
+
+
+// export const authWithGoogle = () => async (dispatch) => {
+//   try {
+//     const response = await axios.post("http://localhost:3001/login/auth/google", {
+//     });
+//     console.log(response);
+//     if (response.data) {
+//       dispatch({ type: IS_AUTH, payload: response.data });
+//     } else {
+//       dispatch({ type: ISNT_AUTH });
+//     }
+//   } catch (error) {
+//     dispatch({ type: ISNT_AUTH });
+//   }
+// };
+
 // LOGOUT
-export const logout = () => (dispatch) => {
-  localStorage.removeItem("authToken");
-  dispatch({ type: ISNT_AUTH });
+export const logout = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOGOUT, payload: false });
+    toast.loading("Waiting...");
+    deleteSessionToken();
+
+    document.location.href = "/";
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const register = (formData) => async (dispatch) => {
@@ -99,19 +165,41 @@ export const getUserById = (id) => {
 };
 
 export const isAuthenticated = (jwtToken) => async (dispatch) => {
-  try {
-    const response = await axios.post("http://localhost:3001/login/auth", {
-      token: jwtToken,
+    try {
+      if (jwtToken) {
+        const response = await axios.post("http://localhost:3001/login/auth", {
+          token: jwtToken})    
+          if (response.data) {
+            dispatch({ type: IS_AUTH, payload: response.data });
+          } 
+          else {
+            dispatch({ type: ISNT_AUTH });
+        };
+      } else {
+        const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    const token = await result.user.getIdToken();
+
+    // Envía el token al backend
+    const googleresponse = await fetch("http://localhost:3001/login/auth/google", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: token }),
     });
-    if (response.data) {
-      dispatch({ type: IS_AUTH, payload: response.data });
-    } else {
+      if (googleresponse.data) {
+        dispatch({ type: IS_AUTH, payload: googleresponse.data });
+      }
+      else {
+        dispatch({ type: ISNT_AUTH });
+      }
+      }     
+    } catch (error) {
       dispatch({ type: ISNT_AUTH });
     }
-  } catch (error) {
-    dispatch({ type: ISNT_AUTH });
   }
-};
+
 
 //PRODUCTS
 export const getAllProducts = () => {

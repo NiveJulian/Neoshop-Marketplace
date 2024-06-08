@@ -23,6 +23,7 @@ import {
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM_QUANTITY,
   LOGIN_WITH_GOOGLE,
+  LOGOUT,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -63,6 +64,9 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, isAuth: true, user: payload };
 
     case ISNT_AUTH:
+      return { ...state, isAuth: false, user: {} };
+
+    case LOGOUT:
       return { ...state, isAuth: false, user: {} };
 
     case LOGIN_WITH_GOOGLE:

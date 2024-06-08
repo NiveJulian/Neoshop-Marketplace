@@ -16,25 +16,8 @@ export default function UserFormRegister({ title = "Register" }) {
     nro_document: "",
   });
 
-  const [errors, setErrors] = useState({
-    name: "",
-    lastname: "",
-    password: "",
-    city: "",
-    state: "",
-    email: "",
-    nro_document: "",
-  });
-
-  const [touched, setTouched] = useState({
-    name: false,
-    lastname: false,
-    password: false,
-    city: false,
-    state: false,
-    email: false,
-    nro_document: false,
-  });
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,9 +40,7 @@ export default function UserFormRegister({ title = "Register" }) {
   }, [formData]);
 
   useEffect(() => {
-    if (Object.keys(memoizedErrors).length > 0) {
-      setErrors(memoizedErrors);
-    }
+    setErrors(memoizedErrors);
   }, [memoizedErrors]);
 
   const handleSubmit = async (e) => {
@@ -68,7 +49,9 @@ export default function UserFormRegister({ title = "Register" }) {
       try {
         dispatch(register(formData));
         console.log("Form data submitted:", formData);
+        toast.success("Register successful!");
       } catch (error) {
+        console.log(error);
         toast.error("Register failed. Please try again.");
       }
     } else {
@@ -120,7 +103,9 @@ export default function UserFormRegister({ title = "Register" }) {
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                touched.lastname && errors.lastname ? "border-red-500" : "border-gray-200"
+                touched.lastname && errors.lastname
+                  ? "border-red-500"
+                  : "border-gray-200"
               }`}
               id="grid-last-name"
               type="text"
@@ -145,7 +130,9 @@ export default function UserFormRegister({ title = "Register" }) {
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                touched.password && errors.password ? "border-red-500" : "border-gray-200"
+                touched.password && errors.password
+                  ? "border-red-500"
+                  : "border-gray-200"
               }`}
               id="grid-password"
               type="password"
@@ -207,9 +194,7 @@ export default function UserFormRegister({ title = "Register" }) {
               <p className="text-red-500 text-xs italic">{errors.state}</p>
             )}
           </div>
-          
         </div>
-        
         <div className="flex flex-wrap mx-2 mb-1">
           <div className="w-full px-3">
             <label
@@ -220,7 +205,9 @@ export default function UserFormRegister({ title = "Register" }) {
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                touched.nro_document && errors.nro_document ? "border-red-500" : "border-gray-200"
+                touched.nro_document && errors.nro_document
+                  ? "border-red-500"
+                  : "border-gray-200"
               }`}
               id="grid-nro_document"
               type="text"
@@ -231,7 +218,9 @@ export default function UserFormRegister({ title = "Register" }) {
               onBlur={handleBlur}
             />
             {touched.nro_document && errors.nro_document && (
-              <p className="text-red-500 text-xs italic">{errors.nro_document}</p>
+              <p className="text-red-500 text-xs italic">
+                {errors.nro_document}
+              </p>
             )}
           </div>
         </div>

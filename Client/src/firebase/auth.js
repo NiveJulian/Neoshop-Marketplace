@@ -3,13 +3,13 @@ import { auth } from "./firebase";
 import store from "../Redux/Store/Store";
 import { loginWithGoogle } from "../Redux/Actions/Actions";
 
-export const doCreateUserWithEmailAndPassword = async (email, password) => {
-  return createUserWithEmailAndPassword(auth, email, password);
-};
+// export const doCreateUserWithEmailAndPassword = async (email, password) => {
+//   return createUserWithEmailAndPassword(auth, email, password);
+// };
 
-export const doSignInWithEmailAndPassowrd = async (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
-};
+// export const doSignInWithEmailAndPassowrd = async (email, password) => {
+//   return signInWithEmailAndPassword(auth, email, password);
+// };
 
 export const doSignInWithGoogle = async () => {
   try {

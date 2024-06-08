@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../Redux/Actions/Actions";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { doSignInWithEmailAndPassowrd, doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
+import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 
 export default function UserFormLogin({ title, onClose }) {
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -29,20 +29,21 @@ export default function UserFormLogin({ title, onClose }) {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     validationLogin(formData, errors, setErrors);
     const noErrors = Object.keys(errors).every((key) => errors[key] === "");
-    if (!isSigningIn) {
-      setIsSigningIn(true);
+
+    if (noErrors) {
       try {
-        await doSignInWithEmailAndPassowrd(formData.email, formData.password);
         dispatch(login(formData));
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
       } catch (error) {
         toast.error("Login failed. Please try again.");
         console.log(error.message);
-      } finally {
-        setIsSigningIn(false);
       }
     }
   };
@@ -61,15 +62,7 @@ export default function UserFormLogin({ title, onClose }) {
 
   const onGoogleSignIn = async (e) => {
     e.preventDefault();
-    if (!isSigningIn) {
-      setIsSigningIn(true);
-      try {
-        await doSignInWithGoogle();
-      } catch (err) {
-        console.error(err);
-        setIsSigningIn(false);
-      }
-    }
+    dispatch(doSignInWithGoogle());
   };
 
   return (
