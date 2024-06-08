@@ -1,4 +1,4 @@
-const validationRegister = ({ name, lastname, password, city, state, postalCode, email, nro_document }) => {
+const validationRegister = ({ name, lastname, password, city, state, email, nro_document }) => {
   let newErrors = {};
 
   if (!name || !name.trim()) {
@@ -47,14 +47,6 @@ const validationRegister = ({ name, lastname, password, city, state, postalCode,
     newErrors.state = "El estado no puede contener símbolos";
   } else {
     newErrors.state = "";
-  }
-
-  if (!postalCode) {
-    newErrors.postalCode = "El código postal está vacío";
-  } else if (!/^\d{4,6}$/.test(postalCode)) {
-    newErrors.postalCode = "El código postal debe ser un número de 4 a 6 cifras";
-  } else {
-    newErrors.postalCode = "";
   }
 
   if (!email) {

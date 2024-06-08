@@ -1,5 +1,4 @@
 import axios from "axios";
-import { deleteSessionToken } from "../../components/delCookie";
 import toast from "react-hot-toast";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
@@ -26,8 +25,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
-
-
+export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -50,14 +48,10 @@ export const login = (formData) => async (dispatch) => {
 };
 
 // LOGIN WITH GOOGLE
-export const loginWithGoogle = (user) => async (dispatch) => {
-  try {
-    dispatch({ type: LOGIN_SUCCESS, payload: user });
-  } catch (error) {
-    toast.error("Error al ingresar");
-    console.log(error.message);
-  }
-};
+export const loginWithGoogle = (userInfo) => ({
+  type: LOGIN_WITH_GOOGLE,
+  payload: userInfo,
+});
 
 // LOGOUT
 export const logout = () => (dispatch) => {

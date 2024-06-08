@@ -12,7 +12,6 @@ export default function UserFormRegister({ title = "Register" }) {
     password: "",
     city: "",
     state: "",
-    postalCode: "",
     email: "",
     nro_document: "",
   });
@@ -23,7 +22,6 @@ export default function UserFormRegister({ title = "Register" }) {
     password: "",
     city: "",
     state: "",
-    postalCode: "",
     email: "",
     nro_document: "",
   });
@@ -34,7 +32,6 @@ export default function UserFormRegister({ title = "Register" }) {
     password: false,
     city: false,
     state: false,
-    postalCode: false,
     email: false,
     nro_document: false,
   });
@@ -78,6 +75,8 @@ export default function UserFormRegister({ title = "Register" }) {
       toast.error("Please fix the errors before submitting.");
     }
   };
+
+  console.log(formData);
 
   return (
     <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen">
