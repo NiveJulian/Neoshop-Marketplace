@@ -1,0 +1,192 @@
+.landing-container {
+    font-family: "Oswald", sans-serif;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
+    background-color: var(--color-fondo);
+    position: relative; 
+  }
+  
+  .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .header {
+    background-image: linear-gradient(#004f80, #0088cc);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid black;
+    transition: all 0.3s ease; 
+  }
+  
+  .header:hover {
+    transform: scale(1.05); 
+  }
+  
+  .title {
+    font-size: 3em;
+    margin: 0;
+  }
+  
+  .subtitle {
+    font-size: 1.5em;
+    margin: 0;
+  }
+  
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+  
+  .hero-section {
+    text-align: center;
+    margin: 5px 0;
+  }
+  
+  .carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .carousel-button.left {
+    left: 10px;
+    background-image: linear-gradient(#004f80, #0088cc);
+  }
+  
+  .carousel-button.right {
+    right: 10px;
+    background-image: linear-gradient(#004f80, #0088cc);
+  }
+  
+  .hero-image {
+    width: 800px;
+    height: 700px;
+    object-fit: cover;
+  }
+  
+  .hero-title {
+    font-size: 2em;
+    margin: 20px 0;
+  }
+  
+  .hero-description {
+    font-size: 1.2em;
+    margin: 20px 0;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-image: linear-gradient(#004f80, #0088cc);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    transform: scale(1.05); 
+  }
+  
+  .cta-button::after {
+    content: "Go!";
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
+  }
+  
+  .cta-button:hover::after {
+    opacity: 1;
+  }
+  
+  .testimonials-section {
+    text-align: center;
+    margin: 40px 0;
+  }
+  
+  .testimonials-title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .testimonials-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    color: white;
+  }
+  
+  .testimonial {
+    width: 45%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+    background-image: linear-gradient(#004f80, #0088cc);
+    transition: all 0.3s ease;
+  }
+  
+  .testimonial:hover {
+    transform: scale(1.05); /* Aumenta el tamaño del contenedor */
+  }
+  
+  .testimonial p {
+    margin: 0 0 10px;
+  }
+  
+  .testimonial-author {
+    font-weight: bold;
+  }
+  
+  .footer {
+    background-image: linear-gradient(#004f80, #0088cc);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+  }
+  
+  .footer:hover {
+    transform: scale(1.02); 
+  }
+  
+  .github-link {
+    color: white;
+  
+    text-decoration: underline;
+  }
+  
+  .github-link:hover {
+    color: #ccc;
+  }
+  

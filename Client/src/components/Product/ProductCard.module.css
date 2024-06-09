@@ -1,0 +1,17 @@
+.tarjeta{
+    position:relative;
+      width: 200px;
+      height: 200px;
+      padding: 10px;
+       /* border: 1px solid; */
+      border-radius: 10px; 
+      margin: 20px; 
+      overflow: hidden;
+      box-shadow: 0 0 10px orange; /* Desenfoque de color naranja neon */
+}
+
+.imagen_borde {
+  width: 80%;
+  height: 80%;
+  border-radius: 10px;
+}
