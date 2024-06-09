@@ -22,29 +22,30 @@ function CartItem({ product }) {
   const subtotal = (parseFloat(product.price) * cartQuantity).toFixed(2);
 
   return (
-    <div className="flex items-center border rounded-lg px-2 py-2">
+    <div className="flex items-center gap-2 border rounded-lg px-2 py-2">
       <img
         src={product.img_product}
         alt={product.name}
         className="w-16 h-16 mr-4"
       />
       <div className="flex-1">
-        <h3 className="text-lg font-semibold">{product.name}</h3>
+        <h3 className="text-sm font-semibold">{product.name}</h3>
         <p className="text-gray-500">${product.price}</p>
       </div>
       <input
         type="number"
         value={cartQuantity}
         onChange={handleChangeQuantity}
-        className="w-16 border rounded-md p-1 text-center mr-4"
+        className="w-9 justify-center border rounded-md p-1 text-center mr-4"
         min="1"
       />
-      <div>
-        <p className="text-gray-500">Subtotal: ${subtotal}</p>
+      <div className="flex-col">
+        <p className="text-gray-500 text-sm">Subtotal: </p>
+        <span>${subtotal}</span>
       </div>
       <button
         onClick={handleRemove}
-        className="text-red-500 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)] hover:text-red-400"
+        className="text-red-500 hover:border hover:rounded-full hover:border-gray-200 p-2 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)] hover:text-red-400"
       >
         {/* Icono para eliminar producto */}
         <svg

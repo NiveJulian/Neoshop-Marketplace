@@ -25,9 +25,12 @@ export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
+export const UPDATE_CART_ITEM_QUANTITY = "UPDATE_CART_ITEM_QUANTITY";
 
-
+export const CART_SENT_SUCCESS = "CART_SENT_SUCCESS";
+export const CART_SENT_FAILURE = "CART_SENT_FAILURE";
+export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
+export const GET_CART_FAILURE = "GET_CART_FAILURE";
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -44,7 +47,7 @@ export const login = (formData) => async (dispatch) => {
       dispatch({ type: LOGIN_SUCCESS });
     }
   } catch (error) {
-    toast.error("Error al ingresar")
+    toast.error("Error al ingresar");
     localStorage.setItem("isAuth", "false");
   }
 };
@@ -54,7 +57,7 @@ export const register = (formData) => async (dispatch) => {
 
   try {
     const response = await axios.post(`${endpoint}`, formData);
-    
+
     toast.loading("Waiting...");
     if (response.status === 200) {
       toast.success("Register successful!");
@@ -63,11 +66,11 @@ export const register = (formData) => async (dispatch) => {
       setTimeout(() => {
         location.href = "/";
       }, 2000);
-    }else{
-      toast.error("Error while registering")
+    } else {
+      toast.error("Error while registering");
     }
   } catch (error) {
-    toast.error("Error while registering")
+    toast.error("Error while registering");
 
     console.log(error);
   }
@@ -305,15 +308,53 @@ export const renderCondition = (condition) => ({
 
 export const addToCart = (product) => ({
   type: ADD_TO_CART,
-  payload: product
+  payload: product,
 });
 
 export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,
-  payload: productId
+  payload: productId,
 });
 
 export const updateCartItemQuantity = (productId, quantity) => ({
   type: UPDATE_CART_ITEM_QUANTITY,
-  payload: { productId, quantity }
+  payload: { productId, quantity },
 });
+
+export const sendCart = (userId, cartItems) => async (dispatch) => {
+  try {
+    if (userId) {
+      const data = {
+        idUser: userId, // Ajusta el nombre de la propiedad a "idUser"
+        arrayProducts: cartItems.map((product) => ({
+          id_product: product.id_product,
+          cartQuantity: product.cartQuantity,
+        })),
+      };
+      // Realizar la petición POST
+      const response = await axios.post("http://localhost:3001/cart/", data);
+      // Despachar una acción si es necesario
+      console.log(response);
+      // dispatch({ type: CART_SENT_SUCCESS, payload: response });
+    } else {
+      console.log("No user is logged in.");
+    }
+  } catch (error) {
+    console.error("Error sending cart:", error);
+    dispatch({ type: CART_SENT_FAILURE, error });
+  }
+};
+
+export const getCartByUserId = (userId) => async (dispatch) => {
+  try {
+    // Realizar la petición GET para obtener la información del carrito del usuario
+    const response = await axios.get(`http://localhost:3001/cart/id/${userId}`);
+    console.log(response.data);
+    // Despachar una acción con la información del carrito obtenida
+    dispatch({ type: GET_CART_SUCCESS, payload: response.data });
+  } catch (error) {
+    // En caso de error, despachar una acción de error
+    console.error("Error al obtener el carrito:", error);
+    dispatch({ type: GET_CART_FAILURE, error });
+  }
+};

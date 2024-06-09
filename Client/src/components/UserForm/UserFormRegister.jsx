@@ -16,6 +16,8 @@ export default function UserFormRegister({ title = "Register" }) {
     nro_document: "",
   });
 
+
+
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
@@ -48,10 +50,7 @@ export default function UserFormRegister({ title = "Register" }) {
     if (Object.keys(memoizedErrors).length === 0) {
       try {
         dispatch(register(formData));
-        console.log("Form data submitted:", formData);
-        toast.success("Register successful!");
       } catch (error) {
-        console.log(error);
         toast.error("Register failed. Please try again.");
       }
     } else {

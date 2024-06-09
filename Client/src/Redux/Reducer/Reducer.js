@@ -22,6 +22,10 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM_QUANTITY,
+  CART_SENT_SUCCESS,
+  CART_SENT_FAILURE,
+  GET_CART_SUCCESS,
+  GET_CART_FAILURE,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -42,6 +46,8 @@ const initialState = {
   registering: false,
   registerError: null,
   loginError: null,
+  cartSent: false,
+  cartError: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -217,6 +223,31 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: updatedCartItems,
+      };
+
+    case CART_SENT_SUCCESS:
+      return {
+        ...state,
+        cartSent: true,
+        cartError: null,
+      };
+    case CART_SENT_FAILURE:
+      return {
+        ...state,
+        cartSent: false,
+        cartError: payload,
+      };
+
+    case GET_CART_SUCCESS:  
+      return {
+        ...state,
+        cartItems: payload.cartProducts, 
+      };
+
+    case GET_CART_FAILURE: 
+      return {
+        ...state,
+        cartError: payload,
       };
 
     default:
