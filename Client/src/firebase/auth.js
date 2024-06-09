@@ -39,7 +39,7 @@ export const doSignInWithGoogle = async () => {
 
       store.dispatch(loginWithGoogle(userInfo));
       localStorage.setItem("authToken", token);
-      // window.location.href = "/Home";
+      window.location.href = "/Home";
     } else {
       throw new Error("Error al enviar el token al backend");
     }
