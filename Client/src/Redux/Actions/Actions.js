@@ -29,6 +29,7 @@ export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 import { deleteSessionToken } from "../../components/delCookie";
 import { auth } from "../../firebase/firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 
 // LOGIN
@@ -113,11 +114,13 @@ export const loginWithGoogle = (userInfo) => ({
 // };
 
 // LOGOUT
+
 export const logout = () => async (dispatch) => {
   try {
     dispatch({ type: LOGOUT, payload: false });
     toast.loading("Waiting...");
     deleteSessionToken();
+    localStorage.setItem("authToken", "false")
 
     document.location.href = "/";
   } catch (error) {
@@ -167,35 +170,32 @@ export const getUserById = (id) => {
 export const isAuthenticated = (jwtToken) => async (dispatch) => {
     try {
       if (jwtToken) {
+        console.log("hay jwtToken");
         const response = await axios.post("http://localhost:3001/login/auth", {
-          token: jwtToken})    
+          token: jwtToken, provider: 'jwt'})    
           if (response.data) {
             dispatch({ type: IS_AUTH, payload: response.data });
           } 
           else {
+            console.log("fallo login con jwtToken");
             dispatch({ type: ISNT_AUTH });
         };
       } else {
-        const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const token = await result.user.getIdToken();
-
-    // Envía el token al backend
-    const googleresponse = await fetch("http://localhost:3001/login/auth/google", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: token }),
-    });
-      if (googleresponse.data) {
-        dispatch({ type: IS_AUTH, payload: googleresponse.data });
+      const googletoken = localStorage.getItem("authToken")
+      const response = await axios.post("http://localhost:3001/login/auth", {
+        token: googletoken, provider: "google"})
+        console.log("respuesta de google:", response);
+        if (response.data) {
+          console.log("data de respuesta de google:", response.data);
+          dispatch({ type: IS_AUTH, payload: response.data });
+        } 
+        else {
+          console.log("fallo login con google");
+          dispatch({ type: ISNT_AUTH });
       }
-      else {
-        dispatch({ type: ISNT_AUTH });
-      }
-      }     
+    }     
     } catch (error) {
+      console.log("catch error:", error);
       dispatch({ type: ISNT_AUTH });
     }
   }

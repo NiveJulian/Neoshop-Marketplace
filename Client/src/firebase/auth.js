@@ -15,6 +15,7 @@ export const doSignInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
+    console.log("result en funcion del auth:", result);
     const token = await result.user.getIdToken();
 
     // Envía el token al backend
@@ -38,7 +39,7 @@ export const doSignInWithGoogle = async () => {
 
       store.dispatch(loginWithGoogle(userInfo));
       localStorage.setItem("authToken", token);
-      window.location.href = "/Home";
+      // window.location.href = "/Home";
     } else {
       throw new Error("Error al enviar el token al backend");
     }
