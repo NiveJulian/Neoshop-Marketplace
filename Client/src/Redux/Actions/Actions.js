@@ -190,9 +190,7 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
       const googletoken = localStorage.getItem("authToken")
       const response = await axios.post("http://localhost:3001/login/auth", {
         token: googletoken, provider: "google"})
-        console.log("respuesta de google:", response);
         if (response.data) {
-          console.log("data de respuesta de google:", response.data);
           dispatch({ type: IS_AUTH, payload: response.data });
         } 
         else {
