@@ -27,9 +27,10 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
+export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
 import { deleteSessionToken } from "../../components/delCookie";
-import { auth } from "../../firebase/firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import { auth } from "../../firebase/firebase";
+// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 
 // LOGIN
@@ -59,6 +60,11 @@ export const loginWithGoogle = (userInfo) => ({
   type: LOGIN_WITH_GOOGLE,
   payload: userInfo,
 });
+
+export const loginWithFacebook = (userInfo) => ({
+  type: LOGIN_WITH_FACEBOOK,
+  payload: userInfo
+})
 
 // export const doSignInWithGoogle = () => async (dispatch) => {
 //   try {

@@ -50,14 +50,7 @@ export default function UserFormLogin({ title, onClose }) {
 
   const onFacebookSignIn = async (e) => {
     e.preventDefault();
-    if (!isSigningIn) {
-      setIsSigningIn(true);
-      try {
-        await doSignWithFacebook();
-      } catch (err) {
-        setIsSigningIn(false);
-      }
-    }
+    dispatch(doSignWithFacebook());
   };
 
   const onGoogleSignIn = async (e) => {
