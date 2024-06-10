@@ -4,6 +4,7 @@ import ProductList from "../components/ProductList/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../Redux/Actions/Actions";
 import { useEffect } from "react";
+// import Categories from "../components/Categories/Categories";
 
 export const Products = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,9 @@ export const Products = () => {
         <h1 className="mb-7 text-4xl font-bold pb-2 text-gray-300 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]">
           Products
         </h1>
+        {/* <Categories/>  */}
       </div>
+      
       <div className="relative -mt-24">
         <Sidebar />
       </div>

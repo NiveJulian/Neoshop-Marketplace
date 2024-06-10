@@ -18,8 +18,10 @@ import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
 
-function App() {
+function App () {
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllSellers());

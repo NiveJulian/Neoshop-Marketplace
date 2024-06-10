@@ -50,6 +50,12 @@ export default function ProductList({ allProducts }) {
           />
         ))}
       </div>
+      <Paginate 
+        productsPerPage={productsPerPage}
+        totalProducts={allProducts.length}
+        page={page}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

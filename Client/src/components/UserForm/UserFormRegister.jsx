@@ -58,6 +58,8 @@ export default function UserFormRegister({ title = "Register" }) {
     }
   };
 
+  console.log(formData);
+
   return (
     <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen">
       <form

@@ -26,6 +26,9 @@ import {
   CART_SENT_FAILURE,
   GET_CART_SUCCESS,
   GET_CART_FAILURE,
+  LOGIN_WITH_GOOGLE,
+  LOGIN_WITH_FACEBOOK,
+  LOGOUT,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -62,13 +65,22 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, registering: true };
 
     case LOGIN_SUCCESS:
-      return { ...state, isAuth: payload };
+      return { ...state, isAuth: payload, user: payload };
 
     case IS_AUTH:
       return { ...state, isAuth: true, user: payload };
 
     case ISNT_AUTH:
-      return { ...state, isAuth: false };
+      return { ...state, isAuth: false, user: {} };
+
+    case LOGOUT:
+      return { ...state, isAuth: false, user: {} };
+
+    case LOGIN_WITH_GOOGLE:
+      return { ...state, isAuth: true, user: payload };
+
+    case LOGIN_WITH_FACEBOOK:
+      return { ...state, isAuth: true, user: payload };
 
     case GET_ALL:
       return { ...state, allProducts: payload };

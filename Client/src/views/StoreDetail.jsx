@@ -7,22 +7,8 @@ import {
 import "./StoreDetail.css";
 
 import Nav from "../components/Nav/Nav";
-// import Sidebar from "../components/SideBar/SideBar.jsx";
 import { useParams } from "react-router-dom";
 import ListCardProductByStore from "../components/ProductByStore/ListCardProductByStore.jsx";
-
-// const seller = {
-//   name: "MotoMoto",
-//   image:
-//     "https://lojarcell.vteximg.com.br/arquivos/ids/162373/banner-marcas-motorola-mobile-min.png?v=637493652503570000",
-//   ventas: 11000,
-//   average_mark: 4.5,
-//   adress_cp: "1653",
-//   adress_country: "Argentina",
-//   adress_city: "Buenos Aires",
-//   date_creation: "10 / 02 / 2024",
-//   quantity_review: 3000,
-// };
 
 const StoreDetail = () => {
   const dispatch = useDispatch();
@@ -54,7 +40,6 @@ const StoreDetail = () => {
   return (
     <div>
       <Nav />
-      {/* <Sidebar /> */}
       <div className="detail-container">
         <div className="detail-content">
           <div className="seller-container">
@@ -66,7 +51,6 @@ const StoreDetail = () => {
             <div className="seller-stats">
               <p className="seller-name">{seller.name}</p>
               <p className="seller-stats-text">
-                {/* {formatVentasText(seller.ventas)} */}
               </p>
               <p className="seller-stats-text">
                 reputación: {seller.average_mark} / 5
@@ -80,6 +64,7 @@ const StoreDetail = () => {
               <p>{seller.quantity_review} reviews totales</p>
             </div>
           </div>
+          {/* <Categories/> */}
           <div className="banner">Products</div>
           <div className="mt-8">
             <ListCardProductByStore productByStore={productsByStore} />
