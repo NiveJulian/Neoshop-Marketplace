@@ -15,11 +15,10 @@ export const doSignInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
-    console.log("result en funcion del auth:", result);
     const token = await result.user.getIdToken();
 
     // Envía el token al backend
-    const response = await fetch("http://localhost:3001/login/auth/google", {
+    const response = await fetch("http://localhost:3001/login/auth/third", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,15 +49,11 @@ export const doSignInWithGoogle = async () => {
 
 export const doSignWithFacebook = async () => {
   try {
-    console.log("hola");
     const provider = new FacebookAuthProvider();
-    console.log("provider de facebook:", provider);
     const result = await signInWithPopup(auth, provider);
-    console.log('result de facebook:', result);
     const token = await result.user.getIdToken()
-    console.log("token de facebook:", token);
 
-    const response = await fetch("http://localhost:3001/login/auth/google", {
+    const response = await fetch("http://localhost:3001/login/auth/third", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

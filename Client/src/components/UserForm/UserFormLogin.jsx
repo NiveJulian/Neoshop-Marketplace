@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 
 export default function UserFormLogin({ title, onClose }) {
-  const [isSigningIn, setIsSigningIn] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
