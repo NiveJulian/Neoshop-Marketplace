@@ -7,16 +7,18 @@ import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllBrands, getAllCategories, getAllProducts, getAllSellers, isAuthenticated } from "./Redux/Actions/Actions";
+import {
+  getAllBrands,
+  getAllCategories,
+  getAllProducts,
+  getAllSellers,
+  isAuthenticated,
+} from "./Redux/Actions/Actions";
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
-import axios from "axios";
 
 function App() {
- 
-
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
@@ -24,13 +26,8 @@ function App() {
     dispatch(getAllBrands());
     dispatch(getAllCategories());
     dispatch(isAuthenticated(jwtToken));
-   
-    
-    
   }, [dispatch]);
 
- 
- 
   return (
     <div>
       <Toaster position="top-right" reverseOrder={false} />
