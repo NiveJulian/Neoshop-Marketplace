@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeFromCart, updateCartItemQuantity } from "../../../Redux/Actions/Actions";
+import toast from "react-hot-toast";
 
 function CartItem({ product }) {
   const [cartQuantity, setCartQuantity] = useState(product.cartQuantity || 1);
@@ -10,11 +11,13 @@ function CartItem({ product }) {
   const handleChangeQuantity = (event) => {
     const newCartQuantity = parseInt(event.target.value, 10);
     setCartQuantity(newCartQuantity);
+    toast.success(`Quantity from ${product.name} is upload`)
     dispatch(updateCartItemQuantity(product.id_product, newCartQuantity));
   };
 
   // Función para eliminar el producto del carrito
   const handleRemove = () => {
+    toast.warning()
     dispatch(removeFromCart(product.id_product));
   };
 

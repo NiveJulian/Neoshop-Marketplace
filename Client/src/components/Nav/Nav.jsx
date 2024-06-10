@@ -17,15 +17,18 @@ export default function Nav({ color }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isAuth && user?.id_user) {
-      dispatch(getCartByUserId(user?.id_user));
-    }
-  }, [dispatch, user, isAuth]);
+      if (cartItems.length === 0 && user.id_user) {
+        dispatch(getCartByUserId(user?.id_user));
+      }
+  }, [dispatch, user, cartItems]);
 
   useEffect(() => {
-    // Llamar a la acción para enviar el carrito cada vez que se actualiza
     if (cartItems.length > 0 && isAuth) {
-      dispatch(sendCart(user?.id_user, cartItems));
+      try {
+        dispatch(sendCart(user?.id_user, cartItems));
+      } catch (error) {
+        console.error('Error sending cart:', error);
+      }
     }
   }, [cartItems, user, dispatch, isAuth]);
 

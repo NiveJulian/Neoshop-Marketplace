@@ -322,6 +322,7 @@ export const updateCartItemQuantity = (productId, quantity) => ({
 });
 
 export const sendCart = (userId, cartItems) => async (dispatch) => {
+  console.log(userId, cartItems)
   try {
     if (userId) {
       const data = {
@@ -335,7 +336,7 @@ export const sendCart = (userId, cartItems) => async (dispatch) => {
       const response = await axios.post("http://localhost:3001/cart/", data);
       // Despachar una acción si es necesario
       console.log(response);
-      // dispatch({ type: CART_SENT_SUCCESS, payload: response });
+      dispatch({ type: CART_SENT_SUCCESS, payload: response });
     } else {
       console.log("No user is logged in.");
     }
@@ -346,6 +347,7 @@ export const sendCart = (userId, cartItems) => async (dispatch) => {
 };
 
 export const getCartByUserId = (userId) => async (dispatch) => {
+  console.log(userId)
   try {
     // Realizar la petición GET para obtener la información del carrito del usuario
     const response = await axios.get(`http://localhost:3001/cart/id/${userId}`);
