@@ -4,36 +4,36 @@ import { removeFromCart, updateCartItemQuantity } from "../../../Redux/Actions/A
 import toast from "react-hot-toast";
 
 function CartItem({ product }) {
-  const [cartQuantity, setCartQuantity] = useState(product.cartQuantity || 1);
+  const [cartQuantity, setCartQuantity] = useState(product?.cartQuantity || 1);
   const dispatch = useDispatch();
 
   // Función para manejar cambios en la cantidad del carrito
   const handleChangeQuantity = (event) => {
     const newCartQuantity = parseInt(event.target.value, 10);
     setCartQuantity(newCartQuantity);
-    toast.success(`Quantity from ${product.name} is upload`)
-    dispatch(updateCartItemQuantity(product.id_product, newCartQuantity));
+    toast.success(`Quantity from ${product?.name} is upload`)
+    dispatch(updateCartItemQuantity(product?.id_product, newCartQuantity));
   };
 
   // Función para eliminar el producto del carrito
   const handleRemove = () => {
     toast.success("Eliminado correctamente")
-    dispatch(removeFromCart(product.id_product));
+    dispatch(removeFromCart(product?.id_product));
   };
 
   // Calcular el subtotal del producto
-  const subtotal = (parseFloat(product.price) * cartQuantity).toFixed(2);
+  const subtotal = (parseFloat(product?.price) * cartQuantity).toFixed(2);
 
   return (
     <div className="flex items-center gap-2 border rounded-lg px-2 py-2">
       <img
-        src={product.img_product}
-        alt={product.name}
+        src={product?.img_product}
+        alt={product?.name}
         className="w-16 h-16 mr-4"
       />
       <div className="flex-1">
-        <h3 className="text-sm font-semibold">{product.name}</h3>
-        <p className="text-gray-500">${product.price}</p>
+        <h3 className="text-sm font-semibold">{product?.name}</h3>
+        <p className="text-gray-500">${product?.price}</p>
       </div>
       <input
         type="number"

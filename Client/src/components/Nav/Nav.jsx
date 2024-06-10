@@ -10,14 +10,14 @@ import CartList from "../ProductCart/CartList/CartList";
 export default function Nav({ color }) {
   const user = useSelector((state) => state.user);
   const isAuth = useSelector((state) => state.isAuth);
-  const cartItems = useSelector((state) => state.cartItems);
+  const cartItems = useSelector((state) => state.cartItems) || 0;
 
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-      if (cartItems.length === 0 && user.id_user) {
+      if (cartItems?.length === 0 && user?.id_user) {
         dispatch(getCartByUserId(user?.id_user));
       }
   }, [dispatch, user, cartItems]);
@@ -68,7 +68,7 @@ export default function Nav({ color }) {
         <div className="flex gap-2 justify-center items-center">
           <Link to={"/"}>
             <img
-              src="neoshoplogo.jpeg"
+              src="../../../../neoshoplogo.jpeg"
               className="rounded-lg w-10 h-10"
               alt="neoshologo"
             />
@@ -215,9 +215,9 @@ export default function Nav({ color }) {
                 />
               </svg>
             </button>
-            {cartItems.length > 0 && (
+            {cartItems?.length > 0 && (
               <span className="bg-secondary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center absolute top-0 right-0">
-                {cartItems.length}
+                {cartItems?.length}
               </span>
             )}
             <div className="tooltiptext">Cart</div>

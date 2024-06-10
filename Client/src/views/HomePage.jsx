@@ -16,9 +16,9 @@ const HomePage = () => {
   return (
     <div>
       <Nav color={"primary"} />
-      <div className="mx-2 md:mx-80 mt-8">
+      <div className="mx-2 flex justify-center items-center flex-col mt-8">
         <div className="flex">
-          <div className="w-1/4 p-5 text-center bg-gray-100 p-4 rounded-l-2xl">
+          <div className="w-1/4 text-center bg-gray-100 p-4 rounded-l-2xl">
             <h1 className="mb-4 text-xl font-bold pb-2 text-gray-600">
               Recent products
             </h1>

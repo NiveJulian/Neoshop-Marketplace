@@ -101,7 +101,7 @@ const ProductDetail = () => {
 
   return (
     <div>
-      <Nav />
+      <Nav color={"primary"}/>
       <div className="detail-container">
         <div className="detail-cont">
           <div>
