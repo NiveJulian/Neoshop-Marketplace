@@ -1,27 +1,13 @@
 import Nav from "./Nav";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Logo from "./Logo";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useId } from "react";
 import { useRouter } from "next/router";
 
-export default function Layout({ children }) {
+export default function Layout({ children, userId, user }) {
   const [showNav, setShowNav] = useState(false);
-  const { user, error, isLoading } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    // Esperar hasta que isLoading sea falso
-    if (isLoading) return;
-
-    // Verificar si el usuario está autenticado
-    if (!user) {
-      // Redirigir al usuario a la página de login
-      router.push("/api/auth/login");
-    }
-  }, [user, isLoading, router]);
-
-  if (!user) {
-    return <div>Waiting...</div>
+  if(!userId){
+    return <div>Loading...</div>
   }
   return (
     <div className="bg-gray-200 h-full">
@@ -47,7 +33,7 @@ export default function Layout({ children }) {
         </div>
       </div>
       <div className="flex">
-        <Nav show={showNav} />
+        <Nav show={showNav} userId={userId} user={user} />
         <div className="flex-grow p-4">{children}</div>
       </div>
     </div>

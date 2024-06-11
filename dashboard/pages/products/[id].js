@@ -1,14 +1,15 @@
-'use client'; 
-import Layout from "../components/Layout";
-import axios from "axios";
+import Layout from "../../components/Layout";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { 
     // useEffect, 
     useState 
 } from "react";
 
-export default function Products() {
+export default function Products({user}) {
   const [products, setProducts] = useState([]);
+  const router = useRouter();
+  const { id } = router.query;
 
 //   useEffect(() => {
 //     const fetchProducts = async () => {
@@ -27,10 +28,10 @@ export default function Products() {
 //   }, []);
 
   return (
-    <Layout>
+    <Layout userId={id} user={user}>
       <Link 
       className="btn-primary" 
-      href={'#'}
+      href={`/products/new/${id}`}
       >
         Crear producto
       </Link>
