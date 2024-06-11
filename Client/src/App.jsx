@@ -13,6 +13,8 @@ import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
 import axios from "axios";
 import { PayDetail } from "./views/PayDetail";
+import { AdressUser } from "./views/AdressUser";
+import { PayPreview } from "./views/PayPreview";
 
 function App() {
  
@@ -43,7 +45,9 @@ function App() {
         <Route path="/store" element={<Store />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/store/:id" element={<StoreDetail />} />
+        <Route path="/store/:id" element={<StoreDetail />} /> 
+        <Route path="/payPreview" element={<PayPreview/>} />
+        <Route path="/adress" element={<AdressUser/>} />
         <Route path="/pay" element={<PayDetail/>} />
       </Routes>
     </div>

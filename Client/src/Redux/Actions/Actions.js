@@ -27,7 +27,10 @@ export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
+export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
+export const CLEAN_CART = "CLEAN_CART";
 
 
 
@@ -114,6 +117,28 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
     }
   } catch (error) {
     dispatch({ type: ISNT_AUTH });
+  }
+};
+
+export const updateUserAddress = (formUpdate) => async (dispatch) => {
+  const endpoint = 'http://localhost:3001/user/update';
+
+  try {
+    const response = await axios.put(endpoint, formUpdate);
+
+    if (response.status === 200) {
+      toast.success('Update successful!');
+      dispatch({
+        type: UPDATE_USER,
+        payload: response.data,
+      });
+         setTimeout(() => {
+         location.href = "/payPreview";
+         }, 5000);
+    }
+  } catch (error) {
+    toast.error('Error while updating');
+    console.log(error);
   }
 };
 
@@ -315,24 +340,38 @@ export const removeFromCart = (productId) => ({
   payload: productId
 });
 
+export const cleanCart = () => ({
+  type: CLEAN_CART,
+})
+
 export const updateCartItemQuantity = (productId, quantity) => ({
   type: UPDATE_CART_ITEM_QUANTITY,
   payload: { productId, quantity }
 });
 
+export const updateDeliveryMethod = (delivery) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_DELIVERY,
+      payload: delivery,
+    });
+  };
+};
+
 //PAGOS
 export const paymentOk = (payment) => {
 
-  return async () => {
+  return async (dispatch) => {
     try {
       console.log (payment);
       const response = await axios.post("http://localhost:3001/paying/post-order", payment);
       
       if (response.status === 200) {
         
-
-      } else {
-        toast.error("Error sending payment");
+        
+    
+     } else {
+      toast.error("Error archiving payment");
       }
     } catch (error) {
       toast.error("Error sending payment");

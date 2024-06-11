@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { CartDetailItem } from "../components/ProductCart/CartDetailItem/CartDetailItem";
-import { paymentOk } from "../Redux/Actions/Actions";
+import { cleanCart, paymentOk } from "../Redux/Actions/Actions";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const PayDetail = () => {
     const cartItems = useSelector((state) => state.cartItems);
     const user = useSelector((state) => state.user);
-    console.log (user);
+    const ship = useSelector ((state) => state.delivery);
+    const navigate = useNavigate ();
+    const dispatch = useDispatch();
+    
     const [subtotal, setSubtotal] = useState(0);
     const [comission, setComission] = useState(0);
     const [finalTotal, setFinalTotal] = useState(0);
@@ -42,7 +46,7 @@ export const PayDetail = () => {
           amount: calculatedFinalTotal,
           date: "",
         });
-      
+       
     }, [cartItems, user]);
   
     function createOrder() {
@@ -120,7 +124,7 @@ export const PayDetail = () => {
         toast.success("Success Payment Sent!");
         setTimeout(() => {
             location.href = "/";
-          }, 5000);
+          }, 4000);
       })
  
       .catch(error => {
@@ -133,7 +137,8 @@ export const PayDetail = () => {
         const sendPayment = async () => {
             try {
                 const response = await paymentOk(paymentDetail)();
-                // Puedes agregar lógica adicional aquí si es necesario
+                dispatch(cleanCart());
+                
                 // setTimeout(() => {
                 //     location.href = "/";
                 //   }, 5000);
@@ -146,10 +151,12 @@ export const PayDetail = () => {
             sendPayment();
         }
     }, [paymentDetail]);
+
+    console.log ("Este es el delivery" +ship);
 return(
 <div className="min-h-screen flex justify-center items-center bg-gray-100 ">
     
-      <div className="h-[500px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10">
+      <div className="h-[560px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10">
         <div className="order-info h-full w-[60%] p-6 flex justify-center relative box-border">
           <div className="order-info-content w-full table-fixed ">
             <h2 className="mb-0 mt-1 text-center font-light text-lg">
@@ -193,7 +200,7 @@ return(
                                 <div><strong>City:</strong> {user.city}</div>
                                 <div><strong>State:</strong> {user.state}</div>
                                 <div><strong>Postal Code:</strong> {user.postalCode}</div>
-                                <div><strong>Delivery: </strong>Standard</div>
+                                <div><strong>Delivery: </strong>{ship}</div>
                             </div>
             </div>
           </div>
@@ -210,7 +217,8 @@ return(
               }}
             />
           </div>
-          <button className="pay-btn border-none bg-green-600 leading-8 rounded-lg text-lg text-white cursor-pointer mt-4 w-1/3 mx-auto transition duration-200 ease-in-out hover:bg-green-500">
+          <button className="pay-btn border-none bg-gray-300 leading-8 rounded-lg text-sm text-gray-600 cursor-pointer mt-4 w-1/5 mx-auto transition duration-200 ease-in-out hover:bg-gray-500 hover:text-gray-200"
+            onClick={() => navigate("/payPreview")}>
             GoBack
           </button>
         </div>

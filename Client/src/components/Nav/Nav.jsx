@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
@@ -16,6 +16,7 @@ export default function Nav({ color }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -214,7 +215,8 @@ export default function Nav({ color }) {
                   <p className="text-gray-500">${calculateTotal()}</p>
                 </div>
                 <div className="mt-4 float-left">
-                  <button className="border p-2 hover:text-secondary hover:border-secondary hover:shadow-lg active:translate-y-[5%] rounded-md active:shadow-xl">
+                  <button className="border p-2 hover:text-secondary hover:border-secondary hover:shadow-lg active:translate-y-[5%] rounded-md active:shadow-xl"
+                  onClick={()=>((navigate("/payPreview")))}>
                     Continue with the purchase
                   </button>
                 </div>
