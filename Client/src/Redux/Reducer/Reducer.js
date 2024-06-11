@@ -29,12 +29,17 @@ import {
   LOGIN_WITH_GOOGLE,
   LOGIN_WITH_FACEBOOK,
   LOGOUT,
+  CREATE_STORE_SUCCESS,
+  CREATE_STORE_FAILURE,
+  UPLOAD_IMAGES_SUCCESS,
+  UPLOAD_IMAGES_FAILURE,
 } from "../Actions/Actions";
 
 const initialState = {
   allProducts: [],
   product: {},
   store: [],
+  images: [],
   categories: [],
   brands: [],
   seller: {},
@@ -93,7 +98,32 @@ const rootReducer = (state = initialState, action) => {
 
     case GET_ALL_STORE:
       return { ...state, store: payload };
+    case CREATE_STORE_SUCCESS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          id_store: payload,
+        },
+      };
 
+    case CREATE_STORE_FAILURE:
+      return {
+        ...state,
+      };
+
+    case UPLOAD_IMAGES_SUCCESS:
+      return {
+        ...state,
+        images: [...state.images, payload],
+        error: null,
+      };
+    case UPLOAD_IMAGES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
     case GET_ALL_CATEGORIES:
       return { ...state, categories: payload };
 

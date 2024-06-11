@@ -19,6 +19,8 @@ import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
 import ProfileDetail from "./views/ProfileDetail";
 import PersonalDetail from "./views/PersonalDetail";
+import ConfirmationUser from "./views/ConfirmationUser";
+import CreateStore from "./views/CreateStore";
 
 function App () {
 
@@ -46,6 +48,8 @@ function App () {
         <Route path="/store/:id" element={<StoreDetail />} />
         <Route path="/profile" element={<ProfileDetail/>} />
         <Route path="/personal" element={<PersonalDetail/>} />
+        <Route path="/confirmation" element={<ConfirmationUser/>} />
+        <Route path="/createstore" element={<CreateStore/>} />
       </Routes>
     </div>
   );

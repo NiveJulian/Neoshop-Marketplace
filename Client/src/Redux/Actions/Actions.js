@@ -36,6 +36,12 @@ export const CART_SENT_SUCCESS = "CART_SENT_SUCCESS";
 export const CART_SENT_FAILURE = "CART_SENT_FAILURE";
 export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 export const GET_CART_FAILURE = "GET_CART_FAILURE";
+export const CREATE_STORE_SUCCESS = "CREATE_STORE_SUCCESS";
+export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
+
+export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
+export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
+
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -147,7 +153,7 @@ export const register = (formData) => async (dispatch) => {
 
       dispatch({ type: REGISTER_SUCCESS });
       setTimeout(() => {
-        location.href = "/";
+        location.href = "/confirmation";
       }, 2000);
     } else {
       toast.error("Error while registering");
@@ -348,6 +354,43 @@ export const getAllBrands = () => {
   };
 };
 
+//STORE
+
+export const createStore = (formData) => async (dispatch) => {
+  console.log(formData);
+  try {
+    const response = await axios.post("http://localhost:3001/store/", formData);
+    if (response.status === 200) {
+      toast.success("Your store is create");
+      dispatch({ type: CREATE_STORE_SUCCESS, payload: response.data });
+    }
+  } catch (error) {
+    dispatch({ type: CREATE_STORE_FAILURE, payload: error });
+  }
+};
+
+export const uploadImages = (formData) => async (dispatch) => {
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3001/images/upload",
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    if (response.data) {
+      toast.success("Upload image success")
+      dispatch({ type: UPLOAD_IMAGES_SUCCESS, payload: response.data.links });
+    }
+  } catch (error) {
+    console.error("Error uploading images:", error);
+    dispatch({
+      type: UPLOAD_IMAGES_FAILURE,
+      payload: "Error uploading images",
+    });
+  }
+};
 //FILTER
 
 export const filterProducts = (filters) => {
