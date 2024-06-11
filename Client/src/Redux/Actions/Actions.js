@@ -10,6 +10,7 @@ export const GET_ALL_STORE = "GET_ALL_STORE";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS";
 export const GET_PRODUCT_FILTER = "GET_PRODUCT_FILTER";
+export const POST_PAYMENT = "POST_PAYMENT";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const SHOW_STORE = "SHOW_STORE";
 export const SHOW_ABC = "SHOW_ABC";
@@ -25,6 +26,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_CART_ITEM_QUANTITY = "UPDATE_CART_ITEM_QUANTITY";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
@@ -40,7 +42,9 @@ export const CREATE_STORE_SUCCESS = "CREATE_STORE_SUCCESS";
 export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
 
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
-export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
+export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
+export const CLEAN_CART = "CLEAN_CART";
+
 
 
 // LOGIN
@@ -207,6 +211,28 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
     }
   } catch (error) {
     dispatch({ type: ISNT_AUTH });
+  }
+};
+
+export const updateUserAddress = (formUpdate) => async (dispatch) => {
+  const endpoint = 'http://localhost:3001/user/update';
+
+  try {
+    const response = await axios.put(endpoint, formUpdate);
+
+    if (response.status === 200) {
+      toast.success('Update successful!');
+      dispatch({
+        type: UPDATE_USER,
+        payload: response.data,
+      });
+         setTimeout(() => {
+         location.href = "/payPreview";
+         }, 5000);
+    }
+  } catch (error) {
+    toast.error('Error while updating');
+    console.log(error);
   }
 };
 
@@ -444,6 +470,10 @@ export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,
   payload: productId,
 });
+
+export const cleanCart = () => ({
+  type: CLEAN_CART,
+})
 
 export const updateCartItemQuantity = (productId, quantity) => ({
   type: UPDATE_CART_ITEM_QUANTITY,

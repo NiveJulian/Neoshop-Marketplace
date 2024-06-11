@@ -21,8 +21,13 @@ import ProfileDetail from "./views/ProfileDetail";
 import PersonalDetail from "./views/PersonalDetail";
 import ConfirmationUser from "./views/ConfirmationUser";
 import CreateStore from "./views/CreateStore";
+import { PayDetail } from "./views/PayDetail";
+import { AdressUser } from "./views/AdressUser";
+import { PayPreview } from "./views/PayPreview";
 
-function App () {
+function App() {
+ 
+
 
   const dispatch = useDispatch();
 
@@ -45,7 +50,10 @@ function App () {
         <Route path="/store" element={<Store />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/store/:id" element={<StoreDetail />} />
+        <Route path="/store/:id" element={<StoreDetail />} /> 
+        <Route path="/payPreview" element={<PayPreview/>} />
+        <Route path="/adress" element={<AdressUser/>} />
+        <Route path="/pay" element={<PayDetail/>} />
         <Route path="/profile" element={<ProfileDetail/>} />
         <Route path="/personal" element={<PersonalDetail/>} />
         <Route path="/confirmation" element={<ConfirmationUser/>} />
