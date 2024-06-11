@@ -42,10 +42,9 @@ export const CREATE_STORE_SUCCESS = "CREATE_STORE_SUCCESS";
 export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
 
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
-export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
+export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
+export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
 export const CLEAN_CART = "CLEAN_CART";
-
-
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -215,23 +214,23 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
 };
 
 export const updateUserAddress = (formUpdate) => async (dispatch) => {
-  const endpoint = 'http://localhost:3001/user/update';
+  const endpoint = "http://localhost:3001/user/update";
 
   try {
     const response = await axios.put(endpoint, formUpdate);
 
     if (response.status === 200) {
-      toast.success('Update successful!');
+      toast.success("Update successful!");
       dispatch({
         type: UPDATE_USER,
         payload: response.data,
       });
-         setTimeout(() => {
-         location.href = "/payPreview";
-         }, 5000);
+      setTimeout(() => {
+        location.href = "/payPreview";
+      }, 5000);
     }
   } catch (error) {
-    toast.error('Error while updating');
+    toast.error("Error while updating");
     console.log(error);
   }
 };
@@ -396,7 +395,6 @@ export const createStore = (formData) => async (dispatch) => {
 };
 
 export const uploadImages = (formData) => async (dispatch) => {
-
   try {
     const response = await axios.post(
       "http://localhost:3001/images/upload",
@@ -406,7 +404,7 @@ export const uploadImages = (formData) => async (dispatch) => {
       }
     );
     if (response.data) {
-      toast.success("Upload image success")
+      toast.success("Upload image success");
       dispatch({ type: UPLOAD_IMAGES_SUCCESS, payload: response.data.links });
     }
   } catch (error) {
@@ -473,7 +471,7 @@ export const removeFromCart = (productId) => ({
 
 export const cleanCart = () => ({
   type: CLEAN_CART,
-})
+});
 
 export const updateCartItemQuantity = (productId, quantity) => ({
   type: UPDATE_CART_ITEM_QUANTITY,
@@ -518,4 +516,35 @@ export const getCartByUserId = (userId) => async (dispatch) => {
     console.error("Error al obtener el carrito:", error);
     dispatch({ type: GET_CART_FAILURE, error });
   }
+};
+
+//PAGOS
+export const paymentOk = (payment) => {
+  return async () => {
+    try {
+      console.log(payment);
+      const response = await axios.post(
+        "http://localhost:3001/paying/post-order",
+        payment
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        toast.success("Payment Ok")
+      } 
+    } catch (error) {
+      toast.error("Error sending payment");
+      console.log(error.message);
+    }
+  };
+};
+
+
+export const updateDeliveryMethod = (delivery) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_DELIVERY,
+      payload: delivery,
+    });
+  };
 };
