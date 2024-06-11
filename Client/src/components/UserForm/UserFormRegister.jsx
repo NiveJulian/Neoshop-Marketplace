@@ -1,11 +1,8 @@
-import  { useState } from "react";
-import { 
-  useDispatch, 
-  // useSelector 
-} from "react-redux";
-
+import { useState, useEffect, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import validationRegister from "./validationRegister"; // Importa tu función de validación
 import { register } from "../../Redux/Actions/Actions";
+import toast from "react-hot-toast";
 
 export default function UserFormRegister({ title = "Register" }) {
   const dispatch = useDispatch();
@@ -15,218 +12,251 @@ export default function UserFormRegister({ title = "Register" }) {
     password: "",
     city: "",
     state: "",
-    postalCode: "",
     email: "",
+    nro_document: "",
   });
+  console.log(formData)
 
-  const [errors, setErrors] = useState({
-    name: "",
-    lastname: "",
-    password: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    email: "",
-  });
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
+      
     });
-    validationRegister({ ...formData, [name]: value }, errors, setErrors);
+   
   };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched({
+      ...touched,
+      [name]: true,
+    });
+  };
+
+  const memoizedErrors = useMemo(() => {
+    return validationRegister(formData);
+  }, [formData]);
+
+  useEffect(() => {
+    setErrors(memoizedErrors);
+  }, [memoizedErrors]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      dispatch(register(formData))
-      console.log("Form data submitted:", formData);
+    if (Object.keys(memoizedErrors).length === 0) {
+      try {
+        
+        dispatch(register(formData));
+      } catch (error) {
+        toast.error("Register failed. Please try again.");
+      }
+    } else {
+      toast.error("Please fix the errors before submitting.");
+    }
   };
 
   return (
-    <form className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md" onSubmit={handleSubmit}>
-      <h1 className="text-center mb-4 text-3xl text-primary border-b-2">
-        <strong>{title}</strong>
-      </h1>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-first-name"
-          >
-            First Name
-          </label>
-          <input
-            className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-              errors.name ? "border-red-500" : "border-gray-200"
-            }`}
-            id="grid-first-name"
-            type="text"
-            placeholder="Juan Paco"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          {errors.name && (
-            <p className="text-red-500 text-xs italic">{errors.name}</p>
-          )}
-        </div>
-        <div className="w-full md:w-1/2 px-3">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-last-name"
-          >
-            Last Name
-          </label>
-          <input
-            className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-              errors.lastname ? "border-red-500" : "border-gray-200"
-            }`}
-            id="grid-last-name"
-            type="text"
-            placeholder="Delamar"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleChange}
-          />
-          {errors.lastname && (
-            <p className="text-red-500 text-xs italic">{errors.lastname}</p>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-password"
-          >
-            Password
-          </label>
-          <input
-            className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-              errors.password ? "border-red-500" : "border-gray-200"
-            }`}
-            id="grid-password"
-            type="password"
-            placeholder="******************"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-xs italic">{errors.password}</p>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-city"
-          >
-            City
-          </label>
-          <input
-            className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-              errors.city ? "border-red-500" : "border-gray-200"
-            }`}
-            id="grid-city"
-            type="text"
-            placeholder="Albuquerque"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-          />
-          {errors.city && (
-            <p className="text-red-500 text-xs italic">{errors.city}</p>
-          )}
-        </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-state"
-          >
-            State
-          </label>
-          <div className="relative">
+    <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen">
+      <form
+        className="max-w-sm p-4 h-auto bg-white rounded-lg shadow-md"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="text-center mx-4 mb-4 text-3xl text-primary border-b-2">
+          <strong>{title}</strong>
+        </h1>
+        <div className="flex flex-wrap mx-2 mb-1">
+          <div className="w-full md:w-1/2 px-3 mb-1 md:mb-0">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              htmlFor="grid-first-name"
+            >
+              First Name
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                touched.name && errors.name ? "border-red-500" : "border-gray-200"
+              }`}
+              id="grid-first-name"
+              type="text"
+              placeholder="Juan Paco"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.name && errors.name && (
+              <p className="text-red-500 text-xs italic">{errors.name}</p>
+            )}
+          </div>
+          <div className="w-full md:w-1/2 px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              htmlFor="grid-last-name"
+            >
+              Last Name
+            </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                errors.state ? "border-red-500" : "border-gray-200"
+                touched.lastname && errors.lastname
+                  ? "border-red-500"
+                  : "border-gray-200"
+              }`}
+              id="grid-last-name"
+              type="text"
+              placeholder="Delamar"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.lastname && errors.lastname && (
+              <p className="text-red-500 text-xs italic">{errors.lastname}</p>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap mx-2 mb-1">
+          <div className="w-full px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              htmlFor="grid-password"
+            >
+              Password
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                touched.password && errors.password
+                  ? "border-red-500"
+                  : "border-gray-200"
+              }`}
+              id="grid-password"
+              type="password"
+              placeholder="******************"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.password && errors.password && (
+              <p className="text-red-500 text-xs italic">{errors.password}</p>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap mx-2 mb-1">
+          <div className="w-full md:w-1/2 px-3 mb-1 md:mb-0">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              htmlFor="grid-city"
+            >
+              City
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                touched.city && errors.city ? "border-red-500" : "border-gray-200"
+              }`}
+              id="grid-city"
+              type="text"
+              placeholder="City"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.city && errors.city && (
+              <p className="text-red-500 text-xs italic">{errors.city}</p>
+            )}
+          </div>
+          <div className="w-full md:w-1/2 px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              htmlFor="grid-state"
+            >
+              State
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
+                touched.state && errors.state ? "border-red-500" : "border-gray-200"
               }`}
               id="grid-state"
               type="text"
-              placeholder="New Mexico"
+              placeholder="State"
               name="state"
               value={formData.state}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.state && (
+            {touched.state && errors.state && (
               <p className="text-red-500 text-xs italic">{errors.state}</p>
             )}
           </div>
         </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-zip"
-          >
-            Postal Code
-          </label>
-          <input
-            className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-              errors.postalCode ? "border-red-500" : "border-gray-200"
-            }`}
-            id="grid-zip"
-            type="text"
-            placeholder="90210"
-            name="postalCode"
-            value={formData.postalCode}
-            onChange={handleChange}
-          />
-          {errors.postalCode && (
-            <p className="text-red-500 text-xs italic">{errors.postalCode}</p>
-          )}
+        <div className="flex flex-wrap mx-2 mb-1">
+          <div className="w-full px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              htmlFor="grid-nro_document"
+            >
+              Document Number
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                touched.nro_document && errors.nro_document
+                  ? "border-red-500"
+                  : "border-gray-200"
+              }`}
+              id="grid-nro_document"
+              type="text"
+              placeholder="12345378"
+              name="nro_document"
+              value={formData.nro_document}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.nro_document && errors.nro_document && (
+              <p className="text-red-500 text-xs italic">
+                {errors.nro_document}
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-email"
-          >
-            Email
-          </label>
-          <input
-            className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-              errors.email ? "border-red-500" : "border-gray-200"
-            }`}
-            id="grid-email"
-            type="email"
-            placeholder="example@example.com"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-xs italic">{errors.email}</p>
-          )}
+        <div className="flex flex-wrap mx-2 mb-1">
+          <div className="w-full px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+              htmlFor="grid-email"
+            >
+              Email
+            </label>
+            <input
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
+                touched.email && errors.email ? "border-red-500" : "border-gray-200"
+              }`}
+              id="grid-email"
+              type="email"
+              placeholder="example@example.com"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.email && errors.email && (
+              <p className="text-red-500 text-xs italic">{errors.email}</p>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="flex items-center justify-between">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
-          Register
-        </button>
-        <a
-          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-          href="/login"
-        >
-          Sing In
-        </a>
-      </div>
-    </form>
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

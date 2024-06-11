@@ -1,24 +1,31 @@
-import { useState } from "react";
-import validationLogin from "./validationLogin"; // Importa tu función de validación
+import { useState, useEffect } from "react";
+import validationLogin from "./validationLogin";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../Redux/Actions/Actions";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 
-export default function UserFormLogin({ title }) {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+export default function UserFormLogin({ title, onClose }) {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuth = useSelector(state => state.isAuth);
 
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/home");
+    }
+  }, [isAuth, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+    setFormData((prevState) => {
+      const newFormData = { ...prevState, [name]: value };
+      validationLogin(newFormData, errors, setErrors);
+      return newFormData;
     });
-    validationLogin({ ...formData, [name]: value }, errors, setErrors);
   };
 
   const handleSubmit = (e) => {
@@ -27,94 +34,104 @@ export default function UserFormLogin({ title }) {
     const noErrors = Object.keys(errors).every((key) => errors[key] === "");
 
     if (noErrors) {
-      console.log("Form data submitted:", formData);
+      try {
+        dispatch(login(formData));
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
+      } catch (error) {
+        toast.error("Login failed. Please try again.");
+        console.log(error.message);
+      }
     }
   };
 
+  const onFacebookSignIn = async (e) => {
+    e.preventDefault();
+    dispatch(doSignWithFacebook());
+  };
+
+  const onGoogleSignIn = async (e) => {
+    e.preventDefault();
+    dispatch(doSignInWithGoogle());
+  };
+
   return (
-    <div className="w-full max-w-xs">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
-        <h1 className="text-center mb-4 text-3xl text-primary border-b-2 p-2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <form
+        className="bg-white text-center shadow-md p-2 rounded-xl w-full max-w-sm space-y-6"
+        onSubmit={handleSubmit}
+      >
+        <button
+          type="button"
+          className="flex top-0 right-0 text-3xl text-gray-800 hover:text-gray-600"
+          onClick={onClose}
+        >
+          &times;
+        </button>
+        <h1 className="text-center text-2xl text-primary border-b-2 pb-2">
           <strong>{title}</strong>
         </h1>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.email ? "border-red-500" : ""
-            }`}
-            id="email"
-            type="text"
-            placeholder="Email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-xs italic">{errors.email}</p>
-          )}
-        </div>
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.password ? "border-red-500" : ""
-            }`}
-            id="password"
-            type="password"
-            placeholder="******************"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-xs italic">{errors.password}</p>
-          )}
+        <div className="space-y-4">
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              Email
+            </label>
+            <input
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500" : ""}`}
+              id="email"
+              type="text"
+              placeholder="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
+          </div>
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              Password
+            </label>
+            <input
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "border-red-500" : ""}`}
+              id="password"
+              type="password"
+              placeholder="******************"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
+          </div>
         </div>
         <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Sign In
           </button>
-          <a
-            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="/signup"
-          >
-            Sign Up
-          </a>
+          <Link to="/signup" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+            Register
+          </Link>
         </div>
-        <div className="mt-6 flex flex-col items-center gap-2">
-          <button
-            className="w-full bg-gray-100 hover:bg-gray-300 text-gray-700 hover:text-white font-bold py-2 px-4 rounded flex items-center justify-center"
-            type="button"
-          >
-            <img src="google-icon.png" alt="Google" className="w-5 h-5 mr-2" />
-            Sign in with Google
+        <div className="mt-6 flex justify-center gap-2 items-center flex-col">
+          <button onClick={onGoogleSignIn} className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+            <div className="relative flex items-center space-x-4 justify-center">
+              <img src="https://tailus.io/sources/blocks/social/preview/images/google.svg" className="absolute left-0 w-5" alt="google logo" />
+              <span className="block w-max ml-1 font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
+                Continue with Google
+              </span>
+            </div>
           </button>
-          <button
-            className="w-full bg-gray-100 hover:bg-gray-300 text-gray-700 hover:text-white font-bold py-2 px-4 rounded flex items-center justify-center"
-            type="button"
-          >
-            <img src="facebook-icon.png" alt="Facebook" className="w-6 h-5 mr-2" />
-            Sign in with Facebook
+          <button onClick={onFacebookSignIn} className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+            <div className="relative flex items-center space-x-4 justify-center">
+              <img src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg" className="absolute left-0 w-5" alt="Facebook logo" />
+              <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
+                Continue with Facebook
+              </span>
+            </div>
           </button>
         </div>
       </form>
-      {/* <p className="text-center text-gray-500 text-xs">
-        &copy;2020 Acme Corp. All rights reserved.
-      </p> */}
     </div>
   );
 }

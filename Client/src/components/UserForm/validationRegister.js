@@ -1,9 +1,5 @@
-const validationRegister = (
-  { name, lastname, password, city, state, postalCode, email },
-  errors,
-  setErrors
-) => {
-  let newErrors = { ...errors };
+const validationRegister = ({ name, lastname, password, city, state, email, nro_document }) => {
+  let newErrors = {};
 
   if (!name || !name.trim()) {
     newErrors.name = "El nombre está vacío";
@@ -11,8 +7,6 @@ const validationRegister = (
     newErrors.name = "El nombre no puede contener símbolos";
   } else if (name.length > 35) {
     newErrors.name = "El nombre no debe superar los 35 caracteres";
-  } else {
-    newErrors.name = "";
   }
 
   if (!lastname || !lastname.trim()) {
@@ -21,8 +15,6 @@ const validationRegister = (
     newErrors.lastname = "El apellido no puede contener símbolos";
   } else if (lastname.length > 35) {
     newErrors.lastname = "El apellido no debe superar los 35 caracteres";
-  } else {
-    newErrors.lastname = "";
   }
 
   if (!password) {
@@ -33,43 +25,33 @@ const validationRegister = (
     !/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])/.test(password)
   ) {
     newErrors.password = "El password debe contener al menos un número, una letra mayúscula, una letra minúscula y un símbolo especial";
-  } else {
-    newErrors.password = "";
   }
 
   if (!city || !city.trim()) {
     newErrors.city = "La ciudad está vacía";
   } else if (!/^[a-zA-Z\s]*$/.test(city)) {
     newErrors.city = "La ciudad no puede contener símbolos";
-  } else {
-    newErrors.city = "";
   }
 
   if (!state || !state.trim()) {
     newErrors.state = "El estado está vacío";
   } else if (!/^[a-zA-Z\s]*$/.test(state)) {
     newErrors.state = "El estado no puede contener símbolos";
-  } else {
-    newErrors.state = "";
-  }
-
-  if (!postalCode) {
-    newErrors.postalCode = "El código postal está vacío";
-  } else if (!/^\d{4,6}$/.test(postalCode)) {
-    newErrors.postalCode = "El código postal debe ser un número de 4 a 6 cifras";
-  } else {
-    newErrors.postalCode = "";
   }
 
   if (!email) {
     newErrors.email = "El correo electrónico está vacío";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     newErrors.email = "El correo electrónico no es válido";
-  } else {
-    newErrors.email = "";
   }
 
-  setErrors(newErrors);
+  if (!nro_document) {
+    newErrors.nro_document = "El nro_document está vacío";
+  } else if (!/^\d{8,10}$/.test(nro_document)) {
+    newErrors.nro_document = "El nro_document debe ser un número de 8 a 10 cifras";
+  }
+
+  return newErrors;
 };
 
 export default validationRegister;

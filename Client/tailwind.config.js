@@ -11,7 +11,7 @@ export default {
         secondary: '#FF8200',
         background: '#FFFFFF',
         details: '#EBEBEB',
-      }
+      },
     },
   },
   plugins: [],
