@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, updatePassword } from "firebase/auth";
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "./firebase";
 import store from "../Redux/Store/Store";
 import { loginWithFacebook, loginWithGoogle } from "../Redux/Actions/Actions";
@@ -17,7 +17,6 @@ export const doSignInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken();
 
-    // Envía el token al backend
     const response = await fetch("http://localhost:3001/login/auth/third", {
       method: "POST",
       headers: {
@@ -26,9 +25,11 @@ export const doSignInWithGoogle = async () => {
       body: JSON.stringify({ token: token }),
     });
 
+    console.log("Response sing in Google: "+ response)
+
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+      console.log("Data where response is ok: "+data);
 
       const userInfo = {
         uid: result.user.uid,

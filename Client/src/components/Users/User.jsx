@@ -51,9 +51,9 @@ export default function User({ user, onClose }) {
           </div>
 
           <p className="pt-2 text-lg font-semibold text-gray-50">
-            {user?.name}
+            {user.name}
           </p>
-          <p className="text-sm text-gray-100">{user?.email}</p>
+          <p className="text-sm text-gray-100">{user.email}</p>
         </div>
         <div className="border-b">
           <Link to="/Profile" className="px-4 py-2 hover:bg-gray-100 flex">

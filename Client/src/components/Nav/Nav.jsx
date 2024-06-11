@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector, useDispatch } from "react-redux";
 import User from "../Users/User";
-import { getCartByUserId, renderCondition, sendCart } from "../../Redux/Actions/Actions";
+import {
+  getCartByUserId,
+  renderCondition,
+  sendCart,
+} from "../../Redux/Actions/Actions";
 import CartList from "../ProductCart/CartList/CartList";
 
 export default function Nav({ color }) {
@@ -17,9 +21,9 @@ export default function Nav({ color }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      if (cartItems?.length === 0 && user?.id_user) {
-        dispatch(getCartByUserId(user?.id_user));
-      }
+    if (cartItems?.length === 0 && user?.id_user) {
+      dispatch(getCartByUserId(user?.id_user));
+    }
   }, [dispatch, user, cartItems]);
 
   useEffect(() => {
@@ -27,7 +31,7 @@ export default function Nav({ color }) {
       try {
         dispatch(sendCart(user?.id_user, cartItems));
       } catch (error) {
-        console.error('Error sending cart:', error);
+        console.error("Error sending cart:", error);
       }
     }
   }, [cartItems, user, dispatch, isAuth]);
@@ -192,6 +196,35 @@ export default function Nav({ color }) {
                 <UserFormLogin title={"Login"} onClose={handleOnClose} />
               )}
             </>
+          )}
+          {user?.user_type ? (
+            <div className="tooltip">
+              <a
+                href={`http://localhost:3000/dashboard/${user.id_user}`}
+                rel="noopener noreferrer"
+                className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                  color === "primary" ? "text-gray-200" : "text-gray-600"
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
+                  />
+                </svg>
+              </a>
+              <div className="tooltiptext">Dashboard</div>
+            </div>
+          ) : (
+            <></>
           )}
           <div className="tooltip">
             <button

@@ -44,8 +44,6 @@ export const login = (formData) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
-    console.log(response);
-    console.log(response);
     toast.loading("Waiting...");
     if (response.data.correctLogin) {
       toast.success("Login successful!");
@@ -67,8 +65,8 @@ export const loginWithGoogle = (userInfo) => ({
 
 export const loginWithFacebook = (userInfo) => ({
   type: LOGIN_WITH_FACEBOOK,
-  payload: userInfo
-})
+  payload: userInfo,
+});
 
 // export const doSignInWithGoogle = () => async (dispatch) => {
 //   try {
@@ -107,7 +105,6 @@ export const loginWithFacebook = (userInfo) => ({
 //   }
 // };
 
-
 // export const authWithGoogle = () => async (dispatch) => {
 //   try {
 //     const response = await axios.post("http://localhost:3001/login/auth/google", {
@@ -130,7 +127,7 @@ export const logout = () => async (dispatch) => {
     dispatch({ type: LOGOUT, payload: false });
     toast.loading("Waiting...");
     deleteSessionToken();
-    localStorage.setItem("authToken", "false")
+    localStorage.setItem("authToken", "false");
 
     document.location.href = "/";
   } catch (error) {
@@ -178,36 +175,34 @@ export const getUserById = (id) => {
 };
 
 export const isAuthenticated = (jwtToken) => async (dispatch) => {
-    try {
-      if (jwtToken) {
-        console.log("hay jwtToken");
-        const response = await axios.post("http://localhost:3001/login/auth", {
-          token: jwtToken, provider: 'jwt'})    
-          if (response.data) {
-            dispatch({ type: IS_AUTH, payload: response.data });
-          } 
-          else {
-            console.log("fallo login con jwtToken");
-            dispatch({ type: ISNT_AUTH });
-        }
+  const endpoint = "http://localhost:3001/login/auth";
+  try {
+    if (jwtToken) {
+      const response = await axios.post(endpoint, {
+        token: jwtToken,
+        provider: "jwt",
+      });
+      if (response.data) {
+        dispatch({ type: IS_AUTH, payload: response.data });
       } else {
-      const googletoken = localStorage.getItem("authToken")
-      const response = await axios.post("http://localhost:3001/login/auth", {
-        token: googletoken, provider: "google"})
-        if (response.data) {
-          dispatch({ type: IS_AUTH, payload: response.data });
-        } 
-        else {
-          console.log("fallo login con google");
-          dispatch({ type: ISNT_AUTH });
+        dispatch({ type: ISNT_AUTH });
       }
-    }     
-    } catch (error) {
-      console.log("catch error:", error);
-      dispatch({ type: ISNT_AUTH });
+    } else {
+      const googletoken = localStorage.getItem("authToken");
+      const response = await axios.post(endpoint, {
+        token: googletoken,
+        provider: "google",
+      });
+      if (response.data) {
+        dispatch({ type: IS_AUTH, payload: response.data });
+      } else {
+        dispatch({ type: ISNT_AUTH });
+      }
     }
+  } catch (error) {
+    dispatch({ type: ISNT_AUTH });
   }
-
+};
 
 //PRODUCTS
 export const getAllProducts = () => {
@@ -413,7 +408,7 @@ export const updateCartItemQuantity = (productId, quantity) => ({
 });
 
 export const sendCart = (userId, cartItems) => async (dispatch) => {
-  console.log(userId, cartItems)
+  console.log(userId, cartItems);
   try {
     if (userId) {
       const data = {
@@ -438,13 +433,13 @@ export const sendCart = (userId, cartItems) => async (dispatch) => {
 };
 
 export const getCartByUserId = (userId) => async (dispatch) => {
-  console.log(userId)
+  console.log(userId);
   try {
     // Realizar la petición GET para obtener la información del carrito del usuario
     const response = await axios.get(`http://localhost:3001/cart/id/${userId}`);
-    console.log(response.data);
+    console.log(response.data.products);
     // Despachar una acción con la información del carrito obtenida
-    dispatch({ type: GET_CART_SUCCESS, payload: response.data });
+    dispatch({ type: GET_CART_SUCCESS, payload: response.data.products });
   } catch (error) {
     // En caso de error, despachar una acción de error
     console.error("Error al obtener el carrito:", error);

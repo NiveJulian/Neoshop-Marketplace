@@ -68,9 +68,15 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, isAuth: payload, user: payload };
 
     case IS_AUTH:
+      // Guardar la información del usuario en sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(payload));
+      // Actualizar el estado global
       return { ...state, isAuth: true, user: payload };
 
     case ISNT_AUTH:
+      // Eliminar la información del usuario del sessionStorage
+      sessionStorage.removeItem("user");
+      // Actualizar el estado global
       return { ...state, isAuth: false, user: {} };
 
     case LOGOUT:
@@ -250,13 +256,13 @@ const rootReducer = (state = initialState, action) => {
         cartError: payload,
       };
 
-    case GET_CART_SUCCESS:  
+    case GET_CART_SUCCESS:
       return {
         ...state,
-        cartItems: payload.cartProducts, 
+        cartItems: payload,
       };
 
-    case GET_CART_FAILURE: 
+    case GET_CART_FAILURE:
       return {
         ...state,
         cartError: payload,

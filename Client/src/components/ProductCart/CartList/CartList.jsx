@@ -3,7 +3,7 @@ import CartItem from "../CartItem/CartItem";
 export default function CartList({ cartItems, calculateTotal }) {
   return (
     <div className="absolute w-max z-10 top-8 right-0 bg-white rounded-lg p-4 shadow-lg">
-      {cartItems.map((product, index) => (
+      {cartItems?.map((product, index) => (
         <CartItem key={index} product={product} />
       ))}
       {/* Total del carrito */}
