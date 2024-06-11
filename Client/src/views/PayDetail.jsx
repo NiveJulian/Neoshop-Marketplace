@@ -3,85 +3,154 @@ import { useSelector } from "react-redux";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { CartDetailItem } from "../components/ProductCart/CartDetailItem/CartDetailItem";
+import { paymentOk } from "../Redux/Actions/Actions";
+import toast from "react-hot-toast";
 
 export const PayDetail = () => {
-  const cartItems = useSelector((state) => state.cartItems);
-  useEffect(() => {
-    console.log(cartItems);
-  }, []);
-
-  const subtotal = cartItems.reduce((accumulator, item) => {
-    return accumulator + parseFloat(item.price) * item.quantity;
-  }, 0);
-
-  const comission = subtotal * 0.15;
-  const finalTotal = (subtotal+comission+4.95);
-
-  async function createOrder() {
-    try {
+    const cartItems = useSelector((state) => state.cartItems);
+    const user = useSelector((state) => state.user);
+    console.log (user);
+    const [subtotal, setSubtotal] = useState(0);
+    const [comission, setComission] = useState(0);
+    const [finalTotal, setFinalTotal] = useState(0);
+    const [paymentId, setPaymentId]=useState("");
+    const [paymentDetail, setPaymentDetail] = useState({
+      arrayProducts: [],
+      id_user: "",
+      id_payment: "",
+      amount: "",
+      date: "",
+    });
+  
+    useEffect(() => {
+     
+        const calculatedSubtotal = cartItems.reduce((accumulator, item) => {
+          return accumulator + parseFloat(item.price) * item.cartQuantity;
+        }, 0);
+        
+        const calculatedComission = calculatedSubtotal * 0.15;
+        const calculatedFinalTotal = (calculatedSubtotal + calculatedComission + 4.95).toFixed(2);
+  
+        setSubtotal(calculatedSubtotal);
+        setComission(calculatedComission);
+        setFinalTotal(calculatedFinalTotal);
+        
+        setPaymentDetail({
+          arrayProducts: [...cartItems],
+          id_user: user.id_user,
+          id_payment: "",
+          amount: calculatedFinalTotal,
+          date: "",
+        });
+      
+    }, [cartItems, user]);
+  
+    function createOrder() {
       const purchaseUnits = cartItems.map(item => ({
         name: item.name,
         description: item.description,
-        amount: {
+        quantity: item.cartQuantity.toString(), // Convert to string
+        unit_amount: {
           currency_code: "USD",
-          value: (parseFloat(item.price) * item.quantity).toFixed(2),
+          value: parseFloat(item.price).toFixed(2),
         },
-        quantity: item.quantity,
       }));
-
-      const response = await axios.post('/my-server/create-paypal-order', {
-        intent: "CAPTURE",
-        purchase_units: [
-          {
-            amount: {
-              currency_code: "USD",
-              value: finalTotal.toFixed(2),
-              breakdown: {
-                item_total: { currency_code: "USD", value: subtotal.toFixed(2) },
-                shipping: { currency_code: "USD", value: "4.95" },
-                tax_total: { currency_code: "USD", value: comission.toFixed(2) },
+  
+      return fetch("http://localhost:3001/paypal/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          intent: "CAPTURE",
+          purchase_units: [
+            {
+              amount: {
+                currency_code: "USD",
+                value: finalTotal,
+                breakdown: {
+                  item_total: { currency_code: "USD", value: subtotal.toFixed(2) },
+                  shipping: { currency_code: "USD", value: "4.95" },
+                  tax_total: { currency_code: "USD", value: comission.toFixed(2) },
+                },
               },
+              items: purchaseUnits,
             },
-            items: purchaseUnits,
-          },
-        ],
-      }, {
+          ],
+        }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => data.id)
+      .catch(error => {
+        console.error("Error creating order:", error);
+        throw error;
+      });
+    }
+  
+    function onApprove(data) {
+        setPaymentId(data.orderID);
+        setPaymentDetail(prevDetail => ({
+            ...prevDetail,
+            id_payment: data.orderID,
+            date: new Date().toISOString(),
+        }));
+      return fetch(`http://localhost:3001/paypal/capture-order/${data.orderID}`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          orderID: data.orderID,
+          emailAddress: user.email,
+        }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(orderData => {
+        const name = orderData.payer.name.given_name;
+        toast.success("Success Payment Sent!");
+        setTimeout(() => {
+            location.href = "/";
+          }, 5000);
+      })
+ 
+      .catch(error => {
+        console.error("Error capturing order:", error);
+        throw error;
       });
-
-      return response.data.id;
-    } catch (error) {
-      console.error("Error creating order:", error);
-      throw error;
     }
-  }
+   
+    useEffect(() => {
+        const sendPayment = async () => {
+            try {
+                const response = await paymentOk(paymentDetail)();
+                // Puedes agregar lógica adicional aquí si es necesario
+                // setTimeout(() => {
+                //     location.href = "/";
+                //   }, 5000);
+            } catch (error) {
+                console.error("Error sending payment:", error);
+            }
+        };
 
-  async function onApprove(data, actions) {
-    try {
-      const response = await axios.post('/my-server/capture-paypal-order', {
-        orderID: data.orderID,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const orderData = response.data;
-      const name = orderData.payer.name.given_name;
-      alert(`Transaction completed by ${name}`);
-    } catch (error) {
-      console.error("Error capturing order:", error);
-      throw error;
-    }
-  }
-
-
-  return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 ">
-      <div className="h-[550px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10">
-        <div className="order-info h-full w-1/2 p-6 flex justify-center relative box-border">
+        if (paymentDetail.id_payment !== "") {
+            sendPayment();
+        }
+    }, [paymentDetail]);
+return(
+<div className="min-h-screen flex justify-center items-center bg-gray-100 ">
+    
+      <div className="h-[500px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10">
+        <div className="order-info h-full w-[60%] p-6 flex justify-center relative box-border">
           <div className="order-info-content w-full table-fixed ">
             <h2 className="mb-0 mt-1 text-center font-light text-lg">
               Order Summary
@@ -110,27 +179,39 @@ export const PayDetail = () => {
             </div>
           </div>
         </div>
-        <div className=" h-full w-1/2 bg-orange-400 text-black-200 flex justify-center align-center text-sm p-6 relative rounded-tr-2xl rounded-br-2xl box-border">
-          <div className="h-[390px] w-[280px] bg-white flex shadow-xl rounded-2xl justify-center align-center mt-4 ">
-            <div className="">User</div>
-            <div className="font-light color-black">Adress</div>
-          </div>
-          <div className="h-[390px] w-[330px] mr-1 ml-6 flex justify-center align-center rounded-2xl mt-4 overflow-hidden ">
-            <div className="mt-1 flex p-1 rounded-xl overflow-y-auto  ">
-              <PayPalButtons
-                createOrder={createOrder}
-                onApprove={onApprove}
-                style={{
-                  layout: "vertical",
-                  color: "blue",
-                  shape: "rect",
-                  label: "paypal",
-                }}
-              />
+        <div className="h-full w-[40%] bg-orange-400 text-black-200 flex flex-col justify-center align-center text-sm p-6 relative rounded-tr-2xl rounded-br-2xl box-border">
+          <div className="h-[300px] w-[300px] bg-white flex shadow-xl rounded-2xl justify-center items-center mt-4 mx-auto">
+            <div className="text-center justify-center mt-4">
+            <div className="font-light text-black">
+                                <div className="mb-4 text-lg"><strong>Buyer Information:</strong></div>
+                                <div><strong>Name:</strong> {user.name}</div>
+                                <div><strong>Last Name:</strong> {user.lastname}</div>
+                                <div><strong>Email:</strong> {user.email}</div>
+                                <div><strong>Phone Number:</strong> {user.phone_number}</div>
+                                <div><strong>Address Number:</strong> {user.adress_nro}</div>
+                                <div><strong>Street:</strong> {user.adress_street}</div>
+                                <div><strong>City:</strong> {user.city}</div>
+                                <div><strong>State:</strong> {user.state}</div>
+                                <div><strong>Postal Code:</strong> {user.postalCode}</div>
+                                <div><strong>Delivery: </strong>Standard</div>
+                            </div>
             </div>
           </div>
-          <button className="pay-btn border-none bg-green-600 leading-8 rounded-lg text-lg text-white cursor-pointer absolute bottom-6 w-[calc(50%-50px)] transition duration-200 ease-in-out hover:bg-green-500">
-            Finish
+          <div className="mt-4 flex justify-center w-full">
+            <PayPalButtons
+              createOrder={createOrder}
+              onApprove={onApprove}
+              style={{
+                layout: "horizontal",
+                color: "blue",
+                shape: "rect",
+                label: "pay",
+                height:40,
+              }}
+            />
+          </div>
+          <button className="pay-btn border-none bg-green-600 leading-8 rounded-lg text-lg text-white cursor-pointer mt-4 w-1/3 mx-auto transition duration-200 ease-in-out hover:bg-green-500">
+            GoBack
           </button>
         </div>
       </div>

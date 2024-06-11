@@ -1,6 +1,7 @@
 import axios from "axios";
 import { deleteSessionToken } from "../../components/delCookie";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 export const GET_ALL = "GET_ALL";
 export const GET_NEW = "GET_NEW";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -11,6 +12,7 @@ export const GET_ALL_STORE = "GET_ALL_STORE";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS";
 export const GET_PRODUCT_FILTER = "GET_PRODUCT_FILTER";
+export const POST_PAYMENT = "POST_PAYMENT";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const SHOW_STORE = "SHOW_STORE";
 export const SHOW_ABC = "SHOW_ABC";
@@ -317,3 +319,24 @@ export const updateCartItemQuantity = (productId, quantity) => ({
   type: UPDATE_CART_ITEM_QUANTITY,
   payload: { productId, quantity }
 });
+
+//PAGOS
+export const paymentOk = (payment) => {
+
+  return async () => {
+    try {
+      console.log (payment);
+      const response = await axios.post("http://localhost:3001/paying/post-order", payment);
+      
+      if (response.status === 200) {
+        
+
+      } else {
+        toast.error("Error sending payment");
+      }
+    } catch (error) {
+      toast.error("Error sending payment");
+      console.log(error.message);
+    }
+  };
+};

@@ -12,10 +12,11 @@ export default function UserFormRegister({ title = "Register" }) {
     password: "",
     city: "",
     state: "",
-    postalCode: "",
+    // postalCode: "",
     email: "",
     nro_document: "",
   });
+  console.log(formData)
 
   const [errors, setErrors] = useState({
     name: "",
@@ -23,7 +24,7 @@ export default function UserFormRegister({ title = "Register" }) {
     password: "",
     city: "",
     state: "",
-    postalCode: "",
+    // postalCode: "",
     email: "",
     nro_document: "",
   });
@@ -34,7 +35,7 @@ export default function UserFormRegister({ title = "Register" }) {
     password: false,
     city: false,
     state: false,
-    postalCode: false,
+    // postalCode: false,
     email: false,
     nro_document: false,
   });
@@ -44,7 +45,9 @@ export default function UserFormRegister({ title = "Register" }) {
     setFormData({
       ...formData,
       [name]: value,
+      
     });
+   
   };
 
   const handleBlur = (e) => {
@@ -62,6 +65,7 @@ export default function UserFormRegister({ title = "Register" }) {
   useEffect(() => {
     if (Object.keys(memoizedErrors).length > 0) {
       setErrors(memoizedErrors);
+      console.log (memoizedErrors);
     }
   }, [memoizedErrors]);
 
@@ -69,6 +73,7 @@ export default function UserFormRegister({ title = "Register" }) {
     e.preventDefault();
     if (Object.keys(memoizedErrors).length === 0) {
       try {
+        
         dispatch(register(formData));
         console.log("Form data submitted:", formData);
       } catch (error) {
