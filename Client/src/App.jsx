@@ -17,6 +17,8 @@ import {
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
+import ProfileDetail from "./views/ProfileDetail";
+import PersonalDetail from "./views/PersonalDetail";
 
 function App () {
 
@@ -42,6 +44,8 @@ function App () {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/store/:id" element={<StoreDetail />} />
+        <Route path="/profile" element={<ProfileDetail/>} />
+        <Route path="/personal" element={<PersonalDetail/>} />
       </Routes>
     </div>
   );
