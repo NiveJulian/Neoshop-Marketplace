@@ -15,8 +15,7 @@ export default function UserFormRegister({ title = "Register" }) {
     email: "",
     nro_document: "",
   });
-
-
+  console.log(formData)
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -26,7 +25,9 @@ export default function UserFormRegister({ title = "Register" }) {
     setFormData({
       ...formData,
       [name]: value,
+      
     });
+   
   };
 
   const handleBlur = (e) => {
@@ -49,6 +50,7 @@ export default function UserFormRegister({ title = "Register" }) {
     e.preventDefault();
     if (Object.keys(memoizedErrors).length === 0) {
       try {
+        
         dispatch(register(formData));
       } catch (error) {
         toast.error("Register failed. Please try again.");

@@ -25,7 +25,7 @@ export default function Paginate({
   };
 
   return (
-    <nav className="pagination">
+    <nav className="pagination mt-10 mb-10">
       <div
         className="
             inline-flex

@@ -26,12 +26,23 @@ import {
   CART_SENT_FAILURE,
   GET_CART_SUCCESS,
   GET_CART_FAILURE,
+  LOGIN_WITH_GOOGLE,
+  LOGIN_WITH_FACEBOOK,
+  LOGOUT,
+  CREATE_STORE_SUCCESS,
+  CREATE_STORE_FAILURE,
+  UPLOAD_IMAGES_SUCCESS,
+  UPLOAD_IMAGES_FAILURE,
+  UPDATE_USER,
+  UPDATE_DELIVERY,
+  CLEAN_CART,
 } from "../Actions/Actions";
 
 const initialState = {
   allProducts: [],
   product: {},
   store: [],
+  images: [],
   categories: [],
   brands: [],
   seller: {},
@@ -48,6 +59,7 @@ const initialState = {
   loginError: null,
   cartSent: false,
   cartError: null,
+  delivery:"",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -62,20 +74,60 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, registering: true };
 
     case LOGIN_SUCCESS:
-      return { ...state, isAuth: payload };
+      return { ...state, isAuth: payload, user: payload };
 
     case IS_AUTH:
+      // Guardar la información del usuario en sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(payload));
+      // Actualizar el estado global
       return { ...state, isAuth: true, user: payload };
 
     case ISNT_AUTH:
-      return { ...state, isAuth: false };
+      // Eliminar la información del usuario del sessionStorage
+      sessionStorage.removeItem("user");
+      // Actualizar el estado global
+      return { ...state, isAuth: false, user: {} };
+
+    case LOGOUT:
+      return { ...state, isAuth: false, user: {} };
+
+    case LOGIN_WITH_GOOGLE:
+      return { ...state, isAuth: true, user: payload };
+
+    case LOGIN_WITH_FACEBOOK:
+      return { ...state, isAuth: true, user: payload };
 
     case GET_ALL:
       return { ...state, allProducts: payload };
 
     case GET_ALL_STORE:
       return { ...state, store: payload };
+    case CREATE_STORE_SUCCESS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          id_store: payload,
+        },
+      };
 
+    case CREATE_STORE_FAILURE:
+      return {
+        ...state,
+      };
+
+    case UPLOAD_IMAGES_SUCCESS:
+      return {
+        ...state,
+        images: [...state.images, payload],
+        error: null,
+      };
+    case UPLOAD_IMAGES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
     case GET_ALL_CATEGORIES:
       return { ...state, categories: payload };
 
@@ -111,6 +163,19 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: payload,
       };
+
+     case UPDATE_USER:
+      return {
+        ...state,
+        user: payload
+      }
+    
+    case UPDATE_DELIVERY:
+      console.log("Reducer received payload:", payload); // Log para verificar el payload
+      return{
+        ...state,
+        delivery:payload
+      }  
 
     case GET_PRODUCT_FILTER:
       return { ...state, filteredProducts: payload };
@@ -238,18 +303,24 @@ const rootReducer = (state = initialState, action) => {
         cartError: payload,
       };
 
-    case GET_CART_SUCCESS:  
+    case GET_CART_SUCCESS:
       return {
         ...state,
-        cartItems: payload.cartProducts, 
+        cartItems: payload,
       };
 
-    case GET_CART_FAILURE: 
+    case GET_CART_FAILURE:
       return {
         ...state,
         cartError: payload,
       };
 
+      case CLEAN_CART:
+        localStorage.removeItem("cartItems");
+        return {
+          ...state,
+          cartItems: [],
+        }
     default:
       return state;
   }

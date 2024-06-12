@@ -3,6 +3,7 @@ import { ProductCard } from "../Product/ProductCard";
 import Paginate from "../Paginate/Paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../Redux/Actions/Actions";
+import toast from "react-hot-toast";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,6 +22,7 @@ export default function ProductList({ allProducts }) {
   const page = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleAddToCart = (product) => {
+    toast.success("Add to cart")
     dispatch(addToCart(product));
   };
 
@@ -50,6 +52,12 @@ export default function ProductList({ allProducts }) {
           />
         ))}
       </div>
+      <Paginate 
+        productsPerPage={productsPerPage}
+        totalProducts={allProducts.length}
+        page={page}
+        currentPage={currentPage}
+      />
     </div>
   );
 }
