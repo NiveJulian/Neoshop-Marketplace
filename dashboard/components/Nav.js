@@ -163,7 +163,7 @@ export default function Nav({ show, userId, user }) {
             </svg>
             Brand
           </Link>
-          <Link href="/api/auth/logout" className={inactiveLink}>
+          <Link href="" className={inactiveLink}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

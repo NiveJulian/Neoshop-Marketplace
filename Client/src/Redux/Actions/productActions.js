@@ -17,7 +17,7 @@ export const SET_CONDITION = "SET_CONDITION";
 
 
 export const getAllProducts = () => {
-    const endpoint = "http://localhost:3001/product/";
+    const endpoint = "https://neoshop-back.onrender.com/product/";
     return async (dispatch) => {
       try {
         let response = await axios.get(`${endpoint}`);
@@ -32,7 +32,7 @@ export const getAllProducts = () => {
   };
   
   export const getProductById = (id) => {
-    const endpoint = "http://localhost:3001/product";
+    const endpoint = "https://neoshop-back.onrender.com/product";
   
     return async (dispatch) => {
       try {
@@ -48,7 +48,7 @@ export const getAllProducts = () => {
   };
   
   export const getNewProducts = () => {
-    const endpoint = "http://localhost:3001/product/latest";
+    const endpoint = "https://neoshop-back.onrender.com/product/latest";
     return async (dispatch) => {
       try {
         const response = await axios.get(endpoint);
@@ -63,7 +63,7 @@ export const getAllProducts = () => {
   };
   
   export const getProductByName = (name) => {
-    const endpoint = `http://localhost:3001/product/name/${name}`;
+    const endpoint = `https://neoshop-back.onrender.com/product/name/${name}`;
     return async (dispatch) => {
       try {
         let response = await axios.get(endpoint);
@@ -79,7 +79,7 @@ export const getAllProducts = () => {
   };
   
   export const getProductByStore = (id) => {
-    const endpoint = `http://localhost:3001/product/allProductsStore/${id}`;
+    const endpoint = `https://neoshop-back.onrender.com/product/allProductsStore/${id}`;
     return async (dispatch) => {
       try {
         let response = await axios.get(endpoint);
@@ -96,7 +96,7 @@ export const getAllProducts = () => {
   };
   
 export const getAllCategories = () => {
-    const endpoint = "http://localhost:3001/category";
+    const endpoint = "https://neoshop-back.onrender.com/category";
   
     return async (dispatch) => {
       try {
@@ -112,7 +112,7 @@ export const getAllCategories = () => {
   };
   
   export const getAllBrands = () => {
-    const endpoint = "http://localhost:3001/brand";
+    const endpoint = "https://neoshop-back.onrender.com/brand";
   
     return async (dispatch) => {
       try {
@@ -128,7 +128,7 @@ export const getAllCategories = () => {
   };
 
   export const filterProducts = (filters) => {
-    const endpoint = "http://localhost:3001/product/filter";
+    const endpoint = "https://neoshop-back.onrender.com/product/filter";
     return async (dispatch) => {
       try {
         const queryString = new URLSearchParams(filters).toString();

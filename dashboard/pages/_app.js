@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/user/${id}`);
+        const response = await axios.get(`https://neoshop-back.onrender.com/user/${id}`);
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);

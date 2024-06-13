@@ -47,7 +47,7 @@ export default function ProductForm() {
       await axios.put("/api/products", { ...data, _id });
     } else {
       //create
-      await axios.post("http://localhost:3001/product/", { ...data });
+      await axios.post("https://neoshop-back.onrender.com/product/", { ...data });
       setGoToProduct(true);
     }
 

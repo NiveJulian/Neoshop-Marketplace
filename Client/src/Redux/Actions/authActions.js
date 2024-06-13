@@ -14,7 +14,7 @@ export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/login/";
+    const endpoint = "https://neoshop-back.onrender.com/login/";
     try {
       const response = await axios.post(endpoint, formData, {
         withCredentials: true,
@@ -57,7 +57,7 @@ export const login = (formData) => async (dispatch) => {
   };
   
   export const register = (formData) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/user/";
+    const endpoint = "https://neoshop-back.onrender.com/user/";
   
     try {
       const response = await axios.post(`${endpoint}`, formData);
@@ -81,7 +81,7 @@ export const login = (formData) => async (dispatch) => {
   };
   
   export const getUserById = (id) => {
-    const endpoint = "http://localhost:3001/user";
+    const endpoint = "https://neoshop-back.onrender.com/user";
     return async (dispatch) => {
       try {
         let response = await axios.get(`${endpoint}/${id}`);
@@ -96,7 +96,7 @@ export const login = (formData) => async (dispatch) => {
   };
   
   export const isAuthenticated = (jwtToken) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/login/auth";
+    const endpoint = "https://neoshop-back.onrender.com/login/auth";
     try {
       if (jwtToken) {
         const response = await axios.post(endpoint, {
@@ -126,7 +126,7 @@ export const login = (formData) => async (dispatch) => {
   };
 
   export const updateUserAddress = (formUpdate) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/user/update";
+    const endpoint = "https://neoshop-back.onrender.com/user/update";
   
     try {
       const response = await axios.put(endpoint, formUpdate);

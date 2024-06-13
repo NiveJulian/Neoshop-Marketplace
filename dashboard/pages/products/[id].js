@@ -14,7 +14,7 @@ export default function Products({user}) {
 //   useEffect(() => {
 //     const fetchProducts = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:3001/product/');
+//         const response = await axios.get('https://neoshop-back.onrender.com/product/');
 //         setProducts(response.data);
 //       } catch (error) {
 //         console.error('Error fetching products:', error);

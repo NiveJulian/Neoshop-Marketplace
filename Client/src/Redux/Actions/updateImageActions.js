@@ -7,7 +7,7 @@ export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
 export const uploadImages = (formData) => async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/images/upload",
+        "https://neoshop-back.onrender.com/images/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
