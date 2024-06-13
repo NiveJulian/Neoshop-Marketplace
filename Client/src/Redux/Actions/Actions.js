@@ -283,7 +283,7 @@ export const getNewProducts = () => {
 };
 
 export const getProductByName = (name) => {
-  const endpoint = `http://localhost:3001/product/name/${name}`;
+  const endpoint = `http://localhost:3001/product/global/${name}`;
   return async (dispatch) => {
     try {
       let response = await axios.get(endpoint);
