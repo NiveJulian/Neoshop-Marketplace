@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Nav from "../components/Nav/Nav";
-import { useDispatch, useSelector } from "react-redux";
-import { updateDeliveryMethod } from "../Redux/Actions/Actions";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const PayPreview = () => {
-  const cart = useSelector((state) => state.cartItems);
+  const cart = useSelector((state) => state.cart.cartItems);
   const total = cart.reduce(
     (acc, product) => acc + parseFloat(product.price) * product.cartQuantity,
     0
@@ -14,13 +13,11 @@ export const PayPreview = () => {
   // Estado para el método de envío
   const [deliveryMethod, setDeliveryMethod] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Función para manejar el cambio en los checkboxes
   const handleCheckboxChange = (method) => {
     setDeliveryMethod(method);
-    dispatch(updateDeliveryMethod(method));
   };
 
   return (

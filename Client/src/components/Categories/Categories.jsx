@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import CategoryCard from './CategoryCard';
 import { useDispatch, useSelector } from 'react-redux';
-import filterProducts from '../../Redux/Actions/Actions';
+import { filterProducts } from '../../Redux/Actions/productActions';
 
 
 const Categories = () => {
@@ -14,9 +14,7 @@ const Categories = () => {
   //   "Ropa", 
   //   "Juegos y Juguetes"
   // ];
-  const categories = useSelector((state) => state.categories);
-  const dispatch = useDispatch();
-
+  const categories = useSelector((state) => state.product.categories);
   const [filters, setFilters] = useState({
     category: '',
   });
@@ -51,7 +49,7 @@ const Categories = () => {
         className="flex overflow-x-auto space-x-4 p-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
         style={{ width: 'calc(100% - 80px)' }}
       >
-        {categorias.map((categoria, index) => (
+        {categories.map((categoria, index) => (
           <CategoryCard key={index} category={categoria} />
         ))}
       </div>

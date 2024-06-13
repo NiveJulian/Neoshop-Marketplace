@@ -2,16 +2,16 @@ import Nav from "../components/Nav/Nav";
 import Sidebar from "../components/SideBar/SideBar";
 import ProductList from "../components/ProductList/ProductList";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../Redux/Actions/Actions";
 import { useEffect } from "react";
+import { getAllProducts } from "../Redux/Actions/productActions";
 // import Categories from "../components/Categories/Categories";
 
 export const Products = () => {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.allProducts);
-  const filteredProducts = useSelector((state) => state.filteredProducts);
-  const namedProducts = useSelector((state) => state.namedProducts);
-  const condition = useSelector((state) => state.condition);
+  const allProducts = useSelector((state) => state.product.allProducts);
+  const filteredProducts = useSelector((state) => state.product.filteredProducts);
+  const namedProducts = useSelector((state) => state.product.namedProducts);
+  const condition = useSelector((state) => state.product.condition);
 
   useEffect(() => {
     dispatch(getAllProducts());

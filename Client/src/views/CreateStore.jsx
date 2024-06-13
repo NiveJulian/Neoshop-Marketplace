@@ -5,8 +5,8 @@ import UserFormLogin from "../components/UserForm/UserFormLogin";
 import { useEffect, useState } from "react";
 
 export default function CreateStore() {
-  const isAuth = useSelector((state) => state.isAuth);
-  const user = useSelector((state) => state.user);
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const user = useSelector((state) => state.auth.user);
   const [showRegisterStoreForm, setShowRegisterStoreForm] = useState(false);
 
   useEffect(() => {

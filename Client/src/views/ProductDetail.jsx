@@ -3,8 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import "./ProductDetail.css";
 import Nav from "../components/Nav/Nav";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, getProductById, getSellerById } from "../Redux/Actions/Actions";
 import toast from "react-hot-toast";
+import { getProductById } from "../Redux/Actions/productActions";
+import { getSellerById } from "../Redux/Actions/storeActions";
+import { addToCart } from "../Redux/Actions/cartActions";
 
 
 const reviews = [
@@ -23,8 +25,8 @@ const ProductDetail = () => {
 
   const { id } = useParams();
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.product);
-  const seller = useSelector((state) => state.seller);
+  const product = useSelector((state) => state.product.product);
+  const seller = useSelector((state) => state.store.seller);
 
   useEffect(() => {
     const interval = setInterval(() => {
