@@ -49,12 +49,12 @@ const LandingPage = () => {
           >
             <strong>Go to Store</strong>
           </button>
-          <button
+          {/* <button
             className="px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg transform transition-transform duration-100 active:translate-y-[5%] hover:shadow-sm active:shadow-2xl"
             onClick={postFakeApi}
           >
             <strong>Post Products</strong>
-          </button>
+          </button> */}
         </div>
       </header>
       <section id="features" className="py-12 px-6 bg-gray-100 shadow-md mt-6">
