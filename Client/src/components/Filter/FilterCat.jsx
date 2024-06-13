@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import {  clearFilteredProducts, renderCondition } from "../../Redux/Actions/Actions";
 import style from "./FilterCat.module.css"
+import { clearFilteredProducts, renderCondition } from "../../Redux/Actions/productActions";
 
 export default function Filter() {
   const dispatch = useDispatch();
@@ -10,7 +10,6 @@ export default function Filter() {
     const categories = event.target.value; 
 
     if (categories !== "All") {
-      dispatch(categoryFilter(categories));
       dispatch(renderCondition("filteredProducts"));
     } else {
       dispatch(renderCondition("allProducts"));

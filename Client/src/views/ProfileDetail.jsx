@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Nav from "../components/Nav/Nav";
 
 const ProfileDetail = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <div className="bg-gray-100 pb-10 min-h-screen">

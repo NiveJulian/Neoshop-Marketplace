@@ -7,13 +7,6 @@ import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import {
-  getAllBrands,
-  getAllCategories,
-  getAllProducts,
-  getAllSellers,
-  isAuthenticated,
-} from "./Redux/Actions/Actions";
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
@@ -24,6 +17,9 @@ import CreateStore from "./views/CreateStore";
 import { PayDetail } from "./views/PayDetail";
 import { AdressUser } from "./views/AdressUser";
 import { PayPreview } from "./views/PayPreview";
+import { getAllBrands, getAllCategories, getAllProducts } from "./Redux/Actions/productActions";
+import { getAllSellers } from "./Redux/Actions/storeActions";
+import { isAuthenticated } from "./Redux/Actions/authActions";
 
 function App() {
  

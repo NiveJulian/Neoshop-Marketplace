@@ -1,7 +1,7 @@
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "./firebase";
 import store from "../Redux/Store/Store";
-import { loginWithFacebook, loginWithGoogle } from "../Redux/Actions/Actions";
+import { loginWithFacebook, loginWithGoogle } from "../Redux/Actions/authActions";
 
 // export const doCreateUserWithEmailAndPassword = async (email, password) => {
 //   return createUserWithEmailAndPassword(auth, email, password);

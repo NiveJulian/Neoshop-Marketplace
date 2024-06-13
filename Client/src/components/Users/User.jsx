@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../../Redux/Actions/Actions";
 import { doSignOut } from "../../firebase/auth";
+import { logout } from "../../Redux/Actions/authActions";
 
 export default function User({ user, onClose }) {
   const dispatch = useDispatch();

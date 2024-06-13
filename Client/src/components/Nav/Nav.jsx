@@ -1,27 +1,24 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState, useEffect } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector, useDispatch } from "react-redux";
 import User from "../Users/User";
-import {
-  getCartByUserId,
-  renderCondition,
-  sendCart,
-} from "../../Redux/Actions/Actions";
 import CartList from "../ProductCart/CartList/CartList";
+import { getCartByUserId, sendCart } from "../../Redux/Actions/cartActions";
+import { renderCondition } from "../../Redux/Actions/productActions";
 
 export default function Nav({ color }) {
-  const user = useSelector((state) => state.user);
-  const isAuth = useSelector((state) => state.isAuth);
-  const cartItems = useSelector((state) => state.cartItems) || 0;
+  const user = useSelector((state) => state.auth.user);
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const cartItems = useSelector((state) => state.cart.cartItems) || 0;
 
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (cartItems?.length === 0 && user?.id_user) {
+    if (cartItems.length === 0 && user?.id_user) {
       dispatch(getCartByUserId(user?.id_user));
     }
   }, [dispatch, user, cartItems]);

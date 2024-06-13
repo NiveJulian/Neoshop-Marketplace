@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { ProductCard } from "../Product/ProductCard";
 import Paginate from "../Paginate/Paginate";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../Redux/Actions/Actions";
+import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { addToCart } from "../../Redux/Actions/cartActions";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);

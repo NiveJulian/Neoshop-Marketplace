@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { orderProductsPrice, renderCondition } from "../../Redux/Actions/Actions";
 import { useState } from "react";
+import { orderProductsPrice, renderCondition } from "../../Redux/Actions/productActions";
 
 export const OrderPrice = () => {
   const dispatch = useDispatch();

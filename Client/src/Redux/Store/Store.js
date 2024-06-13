@@ -1,6 +1,22 @@
-import { applyMiddleware, createStore, compose } from "redux";
+import { applyMiddleware, createStore, compose, combineReducers } from "redux";
 import {thunk} from "redux-thunk";
-import rootReducer from "../Reducer/Reducer";
+import authReducer from '../Reducer/authReducer';
+import cartReducer from '../Reducer/cartReducer';
+import payReducer from '../Reducer/payReducer';
+import productReducer from '../Reducer/productReducer';
+import storeReducer from '../Reducer/storeReducer';
+import updateImageReducer from '../Reducer/updateImageReducer';
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  cart: cartReducer,
+  pay: payReducer,
+  product: productReducer,
+  store: storeReducer,
+  updateImage: updateImageReducer,
+});
+
+
 
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; 

@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import validationLogin from "./validationLogin";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../Redux/Actions/Actions";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
+import { login } from "../../Redux/Actions/authActions";
 
 export default function UserFormLogin({ title, onClose }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuth = useSelector(state => state.isAuth);
+  const isAuth = useSelector(state => state.auth.isAuth);
 
   useEffect(() => {
     if (isAuth) {

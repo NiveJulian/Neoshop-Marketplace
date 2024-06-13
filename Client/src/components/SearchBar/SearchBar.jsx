@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { getProductByName, renderCondition, getAllProducts } from "../../Redux/Actions/Actions";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { getAllProducts, getProductByName, renderCondition } from "../../Redux/Actions/productActions";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
