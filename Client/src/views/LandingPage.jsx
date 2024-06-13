@@ -9,7 +9,7 @@ const LandingPage = () => {
 
   const postFakeApi = async () => {
     try {
-      await axios.post("http://localhost:3001/");
+      await axios.post("https://neoshop-back.onrender.com/");
     } catch (error) {
       console.error("Error al hacer el fake POST:", error);
     }

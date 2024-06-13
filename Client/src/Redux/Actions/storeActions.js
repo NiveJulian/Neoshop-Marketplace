@@ -11,7 +11,7 @@ export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
 
 export const createStore = (formData) => async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:3001/store/", formData);
+      const response = await axios.post("https://neoshop-back.onrender.com/store/", formData);
       if (response.status === 200) {
         toast.success("Your store is create");
         dispatch({ type: CREATE_STORE_SUCCESS, payload: response.data });
@@ -23,7 +23,7 @@ export const createStore = (formData) => async (dispatch) => {
   
 
 export const getAllSellers = () => {
-    const endpoint = "http://localhost:3001/store/";
+    const endpoint = "https://neoshop-back.onrender.com/store/";
   
     return async (dispatch) => {
       try {
@@ -39,7 +39,7 @@ export const getAllSellers = () => {
   };
   
   export const getSellerById = (id) => {
-    const endpoint = "http://localhost:3001/store";
+    const endpoint = "https://neoshop-back.onrender.com/store";
   
     return async (dispatch) => {
       try {

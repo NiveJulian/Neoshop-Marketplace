@@ -42,7 +42,7 @@ export const addToCart = (product) => ({
           })),
         };
   
-        const response = await axios.post("http://localhost:3001/cart/", data);
+        const response = await axios.post("https://neoshop-back.onrender.com/cart/", data);
         dispatch({ type: CART_SENT_SUCCESS, payload: response });
       } else {
         console.log("No user is logged in.");
@@ -56,7 +56,7 @@ export const addToCart = (product) => ({
   export const getCartByUserId = (userId) => async (dispatch) => {
     try {
       // Realizar la petición GET para obtener la información del carrito del usuario
-      const response = await axios.get(`http://localhost:3001/cart/id/${userId}`);
+      const response = await axios.get(`https://neoshop-back.onrender.com/cart/id/${userId}`);
       // Despachar una acción con la información del carrito obtenida
       dispatch({ type: GET_CART_SUCCESS, payload: response.data.products });
     } catch (error) {
