@@ -1,4 +1,5 @@
 import axios from "axios";
+import rutaBack from "./rutaBack"
 
 export const CLEAR_FILTERED_PRODUCTS = "CLEAR_FILTERED_PRODUCTS";
 export const CLEAR_PRODUCTS_STORE = "CLEAR_PRODUCTS_STORE";
@@ -17,7 +18,7 @@ export const SET_CONDITION = "SET_CONDITION";
 
 
 export const getAllProducts = () => {
-    const endpoint = "https://neoshop-back.onrender.com/product/";
+    const endpoint = `${rutaBack}/product/`;
     return async (dispatch) => {
       try {
         let response = await axios.get(`${endpoint}`);
@@ -32,7 +33,7 @@ export const getAllProducts = () => {
   };
   
   export const getProductById = (id) => {
-    const endpoint = "https://neoshop-back.onrender.com/product";
+    const endpoint = `${rutaBack}/product/`;
   
     return async (dispatch) => {
       try {
@@ -48,7 +49,7 @@ export const getAllProducts = () => {
   };
   
   export const getNewProducts = () => {
-    const endpoint = "https://neoshop-back.onrender.com/product/latest";
+    const endpoint = `${rutaBack}/product/latest`;
     return async (dispatch) => {
       try {
         const response = await axios.get(endpoint);
@@ -63,7 +64,7 @@ export const getAllProducts = () => {
   };
   
   export const getProductByName = (name) => {
-    const endpoint = `https://neoshop-back.onrender.com/product/name/${name}`;
+    const endpoint = `${rutaBack}/product/name/${name}`;
     return async (dispatch) => {
       try {
         let response = await axios.get(endpoint);
@@ -79,7 +80,7 @@ export const getAllProducts = () => {
   };
   
   export const getProductByStore = (id) => {
-    const endpoint = `https://neoshop-back.onrender.com/product/allProductsStore/${id}`;
+    const endpoint = `${rutaBack}/product/allProductsStore/${id}`;
     return async (dispatch) => {
       try {
         let response = await axios.get(endpoint);
@@ -96,7 +97,7 @@ export const getAllProducts = () => {
   };
   
 export const getAllCategories = () => {
-    const endpoint = "https://neoshop-back.onrender.com/category";
+    const endpoint = `${rutaBack}/category`;
   
     return async (dispatch) => {
       try {
@@ -112,7 +113,7 @@ export const getAllCategories = () => {
   };
   
   export const getAllBrands = () => {
-    const endpoint = "https://neoshop-back.onrender.com/brand";
+    const endpoint = `${rutaBack}/brand/`;
   
     return async (dispatch) => {
       try {
@@ -128,7 +129,7 @@ export const getAllCategories = () => {
   };
 
   export const filterProducts = (filters) => {
-    const endpoint = "https://neoshop-back.onrender.com/product/filter";
+    const endpoint = `${rutaBack}/product/filter`;
     return async (dispatch) => {
       try {
         const queryString = new URLSearchParams(filters).toString();
