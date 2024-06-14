@@ -33,6 +33,10 @@ import {
   CREATE_STORE_FAILURE,
   UPLOAD_IMAGES_SUCCESS,
   UPLOAD_IMAGES_FAILURE,
+  UPDATE_USER,
+  UPDATE_DELIVERY,
+  CLEAN_CART,
+  MY_SHOPPING,
 } from "../Actions/Actions";
 
 const initialState = {
@@ -56,6 +60,8 @@ const initialState = {
   loginError: null,
   cartSent: false,
   cartError: null,
+  delivery:"",
+  myShopping: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -159,6 +165,19 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: payload,
       };
+
+     case UPDATE_USER:
+      return {
+        ...state,
+        user: payload
+      }
+    
+    case UPDATE_DELIVERY:
+      console.log("Reducer received payload:", payload); // Log para verificar el payload
+      return{
+        ...state,
+        delivery:payload
+      }  
 
     case GET_PRODUCT_FILTER:
       return { ...state, filteredProducts: payload };
@@ -295,9 +314,19 @@ const rootReducer = (state = initialState, action) => {
     case GET_CART_FAILURE:
       return {
         ...state,
-        cartError: payload,
+        // cartError: payload,
       };
 
+    case CLEAN_CART:
+      localStorage.setItem("cartItems", "");
+      return {
+        ...state,
+        cartItems: [],
+      }
+
+    case MY_SHOPPING:
+      return { ...state, myShopping: payload };
+      
     default:
       return state;
   }

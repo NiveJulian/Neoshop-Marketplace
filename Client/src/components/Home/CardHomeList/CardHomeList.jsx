@@ -9,7 +9,6 @@ export const CardHomeList = ({ allProducts }) => {
           key={product.id_product} 
           id_product={product.id_product}
           name={product.name}
-          idStore={product.storeIdStore}
           store={product.store}
           img_product={product.img_product[0]}
           price={product.price}

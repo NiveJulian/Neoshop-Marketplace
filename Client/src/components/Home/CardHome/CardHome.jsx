@@ -55,7 +55,7 @@ export const CardHome = ({
       <div className="flex justify-between items-center w-full pb-4 mb-auto">
         <div className="flex items-center">
           <div className="pr-3">
-            <Link to={`/store/${idStore}`}>
+            <Link to={`/store/${store.id_store}`}>
               <img
                 className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
                 src={store.logo}

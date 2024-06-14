@@ -1,4 +1,5 @@
 import CartItem from "../CartItem/CartItem";
+import { Link } from "react-router-dom";
 
 export default function CartList({ cartItems, calculateTotal }) {
   return (
@@ -12,9 +13,11 @@ export default function CartList({ cartItems, calculateTotal }) {
         <p className="text-gray-500">${calculateTotal()}</p>
       </div>
       <div className="mt-4 float-left">
-        <button className="border p-2 hover:text-secondary hover:border-secondary hover:shadow-lg active:translate-y-[5%] rounded-md active:shadow-xl">
-          Continue with the purchase
-        </button>
+        <Link to={"/payPreview"}>        
+          <button className="border p-2 hover:text-secondary hover:border-secondary hover:shadow-lg active:translate-y-[5%] rounded-md active:shadow-xl">
+            Continue with the purchase
+          </button>
+        </Link>
       </div>
     </div>
   );

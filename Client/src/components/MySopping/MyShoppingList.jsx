@@ -4,7 +4,7 @@ import Paginate from "../Paginate/Paginate";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../Redux/Actions/Actions";
 
-export default function ProductList({ allProducts }) {
+export default function MyShoppingList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const dispatch = useDispatch();

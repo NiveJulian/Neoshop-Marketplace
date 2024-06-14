@@ -10,6 +10,7 @@ export const GET_ALL_STORE = "GET_ALL_STORE";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS";
 export const GET_PRODUCT_FILTER = "GET_PRODUCT_FILTER";
+export const POST_PAYMENT = "POST_PAYMENT";
 export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const SHOW_STORE = "SHOW_STORE";
 export const SHOW_ABC = "SHOW_ABC";
@@ -25,23 +26,22 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_CART_ITEM_QUANTITY = "UPDATE_CART_ITEM_QUANTITY";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
 import { deleteSessionToken } from "../../components/delCookie";
-// import { auth } from "../../firebase/firebase";
-// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-// import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";export const CART_SENT_SUCCESS = "CART_SENT_SUCCESS";
 export const CART_SENT_SUCCESS = "CART_SENT_SUCCESS";
 export const CART_SENT_FAILURE = "CART_SENT_FAILURE";
 export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 export const GET_CART_FAILURE = "GET_CART_FAILURE";
 export const CREATE_STORE_SUCCESS = "CREATE_STORE_SUCCESS";
 export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
-
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
 export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
-
+export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
+export const CLEAN_CART = "CLEAN_CART";
+export const MY_SHOPPING = "MY_SHOPPING";
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -210,6 +210,28 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
   }
 };
 
+export const updateUserAddress = (formUpdate) => async (dispatch) => {
+  const endpoint = "http://localhost:3001/user/update";
+
+  try {
+    const response = await axios.put(endpoint, formUpdate);
+
+    if (response.status === 200) {
+      toast.success("Update successful!");
+      dispatch({
+        type: UPDATE_USER,
+        payload: response.data,
+      });
+      setTimeout(() => {
+        window.history.go(-1);
+      }, 2000);
+    }
+  } catch (error) {
+    toast.error("Error while updating");
+    console.log(error);
+  }
+};
+
 //PRODUCTS
 export const getAllProducts = () => {
   const endpoint = "http://localhost:3001/product/";
@@ -370,7 +392,6 @@ export const createStore = (formData) => async (dispatch) => {
 };
 
 export const uploadImages = (formData) => async (dispatch) => {
-
   try {
     const response = await axios.post(
       "http://localhost:3001/images/upload",
@@ -380,7 +401,7 @@ export const uploadImages = (formData) => async (dispatch) => {
       }
     );
     if (response.data) {
-      toast.success("Upload image success")
+      toast.success("Upload image success");
       dispatch({ type: UPLOAD_IMAGES_SUCCESS, payload: response.data.links });
     }
   } catch (error) {
@@ -445,6 +466,10 @@ export const removeFromCart = (productId) => ({
   payload: productId,
 });
 
+export const cleanCart = () => ({
+  type: CLEAN_CART,
+});
+
 export const updateCartItemQuantity = (productId, quantity) => ({
   type: UPDATE_CART_ITEM_QUANTITY,
   payload: { productId, quantity },
@@ -487,5 +512,47 @@ export const getCartByUserId = (userId) => async (dispatch) => {
     // En caso de error, despachar una acción de error
     console.error("Error al obtener el carrito:", error);
     dispatch({ type: GET_CART_FAILURE, error });
+  }
+};
+
+//PAGOS
+export const paymentOk = (payment) => {
+  return async () => {
+    try {
+      console.log(payment);
+      const response = await axios.post(
+        "http://localhost:3001/paying/post-order",
+        payment
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        toast.success("Payment Ok")
+      } 
+    } catch (error) {
+      toast.error("Error sending payment");
+      console.log(error.message);
+    }
+  };
+};
+
+
+export const updateDeliveryMethod = (delivery) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_DELIVERY,
+      payload: delivery,
+    });
+  };
+};
+
+export const myShopping = async (userId) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/paying/user/${userId}`); 
+    dispatch({ type: MY_SHOPPING, payload: response });
+    
+  } catch (error) {
+    console.error("Error al obtener las compras:", error);
+    dispatch({ type: MY_SHOPPING, error });
   }
 };

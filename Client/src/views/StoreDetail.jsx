@@ -16,16 +16,14 @@ const StoreDetail = () => {
   // const newProducts = useSelector((state) => state.newProducts);
   const productsByStore = useSelector((state) => state.productsByStore);
   const seller = useSelector((state) => state.seller);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(getSellerById(id)).then(() => {
-      setLoading(false);
-    });
+    
+    dispatch(getSellerById(id));
+      
+    
     dispatch(getProductByStore(id))
 
-    // dispatch(getNewProducts());
   }, [dispatch, id]);
 
 
@@ -33,9 +31,7 @@ const StoreDetail = () => {
   //   return ventas >= 10000 ? "más de 10 mil ventas" : `${ventas} ventas`;
   // };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
 
   return (
     <div>

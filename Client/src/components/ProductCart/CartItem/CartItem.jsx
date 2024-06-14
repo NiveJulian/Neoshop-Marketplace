@@ -17,7 +17,7 @@ function CartItem({ product }) {
 
   // Función para eliminar el producto del carrito
   const handleRemove = () => {
-    toast.success("Eliminado correctamente")
+    // toast.success("Eliminado correctamente")
     dispatch(removeFromCart(product?.id_product));
   };
 

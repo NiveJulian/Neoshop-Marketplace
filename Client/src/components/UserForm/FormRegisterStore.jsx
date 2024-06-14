@@ -4,6 +4,7 @@ import validationFormRegisterStore from "./validationformregisterstore"; // Impo
 import { createStore, uploadImages } from "../../Redux/Actions/Actions";
 import toast from "react-hot-toast";
 import { ReactSortable } from "react-sortablejs";
+import { Navigate } from "react-router-dom";
 
 export default function FormRegisterStore({ title = "Create Store", user }) {
   const dispatch = useDispatch();
@@ -92,6 +93,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
         toast.loading("Waiting...");
         setTimeout(() => {
           window.location.reload();
+          Navigate("/Home")
         }, 2000);
       } catch (error) {
         toast.error("Register failed. Please try again.");

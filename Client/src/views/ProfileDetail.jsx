@@ -22,12 +22,14 @@ const ProfileDetail = () => {
             <p className="text-gray-600">{user.email}</p>
             </div>
         </div>
+        <Link to="/adress">
         <button className="flex items-center text-left p-2 border border-gray-300 rounded-lg justify-between text-gray-600 hover:border-secondary">
             Edit account
         </button>
+        </Link>        
         </div>
         <div className="space-y-4">
-        <Link to="/Personal" className="block">
+        <Link to="/personal" className="block">
           <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
               {/* <span className="material-icons text-green-500 mr-2">check_circle</span> */}
@@ -39,6 +41,7 @@ const ProfileDetail = () => {
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
           </button>
           </Link>
+          <Link to="/accountdetail" className="block">
           <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
               {/* <span className="material-icons text-green-500 mr-2">check_circle</span> */}
@@ -49,25 +52,18 @@ const ProfileDetail = () => {
             </div>
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
           </button>
+          </Link>
+          <Link to="/myshopping" className="block">          
           <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
-              {/* <span className="material-icons text-green-500 mr-2">check_circle</span> */}
               <div>
-                <h2 className="text-xl font-semibold">Security</h2>
-                <p className="text-gray-600">Security configuration for your account.</p>
+                <h2 className="text-xl font-semibold">My shopping</h2>
+                <p className="text-gray-600">Your history of shopping on the app.</p>
               </div>
             </div>
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
           </button>
-          <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
-            <div className="flex items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Cards</h2>
-                <p className="text-gray-600">Data from your cards saved in your account.</p>
-              </div>
-            </div>
-            {/* <span className="material-icons text-gray-400">chevron_right</span> */}
-          </button>
+          </Link>  
           <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
               <div>
@@ -76,7 +72,16 @@ const ProfileDetail = () => {
               </div>
             </div>
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
-          </button>
+          </button>        
+          <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
+            <div className="flex items-center">
+              <div>
+                <h2 className="text-xl font-semibold">Cards</h2>
+                <p className="text-gray-600">Data from your cards saved in your account.</p>
+              </div>
+            </div>
+            {/* <span className="material-icons text-gray-400">chevron_right</span> */}
+          </button>          
           <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
               <div>
@@ -86,20 +91,21 @@ const ProfileDetail = () => {
             </div>
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
           </button>
-          <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
+          {/* <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
               <div>
                 <h2 className="text-xl font-semibold">Communications</h2>
                 <p className="text-gray-600">Choose what type of information you want to recieve.</p>
               </div>
             </div>
-            {/* <span className="material-icons text-gray-400">chevron_right</span> */}
-          </button>
+            <span className="material-icons text-gray-400">chevron_right</span>
+          </button> */}
           <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
+              {/* <span className="material-icons text-green-500 mr-2">check_circle</span> */}
               <div>
-                <h2 className="text-xl font-semibold">My shopping</h2>
-                <p className="text-gray-600">Your history of shopping on the app.</p>
+                <h2 className="text-xl font-semibold">Security</h2>
+                <p className="text-gray-600">Security configuration for your account.</p>
               </div>
             </div>
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
