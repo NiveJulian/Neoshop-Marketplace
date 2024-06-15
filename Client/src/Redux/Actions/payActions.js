@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import rutaBack from "./rutaBack"
 
 export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
 
@@ -8,7 +9,7 @@ export const paymentOk = (payment) => {
     try {
       console.log(payment);
       const response = await axios.post(
-        "http://localhost:3001/paying/post-order",
+        `${rutaBack}/paying/post-order`,
         payment
       );
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { deleteSessionToken } from "../../components/delCookie";
-
+import rutaBack from "./rutaBack"
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const IS_AUTH = "IS_AUTH";
 export const ISNT_AUTH = "ISNT_AUTH";
@@ -13,8 +13,8 @@ export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
 
 // LOGIN
-export const login = (formData) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/login/";
+export const login = (formData) => async (dispatch) => {``
+    const endpoint = `${rutaBack}/login/`;
     try {
       const response = await axios.post(endpoint, formData, {
         withCredentials: true,
@@ -57,7 +57,7 @@ export const login = (formData) => async (dispatch) => {
   };
   
   export const register = (formData) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/user/";
+    const endpoint = `${rutaBack}/user/`;
   
     try {
       const response = await axios.post(`${endpoint}`, formData);
@@ -81,7 +81,7 @@ export const login = (formData) => async (dispatch) => {
   };
   
   export const getUserById = (id) => {
-    const endpoint = "http://localhost:3001/user";
+    const endpoint = `${rutaBack}/user/`;
     return async (dispatch) => {
       try {
         let response = await axios.get(`${endpoint}/${id}`);
@@ -96,7 +96,7 @@ export const login = (formData) => async (dispatch) => {
   };
   
   export const isAuthenticated = (jwtToken) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/login/auth";
+    const endpoint = `${rutaBack}/login/auth`;
     try {
       if (jwtToken) {
         const response = await axios.post(endpoint, {
@@ -126,7 +126,7 @@ export const login = (formData) => async (dispatch) => {
   };
 
   export const updateUserAddress = (formUpdate) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/user/update";
+    const endpoint = `${rutaBack}/user/update`;
   
     try {
       const response = await axios.put(endpoint, formUpdate);
