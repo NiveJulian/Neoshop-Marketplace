@@ -10,10 +10,9 @@ export default function Nav({ show, userId, user }) {
   const activeIcon = inactiveIcon + " text-primary";
   const router = useRouter();
   const { pathname } = router;
-
   return (
     <div
-      className={`bg-gray-900 text-slate-300 w-64 fixed h-screen md:static md:w-auto transition-all ${
+      className={`bg-gray-900 text-slate-300 absolute w-64 h-screen md:static md:w-auto transition-all ${
         show ? "left-0" : "-left-full"
       }`}
     >
@@ -139,7 +138,7 @@ export default function Nav({ show, userId, user }) {
             Pedidos
           </Link>
 
-          <Link
+          {/* <Link
             href={`/brand/${userId}`}
             className={
               pathname.includes("/settings") ? activeLink : inactiveLink
@@ -162,7 +161,7 @@ export default function Nav({ show, userId, user }) {
               />
             </svg>
             Brand
-          </Link>
+          </Link> */}
           <Link href="" className={inactiveLink}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

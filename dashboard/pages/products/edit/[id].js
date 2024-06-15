@@ -8,16 +8,17 @@ export default function EditProductPage(){
     const [productInfo, setProductInfo] = useState(null);
     const router = useRouter();
     const {id}= router.query;
+    const {product}= router.query;
     useEffect(()=>{
-        if(!id){
+        if(!product){
             return;
         }
-            axios.get('/api/products?id='+id).then(response => {
+            axios.get('http://localhost:3001/product/id/'+product).then(response => {
             setProductInfo(response.data)
         })
-    },[id])
+    },[product])
     return (
-        <Layout>
+        <Layout userId={id}>
             <h1>Edit Product</h1>
             {productInfo && (
                 <ProductForm {...productInfo} />
