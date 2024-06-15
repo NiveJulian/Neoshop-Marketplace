@@ -7,14 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 const LandingPage = () => {
   const store = useSelector((state) => state.store.store);
 
-  const postFakeApi = async () => {
-    try {
-      await axios.post("https://neoshop-back.onrender.com/");
-    } catch (error) {
-      console.error("Error al hacer el fake POST:", error);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800">
       <Nav />

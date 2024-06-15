@@ -1,19 +1,10 @@
 import React, { useRef } from 'react';
 import CategoryCard from './CategoryCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterProducts } from '../../Redux/Actions/productActions';
+import { useSelector } from 'react-redux';
+// import { filterProducts } from '../../Redux/Actions/productActions';
 
 
 const Categories = () => {
-  // const categorias = [
-  //   "Tecnología", 
-  //   "Hogar y Muebles", 
-  //   "Electrodomésticos", 
-  //   "Herramientas", 
-  //   "Deportes y Fitness", 
-  //   "Ropa", 
-  //   "Juegos y Juguetes"
-  // ];
   const categories = useSelector((state) => state.product.categories);
   const [filters, setFilters] = useState({
     category: '',

@@ -8,7 +8,7 @@ export const paymentOk = (payment) => {
     try {
       console.log(payment);
       const response = await axios.post(
-        "https://neoshop-back.onrender.com/paying/post-order",
+        "http://localhost:3001/paying/post-order",
         payment
       );
 

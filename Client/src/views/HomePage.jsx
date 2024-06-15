@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
 import Nav from "../components/Nav/Nav";
@@ -12,7 +12,6 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getNewProducts());
   }, [dispatch]);
-
   return (
     <div>
       <Nav color={"primary"} />

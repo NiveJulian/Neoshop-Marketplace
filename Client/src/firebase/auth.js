@@ -17,7 +17,7 @@ export const doSignInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken();
 
-    const response = await fetch("https://neoshop-back.onrender.com/login/auth/third", {
+    const response = await fetch("http://localhost:3001/login/auth/third", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export const doSignWithFacebook = async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken()
 
-    const response = await fetch("https://neoshop-back.onrender.com/login/auth/third", {
+    const response = await fetch("http://localhost:3001/login/auth/third", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

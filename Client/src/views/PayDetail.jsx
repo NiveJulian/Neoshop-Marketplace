@@ -60,7 +60,7 @@ export const PayDetail = () => {
         },
       }));
   
-      return fetch("https://neoshop-back.onrender.com/paypal/create-order", {
+      return fetch("http://localhost:3001/paypal/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export const PayDetail = () => {
             id_payment: data.orderID,
             date: new Date().toISOString(),
         }));
-      return fetch(`https://neoshop-back.onrender.com/paypal/capture-order/${data.orderID}`, {
+      return fetch(`http://localhost:3001/paypal/capture-order/${data.orderID}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export const GET_SELLER_BY_ID = "GET_SELLER_BY_ID";
+export const GET_SELLER_BY_NAME = "GET_SELLER_BY_NAME";
 export const GET_ALL_STORE = "GET_ALL_STORE";
 
 export const CREATE_STORE_SUCCESS = "CREATE_STORE_SUCCESS";
@@ -11,7 +12,7 @@ export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
 
 export const createStore = (formData) => async (dispatch) => {
     try {
-      const response = await axios.post("https://neoshop-back.onrender.com/store/", formData);
+      const response = await axios.post("http://localhost:3001/store/", formData);
       if (response.status === 200) {
         toast.success("Your store is create");
         dispatch({ type: CREATE_STORE_SUCCESS, payload: response.data });
@@ -23,7 +24,7 @@ export const createStore = (formData) => async (dispatch) => {
   
 
 export const getAllSellers = () => {
-    const endpoint = "https://neoshop-back.onrender.com/store/";
+    const endpoint = "http://localhost:3001/store/";
   
     return async (dispatch) => {
       try {
@@ -39,7 +40,7 @@ export const getAllSellers = () => {
   };
   
   export const getSellerById = (id) => {
-    const endpoint = "https://neoshop-back.onrender.com/store";
+    const endpoint = "http://localhost:3001/store";
   
     return async (dispatch) => {
       try {
@@ -54,4 +55,18 @@ export const getAllSellers = () => {
     };
   };
 
+  export const getSellerByName = (name) => {
+    const endpoint = "http://localhost:3001/store";
   
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${endpoint}/name/${name}`);
+        dispatch({
+          type: GET_SELLER_BY_NAME,
+          payload: response.data,
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+  };
