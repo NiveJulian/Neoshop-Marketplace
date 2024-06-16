@@ -1,7 +1,4 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getSellerByName } from "../../../Redux/Actions/storeActions";
 export const CardHome = ({
   id_product,
   name,
@@ -10,13 +7,6 @@ export const CardHome = ({
   quantity,
   store,
 }) => {
-  const dispatch = useDispatch();
-  const { seller } = useSelector((state) => state.store);
-  
-  useEffect(() => {
-    dispatch(getSellerByName(store.name));
-  }, [dispatch, store]);
-
   return (
     <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64">
       <div className="relative flex mb-4 rounded-2xl">

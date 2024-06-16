@@ -14,7 +14,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex items-start w-64 mt-auto mb-6 fixed z-30">
+    <div className="flex items-start mt-auto mb-6 fixed z-30">
       {expanded ? (
         <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center px-2 w-16 h-full overflow-hidden bg-orange-400 rounded">
           <a
