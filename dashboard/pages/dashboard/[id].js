@@ -24,7 +24,6 @@ export default function Dashboard({ user }) {
     };
     fetchData();
   }, [id]);
-
   // Aquí puedes realizar las acciones necesarias para cargar los datos del usuario basados en el userId
 
   return (

@@ -84,7 +84,7 @@ export default function Products({ user }) {
                         </Link>
                         <Link
                           className="btn-red"
-                          href={"/products/delete/" + product?.id_product}
+                          href={`/products/delete/${storeData.data.id_user}?product=${product?.id_product}`}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

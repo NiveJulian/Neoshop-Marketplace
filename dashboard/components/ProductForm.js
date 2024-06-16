@@ -1,5 +1,4 @@
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
@@ -7,26 +6,27 @@ import Image from "next/image";
 
 export default function ProductForm({
   store,
+  storeIdStore,
   id_product,
   name: existingName,
   description: existingDescription,
   price: existingPrice,
   img_product: existingImage,
   quantity: existingQuantity,
-  category: existingCategory,
+  categories: existingCategories,
   brand: existingBrand,
 }) {
   const [title, setTitle] = useState(existingName || "");
-  // const [productProperties, setProductProperties] = useState({});
   const [price, setPrice] = useState(existingPrice || "");
   const [images, setImages] = useState(existingImage || []);
-  const [quantity, setQuantity] = useState(existingQuantity || 0); // Añadido
-  const [brand, setBrand] = useState(existingBrand || {}); // Añadido
+  const [quantity, setQuantity] = useState(existingQuantity || 0);
+  const [brand, setBrand] = useState(existingBrand || ""); // Ajustado para recibir string
   const [goToProduct, setGoToProduct] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [description, setDescription] = useState(existingDescription || "");
-  const [category, setCategory] = useState(existingCategory || []);
+  const [category, setCategory] = useState(existingCategories[0] || ""); // Ajustado para recibir string
   const [categories, setCategories] = useState([]);
+  const [storeData, setStoreData] = useState(null);
 
   const router = useRouter();
   const { id } = router.query;
@@ -34,34 +34,48 @@ export default function ProductForm({
   useEffect(() => {
     if (id) {
       fetchCategories();
+      fetchData();
     }
-  }, [id]); // Asegúrate de que el fetch se ejecute cuando cambie el ID
+  }, [id]);
 
   async function fetchCategories() {
     try {
-      const result = await axios.get(
-        `http://localhost:3001/category/`
-      );
+      const result = await axios.get(`http://localhost:3001/category/`);
       setCategories(result.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   }
 
+  async function fetchData() {
+    if (id) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/store/user/${id}`
+        );
+        setStoreData(response.data);
+      } catch (error) {
+        console.error("Error fetching store data:", error);
+      }
+    }
+  }
+
   async function createProduct(ev) {
     ev.preventDefault();
     const data = {
+      id_product,
+      id_store: storeIdStore,
       name: title,
       description,
       price,
       quantity,
       img_product: images,
-      categoryName: [...category],
-      fromStore: store.name,
+      categoryName: [category],
+      fromStore: store,
       brand: brand,
     };
     if (id_product) {
-      await axios.put(`http://localhost:3001/product/${id_product}`, data);
+      await axios.put(`http://localhost:3001/product/update`, data);
     } else {
       await axios.post("http://localhost:3001/product/", data);
     }
@@ -69,7 +83,7 @@ export default function ProductForm({
   }
 
   if (goToProduct) {
-    router.push(`/products/${store.id_user}`);
+    router.push(`/products/${storeData.id_user}`);
   }
 
   async function uploadImages(ev) {
@@ -82,7 +96,6 @@ export default function ProductForm({
       }
       const res = await axios.post("http://localhost:3001/images/upload", data);
 
-      console.log(res);
       setImages((oldImages) => [...oldImages, ...res.data.links]);
       setIsUploading(false);
     }
@@ -106,7 +119,7 @@ export default function ProductForm({
           <option value="">Uncategorized</option>
           {categories.length > 0 &&
             categories.map((c) => (
-              <option key={c._id} value={c._id}>
+              <option key={c._id} value={c.name}>
                 {c.name}
               </option>
             ))}
@@ -181,7 +194,7 @@ export default function ProductForm({
         <input
           type="text"
           placeholder="Brand"
-          value={brand?.name}
+          value={brand}
           onChange={(ev) => setBrand(ev.target.value)}
         />
         <button type="submit" className="btn-primary">
