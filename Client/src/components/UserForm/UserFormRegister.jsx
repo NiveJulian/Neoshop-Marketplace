@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import validationRegister from "./validationRegister"; // Importa tu función de validación
-import { register } from "../../Redux/Actions/Actions";
+import validationRegister from "./validationRegister";
 import toast from "react-hot-toast";
+import { register } from "../../Redux/Actions/authActions";
 
 export default function UserFormRegister({ title = "Register" }) {
   const dispatch = useDispatch();

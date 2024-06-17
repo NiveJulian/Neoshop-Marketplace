@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import validationFormRegisterStore from "./validationformregisterstore"; // Importa tu función de validación
-import { createStore, uploadImages } from "../../Redux/Actions/Actions";
+import validationFormRegisterStore from "./validationformregisterstore"; 
 import toast from "react-hot-toast";
 import { ReactSortable } from "react-sortablejs";
+import { uploadImages } from "../../Redux/Actions/updateImageActions";
+import { createStore } from "../../Redux/Actions/storeActions";
 
 export default function FormRegisterStore({ title = "Create Store", user }) {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
   const [touched, setTouched] = useState({});
   const [images, setImages] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
-  const img = useSelector((state) => state.images);
+  const img = useSelector((state) => state.updateImage.images);
 
   useEffect(() => {
     if (img && img.length > 0 && Array.isArray(img[0])) {

@@ -3,38 +3,91 @@ import { Link, useParams } from "react-router-dom";
 import "./ProductDetail.css";
 import Nav from "../components/Nav/Nav";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, getProductById, getSellerById } from "../Redux/Actions/Actions";
 import toast from "react-hot-toast";
+import { getProductById } from "../Redux/Actions/productActions";
+import { getSellerById } from "../Redux/Actions/storeActions";
+import { addToCart } from "../Redux/Actions/cartActions";
+import { getPaymentsByUserId } from "../Redux/Actions/reviewActions";
+import { sendReview } from "../Redux/Actions/reviewActions";
 
+function betterAverageMark(average_mark){
+  const formattedNumber = average_mark.toFixed(1);
+  return parseFloat(formattedNumber);
+}
+//Esta funcion verifica que el usuario haya comprado el producto anteriormente
+function hasUserPurchasedProduct(payments, productId) {
+  for (let i = 0; i < payments.length; i++) {
+    const payment = payments[i];
+    for (let j = 0; j < payment.paymentProducts.length; j++) {
+      const product = payment.paymentProducts[j];
+      if (product.id_product === productId) {
+        return true; 
+      }
+    }
+  }
+  return false; 
+}
 
-const reviews = [
-  'Marcos: "Me encantó" 5 / 5',
-  'Juan: "Muy buen producto" 4 / 5',
-  'Candela: "Es casi perfecto!" 4.5 / 5',
-  'María: "Excelente!" 5 / 5',
-];
+//Esta funcion devuelve fechas del back en un mejor formato
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Los meses empiezan desde 0, así que sumamos 1
+  const day = String(date.getDate()).padStart(2, "0");
+  const formattedDate = `${year}/${month}/${day}`; // Formatear la fecha como "YYYY/MM/DD"
+  return formattedDate;
+}
+
+// Componente para sacar el promedio de estrellas de los usuarios
+const StarRating = ({ rating, color = "#ffc107" }) => {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 !== 0;
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+  return (
+    <div className="star-rating">
+      {[...Array(fullStars)].map((_, index) => (
+        <span key={index} style={{ color: color }}>
+          &#9733;
+        </span>
+      ))}
+      {[...Array(emptyStars)].map((_, index) => (
+        <span
+          key={index + fullStars + (halfStar ? 1 : 0)}
+          style={{ color: "#ccc" }}
+        >
+          &#9733;
+        </span>
+      ))}
+    </div>
+  );
+};
 
 const ProductDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  // const [customQuantity, setCustomQuantity] = useState("");
-  // const [isCustomQuantity, setIsCustomQuantity] = useState(false);
-  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
-
   const { id } = useParams();
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.product);
-  const seller = useSelector((state) => state.seller);
+  const product = useSelector((state) => state.product.product);
+  const seller = useSelector((state) => state.store.seller);
+  const user = useSelector((state) => state.auth.user);
+  const payments = useSelector((state) => state.reviews.allPayments) || [];
+  const [newReview, setNewReview] = useState({ text: "", rating: 0 });
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length);
-    }, 5000);
     dispatch(getProductById(id));
     dispatch(getSellerById(product.storeIdStore));
-
-    return () => clearInterval(interval);
+    dispatch(getPaymentsByUserId(user.id_user));
   }, [dispatch, id, product.storeIdStore]);
+
+  // Función para manejar el cambio dinámico de altura del textarea
+  const handleTextareaChange = (e) => {
+    const textareaLineHeight = 24;
+    const minRows = 1;
+    e.target.rows = minRows;
+    const currentRows = Math.ceil(e.target.scrollHeight / textareaLineHeight);
+    e.target.style.height = `${currentRows * textareaLineHeight}px`;
+    setNewReview({ ...newReview, text: e.target.value });
+  };
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -43,9 +96,9 @@ const ProductDetail = () => {
   };
 
   const handleAddToCart = (product) => {
-    toast.success("Add to cart")
-    dispatch(addToCart(product))
-  }
+    toast.success("Add to cart");
+    dispatch(addToCart(product));
+  };
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -62,12 +115,54 @@ const ProductDetail = () => {
   };
 
   const formatVentasText = (ventas) => {
-    return ventas >= 10000 ? "más de 10 mil ventas" : `${ventas} ventas`;
+    return ventas >= 10000 ? "more than 10 thousand sales" : `${ventas} sales`;
+  };
+
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    const reviewText = newReview.text.trim();
+    if (!reviewText) {
+      toast.error("Please write your opinion before submitting."); // Validación de texto de reseña no vacío
+      return;
+    }
+    if (reviewText.length > 500) {
+      toast.error(`The review cannot be more than ${500} characters.`); // Validación de longitud máxima del texto
+      return;
+    }
+    const suspiciousPattern = /[<*-+)({}|><^%$#@)>]/; // Validación de caracteres sospechosos utilizando una expresión regular
+    if (suspiciousPattern.test(reviewText)) {
+      toast.error("The review contains illegal characters.");
+      return;
+    }
+    if (newReview.rating < 1 || newReview.rating > 5) {
+      // Validación de rating en el rango válido (1 a 5)
+      toast.error("The rating must be between 1 and 5.");
+      return;
+    }
+    const reviewInfo = {
+      rating: newReview.rating,
+      comment: newReview.text,
+      id_user: user.id_user,
+      id_product: id,
+    };
+    try {
+      dispatch(sendReview(reviewInfo));
+      toast.loading("Waiting...");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      toast.error("Register failed. Please try again.");
+    }
+    e.target.previousElementSibling.value = ""; // Limpiar el textarea y resetear la calificación después del envío
+    e.target.previousElementSibling.style.height = "auto";
+    setNewReview({ text: "", rating: 0 });
+    toast.success("Review submitted successfully!");
   };
 
   return (
     <div>
-      <Nav color={"primary"}/>
+      <Nav color={"primary"} />
       <div className="detail-container">
         <div className="detail-cont">
           <div>
@@ -86,7 +181,6 @@ const ProductDetail = () => {
               {product.img_product > 1 && (
                 <button onClick={handleNextImage}>&gt;</button>
               )}
-              
             </div>
             <div className="thumbnail-container">
               {product.length > 0 ? (
@@ -103,7 +197,7 @@ const ProductDetail = () => {
                 ))
               ) : (
                 <img
-                className="w-24 h-auto object-cover border border-gray-300"
+                  className="w-24 h-auto object-cover border border-gray-300"
                   src={
                     product?.img_product
                       ? product?.img_product
@@ -128,12 +222,14 @@ const ProductDetail = () => {
           </div>
 
           <div className="info-container">
-            <p className="product-date">Published: {product?.date_creation}</p>
+            <p className="product-date">
+              Published: {product ? formatDate(product.date_creation) : null}
+            </p>
             <h1 className="product-name">{product?.name}</h1>
             <p className="brand">Category: {product?.category}</p>
             <div className="content-flex">
               <p className="product-average-mark">
-                {product?.average_mark} / 5
+                {product.average_mark?betterAverageMark(product.average_mark):null} / 5
               </p>
               <p className="product-status">{product?.status}</p>
               <p
@@ -141,7 +237,7 @@ const ProductDetail = () => {
                   product?.available ? "available" : "not-available"
                 }`}
               >
-                {product?.available ? "Disponible" : "No disponible"}
+                {product?.available ? "Available" : "Not available"}
               </p>
             </div>
             <p className="product-price">${product?.price}</p>
@@ -162,7 +258,12 @@ const ProductDetail = () => {
                 ({product?.quantity} available)
               </span>
             </div>
-            <button onClick={() => handleAddToCart(product)} className="buy-button">Add to cart</button>
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="buy-button"
+            >
+              Add to cart
+            </button>
             <p className="brand">Seller:</p>
             <div className="seller-cont">
               <img
@@ -187,7 +288,70 @@ const ProductDetail = () => {
               </Link>
             </div>
             <div className="review-container">
-              <p className="review-text">{reviews[currentReviewIndex]}</p>
+              <p className="spec-title">Reviews</p>
+              <div className="review-overflow">
+                {hasUserPurchasedProduct(payments, id) ? (
+                  <div className="write-review-box">
+                    <textarea
+                      className="review-textarea"
+                      value={newReview.text}
+                      onChange={handleTextareaChange}
+                      placeholder="Write your opinion here..."
+                      rows={1}
+                      style={{ minHeight: "50px" }}
+                    />
+                    <div className="star-rating-container">
+                      <p className="star-rating-title">Qualification:</p>
+                      <div className="star-rating-input">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span
+                            key={star}
+                            className={
+                              star <= newReview.rating
+                                ? "star selected"
+                                : "star"
+                            }
+                            onClick={() =>
+                              setNewReview({ ...newReview, rating: star })
+                            }
+                          >
+                            &#9733;
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <button
+                      className="submit-review-button"
+                      onClick={handleReviewSubmit}
+                    >
+                      Send Opinion
+                    </button>
+                  </div>
+                ) : null}
+                <div className="reviews-users">
+                  <div className="reviews-users">
+                    {product.reviews && product.reviews.length > 0 ? (
+                      product.reviews.map((review, index) => (
+                        <div key={index} className="review-item">
+                          <div className="review-item-top">
+                            <p className="review-author">{review.user.name}</p>
+                            <StarRating
+                              rating={review.rating}
+                              color="#ffc107"
+                            />{" "}
+                          </div>
+                          <p className="review-date">
+                            Reviewed on {formatDate(review.date)}
+                          </p>
+                          <p className="review-text">"{review.comment}"</p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No reviews available</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

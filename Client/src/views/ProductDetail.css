@@ -317,3 +317,100 @@
     font-size: 1em;
     color: rgb(150, 150, 150);
   }
+
+  .review-container {
+    max-height: 450px;
+    margin-top: 1em;
+    border: 1px solid #ccc;
+    padding: 1em;
+  }
+  
+  .review-overflow {
+    overflow-y: auto;
+    max-height: 350px;
+    padding: 0;
+    border: none;
+  }
+  
+  .write-review-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 1em;
+    border-radius: 5px;
+  }
+  
+  .review-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+    min-height: 50px;
+  }
+  
+  .star-rating-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .star-rating-title {
+    margin-right: 10px;
+  }
+  
+  .star-rating-input {
+    display: flex;
+  }
+  
+  .star {
+    font-size: 1.5rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .star.selected {
+    color: #ffc107;
+  }
+  
+  .submit-review-button {
+    background-color: rgb(255, 130, 0);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-review-button:hover {
+    background-color: rgb(219, 113, 0);
+  }
+  
+  .reviews-users {
+    margin-top: 1em;
+  }
+  
+  .review-item {
+    margin-bottom: 1em;
+  }
+  
+  .review-item-top {
+    display: flex;
+    align-items: center;
+  }
+  
+  .review-author {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .review-text {
+    margin-bottom: 0.5em;
+    color: #333;
+    text-align: left;
+  }
+  
