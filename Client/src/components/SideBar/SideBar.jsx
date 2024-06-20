@@ -16,7 +16,7 @@ const Sidebar = () => {
   return (
     <div className="flex items-start mt-auto mb-6 fixed z-30">
       {expanded ? (
-        <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center px-2 w-16 h-full overflow-hidden bg-orange-400 rounded">
+        <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center px-2 w-16 h-full overflow-hidden bg-orange-400 rounded-lg">
           <a
             className="flex items-center justify-center mt-3 text-gray-200"
             href="#"
@@ -117,7 +117,7 @@ const Sidebar = () => {
           </div>
         </div>
       ) : (
-        <div className="relative flex flex-col transition-all ease-in-out text-gray-100 items-center w-40 h-full overflow-visible bg-orange-400 rounded">
+        <div className="relative flex flex-col transition-all ease-in-out text-gray-100 items-center w-40 h-full overflow-visible bg-orange-400 rounded-lg">
           <a
             className="flex items-center w-full mt-3 justify-center"
             href="#"

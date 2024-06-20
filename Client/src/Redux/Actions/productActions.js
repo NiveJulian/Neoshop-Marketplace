@@ -14,6 +14,7 @@ export const SHOW_ABC = "SHOW_ABC";
 export const SHOW_PRICE = "SHOW_PRICE";
 export const SET_CONDITION = "SET_CONDITION";
 export const MY_SHOPPING = "MY_SHOPPING";
+export const SET_HISTORY = "SET_HISTORY";
 
 export const getAllProducts = () => {
     const endpoint = "http://localhost:3001/product/";
@@ -157,9 +158,15 @@ export const getAllCategories = () => {
     };
   };
 
+  export const setHistory = (history) => {
+    return {
+      type: SET_HISTORY,
+      payload: history,
+    }
+  }
 
   
-export const orderProductsAbc = (vector) => ({
+  export const orderProductsAbc = (vector) => ({
     type: SHOW_ABC,
     payload: vector,
   });
