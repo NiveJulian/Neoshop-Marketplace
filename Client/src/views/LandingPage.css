@@ -19,11 +19,17 @@
   
   .header {
     background-image: linear-gradient(#004f80, #0088cc);
-    color: white;
+    color: grey;
     text-align: center;
     padding: 10px 0;
     border-bottom: 2px solid black;
     transition: all 0.3s ease; 
+  }
+  .header-dark {
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #000;
   }
   
   .header:hover {

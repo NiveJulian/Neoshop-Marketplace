@@ -7,6 +7,7 @@ import productReducer from '../Reducer/productReducer';
 import storeReducer from '../Reducer/storeReducer';
 import updateImageReducer from '../Reducer/updateImageReducer';
 import reviewsReducer from '../Reducer/reviewReducer';
+import themesReducer from '../Reducer/themesReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   store: storeReducer,
   updateImage: updateImageReducer,
   reviews: reviewsReducer,
+  themes: themesReducer,
 });
 
 

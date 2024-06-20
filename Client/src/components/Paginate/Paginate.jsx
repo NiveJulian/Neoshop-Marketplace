@@ -1,4 +1,5 @@
 // Paginate.js
+import { useSelector } from "react-redux";
 
 export default function Paginate({
   productsPerPage,
@@ -7,6 +8,13 @@ export default function Paginate({
   currentPage,
 }) {
   const pageNumbers = [];
+  const theme = useSelector((state) => state.themes.theme);//todo
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
+  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
     pageNumbers.push(i);
@@ -32,6 +40,7 @@ export default function Paginate({
             p-4
             rounded-xl
             "
+            
       >
         <ul className="flex items-center -mx-[6px]">
           <li className="px-1">
@@ -52,6 +61,7 @@ export default function Paginate({
             text-[#838995] text-base
             hover:bg-primary hover:border-primary hover:text-white
             "
+            style={{ borderColor: bordesPlomos}}
             >
               <span>
                 <svg
@@ -80,6 +90,7 @@ export default function Paginate({
                 }}
                 href={`#${number}`}
                 className={`w-9 h-9 flex items-center justify-center rounded-md border border-[#EDEFF1] text-gray-400 text-base  hover:bg-primary hover:border-primary hover:text-white ${currentPage === number ? 'bg-primary text-white' : ''}`}
+                style={{ borderColor: bordesPlomos}}
               >
                 {number}
               </a>
@@ -103,6 +114,7 @@ export default function Paginate({
             text-[#838995] text-base
             hover:bg-primary hover:border-primary hover:text-white
             "
+            style={{ borderColor: bordesPlomos}}
             >
               <span>
                 <svg

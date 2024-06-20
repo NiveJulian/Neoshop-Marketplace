@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export const ButtonStore = () => {
+  const themeLocal = useState(localStorage.getItem("theme"));
+  const theme = themeLocal[0];
+
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+
   return (
     <Link
-        to={'/createstore'}
+      to={"/createstore"}
       className="flex flex-col hover:shadow-lg active:translate-y-[5%] cursor-pointer items-center justify-center text-center border border-gray-300 rounded-lg shadow-md p-6"
       style={{ width: "300px", height: "200px" }}
     >
@@ -24,7 +30,10 @@ export const ButtonStore = () => {
         </svg>
         <span>Store</span>
       </button>
-      <p className="text-gray-600 mt-2 text-center">
+      <p
+        className="text-gray-600 mt-2 text-center"
+        style={{ color: textColor }}
+      >
         This is a brief description of the client section.
       </p>
     </Link>

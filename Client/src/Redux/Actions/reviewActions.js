@@ -23,7 +23,6 @@ export const sendReview = (reviewInfo) => async (dispatch) => {
 };
 
   export const getPaymentsByUserId = (id_user) => {
-    console.log("Lega a actions review")
     const endpoint = `http://localhost:3001/paying/user/${id_user}`;
     return async (dispatch) => {
       try {

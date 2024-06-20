@@ -10,7 +10,7 @@ import { addToCart } from "../Redux/Actions/cartActions";
 import { getPaymentsByUserId } from "../Redux/Actions/reviewActions";
 import { sendReview } from "../Redux/Actions/reviewActions";
 
-function betterAverageMark(average_mark){
+function betterAverageMark(average_mark) {
   const formattedNumber = average_mark.toFixed(1);
   return parseFloat(formattedNumber);
 }
@@ -21,11 +21,11 @@ function hasUserPurchasedProduct(payments, productId) {
     for (let j = 0; j < payment.paymentProducts.length; j++) {
       const product = payment.paymentProducts[j];
       if (product.id_product === productId) {
-        return true; 
+        return true;
       }
     }
   }
-  return false; 
+  return false;
 }
 
 //Esta funcion devuelve fechas del back en un mejor formato
@@ -72,12 +72,24 @@ const ProductDetail = () => {
   const user = useSelector((state) => state.auth.user);
   const payments = useSelector((state) => state.reviews.allPayments) || [];
   const [newReview, setNewReview] = useState({ text: "", rating: 0 });
+  const theme = useSelector((state) => state.themes.theme);//todo
 
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
+  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const naranjaClaro = theme === "dark" ? "#FFDCDC" : "#FFDCDC";
+
+  
+
+  // En useEffect de ProductDetail
   useEffect(() => {
+    // Lógica para obtener datos del producto, vendedor, etc.
     dispatch(getProductById(id));
     dispatch(getSellerById(product.storeIdStore));
     dispatch(getPaymentsByUserId(user.id_user));
-  }, [dispatch, id, product.storeIdStore]);
+  }, [dispatch, id, product.storeIdStore, user.id_user]);
 
   // Función para manejar el cambio dinámico de altura del textarea
   const handleTextareaChange = (e) => {
@@ -159,12 +171,13 @@ const ProductDetail = () => {
     setNewReview({ text: "", rating: 0 });
     toast.success("Review submitted successfully!");
   };
-
+  
   return (
-    <div>
+    <div style={{ background: backgroundColor}}>
       <Nav color={"primary"} />
-      <div className="detail-container">
-        <div className="detail-cont">
+      {/* <div className="detail-container"> */}
+      <div className="detail-container" style={{ background: cartBackGround, border: "none" }}>
+      <div className="detail-cont">
           <div>
             <div className="image-container">
               {product.img_product > 1 && (
@@ -182,7 +195,7 @@ const ProductDetail = () => {
                 <button onClick={handleNextImage}>&gt;</button>
               )}
             </div>
-            <div className="thumbnail-container">
+            <div className="thumbnail-container" style={{ borderColor: bordesPlomos }}>
               {product.length > 0 ? (
                 product.images.map((image, index) => (
                   <img
@@ -207,10 +220,10 @@ const ProductDetail = () => {
                 />
               )}
             </div>
-            <div className="description-container">
-              <p className="product-description">{product.description}</p>
-              <ul className="specifications-list">
-                <p className="spec-title">Characterístics</p>
+            <div className="description-container" >
+              <p className="product-description"  style={{ color: textColor}}>{product.description}</p>
+              <ul className="specifications-list" style={{ borderColor: bordesPlomos }}>
+                <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>Characterístics</p>
                 {/* {Object.entries(product.specifics).map(([key, value]) => (
                   <li key={key}>
                     <span className="spec-name">{key}:</span>{" "}
@@ -221,15 +234,18 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          <div className="info-container">
-            <p className="product-date">
+          <div className="info-container" style={{ borderColor: bordesPlomos}}>
+            <p className="product-date" style={{ color: textColor}}>
               Published: {product ? formatDate(product.date_creation) : null}
             </p>
-            <h1 className="product-name">{product?.name}</h1>
-            <p className="brand">Category: {product?.category}</p>
+            <h1 className="product-name" style={{ color: textColor}}>{product?.name}</h1>
+            <p className="brand" >Category: {product?.category}</p>
             <div className="content-flex">
-              <p className="product-average-mark">
-                {product.average_mark?betterAverageMark(product.average_mark):null} / 5
+              <p className="product-average-mark" style={{ color: textColor }}>
+                {product.average_mark
+                  ? betterAverageMark(product.average_mark)
+                  : null}{" "}
+                / 5
               </p>
               <p className="product-status">{product?.status}</p>
               <p
@@ -240,9 +256,9 @@ const ProductDetail = () => {
                 {product?.available ? "Available" : "Not available"}
               </p>
             </div>
-            <p className="product-price">${product?.price}</p>
+            <p className="product-price" style={{ color: textColor}}>${product?.price}</p>
             <div className="product-quantity">
-              <label htmlFor="quantity-select">quantity: </label>
+              <label htmlFor="quantity-select" style={{ color: textColor}}>quantity: </label>
               <select
                 id="quantity-select"
                 value={selectedQuantity}
@@ -265,13 +281,15 @@ const ProductDetail = () => {
               Add to cart
             </button>
             <p className="brand">Seller:</p>
-            <div className="seller-cont">
+            <div className="seller-cont"style={{ borderColor: bordesPlomos}} >
               <img
                 className="seller-image"
                 src={seller.logo}
-                alt={`Imagen del vendedor ${seller.name}`}
+                alt={`Imagen del vendedor ${seller.name}`
+              
+              }
               />
-              <p className="sellers-name">{seller.name}</p>
+              <p className="sellers-name" style={{ color: textColor}}>{seller.name}</p>
               <div className="sellers-stats">
                 <p className="sellers-stats-text">
                   {formatVentasText(seller.ventas)}
@@ -280,19 +298,28 @@ const ProductDetail = () => {
                   Scrore: {seller.average_mark} / 5
                 </p>
               </div>
-              <Link
+              {/* <Link
                 to={`/store/${product.storeIdStore}`}
                 className="seller-button"
+              > */}
+              <Link
+                to={`/store/${product.storeIdStore}`}
+                className={
+                  theme === "dark"
+                    ? "seller-button seller-button-dark"
+                    : "seller-button"
+                }            
               >
                 Go to Store
               </Link>
             </div>
-            <div className="review-container">
-              <p className="spec-title">Reviews</p>
+            <div className="review-container" style={{ background: backgroundColor, borderColor: bordesPlomos}}>
+              <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>Reviews</p>
               <div className="review-overflow">
                 {hasUserPurchasedProduct(payments, id) ? (
-                  <div className="write-review-box">
+                  <div className="write-review-box" style={{ background: backgroundColor}}>
                     <textarea
+                    
                       className="review-textarea"
                       value={newReview.text}
                       onChange={handleTextareaChange}
@@ -301,7 +328,7 @@ const ProductDetail = () => {
                       style={{ minHeight: "50px" }}
                     />
                     <div className="star-rating-container">
-                      <p className="star-rating-title">Qualification:</p>
+                      <p className="star-rating-title" style={{ color: textColor}}>Qualification:</p>
                       <div className="star-rating-input">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <span
@@ -334,20 +361,20 @@ const ProductDetail = () => {
                       product.reviews.map((review, index) => (
                         <div key={index} className="review-item">
                           <div className="review-item-top">
-                            <p className="review-author">{review.user.name}</p>
+                            <p className="review-author" style={{ color: textColor}}>{review.user.name}</p>
                             <StarRating
                               rating={review.rating}
                               color="#ffc107"
                             />{" "}
                           </div>
-                          <p className="review-date">
+                          <p className="review-date" style={{ color: textColor}}>
                             Reviewed on {formatDate(review.date)}
                           </p>
-                          <p className="review-text">"{review.comment}"</p>
+                          <p className="review-text" style={{ color: textColor}}>"{review.comment}"</p>
                         </div>
                       ))
                     ) : (
-                      <p>No reviews available</p>
+                      <p style={{ color: textColor}}>No reviews available</p>
                     )}
                   </div>
                 </div>

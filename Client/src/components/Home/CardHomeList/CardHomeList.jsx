@@ -1,9 +1,17 @@
 import { CardHome } from "../CardHome/CardHome";
+import { useSelector } from "react-redux";
 
 export const CardHomeList = ({ allProducts }) => {
+  const theme = useSelector((state) => state.themes.theme);
+
+  const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
+  const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const transparent = "#ffffff00";
+
 
   return (
-    <div className="max-w-screen mx-4 mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="max-w-screen mx-4 mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" style={{border:transparent}}>
       {allProducts?.map(product => (
         <CardHome 
           key={product.id_product} 

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import validationRegister from "./validationRegister";
 import toast from "react-hot-toast";
 import { register } from "../../Redux/Actions/authActions";
+import { useSelector } from "react-redux";
 
 export default function UserFormRegister({ title = "Register" }) {
   const dispatch = useDispatch();
@@ -15,19 +16,25 @@ export default function UserFormRegister({ title = "Register" }) {
     email: "",
     nro_document: "",
   });
-  console.log(formData)
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const theme = useSelector((state) => state.themes.theme); //todo
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#272727" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const azulOscuro = theme === "dark" ? "#0069AA" : "#0069AA";
+  const azulClaro = theme === "dark" ? "#3B82F6" : "#3B82F6";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-      
     });
-   
   };
 
   const handleBlur = (e) => {
@@ -50,7 +57,6 @@ export default function UserFormRegister({ title = "Register" }) {
     e.preventDefault();
     if (Object.keys(memoizedErrors).length === 0) {
       try {
-        
         dispatch(register(formData));
       } catch (error) {
         toast.error("Register failed. Please try again.");
@@ -61,10 +67,15 @@ export default function UserFormRegister({ title = "Register" }) {
   };
 
   return (
-    <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen">
+    <div
+      className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen"
+      style={{ background: backgroundColor }}
+    >
+
       <form
         className="max-w-sm p-4 h-auto bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}
+        style={{ background: cartBackGround }}
       >
         <h1 className="text-center mx-4 mb-4 text-3xl text-primary border-b-2">
           <strong>{title}</strong>
@@ -74,12 +85,15 @@ export default function UserFormRegister({ title = "Register" }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-first-name"
+              style={{ color: textColor }}
             >
               First Name
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                touched.name && errors.name ? "border-red-500" : "border-gray-200"
+                touched.name && errors.name
+                  ? "border-red-500"
+                  : "border-gray-200"
               }`}
               id="grid-first-name"
               type="text"
@@ -97,6 +111,7 @@ export default function UserFormRegister({ title = "Register" }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-last-name"
+              style={{ color: textColor }}
             >
               Last Name
             </label>
@@ -124,6 +139,7 @@ export default function UserFormRegister({ title = "Register" }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-password"
+              style={{ color: textColor }}
             >
               Password
             </label>
@@ -151,12 +167,15 @@ export default function UserFormRegister({ title = "Register" }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-city"
+              style={{ color: textColor }}
             >
               City
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                touched.city && errors.city ? "border-red-500" : "border-gray-200"
+                touched.city && errors.city
+                  ? "border-red-500"
+                  : "border-gray-200"
               }`}
               id="grid-city"
               type="text"
@@ -174,12 +193,15 @@ export default function UserFormRegister({ title = "Register" }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-state"
+              style={{ color: textColor }}
             >
               State
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                touched.state && errors.state ? "border-red-500" : "border-gray-200"
+                touched.state && errors.state
+                  ? "border-red-500"
+                  : "border-gray-200"
               }`}
               id="grid-state"
               type="text"
@@ -199,6 +221,7 @@ export default function UserFormRegister({ title = "Register" }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-nro_document"
+              style={{ color: textColor }}
             >
               Document Number
             </label>
@@ -228,12 +251,15 @@ export default function UserFormRegister({ title = "Register" }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="grid-email"
+              style={{ color: textColor }}
             >
               Email
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
-                touched.email && errors.email ? "border-red-500" : "border-gray-200"
+                touched.email && errors.email
+                  ? "border-red-500"
+                  : "border-gray-200"
               }`}
               id="grid-email"
               type="email"

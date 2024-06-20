@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 export const ProductCard = ({
   id,
   name,
@@ -13,8 +15,17 @@ export const ProductCard = ({
   id_store,
   onAddToCart
 }) => {
+  const theme = useSelector((state) => state.themes.theme);
+  const neutralColor = theme === "dark" ? "#2F2F2F" : "#FFFFFF";
+  const blueColor = theme === "dark" ? "#0069AA" : "#3B82F6";
+  const textColorButton = theme === "dark" ? "#b4b4b4" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#d1d1d1" : "#292929";
+
   return (
-    <article className="w-64 h-full rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6">
+    <article className="w-64 h-full rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6"
+    style={{ backgroundColor: neutralColor }}
+
+    >
       <a href={`/product/${id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
           <img
@@ -38,13 +49,14 @@ export const ProductCard = ({
 
 
         <div className="mt-1 p-2">
-          <h2 className="text-slate-700">{name}</h2>
+          <h2 className="text-slate-700" style={{ color: textColor  }}>{name}</h2>
           <p className="mt-1 text-sm text-slate-400">{date_creation}</p>
 
           <div className="mt-3 flex items-end justify-between">
-            <p className="text-lg font-bold text-blue-500">${price}</p>
+            <p className="text-lg font-bold text-blue-500" style={{ color: blueColor}}>${price}</p>
 
-            <div onClick={() => onAddToCart()} className="flex cursor-pointer items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+            <div onClick={() => onAddToCart()} className="flex cursor-pointer items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
+              style={{ background:blueColor }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -60,7 +72,7 @@ export const ProductCard = ({
                 />
               </svg>
 
-              <button className="text-sm">Add to cart</button>
+              <button className="text-sm" color={textColorButton}>Add to cart</button>
             </div>
           </div>
         </div>

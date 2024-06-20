@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
 import { CardWide } from "./CardWide";
+import { useSelector } from "react-redux";
 
 const CardCarousel = ({ allProducts }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const theme = useSelector((state) => state.themes.theme);
+
+  const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
+  const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -13,14 +20,14 @@ const CardCarousel = ({ allProducts }) => {
   }, [allProducts.length]);
 
   return (
-    <div className="relative overflow-hidden w-full">
+    <div className="relative overflow-hidden w-full" >
       {allProducts?.map((product, index) => (
         <div
           key={product.id_product}
           className={`transition-transform duration-1000 ease-in-out transform ${
             index === currentIndex ? "translate-x-0" : "translate-x-full"
           }`}
-          style={{ display: index === currentIndex ? "block" : "none" }}
+          style={{ display: index === currentIndex ? "block" : "none", }}
         >
           <CardWide
             id_product={product.id_product}

@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 export const CardHome = ({
   id_product,
   name,
@@ -13,9 +15,15 @@ export const CardHome = ({
   id_review,
   id_discounts,
 }) => {
+  const theme = useSelector((state) => state.themes.theme);
+
+  const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
+  const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   return (
-    <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64">
+    <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64" style={{ background: backgroundColor, borderColor: bordesPlomos}}>
       <div className="relative flex mb-4 rounded-2xl">
         <Link to={`/product/${id_product}`} className="justify-center items-center">
           <img
@@ -70,7 +78,7 @@ export const CardHome = ({
         </div>
       </div>
       <h3 className="flex font-medium text-xl leading-8">
-      <div className="flex flex-1">
+      <div className="flex flex-1" style={{ color: textColor}}>
             <div className="">
               <p className="text-sm font-semibold ">{name}</p>
               <p className="text-sm text-gray-500">

@@ -22,7 +22,7 @@
   }
   
   .buy-button:hover {
-    background-color: rgb(255, 100, 0);
+    background-color: #ff6400;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
   
@@ -43,11 +43,19 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
   }
+
+  .detail-container-dark{
+    background-color: #212121
+  }
   
   .detail-cont {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
+  }
+
+  .detail-cont-dark{
+    background-color: #212121
   }
 
   .image-container {
@@ -77,6 +85,8 @@
 
   .image-container button:hover {
     background-color: rgb(200, 200, 200);
+
+
   }
   
   .info-container {
@@ -249,6 +259,15 @@
     text-decoration: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
+  .seller-button-dark{
+    background-color: #ff8200;
+    color: rgb(255, 255, 255);
+  }
+
+  .seller-button-dark:hover{
+    background-color: #ff6400;
+    color: rgb(255, 255, 255);
+  }
 
   .seller-button:hover {
     background-color: rgb(255, 220, 220);
@@ -305,7 +324,7 @@
   }
   
   .thumbnail.selected {
-    border: 2px solid rgb(255, 130, 0);
+    border: 2px solid #ff8200;
   }
   
   .thumbnail:hover {

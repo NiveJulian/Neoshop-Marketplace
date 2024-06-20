@@ -6,7 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const store = useSelector((state) => state.store.store);
+  const theme = useSelector((state) => state.themes.theme);
 
+  const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
+  const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  
   const postFakeApi = async () => {
     try {
       await axios.post("http://localhost:3001/");
@@ -15,14 +20,18 @@ const LandingPage = () => {
     }
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800">
+
+  return ( 
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800"
+    style={{ background: backgroundColor}}>
       <Nav />
       <header className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-primary">
         {/* Fondo de animaciones */}
-        <div className="header-background"></div>
+        {theme !== "dark" ? <div className="header-background" ></div> :<div className="header-background-dark" ></div>}
+        {/* <div className="header-background" ></div>  */}
         {/* Marcas flotantes */}
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
+        >
           <div className="floating-logos">
             {store.map((store, index) => (
               <Link
@@ -37,8 +46,8 @@ const LandingPage = () => {
         </div>
         {/* Contenido de bienvenida */}
         <div className="header-content">
-          <h1 className="text-4xl font-bold mb-4">Welcome to Neo Shop</h1>
-          <p className="text-lg font-semibold mb-6">
+          <h1 className="text-4xl font-bold mb-4" style={{color: textColorH1}}>Welcome to Neo Shop</h1>
+          <p className="text-lg font-semibold mb-6" style={{color: textColorH1}}>
             Our project aims to create an innovative marketplace allowing users
             to create personalized stores, securely make purchases, and settle
             payments through the page.
@@ -57,13 +66,13 @@ const LandingPage = () => {
           </button>
         </div>
       </header>
-      <section id="features" className="py-12 px-6 bg-gray-100 shadow-md mt-6">
-        <h2 className="text-3xl font-bold mb-8 text-center">
+      <section id="features" className="py-12 px-6 bg-gray-100 shadow-md mt-6" style={{ background: backgroundColor}}>
+        <h2 className="text-3xl font-bold mb-8 text-center" style={{color: textColor}}>
           Why Choose Neo Shop?
         </h2>
-        <div className="flex flex-wrap justify-center gap-6">
-          <div className="bg-gray-100 border border-secondary rounded-lg p-6 max-w-sm shadow-lg">
-            <h3 className="text-xl font-bold flex gap-2 mb-4">
+        <div className="flex flex-wrap justify-center gap-6" >
+          <div className="bg-gray-100 border border-secondary rounded-lg p-6 max-w-sm shadow-lg" style={{ background: backgroundColor}}>
+            <h3 className="text-xl font-bold flex gap-2 mb-4" style={{color: textColor}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -80,13 +89,13 @@ const LandingPage = () => {
               </svg>
               Personalized Stores
             </h3>
-            <p>
+            <p style={{color: textColor}}>
               Create and customize your store with ease using our intuitive
               tools.
             </p>
           </div>
-          <div className="bg-gray-100 border border-secondary rounded-lg p-6 max-w-sm shadow-lg">
-            <h3 className="text-xl flex gap-2 font-bold mb-4">
+          <div className="bg-gray-100 border border-secondary rounded-lg p-6 max-w-sm shadow-lg" style={{ background: backgroundColor}} >
+            <h3 className="text-xl flex gap-2 font-bold mb-4" style={{color: textColor}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -103,12 +112,12 @@ const LandingPage = () => {
               </svg>
               Secure Transactions
             </h3>
-            <p>
+            <p style={{color: textColor}}>
               Enjoy safe and secure purchases with our robust payment system.
             </p>
           </div>
-          <div className="bg-gray-100 border border-secondary rounded-lg p-6 max-w-sm shadow-lg">
-            <h3 className="text-xl flex gap-2 font-bold mb-4">
+          <div className="bg-gray-100 border border-secondary rounded-lg p-6 max-w-sm shadow-lg" style={{ background: backgroundColor}}>
+            <h3 className="text-xl flex gap-2 font-bold mb-4" style={{color: textColor}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -125,7 +134,7 @@ const LandingPage = () => {
               </svg>
               Easy Integration
             </h3>
-            <p>Integrate with various platforms and services effortlessly.</p>
+            <p style={{color: textColor}}>Integrate with various platforms and services effortlessly.</p>
           </div>
         </div>
       </section>
@@ -135,6 +144,7 @@ const LandingPage = () => {
       <footer
         id="github"
         className="w-full py-4 bg-gray-800 text-white text-center"
+        style={{ background: backgroundColor}}
       >
         <button
           className="px-6 py-2 bg-gray-900 border border-white rounded-lg transition-colors duration-300 hover:bg-gray-700"
