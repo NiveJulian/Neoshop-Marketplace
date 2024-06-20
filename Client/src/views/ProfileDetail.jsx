@@ -9,13 +9,13 @@ const ProfileDetail = () => {
   return (
     <div className="bg-gray-100 pb-10 min-h-screen">
       <Nav />
-      <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg border border-gray-300">
+      <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg ">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
             <img
             src={user.picture}
             alt={user.name}
-            className="rounded-full border border-gray-400 p-2 w-28 h-28 mr-5 text-center"
+            className="rounded-full border border-gray-400 p-2 hover:border-secondary w-28 h-28 mr-5 text-center"
             />
             <div>
             <h1 className="text-2xl font-bold">{`${user.name} ${user.lastname || ''}`}</h1>

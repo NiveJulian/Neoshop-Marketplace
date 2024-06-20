@@ -3,7 +3,7 @@ import Nav from "../components/Nav/Nav";
 import StoreList from "../components/Store/StoreList/StoreList";
 
 export const Store = () => {
-  const allSellers = useSelector((state) => state.store);
+  const allSellers = useSelector((state) => state.store.store);
 
   return (
     <div className="max-w-screen text-center bg-gray-100 gap-4">

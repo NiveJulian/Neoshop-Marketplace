@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { ProductCard } from "../Product/ProductCard";
 import Paginate from "../Paginate/Paginate";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../Redux/Actions/Actions";
+import toast from "react-hot-toast";
+import { addToCart } from "../../Redux/Actions/cartActions";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,6 +22,7 @@ export default function ProductList({ allProducts }) {
   const page = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleAddToCart = (product) => {
+    toast.success("Add to cart")
     dispatch(addToCart(product));
   };
 

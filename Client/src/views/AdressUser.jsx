@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserAddress } from "../Redux/Actions/Actions"; // Asegúrate de tener esta acción creada
+import { updateUserAddress } from "../Redux/Actions/authActions";
 
 export const AdressUser = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({

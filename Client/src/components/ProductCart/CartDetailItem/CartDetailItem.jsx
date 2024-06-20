@@ -1,9 +1,7 @@
-import React from "react";
-
 export const CartDetailItem = ({ cartItems }) => {
     return (
       <div className="overflow-y-auto max-h-96">
-        {cartItems.map((item, index) => (
+        {cartItems?.map((item, index) => (
           <div key={index}>
             <div className="line h-px w-full my-2 bg-gray-300"></div>
             <table className="order-table relative w-full">

@@ -3,21 +3,18 @@ export const CardHome = ({
   id_product,
   name,
   img_product,
-  description,
   date_creation,
   quantity,
-  price,
   store,
-  idStore,
-  available,
-  id_review,
-  id_discounts,
 }) => {
 
   return (
     <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64">
-      <div className="relative mb-4 rounded-2xl">
-        <Link to={`/product/${id_product}`}>
+      <div className="relative flex mb-4 rounded-2xl">
+        <Link
+          to={`/product/${id_product}`}
+          className="justify-center items-center"
+        >
           <img
             className="max-h-80 rounded-2xl w-64 object-cover transition-transform duration-300 transform group-hover:scale-105"
             src={img_product}
@@ -63,38 +60,34 @@ export const CardHome = ({
               />
             </Link>
           </div>
-          
         </div>
-        <div className="flex justify-end">
-        
-        </div>
+        <div className="flex justify-end"></div>
       </div>
       <h3 className="flex font-medium text-xl leading-8">
-      <div className="flex flex-1">
-            <div className="">
-              <p className="text-sm font-semibold ">{name}</p>
-              <p className="text-sm text-gray-500">
-                Published on {date_creation}2 Days ago
-            <svg
-              className="ml-1 w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-              </p>
-            </div>
+        <div className="flex flex-1">
+          <div className="">
+            <p className="text-sm font-semibold ">{name}</p>
+            <p className="text-sm text-gray-500">
+              Published on {date_creation}2 Days ago
+              <svg
+                className="ml-1 w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </p>
           </div>
-          <div className="text-sm flex items-center text-gray-500 ">        
-          </div>
-         {/* <Link
+        </div>
+        <div className="text-sm flex items-center text-gray-500 "></div>
+        {/* <Link
           to={`/product/${id_product}`}
           className="block relative group-hover:text-red-700 transition-colors duration-200 "
         >

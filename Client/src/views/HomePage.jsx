@@ -1,18 +1,17 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getNewProducts } from "../Redux/Actions/Actions";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
 import Nav from "../components/Nav/Nav";
 import CardCarousel from "../components/Home/CardCarousel/CardCarousel";
+import { getNewProducts } from "../Redux/Actions/productActions";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const newProducts = useSelector((state) => state.newProducts);
+  const newProducts = useSelector((state) => state.product.newProducts);
 
   useEffect(() => {
     dispatch(getNewProducts());
   }, [dispatch]);
-
   return (
     <div>
       <Nav color={"primary"} />

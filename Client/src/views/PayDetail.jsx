@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import axios from "axios";
 import { CartDetailItem } from "../components/ProductCart/CartDetailItem/CartDetailItem";
-import { cleanCart, paymentOk } from "../Redux/Actions/Actions";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { cleanCart } from "../Redux/Actions/cartActions";
+import { paymentOk } from "../Redux/Actions/payActions";
 
 export const PayDetail = () => {
-    const cartItems = useSelector((state) => state.cartItems);
-    const user = useSelector((state) => state.user);
-    const ship = useSelector ((state) => state.delivery);
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const user = useSelector((state) => state.auth.user);
+    const ship = useSelector ((state) => state.pay.delivery);
     const navigate = useNavigate ();
     const dispatch = useDispatch();
     
@@ -96,7 +96,7 @@ export const PayDetail = () => {
       });
     }
   
-    function onApprove(data) {
+    async function onApprove(data) {
         setPaymentId(data.orderID);
         setPaymentDetail(prevDetail => ({
             ...prevDetail,
@@ -121,7 +121,7 @@ export const PayDetail = () => {
       })
       .then(orderData => {
         const name = orderData.payer.name.given_name;
-        toast.success("Success Payment Sent!");
+        toast.success("Success Payment Sent! " + name );
         setTimeout(() => {
             location.href = "/";
           }, 4000);
@@ -138,6 +138,9 @@ export const PayDetail = () => {
             try {
                 const response = await paymentOk(paymentDetail)();
                 dispatch(cleanCart());
+
+                console.log(response);
+                
                 // setTimeout(() => {
                 //     location.href = "/";
                 //   }, 5000);

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterProducts, renderCondition } from '../../Redux/Actions/Actions';
 import style from "./FilterCat.module.css";
+import { filterProducts, renderCondition } from '../../Redux/Actions/productActions';
 
 export default function FilterStore() {
   const dispatch = useDispatch();
-  const stores = useSelector((state) => state.store);
-  const brands = useSelector((state) => state.brands);
-  const categories = useSelector((state) => state.categories);
+  const stores = useSelector((state) => state.store.store);
+  const brands = useSelector((state) => state.product.brands);
+  const categories = useSelector((state) => state.product.categories);
 
   const [filters, setFilters] = useState({
     store: '',

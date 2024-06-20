@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.slick-dots li button:before {
+  color: black; /* Color for inactive dots */
+}
+
+.slick-dots li.slick-active button:before {
+  color: white; /* Color for active dot */
+}
+
+
 @keyframes float {
   0% {
     transform: translateY(0) translateX(0);

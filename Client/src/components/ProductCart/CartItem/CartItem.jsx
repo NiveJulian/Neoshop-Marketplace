@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeFromCart, updateCartItemQuantity } from "../../../Redux/Actions/Actions";
-import toast from "react-hot-toast";
+import { removeFromCart, updateCartItemQuantity } from "../../../Redux/Actions/cartActions";
 
 function CartItem({ product }) {
   const [cartQuantity, setCartQuantity] = useState(product?.cartQuantity || 1);
@@ -11,14 +10,12 @@ function CartItem({ product }) {
   const handleChangeQuantity = (event) => {
     const newCartQuantity = parseInt(event.target.value, 10);
     setCartQuantity(newCartQuantity);
-    toast.success(`Quantity from ${product?.name} is upload`)
     dispatch(updateCartItemQuantity(product?.id_product, newCartQuantity));
   };
 
   // Función para eliminar el producto del carrito
-  const handleRemove = () => {
-    // toast.success("Eliminado correctamente")
-    dispatch(removeFromCart(product?.id_product));
+  const handleRemove = (id_product) => {
+    dispatch(removeFromCart(id_product));
   };
 
   // Calcular el subtotal del producto
@@ -47,7 +44,7 @@ function CartItem({ product }) {
         <span>${subtotal}</span>
       </div>
       <button
-        onClick={handleRemove}
+        onClick={() => handleRemove(product.id_product)}
         className="text-red-500 hover:border hover:rounded-full hover:border-gray-200 p-2 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)] hover:text-red-400"
       >
         {/* Icono para eliminar producto */}

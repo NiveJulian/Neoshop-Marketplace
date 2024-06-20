@@ -7,13 +7,6 @@ import { Store } from "./views/Store";
 import { Products } from "./views/Products";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import {
-  getAllBrands,
-  getAllCategories,
-  getAllProducts,
-  getAllSellers,
-  isAuthenticated,
-} from "./Redux/Actions/Actions";
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
 import jwtToken from "./components/getCookie";
@@ -24,10 +17,15 @@ import CreateStore from "./views/CreateStore";
 import { PayDetail } from "./views/PayDetail";
 import { AdressUser } from "./views/AdressUser";
 import { PayPreview } from "./views/PayPreview";
+import { getAllBrands, getAllCategories, getAllProducts } from "./Redux/Actions/productActions";
+import { getAllSellers } from "./Redux/Actions/storeActions";
+import { isAuthenticated } from "./Redux/Actions/authActions";
 import MyShopping from "./views/MyShopping";
 import AccountDetail from "./views/AccountDetail";
 
-function App () {
+function App() {
+ 
+
 
   const dispatch = useDispatch();
 
@@ -51,6 +49,9 @@ function App () {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/store/:id" element={<StoreDetail />} /> 
+        <Route path="/payPreview" element={<PayPreview/>} />
+        <Route path="/adress" element={<AdressUser/>} />
+        <Route path="/pay" element={<PayDetail/>} />
         <Route path="/profile" element={<ProfileDetail/>} />
         <Route path="/personal" element={<PersonalDetail/>} />
         <Route path="/confirmation" element={<ConfirmationUser/>} />
