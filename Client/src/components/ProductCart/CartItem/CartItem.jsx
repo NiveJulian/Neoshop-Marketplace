@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { removeFromCart, updateCartItemQuantity } from "../../../Redux/Actions/cartActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteCartItem,
+  removeFromCart,
+  updateCartItemQuantity,
+} from "../../../Redux/Actions/cartActions";
 
 function CartItem({ product }) {
   const [cartQuantity, setCartQuantity] = useState(product?.cartQuantity || 1);
+  const user = useSelector((state) => state.auth.user);
+
   const dispatch = useDispatch();
 
   // Función para manejar cambios en la cantidad del carrito
@@ -16,6 +22,9 @@ function CartItem({ product }) {
   // Función para eliminar el producto del carrito
   const handleRemove = (id_product) => {
     dispatch(removeFromCart(id_product));
+    if (user) {
+      dispatch(deleteCartItem(user.id_user, id_product));
+    }
   };
 
   // Calcular el subtotal del producto

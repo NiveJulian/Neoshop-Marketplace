@@ -5,68 +5,55 @@ import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector, useDispatch } from "react-redux";
 import User from "../Users/User";
 import CartList from "../ProductCart/CartList/CartList";
-import { getCartByUserId, sendCart } from "../../Redux/Actions/cartActions";
+import { sendCart, getCartByUserId } from "../../Redux/Actions/cartActions";
 import { renderCondition } from "../../Redux/Actions/productActions";
 
 export default function Nav({ color }) {
   const user = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const cartItems = useSelector((state) => state.cart.cartItems) || 0;
+  const cartItems = useSelector((state) => state.cart.cartItems) || [];
 
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (cartItems.length === 0 && user?.id_user) {
-      dispatch(getCartByUserId(user?.id_user));
+    if (isAuth && user) {
+      dispatch(getCartByUserId(user.id_user));
     }
-  }, [dispatch, user, cartItems]);
-
-  useEffect(() => {
-    if (cartItems.length > 0 && isAuth) {
-      try {
-        const formattedCartItems = cartItems.map((item) => ({
-          id_product: item.id_product,
-          cartQuantity: item.cartQuantity || 1
-        }));
-        formattedCartItems.forEach((item) => {
-          dispatch(sendCart(user?.id_user, item.id_product, item.cartQuantity));
-        });
-      } catch (error) {
-        console.error("Error sending cart:", error);
-      }
-    }
-  }, [cartItems, user, dispatch, isAuth]);
+  }, [isAuth, user, dispatch]);
 
   const toggleCart = () => {
     setShowCart(!showCart);
   };
 
-  function handleShowLogin() {
+  const handleShowLogin = () => {
     setShowLogin(true);
-  }
+  };
 
-  function handleOnClose() {
+  const handleOnClose = () => {
     setShowLogin(false);
-  }
+  };
 
-  function handleProducts() {
+  const handleProducts = () => {
     dispatch(renderCondition("allProducts"));
-  }
+  };
 
   const calculateTotal = () => {
-    // Calcular el subtotal basado en el precio y la cantidad de cada producto en el carrito
     const total = cartItems.reduce((acc, product) => {
       const price = parseFloat(product.price);
       const quantity = product.cartQuantity || 1;
       return acc + (isNaN(price) ? 0 : price * quantity);
     }, 0);
 
-    // Redondear el total a dos decimales
     return total.toFixed(2);
   };
 
+  useEffect(() => {
+    if (cartItems.length > 0 && isAuth && user) {
+        dispatch(sendCart(user.id_user, cartItems));
+    }
+  }, [cartItems, isAuth, user, dispatch]);
   return (
     <div className="w-full z-50 shadow-xl">
       <div

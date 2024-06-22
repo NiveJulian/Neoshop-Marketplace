@@ -26,10 +26,10 @@ export const PayPreview = () => {
         <Nav color={"primary"} />
       </div>
       <div className="flex justify-between mt-8">
-        <div className="w-1/3 mr-2 ml-10 mt-4">
+        <div className="mr-2 w-3/4 ml-10 mt-4">
+          <h2 className="font-bold text-2xl mb-2">Choose delivery method</h2>
           <div className="bg-white rounded-lg p-4 shadow-md">
-            <p className="font-bold text-lg">Choose delivery method</p>
-            <label className="flex items-center mt-2">
+            <label className="flex items-center mt-2 p-4 hover:bg-gray-100">
               <input
                 type="checkbox"
                 className="mr-2"
@@ -38,14 +38,16 @@ export const PayPreview = () => {
               />
               Standard shipping
             </label>
-            <button
-              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded"
-              onClick={() => (location.href = "/adress")}
-            >
-              Edit users data
-            </button>
+            <div className="w-full mt-2">
+              <button
+                className="mt-2 bg-gray-400 hover:bg-gray-500 text-white transition-all hover:text-gray-100 font-bold py-2 px-2 rounded-md"
+                onClick={() => (location.href = "/adress")}
+              >
+                Edit users data
+              </button>
+            </div>
           </div>
-          <div className="mt-4 bg-white rounded-lg p-4 shadow-md">
+          <div className="mt-4 bg-white rounded-lg p-4 shadow-md hover:bg-gray-100">
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -57,27 +59,54 @@ export const PayPreview = () => {
             </label>
           </div>
         </div>
-        <div className="w-1/3 ml-2">
+        <div className="w-1/3 justify-center mt-10">
           <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg">
             <strong>Summary</strong>
-            <div className="line h-px w-1/2 my-2 bg-gray-300 mx-auto"></div>
+            <div className="h-auto w-1/2 my-2 bg-gray-300 mx-auto"></div>
             {cart.map((product, index) => (
-              <div key={index} className="flex justify-between items-center">
-                <span>{product.name}</span>
-                <span>({product.cartQuantity})</span>
+              <div
+                key={index}
+                className="flex justify-between items-center gap-4"
+              >
+                <div>
+                  <img
+                    className="rounded-full border border-gray-500 w-10 h-10"
+                    src={product.img_product}
+                    alt=""
+                  />
+                </div>
+                <span className="text-sm">{product.name}</span>
+                <span>{product.cartQuantity}</span>
               </div>
             ))}
             <div className="line h-px w-1/2 my-2 bg-gray-300 mx-auto"></div>
             <div className="text-center">Total ${total.toFixed(2)}</div>
           </div>
+          <div className="flex justify-end mx-16">
+            <button
+              className="mt-8 mb-8 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-lg flex items-center gap-2 justify-between"
+              onClick={() => navigate("/pay")}
+            >
+              Continue{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
-      <button
-        className="mt-16 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg"
-        onClick={() => (navigate("/pay"))}
-      >
-        Continue
-      </button>
+      {/*  */}
     </div>
   );
 };
