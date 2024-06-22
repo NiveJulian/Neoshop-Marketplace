@@ -1,15 +1,36 @@
 import { Link } from "react-router-dom";
 import UserFormRegister from "../components/UserForm/UserFormRegister";
+import { useSelector } from "react-redux";
 
 export default function SingUp() {
+  const theme = useSelector((state) => state.themes.theme); //todo
+  
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#272727" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const azulOscuro = theme === "dark" ? "#212121" : "#0069AA";
+  const azulClaro = theme === "dark" ? "#3B82F6" : "#3B82F6";
+
+
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-1/2 hidden lg:inline-flex h-screen text-white">
-        <div className="w-[450px] shadow-md shadow-gray-400 h-full bg-primary px-10 flex flex-col gap-6 justify-center">
+    <div
+      className="w-full h-screen flex items-center justify-center"
+      style={{ background: backgroundColor }}
+    >
+      <div className="w-1/2 hidden lg:inline-flex h-screen text-white" >
+        <div className="w-[450px] shadow-md shadow-gray-400 h-full bg-primary px-10 flex flex-col gap-6 justify-center"
+        style={{ background: azulOscuro }}>
           <Link to="/">
-            <img src={'neoshoplogo.jpeg'} alt="logoImg" className="w-10 h-10 rounded-full" />
+            <img
+              src={"neoshoplogo.jpeg"}
+              alt="logoImg"
+              className="w-10 h-10 rounded-full"
+            />
           </Link>
-          <div className="flex flex-col gap-1 -mt-1">
+          <div className="flex flex-col gap-1 -mt-1" >
             <h1 className="font-titleFont text-2xl font-bold">
               ¡Regístrate y accede a tus tiendas favoritas!
             </h1>
@@ -42,7 +63,7 @@ export default function SingUp() {
               Obtén acceso exclusivo a promociones, descuentos y mucho más.
             </p>
           </div>
-          <div className="w-[300px] flex items-start gap-3">
+          <div className="w-[300px] flex items-start gap-3" >
             <span className="text-green-500 mt-1">
               {/* <BsCheckCircleFill /> */}
             </span>
@@ -55,7 +76,8 @@ export default function SingUp() {
               NeoShop.
             </p>
           </div>
-          <div className="flex items-center justify-between mt-10">
+          <div className="flex items-center justify-between mt-10" 
+          >
             <Link to="/">
               <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-secondary cursor-pointer duration-300">
                 © NeoShop

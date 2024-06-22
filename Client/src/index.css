@@ -119,6 +119,16 @@
     background: linear-gradient(to bottom right, #1a73e8, #60a5fa, #bbdefb, #60a5fa, #1a73e8);
     animation: lights 10s ease-in-out infinite alternate;
   }
+
+  .header-background-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom right, #000000, #373737, #5f5f5f, #373737, #000000);
+    animation: lights 10s ease-in-out infinite alternate;
+  }
   
   
   /* TestimonialCard.css */

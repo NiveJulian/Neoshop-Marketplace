@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import CategoryCard from './CategoryCard';
-import { useSelector } from 'react-redux';
-// import { filterProducts } from '../../Redux/Actions/productActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterProducts } from '../../Redux/Actions/productActions';
 
 
 const Categories = () => {
@@ -40,6 +40,7 @@ const Categories = () => {
         className="flex overflow-x-auto space-x-4 p-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
         style={{ width: 'calc(100% - 80px)' }}
       >
+        {categories.map((categoria, index) => (
         {categories.map((categoria, index) => (
           <CategoryCard key={index} category={categoria} />
         ))}

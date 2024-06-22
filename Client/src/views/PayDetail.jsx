@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { CartDetailItem } from "../components/ProductCart/CartDetailItem/CartDetailItem";
@@ -9,92 +10,111 @@ import { mailPayOk, paymentOk } from "../Redux/Actions/payActions";
 import { createHtml } from "../components/Mails/createHtml";
 
 export const PayDetail = () => {
-    const cartItems = useSelector((state) => state.cart.cartItems);
-    const user = useSelector((state) => state.auth.user);
+  const cartItems = useSelector((state) => state.cart.cart.cartItems);
+  const user = useSelector((state) => state.auth.auth.user);
     console.log (user);
-    const ship = useSelector ((state) => state.pay.delivery);
-    const navigate = useNavigate ();
-    const dispatch = useDispatch();
-    
-    const [subtotal, setSubtotal] = useState(0);
-    const [comission, setComission] = useState(0);
-    const [finalTotal, setFinalTotal] = useState(0);
-    const [paymentId, setPaymentId]=useState("");
-    const [paymentDetail, setPaymentDetail] = useState({
-      arrayProducts: [],
-      id_user: "",
+  const ship = useSelector((state) => state.pay.pay.delivery);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [subtotal, setSubtotal] = useState(0);
+  const [comission, setComission] = useState(0);
+  const [finalTotal, setFinalTotal] = useState(0);
+  const [paymentId, setPaymentId] = useState("");
+  const [paymentDetail, setPaymentDetail] = useState({
+    arrayProducts: [],
+    id_user: "",
       name:"",
+    id_payment: "",
+    amount: "",
+    date: "",
+  });
+
+  const theme = useSelector((state) => state.themes.theme); //todo
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#171717" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const orangeIntense = theme === "dark" ? "#D67C32" : "#FF8200";
+  const orangeOpaco = theme === "dark" ? "#d17b34" : "#FB923C";
+
+
+  useEffect(() => {
+    const calculatedSubtotal = cartItems.reduce((accumulator, item) => {
+      return accumulator + parseFloat(item.price) * item.cartQuantity;
+    }, 0);
+
+    const calculatedComission = calculatedSubtotal * 0.15;
+    const calculatedFinalTotal = (
+      calculatedSubtotal +
+      calculatedComission +
+      4.95
+    ).toFixed(2);
+
+    setSubtotal(calculatedSubtotal);
+    setComission(calculatedComission);
+    setFinalTotal(calculatedFinalTotal);
+
+    setPaymentDetail({
+      arrayProducts: [...cartItems],
+      id_user: user.id_user,
+          name: user.name,
       id_payment: "",
-      amount: "",
+      amount: calculatedFinalTotal,
       date: "",
     });
-  
-    useEffect(() => {
-     
-        const calculatedSubtotal = cartItems.reduce((accumulator, item) => {
-          return accumulator + parseFloat(item.price) * item.cartQuantity;
-        }, 0);
-        
-        const calculatedComission = calculatedSubtotal * 0.15;
-        const calculatedFinalTotal = (calculatedSubtotal + calculatedComission + 4.95).toFixed(2);
-  
-        setSubtotal(calculatedSubtotal);
-        setComission(calculatedComission);
-        setFinalTotal(calculatedFinalTotal);
-        
-        setPaymentDetail({
-          arrayProducts: [...cartItems],
-          id_user: user.id_user,
-          name: user.name,
-          id_payment: "",
-          amount: calculatedFinalTotal,
-          date: "",
-        });
-       
-    }, [cartItems, user]);
-  
-    async function createOrder() {
-      const purchaseUnits = cartItems.map(item => ({
-        name: item.name,
-        description: item.description,
-        quantity: item.cartQuantity.toString(), // Convert to string
-        unit_amount: {
-          currency_code: "USD",
-          value: parseFloat(item.price).toFixed(2),
-        },
-      }));
-  
-      return await fetch("http://localhost:3001/paypal/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          intent: "CAPTURE",
-          purchase_units: [
-            {
-              amount: {
-                currency_code: "USD",
-                value: finalTotal,
-                breakdown: {
-                  item_total: { currency_code: "USD", value: subtotal.toFixed(2) },
-                  shipping: { currency_code: "USD", value: "4.95" },
-                  tax_total: { currency_code: "USD", value: comission.toFixed(2) },
+  }, [cartItems, user]);
+
+  async function createOrder() {
+    const purchaseUnits = cartItems.map((item) => ({
+      name: item.name,
+      description: item.description,
+      quantity: item.cartQuantity.toString(), // Convert to string
+      unit_amount: {
+        currency_code: "USD",
+        value: parseFloat(item.price).toFixed(2),
+      },
+    }));
+
+    return await fetch("http://localhost:3001/paypal/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        intent: "CAPTURE",
+        purchase_units: [
+          {
+            amount: {
+              currency_code: "USD",
+              value: finalTotal,
+              breakdown: {
+                item_total: {
+                  currency_code: "USD",
+                  value: subtotal.toFixed(2),
+                },
+                shipping: { currency_code: "USD", value: "4.95" },
+                tax_total: {
+                  currency_code: "USD",
+                  value: comission.toFixed(2),
                 },
               },
-              items: purchaseUnits,
             },
-          ],
-        }),
-      })
-      .then(response => {
+            items: purchaseUnits,
+          },
+        ],
+      }),
+    })
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => data.id)
-      .catch(error => {
+      .then((data) => data.id)
+      .catch((error) => {
         console.error("Error creating order:", error);
         throw error;
       });
@@ -119,19 +139,19 @@ export const PayDetail = () => {
       })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(orderData => {
+      .then((orderData) => {
         const name = orderData.payer.name.given_name;
-        toast.success("Success Payment Sent! " + name );
-        // setTimeout(() => {
-        //     location.href = "/";
-        //   }, 4000);
+        toast.success("Success Payment Sent! " + name);
+        setTimeout(() => {
+          location.href = "/";
+        }, 4000);
       })
- 
-      .catch(error => {
+
+      .catch((error) => {
         console.error("Error capturing order:", error);
         throw error;
       });
@@ -150,16 +170,15 @@ export const PayDetail = () => {
             }
         };
 
-        if (paymentDetail.id_payment !== "") {
-            sendPayment();
-        }
-    }, [paymentDetail]);
+    if (paymentDetail.id_payment !== "") {
+      sendPayment();
+    }
+  }, [paymentDetail]);
 
-    console.log ("Este es el delivery" +ship);
-return(
-<div className="min-h-screen flex justify-center items-center bg-gray-100 ">
-    
-      <div className="h-[560px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10">
+  console.log("Este es el delivery" + ship);
+  return (
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 " style={{ background: backgroundColor}}>
+      <div className="h-[560px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10" style={{ background: backgroundColor, color: textColor}}>
         <div className="order-info h-full w-[60%] p-6 flex justify-center relative box-border">
           <div className="order-info-content w-full table-fixed ">
             <h2 className="mb-0 mt-1 text-center font-light text-lg">
@@ -189,22 +208,46 @@ return(
             </div>
           </div>
         </div>
-        <div className="h-full w-[40%] bg-orange-400 text-black-200 flex flex-col justify-center align-center text-sm p-6 relative rounded-tr-2xl rounded-br-2xl box-border">
-          <div className="h-[300px] w-[300px] bg-white flex shadow-xl rounded-2xl justify-center items-center mt-4 mx-auto">
+        <div className="h-full w-[40%] bg-orange-400 text-black-200 flex flex-col justify-center align-center text-sm p-6 relative rounded-tr-2xl rounded-br-2xl box-border" style={{ background: orangeIntense}}>
+          <div className="h-[300px] w-[300px] bg-white flex shadow-xl rounded-2xl justify-center items-center mt-4 mx-auto"
+           style={{ background: backgroundColor, color: textColor}}>
             <div className="text-center justify-center mt-4">
-            <div className="font-light text-black">
-                                <div className="mb-4 text-lg"><strong>Buyer Information:</strong></div>
-                                <div><strong>Name:</strong> {user.name}</div>
-                                <div><strong>Last Name:</strong> {user.lastname}</div>
-                                <div><strong>Email:</strong> {user.email}</div>
-                                <div><strong>Phone Number:</strong> {user.phone_number}</div>
-                                <div><strong>Address Number:</strong> {user.adress_nro}</div>
-                                <div><strong>Street:</strong> {user.adress_street}</div>
-                                <div><strong>City:</strong> {user.city}</div>
-                                <div><strong>State:</strong> {user.state}</div>
-                                <div><strong>Postal Code:</strong> {user.postalCode}</div>
-                                <div><strong>Delivery: </strong>{ship}</div>
-                            </div>
+              <div className="font-light text-black"  style={{color: textColor}}>
+                <div className="mb-4 text-lg">
+                  <strong>Buyer Information:</strong>
+                </div>
+                <div>
+                  <strong>Name:</strong> {user.name}
+                </div>
+                <div>
+                  <strong>Last Name:</strong> {user.lastname}
+                </div>
+                <div>
+                  <strong>Email:</strong> {user.email}
+                </div>
+                <div>
+                  <strong>Phone Number:</strong> {user.phone_number}
+                </div>
+                <div>
+                  <strong>Address Number:</strong> {user.adress_nro}
+                </div>
+                <div>
+                  <strong>Street:</strong> {user.adress_street}
+                </div>
+                <div>
+                  <strong>City:</strong> {user.city}
+                </div>
+                <div>
+                  <strong>State:</strong> {user.state}
+                </div>
+                <div>
+                  <strong>Postal Code:</strong> {user.postalCode}
+                </div>
+                <div>
+                  <strong>Delivery: </strong>
+                  {ship}
+                </div>
+              </div>
             </div>
           </div>
           <div className="mt-4 flex justify-center w-full">
@@ -216,12 +259,14 @@ return(
                 color: "blue",
                 shape: "rect",
                 label: "pay",
-                height:40,
+                height: 40,
               }}
             />
           </div>
-          <button className="pay-btn border-none bg-gray-300 leading-8 rounded-lg text-sm text-gray-600 cursor-pointer mt-4 w-1/5 mx-auto transition duration-200 ease-in-out hover:bg-gray-500 hover:text-gray-200"
-            onClick={() => navigate("/payPreview")}>
+          <button
+            className="pay-btn border-none bg-gray-300 leading-8 rounded-lg text-sm text-gray-600 cursor-pointer mt-4 w-1/5 mx-auto transition duration-200 ease-in-out hover:bg-gray-500 hover:text-gray-200"
+            onClick={() => navigate("/payPreview")}
+          >
             GoBack
           </button>
         </div>

@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { doSignOut } from "../../firebase/auth";
 import { logout } from "../../Redux/Actions/authActions";
+import { useSelector } from "react-redux";
+import React, { useState } from "react";
 
 export default function User({ user, onClose }) {
   const dispatch = useDispatch();
@@ -14,19 +16,45 @@ export default function User({ user, onClose }) {
       console.error("Logout failed:", error);
     }
   };
+  const theme = useSelector((state) => state.themes.theme); //todo
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const textColorLetrasBlancas = theme === "dark" ? "#9c9c9c" : "#DDDDDD";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const backgroundPerfil = theme === "dark" ? "#1a1a1a" : "#1F2937";
+  const hoverColor = theme === "dark" ? "#535353" : "#d4d4d4";
+
+  const [bgColorProfile, setBgColorProfile] = useState("");
+  const [bgColorContact, setBgColorContact] = useState("");
+  const [bgColorLogout, setBgColorLogout] = useState("");
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-      <div className="bg-white w-72 h-auto rounded overflow-hidden shadow-lg">
-        <div className="text-center p-6 bg-gray-800 border-b">
+      <div
+        className="bg-white w-72 h-auto rounded overflow-hidden shadow-lg"
+        style={{ background: backgroundColor }}
+      >
+        <div
+          className="text-center p-6 bg-gray-800 border-b"
+          style={{ background: backgroundPerfil }}
+        >
           <button
             type="button"
             className="flex top-0 right-0 text-3xl text-white hover:text-gray-600"
             onClick={onClose}
+            style={{
+              background: backgroundPerfil,
+              color: textColorLetrasBlancas,
+            }}
           >
             &times;
           </button>
-          <div className="flex justify-center">
+          <div
+            className="flex justify-center"
+            style={{ background: backgroundPerfil }}
+          >
             {!user?.picture ? (
               <svg
                 aria-hidden="true"
@@ -50,23 +78,63 @@ export default function User({ user, onClose }) {
             )}
           </div>
 
-          <p className="pt-2 text-lg font-semibold text-gray-50">
+          <p
+            className="pt-2 text-lg font-semibold text-gray-50"
+            style={{
+              background: backgroundPerfil,
+              color: textColorLetrasBlancas,
+            }}
+          >
             {user.name}
           </p>
-          <p className="text-sm text-gray-100">{user.email}</p>
+          <p
+            className="text-sm text-gray-100"
+            style={{
+              background: backgroundPerfil,
+              color: textColorLetrasBlancas,
+            }}
+          >
+            {user.email}
+          </p>
         </div>
         <div className="border-b">
-          <Link to="/Profile" className="px-4 py-2 hover:bg-gray-100 flex">
-            <p className="text-sm font-medium text-gray-600">Profile</p>
+          <Link
+            to="/Profile"
+            className="px-4 py-2 flex"
+            style={{ backgroundColor: bgColorProfile }}
+            onMouseEnter={() => setBgColorProfile(hoverColor)} // Cambia el color al pasar el cursor
+            onMouseLeave={() => setBgColorProfile("")} // Restaura el color original al quitar el cursor
+          >
+            <p
+              className="text-sm font-medium text-gray-600"
+              style={{ color: textColor }}
+            >
+              Profile
+            </p>
           </Link>
-          <Link to="/Contact" className="px-4 py-2 hover:bg-gray-100 flex">
-            <p className="text-sm font-medium text-gray-600">Contact</p>
+
+          <Link
+            to="/Contact"
+            className="px-4 py-2 flex"
+            style={{ backgroundColor: bgColorContact }}
+            onMouseEnter={() => setBgColorContact(hoverColor)} // Cambia el color al pasar el cursor
+            onMouseLeave={() => setBgColorContact("")} // Restaura el color original al quitar el cursor
+          >
+            <p
+              className="text-sm font-medium text-gray-600"
+              style={{ color: textColor }}
+            >
+              Contact
+            </p>
           </Link>
         </div>
         <div className="">
           <button
             onClick={handleLogout}
-            className="w-full px-4 py-2 mt-4 text-sm text-left text-red-600 hover:bg-gray-100"
+            className="w-full px-4 py-2 mt-4 text-sm text-left text-red-600"
+            style={{ backgroundColor: bgColorLogout }}
+            onMouseEnter={() => setBgColorLogout(hoverColor)} // Cambia el color al pasar el cursor
+            onMouseLeave={() => setBgColorLogout("")} // Restaura el color original al quitar el cursor
           >
             Logout
           </button>

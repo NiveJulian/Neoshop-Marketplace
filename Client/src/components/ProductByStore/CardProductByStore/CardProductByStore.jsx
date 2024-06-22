@@ -1,3 +1,4 @@
+import { useSelector  } from "react-redux";
 export default function CardProductByStore({
   id,
   name,
@@ -12,8 +13,17 @@ export default function CardProductByStore({
   id_discounts,
   id_store,
 }) {
+  const theme = useSelector((state) => state.themes.theme);//todo
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
+  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+
   return (
-    <article className="h-fulll w-64 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6">
+    <article className="h-fulll w-64 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6"
+    style={{ background: backgroundColor}}>
       <a href={`/product/${id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
           <img
@@ -35,7 +45,7 @@ export default function CardProductByStore({
         </div>
 
         <div className="mt-1 p-2">
-          <h2 className="text-slate-700">{name}</h2>
+          <h2 className="text-slate-700"style={{ color: textColor}} >{name}</h2>
           <p className="mt-1 text-sm text-slate-400">{date_creation}</p>
 
           <div className="mt-3 flex items-end justify-between">
