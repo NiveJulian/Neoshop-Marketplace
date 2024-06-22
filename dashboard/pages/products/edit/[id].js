@@ -17,6 +17,8 @@ export default function EditProductPage(){
             setProductInfo(response.data)
         })
     },[product])
+
+    // console.log(productInfo)
     return (
         <Layout userId={id}>
             <h1>Edit Product</h1>

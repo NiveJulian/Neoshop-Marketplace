@@ -29,28 +29,27 @@ export const updateCartItemQuantity = (productId, quantity) => ({
   payload: { productId, quantity },
 });
 
-export const sendCart = (userId, cartItems) => async (dispatch) => {
+export const sendCart = (userId, idProduct, productQuantity) => async (dispatch) => {
   try {
-    if (userId && cartItems !== 0) {
+    if (userId && productQuantity !== 0) {
       const data = {
-        idUser: userId, // Ajusta el nombre de la propiedad a "idUser"
-        arrayProducts: cartItems.map((product) => ({
-          id_product: product.id_product,
-          cartQuantity: product.cartQuantity,
-        })),
+        idUser: userId,
+        idProduct,
+        productQuantity
       };
+      console.log(data)
 
       const response = await axios.post(
         `${rutaBack}/cart`,
         data
       );
-      dispatch({ type: CART_SENT_SUCCESS, payload: response });
+      dispatch({ type: CART_SENT_SUCCESS, payload: response.data });
     } else {
       console.log("No user is logged in.");
     }
   } catch (error) {
     console.error("Error sending cart:", error);
-    dispatch({ type: CART_SENT_FAILURE, error });
+    dispatch({ type: CART_SENT_FAILURE, error: error.response?.data || error.message });
   }
 };
 

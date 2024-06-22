@@ -26,7 +26,13 @@ export default function Nav({ color }) {
   useEffect(() => {
     if (cartItems.length > 0 && isAuth) {
       try {
-        dispatch(sendCart(user?.id_user, cartItems));
+        const formattedCartItems = cartItems.map((item) => ({
+          id_product: item.id_product,
+          cartQuantity: item.cartQuantity || 1
+        }));
+        formattedCartItems.forEach((item) => {
+          dispatch(sendCart(user?.id_user, item.id_product, item.cartQuantity));
+        });
       } catch (error) {
         console.error("Error sending cart:", error);
       }
