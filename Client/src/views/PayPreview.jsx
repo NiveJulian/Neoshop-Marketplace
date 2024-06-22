@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Nav from "../components/Nav/Nav";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { updateDeliveryMethod } from "../Redux/Actions/payActions";
 
 export const PayPreview = () => {
   const cart = useSelector((state) => state.cart.cartItems);
@@ -14,10 +16,12 @@ export const PayPreview = () => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Función para manejar el cambio en los checkboxes
   const handleCheckboxChange = (method) => {
     setDeliveryMethod(method);
+    dispatch(updateDeliveryMethod(method));
   };
 
   return (
