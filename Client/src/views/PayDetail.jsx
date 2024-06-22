@@ -5,11 +5,13 @@ import { CartDetailItem } from "../components/ProductCart/CartDetailItem/CartDet
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { cleanCart } from "../Redux/Actions/cartActions";
-import { paymentOk } from "../Redux/Actions/payActions";
+import { mailPayOk, paymentOk } from "../Redux/Actions/payActions";
+import { createHtml } from "../components/Mails/createHtml";
 
 export const PayDetail = () => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const user = useSelector((state) => state.auth.user);
+    console.log (user);
     const ship = useSelector ((state) => state.pay.delivery);
     const navigate = useNavigate ();
     const dispatch = useDispatch();
@@ -21,6 +23,7 @@ export const PayDetail = () => {
     const [paymentDetail, setPaymentDetail] = useState({
       arrayProducts: [],
       id_user: "",
+      name:"",
       id_payment: "",
       amount: "",
       date: "",
@@ -42,6 +45,7 @@ export const PayDetail = () => {
         setPaymentDetail({
           arrayProducts: [...cartItems],
           id_user: user.id_user,
+          name: user.name,
           id_payment: "",
           amount: calculatedFinalTotal,
           date: "",
@@ -49,7 +53,7 @@ export const PayDetail = () => {
        
     }, [cartItems, user]);
   
-    function createOrder() {
+    async function createOrder() {
       const purchaseUnits = cartItems.map(item => ({
         name: item.name,
         description: item.description,
@@ -60,7 +64,7 @@ export const PayDetail = () => {
         },
       }));
   
-      return fetch("http://localhost:3001/paypal/create-order", {
+      return await fetch("http://localhost:3001/paypal/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +107,7 @@ export const PayDetail = () => {
             id_payment: data.orderID,
             date: new Date().toISOString(),
         }));
-      return fetch(`http://localhost:3001/paypal/capture-order/${data.orderID}`, {
+      return await fetch(`http://localhost:3001/paypal/capture-order/${data.orderID}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,9 +126,9 @@ export const PayDetail = () => {
       .then(orderData => {
         const name = orderData.payer.name.given_name;
         toast.success("Success Payment Sent! " + name );
-        setTimeout(() => {
-            location.href = "/";
-          }, 4000);
+        // setTimeout(() => {
+        //     location.href = "/";
+        //   }, 4000);
       })
  
       .catch(error => {
@@ -137,13 +141,10 @@ export const PayDetail = () => {
         const sendPayment = async () => {
             try {
                 const response = await paymentOk(paymentDetail)();
+                dispatch(mailPayOk(user.email, paymentDetail));
                 dispatch(cleanCart());
+ 
 
-                console.log(response);
-                
-                // setTimeout(() => {
-                //     location.href = "/";
-                //   }, 5000);
             } catch (error) {
                 console.error("Error sending payment:", error);
             }
