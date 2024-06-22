@@ -187,7 +187,7 @@ export default function Nav({ color }) {
               )}
             </>
           )}
-          {user?.user_type === "admin" ? (
+          {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
               <a
                 href={`http://localhost:3000/dashboard/${user.id_user}`}
