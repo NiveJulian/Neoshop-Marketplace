@@ -15,6 +15,10 @@ export const SHOW_PRICE = "SHOW_PRICE";
 export const SET_CONDITION = "SET_CONDITION";
 export const MY_SHOPPING = "MY_SHOPPING";
 export const SET_HISTORY = "SET_HISTORY";
+export const SET_FILTERS = "SET_FILTERS"
+export const CLEAR_FILTER_STORE = 'CLEAR_FILTER_STORE';
+export const CLEAR_FILTER_BRAND = 'CLEAR_FILTER_BRAND';
+export const CLEAR_FILTER_CATEGORY = 'CLEAR_FILTER_CATEGORY';
 
 export const getAllProducts = () => {
     const endpoint = "http://localhost:3001/product/";
@@ -144,6 +148,13 @@ export const getAllCategories = () => {
       }
     };
   };
+
+  export const setActiveFilters = (filters) => {
+    return {
+      type: SET_FILTERS,
+      payload: filters,
+    }
+  }
 
   export const myShopping = (userId) => {
     return async (dispatch) => {

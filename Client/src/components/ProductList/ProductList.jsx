@@ -31,17 +31,14 @@ export default function ProductList({ allProducts }) {
   }, [allProducts]);
 
   return (
-    <div>
-      <div className="mb-16">
-        <Paginate
-          productsPerPage={productsPerPage}
-          totalProducts={allProducts.length}
-          page={page}
-          currentPage={currentPage}
-        />
+    <div className="h-screen mb-16">
+    {currentProducts.length === 0 ? (
+      <div className="text-center text-gray-600 font-bold text-2xl mt-16">
+        No se encontraron resultados
       </div>
+    ) : (
       <div className="max-w-screen grid grid-cols-1 ml-12 mb-8 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-        {currentProducts?.map((product) => (
+        {currentProducts.map((product) => (
           <ProductCard
             key={product.id_product}
             id={product.id_product}
@@ -52,12 +49,13 @@ export default function ProductList({ allProducts }) {
           />
         ))}
       </div>
-      <Paginate 
-        productsPerPage={productsPerPage}
-        totalProducts={allProducts.length}
-        page={page}
-        currentPage={currentPage}
-      />
-    </div>
-  );
+    )}
+    <Paginate 
+      productsPerPage={productsPerPage}
+      totalProducts={allProducts.length}
+      page={page}
+      currentPage={currentPage}
+    />
+  </div>
+);
 }

@@ -7,12 +7,14 @@ import {
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_STORE,
   GET_ALL_CATEGORIES,
+  GET_ALL_BRANDS,
   GET_PRODUCT_FILTER,
   SHOW_ABC,
   SHOW_PRICE,
   SET_CONDITION,
   MY_SHOPPING,
   SET_HISTORY,
+  SET_FILTERS,
 } from "../Actions/productActions";
 
 const initialState = {
@@ -28,6 +30,11 @@ const initialState = {
   myShopping: [],
   history: [],
   filteredShopping: [],
+  filters: {
+    store: '',
+    brand: '',
+    category: '',
+  },
 };
 
 const productReducer = (state = initialState, action) => {
@@ -58,6 +65,10 @@ const productReducer = (state = initialState, action) => {
       };
     case GET_ALL_CATEGORIES:
       return { ...state, categories: payload };
+
+    case GET_ALL_BRANDS:
+      return { ...state, brands: payload };
+
     case GET_PRODUCT_FILTER:
       return { ...state, filteredProducts: payload };
 
@@ -176,6 +187,9 @@ const productReducer = (state = initialState, action) => {
     case SET_HISTORY:
       return { ...state, history: payload }
 
+    case SET_FILTERS:
+      console.log("llegaron al reducer:", payload);
+      return { ...state, filters: payload }
     default:
       return state;
   }

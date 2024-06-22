@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import style from "./FilterCat.module.css";
-import { filterProducts, renderCondition } from '../../Redux/Actions/productActions';
+import { filterProducts, renderCondition, setActiveFilters } from '../../Redux/Actions/productActions';
 
 export default function FilterStore() {
   const dispatch = useDispatch();
@@ -46,9 +45,26 @@ export default function FilterStore() {
     const filteredFilters = Object.fromEntries(
       Object.entries(filters).filter(([key, value]) => value !== '')
     );
+    console.log("Asi recibe los filtros en el submit:", filteredFilters);
     dispatch(filterProducts(filteredFilters));
     dispatch(renderCondition("filteredProducts"));
+    dispatch(setActiveFilters(filters));
   };
+
+  const reset = () => {
+    setFilters({
+      ...filters,
+      store: '',
+      brand: '',
+      category: '',
+      minPrice: '',
+      maxPrice: '',
+      minPoint: '',
+      maxPoint: ''
+    })
+    dispatch(renderCondition("filteredProducts"));
+    dispatch(setActiveFilters(filters));
+  }
 
   return (
     <div className="text-sm">
@@ -157,6 +173,9 @@ export default function FilterStore() {
 
         <button type="submit" className="bg-gray-200 w-full text-gray-500 rounded px-2 py-2 hover:bg-gray-100 hover:text-gray-600">
           FILTER
+        </button>
+        <button className='bg-red-200 w-full text-gray-500 rounded px-2 py-2 hover:bg-red-100 hover:text-gray-600 mt-3' onClick={() => reset()}>
+          RESET
         </button>
       </form>
     </div>

@@ -5,9 +5,6 @@ import { OrderPrice } from "../Filter/OrderPrice";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
-  const [filterStoreActive, setFilterStoreActive] = useState(false);
-  const [orderAbcActive, setOrderAbcActive] = useState(false);
-  const [orderPriceActive, setOrderPriceActive] = useState(false);
 
   const toggleSidebar = () => {
     setExpanded(!expanded); // Alternar el estado de expansión
