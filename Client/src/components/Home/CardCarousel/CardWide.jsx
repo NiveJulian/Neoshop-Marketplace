@@ -13,11 +13,11 @@ export const CardWide = ({
   store,
 }) => {
   return (
-    <div className="bg-white p-6 shadow-lg transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-r-2xl cursor-pointer border flex w-full max-w-4xl">
+    <div className="bg-white p-6 shadow-lg transition duration-300 group transform hover:shadow-2xl rounded-2xl cursor-pointer border flex h-80">
       <div className="w-1/3">
         <Link to={`/product/${id_product}`}>
           <img
-            className="w-full h-full object-cover"
+            className="w-40 h-40 object-cover"
             src={img_product}
             alt={name}
           />
