@@ -6,12 +6,11 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { cleanCart } from "../Redux/Actions/cartActions";
 import { mailPayOk, paymentOk } from "../Redux/Actions/payActions";
-import { createHtml } from "../components/Mails/createHtml";
+
 
 export const PayDetail = () => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const user = useSelector((state) => state.auth.user);
-    console.log (user);
     const ship = useSelector ((state) => state.pay.delivery);
     const navigate = useNavigate ();
     const dispatch = useDispatch();
@@ -25,6 +24,9 @@ export const PayDetail = () => {
       id_user: "",
       name:"",
       id_payment: "",
+      comission:"",
+      deliveryPrice:"",
+      delivery:"",
       amount: "",
       date: "",
     });
@@ -47,6 +49,9 @@ export const PayDetail = () => {
           id_user: user.id_user,
           name: user.name,
           id_payment: "",
+          comission:calculatedComission,
+          deliveryPrice:4.95,
+          delivery:ship,
           amount: calculatedFinalTotal,
           date: "",
         });

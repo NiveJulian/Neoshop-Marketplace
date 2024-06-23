@@ -146,3 +146,32 @@ export const login = (formData) => async (dispatch) => {``
       console.log(error);
     }
   };
+
+  export const resetPassword = (email) => async (dispatch) => {
+    const endpoint = `${rutaBack}/user/forgot-password`;
+
+    try {
+      const response = await axios.post(endpoint, {email});
+      console.log (response);
+      if (response.status === 200){
+        toast.success ("We sent you an email, check it please")
+      }
+    } catch (error) {
+      console.log (error.message)
+      toast.error("Error email doesn't exist")
+    }
+  }
+
+  export const sendNewPassword = (formData) => async (dispatch) => {
+    const endpoint = `${rutaBack}/user/reset-password`;
+
+    try {
+      const response = await axios.post(endpoint, {password: formData.newPassword, token: formData.token});
+      if (response.status === 200){
+        toast.success ("Password changed with success")}
+    } catch (error) {
+      console.log (error.message)
+      toast.error("Error: the password could not be replaced, please try again")
+      
+    }
+  }
