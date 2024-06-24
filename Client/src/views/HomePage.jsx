@@ -13,7 +13,7 @@ const HomePage = () => {
     dispatch(getNewProducts());
   }, [dispatch]);
   return (
-    <div>
+    <div className="bg-gray-100">
       <Nav color={"primary"} />
       <div className="flex">
           <div className="w-full">

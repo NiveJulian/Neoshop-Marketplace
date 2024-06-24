@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { getProductById } from "../Redux/Actions/productActions";
 import { getSellerById } from "../Redux/Actions/storeActions";
 import { addToCart } from "../Redux/Actions/cartActions";
-
+import { addToFavorites } from "../Redux/Actions/favoritesActions";
 
 const reviews = [
   'Marcos: "Me encantó" 5 / 5',
@@ -40,7 +40,7 @@ const ProductDetail = () => {
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? product?.images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? product?.img_product?.length - 1 : prevIndex - 1
     );
   };
 
@@ -49,9 +49,14 @@ const ProductDetail = () => {
     dispatch(addToCart(product))
   }
 
+  const handleAddToFavorites = (product) => {
+    toast.success("Add to favorites")
+    dispatch(addToFavorites(product))
+  }
+
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === product?.images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === product?.img_product?.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -74,25 +79,52 @@ const ProductDetail = () => {
         <div className="detail-cont">
           <div>
             <div className="image-container">
-              {product.img_product > 1 && (
-                <button onClick={handlePrevImage}>&lt;</button>
+              {product?.img_product?.length > 1 && (
+                <button className="mr-2" onClick={handlePrevImage}>
+                  <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke-width="1.5" 
+                  stroke="currentColor" 
+                  class="size-6"
+                  >
+                    <path 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                </button>
               )}
               <img
                 src={
                   product?.img_product
-                    ? product?.img_product
+                    ? product?.img_product[currentImageIndex]
                     : "neoshoplogo.jpeg"
                 }
                 alt={`Product Image ${currentImageIndex + 1}`}
               />
-              {product.img_product > 1 && (
-                <button onClick={handleNextImage}>&gt;</button>
+              {product?.img_product?.length > 1 && (
+                <button className="ml-2" onClick={handleNextImage}>
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5" 
+                    stroke="currentColor" 
+                    class="size-6"
+                    >
+                      <path 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                </button>
               )}
-              
             </div>
             <div className="thumbnail-container">
-              {product.length > 0 ? (
-                product.images.map((image, index) => (
+              {product?.img_product?.length > 0 ? (
+                product?.img_product?.map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -164,7 +196,23 @@ const ProductDetail = () => {
                 ({product?.quantity} available)
               </span>
             </div>
-            <button onClick={() => handleAddToCart(product)} className="buy-button">Add to cart</button>
+            <div className="flex m-2">
+              <button onClick={() => handleAddToCart(product)} className="buy-button">Add to cart</button>
+              <button onClick={() => handleAddToFavorites(product)} className="fav-button">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5" 
+                    stroke="currentColor" 
+                    class="size-6"
+                  >
+                    <path 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg>
+              </button>
+            </div>            
             <p className="brand">Seller:</p>
             <div className="seller-cont">
               <img

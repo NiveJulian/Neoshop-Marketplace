@@ -22,6 +22,7 @@ import { getAllSellers } from "./Redux/Actions/storeActions";
 import { isAuthenticated } from "./Redux/Actions/authActions";
 import MyShopping from "./views/MyShopping";
 import AccountDetail from "./views/AccountDetail";
+import Favorites from "./views/Favorites";
 
 function App() {
  
@@ -61,6 +62,7 @@ function App() {
         <Route path="/pay" element={<PayDetail/>} />
         <Route path="/myshopping" element={<MyShopping/>} />
         <Route path="/accountdetail" element={<AccountDetail/>} />
+        <Route path="/favorites" element={<Favorites/>} />
       </Routes>
     </div>
   );

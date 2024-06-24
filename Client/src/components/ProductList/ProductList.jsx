@@ -4,6 +4,7 @@ import Paginate from "../Paginate/Paginate";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "../../Redux/Actions/cartActions";
+import { addToFavorites } from "../../Redux/Actions/favoritesActions";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,6 +27,11 @@ export default function ProductList({ allProducts }) {
     dispatch(addToCart(product));
   };
 
+  const handleAddToFav = (product) => {
+    toast.success("Add to favorites")
+    dispatch(addToFavorites(product));
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [allProducts]);
@@ -46,6 +52,7 @@ export default function ProductList({ allProducts }) {
             img_product={product.img_product}
             price={product.price}
             onAddToCart={() => handleAddToCart(product)}
+            onAddToFav={() => handleAddToFav(product)}
           />
         ))}
       </div>

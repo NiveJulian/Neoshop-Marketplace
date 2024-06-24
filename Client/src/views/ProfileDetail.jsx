@@ -64,52 +64,17 @@ const ProfileDetail = () => {
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
           </button>
           </Link>  
+          <Link to="/favorites" className="block">
           <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
             <div className="flex items-center">
               <div>
-                <h2 className="text-xl font-semibold">Adresses</h2>
-                <p className="text-gray-600">Data from your addresses saved in your account.</p>
+                <h2 className="text-xl font-semibold">Favorites</h2>
+                <p className="text-gray-600">List of your favorite products.</p>
               </div>
             </div>
             {/* <span className="material-icons text-gray-400">chevron_right</span> */}
-          </button>        
-          <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
-            <div className="flex items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Cards</h2>
-                <p className="text-gray-600">Data from your cards saved in your account.</p>
-              </div>
-            </div>
-            {/* <span className="material-icons text-gray-400">chevron_right</span> */}
-          </button>          
-          <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
-            <div className="flex items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Privacy</h2>
-                <p className="text-gray-600">Preferences and control over the use of your data.</p>
-              </div>
-            </div>
-            {/* <span className="material-icons text-gray-400">chevron_right</span> */}
-          </button>
-          {/* <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
-            <div className="flex items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Communications</h2>
-                <p className="text-gray-600">Choose what type of information you want to recieve.</p>
-              </div>
-            </div>
-            <span className="material-icons text-gray-400">chevron_right</span>
-          </button> */}
-          <button className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow hover:border-secondary">
-            <div className="flex items-center">
-              {/* <span className="material-icons text-green-500 mr-2">check_circle</span> */}
-              <div>
-                <h2 className="text-xl font-semibold">Security</h2>
-                <p className="text-gray-600">Security configuration for your account.</p>
-              </div>
-            </div>
-            {/* <span className="material-icons text-gray-400">chevron_right</span> */}
-          </button>
+          </button> 
+          </Link>                
         </div>
         {/* <div className="mt-4 text-gray-500 text-center">
           <a href="#" className="text-blue-500">Cancelar tu cuenta</a> siempre que lo desees.
