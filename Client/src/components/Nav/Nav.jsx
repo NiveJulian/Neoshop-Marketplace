@@ -7,70 +7,75 @@ import User from "../Users/User";
 import CartList from "../ProductCart/CartList/CartList";
 import { getCartByUserId, sendCart } from "../../Redux/Actions/cartActions";
 import { renderCondition } from "../../Redux/Actions/productActions";
+import { changeTheme } from "../../Redux/Actions/themeActions";
 
 export default function Nav({ color }) {
   const user = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const cartItems = useSelector((state) => state.cart.cartItems) || 0;
+  const cartItems = useSelector((state) => state.cart.cartItems) || [];
 
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  // const themeColor = useSelector((state) => state.themes.theme);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (cartItems.length === 0 && user?.id_user) {
-      dispatch(getCartByUserId(user?.id_user));
+    if (isAuth && user) {
+      dispatch(getCartByUserId(user.id_user));
     }
-  }, [dispatch, user, cartItems]);
+  }, [isAuth, user, dispatch]);
 
   useEffect(() => {
-    if (cartItems.length > 0 && isAuth) {
-      try {
-        const formattedCartItems = cartItems.map((item) => ({
-          id_product: item.id_product,
-          cartQuantity: item.cartQuantity || 1
-        }));
-        formattedCartItems.forEach((item) => {
-          dispatch(sendCart(user?.id_user, item.id_product, item.cartQuantity));
-        });
-      } catch (error) {
-        console.error("Error sending cart:", error);
-      }
-    }
-  }, [cartItems, user, dispatch, isAuth]);
+    dispatch(changeTheme(localStorage.getItem("theme") || "light"));
+  }, []);
 
   const toggleCart = () => {
     setShowCart(!showCart);
   };
 
-  function handleShowLogin() {
+  const handleShowLogin = () => {
     setShowLogin(true);
-  }
+  };
 
-  function handleOnClose() {
+  const handleOnClose = () => {
     setShowLogin(false);
-  }
+  };
 
-  function handleProducts() {
+  const handleProducts = () => {
     dispatch(renderCondition("allProducts"));
-  }
+  };
 
   const calculateTotal = () => {
-    // Calcular el subtotal basado en el precio y la cantidad de cada producto en el carrito
     const total = cartItems.reduce((acc, product) => {
       const price = parseFloat(product.price);
       const quantity = product.cartQuantity || 1;
       return acc + (isNaN(price) ? 0 : price * quantity);
     }, 0);
 
-    // Redondear el total a dos decimales
     return total.toFixed(2);
   };
 
+  const handleThemeChange = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    dispatch(changeTheme(newTheme));
+    setTheme(newTheme); // Actualizar el estado del tema
+    localStorage.setItem("theme", newTheme); // Guardar el tema en localStorage
+  };
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+
+  useEffect(() => {
+    if (cartItems.length > 0 && isAuth && user) {
+        dispatch(sendCart(user.id_user, cartItems));
+    }
+  }, [cartItems, isAuth, user, dispatch]);
   return (
     <div className="w-full z-50 shadow-xl">
       <div
-        className={`flex items-center justify-between px-2 py-2 shadow-md bg-${color}`}
+        className={`flex items-center justify-between px-2 py-2 shadow-md bg-${
+          theme === "dark" ? "#1f1f1f" : color
+        }`}
       >
         <div className="flex gap-2 justify-center items-center">
           <Link to={"/"}>
@@ -82,15 +87,14 @@ export default function Nav({ color }) {
           </Link>
           <SearchBar className="flex items-center justify-center" />
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4" >
           <div className="tooltip">
             <Link
               to={"/products"}
-              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 flex items-center ${
-                color === "primary"
-                  ? "text-gray-200 border-gray-200"
-                  : "text-gray-600 border-gray-600"
+              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos}}
               onClick={handleProducts}
             >
               <svg
@@ -114,11 +118,11 @@ export default function Nav({ color }) {
           <div className="tooltip">
             <Link
               to={"/store"}
-              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
-                color === "primary"
-                  ? "text-gray-200 border-gray-200"
-                  : "text-gray-600 border-gray-600"
+              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos}}
+
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -144,6 +148,8 @@ export default function Nav({ color }) {
               className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos}}
+
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -172,6 +178,7 @@ export default function Nav({ color }) {
                   ? "text-gray-200 border-gray-200"
                   : "text-gray-600 border-gray-200"
               }`}
+              style={{ borderColor: bordesPlomos}}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +207,7 @@ export default function Nav({ color }) {
               )}
             </>
           )}
-          {user?.user_type === "admin" ? (
+          {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
               <a
                 href={`http://localhost:3000/dashboard/${user.id_user}`}
@@ -229,12 +236,56 @@ export default function Nav({ color }) {
           ) : (
             <></>
           )}
+          {/* Toggle Theme Button */}
+          <div className="tooltip">
+            <button
+              onClick={handleThemeChange}
+              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
+              }`}
+              style={{ borderColor: bordesPlomos}}
+            >
+              {theme === "light" ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 2.25v1.5m0 16.5v1.5m8.25-9h-1.5m-16.5 0h-1.5M18.364 5.636l-1.061-1.061M6.697 17.303l-1.061-1.061m12.728 0l1.061 1.061m-12.728-12.728L5.636 5.636M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75a9.75 9.75 0 0 1-9.75-9.75c0-1.058.17-2.075.502-3.002a9.75 9.75 0 1 0 12.75 12.752z"
+                  />
+                </svg>
+              )}
+            </button>
+            <div className="tooltiptext">Theme</div>
+          </div>
           <div className="tooltip">
             <button
               onClick={() => toggleCart()}
               className={`px-2 py-2 rounded-lg hover:border-secondary hover:text-secondary ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos}}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

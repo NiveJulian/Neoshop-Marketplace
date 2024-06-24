@@ -1,14 +1,44 @@
 import Nav from "./Nav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "./Logo";
-import { useId } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function Layout({ children, userId, user }) {
   const [showNav, setShowNav] = useState(false);
-  if(!userId){
-    return <div>Loading...</div>
+  const [userData, setUserData] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false)
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (userId) {
+        try {
+          const response = await axios.get(
+            `http://localhost:3001/user/${userId}`
+          );
+          setUserData(response.data);
+          if(response.data.user_type === "admin"){
+            setIsAdmin(true)
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+    fetchData();
+  }, [userId]);
+
+  useEffect(() => {
+    if (userData && userData.user_type !== "admin" && userData.user_type !== "trader") {
+      router.push("/not-authorized"); // Redirigir a una página de "No autorizado"
+    }
+  }, [userData, router]);
+
+  if (!userData) {
+    return <div>Loading...</div>;
   }
+
   return (
     <div className="bg-gray-200 h-full">
       <div className="md:hidden flex items-center justify-center p-4">
@@ -33,7 +63,7 @@ export default function Layout({ children, userId, user }) {
         </div>
       </div>
       <div className="flex">
-        <Nav show={showNav} userId={userId} user={user} />
+        <Nav show={showNav} userId={userId} user={user} isAdmin={isAdmin}/>
         <div className="flex-grow p-4">{children}</div>
       </div>
     </div>

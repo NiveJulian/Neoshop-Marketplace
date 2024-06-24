@@ -1,10 +1,22 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { removeFromCart, updateCartItemQuantity } from "../../../Redux/Actions/cartActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteCartItem,
+  removeFromCart,
+  updateCartItemQuantity,
+} from "../../../Redux/Actions/cartActions";
 
 function CartItem({ product }) {
   const [cartQuantity, setCartQuantity] = useState(product?.cartQuantity || 1);
+  const user = useSelector((state) => state.auth.user);
+
   const dispatch = useDispatch();
+  const theme = useSelector((state) => state.themes.theme);//todo
+
+  const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";//todo
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   // Función para manejar cambios en la cantidad del carrito
   const handleChangeQuantity = (event) => {
@@ -16,20 +28,24 @@ function CartItem({ product }) {
   // Función para eliminar el producto del carrito
   const handleRemove = (id_product) => {
     dispatch(removeFromCart(id_product));
+    if (user) {
+      dispatch(deleteCartItem(user.id_user, id_product));
+    }
   };
 
   // Calcular el subtotal del producto
   const subtotal = (parseFloat(product?.price) * cartQuantity).toFixed(2);
 
   return (
-    <div className="flex items-center gap-2 border rounded-lg px-2 py-2">
+    <div className="flex items-center gap-2 border rounded-lg px-2 py-2" style={{borderColor: bordesPlomos}}>
       <img
         src={product?.img_product}
         alt={product?.name}
         className="w-16 h-16 mr-4"
+        style={{color: textColor}}
       />
       <div className="flex-1">
-        <h3 className="text-sm font-semibold">{product?.name}</h3>
+        <h3 className="text-sm font-semibold" style={{color: textColor}}>{product?.name}</h3>
         <p className="text-gray-500">${product?.price}</p>
       </div>
       <input
@@ -38,10 +54,11 @@ function CartItem({ product }) {
         onChange={handleChangeQuantity}
         className="w-9 justify-center border rounded-md p-1 text-center mr-4"
         min="1"
+        style={{ background: backgroundColor, color: textColor, borderColor: bordesPlomos}}
       />
       <div className="flex-col">
-        <p className="text-gray-500 text-sm">Subtotal: </p>
-        <span>${subtotal}</span>
+        <p className="text-gray-500 text-sm" >Subtotal: </p>
+        <span style={{color: textColor}}>${subtotal}</span>
       </div>
       <button
         onClick={() => handleRemove(product.id_product)}

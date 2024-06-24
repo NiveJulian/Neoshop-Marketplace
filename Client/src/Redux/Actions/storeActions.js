@@ -13,10 +13,14 @@ export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
 
 export const createStore = (formData) => async (dispatch) => {
     try {
+      toast.loading("Waiting...");
       const response = await axios.post(`${rutaBack}/store`, formData);
       if (response.status === 200) {
         toast.success("Your store is create");
         dispatch({ type: CREATE_STORE_SUCCESS, payload: response.data });
+        setTimeout(() => {
+          location.href = "/";
+        }, 2000);
       }
     } catch (error) {
       dispatch({ type: CREATE_STORE_FAILURE, payload: error });

@@ -45,6 +45,8 @@ export default function OrdersPage({ user }) {
     }
   }, [id, storeData]);
 
+  console.log(orders)
+
   useEffect(() => {
     const fetchOrdersData = async () => {
       try {
@@ -61,8 +63,6 @@ export default function OrdersPage({ user }) {
       fetchOrdersData();
     }
   }, [storeData, orders.length]);
-
-  console.log(userData);
   return (
     <Layout userId={id} user={user}>
       <h1>Orders Page</h1>
@@ -138,7 +138,7 @@ export default function OrdersPage({ user }) {
                         {product.name}
                       </span>
                       <span>Price: ${product.price}</span>
-                      <span>Quantity: {product.quantity}</span>
+                      <span>Quantity: {product.cartQuantity}</span>
                     </div>
                   ))}
                 </td>

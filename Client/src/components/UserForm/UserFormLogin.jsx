@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
-import validationLogin from "./validationLogin";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
-import {
-  login,
-  resetPassword,
-  sendNewPassword,
-} from "../../Redux/Actions/authActions";
+import { login, resetPassword, sendNewPassword } from "../../Redux/Actions/authActions";
+import validationLogin from "./validationLogin";
 
 export default function UserFormLogin({ title, onClose }) {
   const [formData, setFormData] = useState({
@@ -28,8 +24,14 @@ export default function UserFormLogin({ title, onClose }) {
   const [view, setView] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const isAuth = useSelector((state) => state.auth.isAuth);
+  const mailExist = useSelector((state) => state.auth.mailExist);
+  const themeLocal = useState(localStorage.getItem("theme"));
+  const theme = themeLocal[0];
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
+  const cartBackGround = theme === "dark" ? "#1a1a1a" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
 
   useEffect(() => {
     if (isAuth) {
@@ -38,13 +40,12 @@ export default function UserFormLogin({ title, onClose }) {
   }, [isAuth, navigate]);
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const token = query.get("token");
-    if (token) {
-      setFormData((prevState) => ({ ...prevState, token }));
-      setView("reset");
+    if (view === "forgotPassword" && mailExist) {
+      setTimeout(() => {
+        setView("reset");
+      }, 2000);
     }
-  }, [location]);
+  }, [mailExist, view]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,21 +53,19 @@ export default function UserFormLogin({ title, onClose }) {
       ...prevState,
       [name]: value,
     }));
-    validationLogin({ ...formData, [name]: value }, errors, setErrors);
-
-    // Si se está cambiando la contraseña nueva o la confirmación
+    validationLogin({ ...formData, [name]: value }, errors, setErrors, view);
+    
     if (name === "newPassword" || name === "confirmPassword") {
       if (name === "newPassword") {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          confirmPassword: "", // Limpiar el error al cambiar la nueva contraseña
+          confirmPassword: "",
         }));
       }
       if (name === "confirmPassword") {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          confirmPassword:
-            value !== formData.newPassword ? "Passwords do not match" : "",
+          confirmPassword: value !== formData.newPassword ? "Passwords do not match" : "",
         }));
       }
     }
@@ -84,7 +83,7 @@ export default function UserFormLogin({ title, onClose }) {
         } else if (view === "reset") {
           dispatch(sendNewPassword(formData));
         }
-
+        
         setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -101,7 +100,6 @@ export default function UserFormLogin({ title, onClose }) {
     e.preventDefault();
     if (formData.email) {
       dispatch(resetPassword(formData.email));
-      setView("reset");
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -125,11 +123,13 @@ export default function UserFormLogin({ title, onClose }) {
       <form
         className="bg-white text-center shadow-md p-2 rounded-xl w-full max-w-sm space-y-6"
         onSubmit={handleSubmit}
+        style={{ background: cartBackGround }}
       >
         <button
           type="button"
           className="flex top-0 right-0 text-3xl text-gray-800 hover:text-gray-600"
           onClick={onClose}
+          style={{ color: textColor }}
         >
           &times;
         </button>
@@ -249,7 +249,7 @@ export default function UserFormLogin({ title, onClose }) {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="email"
                 >
-                  Enter your email to reset password
+                  Email
                 </label>
                 <input
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
@@ -272,14 +272,14 @@ export default function UserFormLogin({ title, onClose }) {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 onClick={handlePasswordReset}
               >
-                Continue
+                Send Reset Token
               </button>
               <button
                 type="button"
                 onClick={() => setView("login")}
                 className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               >
-                Back to login
+                Back to Login
               </button>
             </div>
           </>
@@ -292,7 +292,7 @@ export default function UserFormLogin({ title, onClose }) {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="token"
                 >
-                  Please enter the token that you have received via email.
+                  Reset Token
                 </label>
                 <input
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
@@ -300,7 +300,7 @@ export default function UserFormLogin({ title, onClose }) {
                   }`}
                   id="token"
                   type="text"
-                  placeholder="Enter your token"
+                  placeholder="Reset Token"
                   name="token"
                   value={formData.token}
                   onChange={handleChange}
@@ -341,7 +341,7 @@ export default function UserFormLogin({ title, onClose }) {
                   Confirm New Password
                 </label>
                 <input
-                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                     errors.confirmPassword ? "border-red-500" : ""
                   }`}
                   id="confirmPassword"
@@ -368,9 +368,9 @@ export default function UserFormLogin({ title, onClose }) {
               <button
                 type="button"
                 onClick={() => setView("login")}
-                className="inline-block align-baseline font-bold text-sm text-blue-500 hover"
+                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               >
-                Back to login
+                Back to Login
               </button>
             </div>
           </>

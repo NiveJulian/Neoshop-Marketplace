@@ -24,7 +24,7 @@ export default function ProductForm({
   const [goToProduct, setGoToProduct] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [description, setDescription] = useState(existingDescription || "");
-  const [category, setCategory] = useState(existingCategories[0] || ""); // Ajustado para recibir string
+  const [category, setCategory] = useState(existingCategories || ""); // Ajustado para recibir string
   const [categories, setCategories] = useState([]);
   const [storeData, setStoreData] = useState(null);
 
@@ -62,21 +62,36 @@ export default function ProductForm({
 
   async function createProduct(ev) {
     ev.preventDefault();
-    const data = {
-      id_product,
-      id_store: storeIdStore,
-      name: title,
-      description,
-      price,
-      quantity,
-      img_product: images,
-      categoryName: [category],
-      fromStore: store,
-      brand: brand,
-    };
+
     if (id_product) {
-      await axios.put(`http://localhost:3001/product/update`, data);
+      const data = {
+        name: title,
+        description,
+        price,
+        quantity,
+        img_product: images,
+        categoryName: [category],
+        fromStore: store,
+        storeIdStore,
+        brand: brand,
+      };
+      await axios.put(`http://localhost:3001/product/update`, {
+        ...data,
+        id_store: storeIdStore,
+        id_product,
+      });
     } else {
+      const data = {
+        name: title,
+        description,
+        price,
+        quantity,
+        img_product: images,
+        categoryName: [category],
+        fromStore: store.name,
+        storeIdStore,
+        brand: brand,
+      };
       await axios.post("http://localhost:3001/product/", data);
     }
     setGoToProduct(true);
@@ -118,8 +133,8 @@ export default function ProductForm({
         >
           <option value="">Uncategorized</option>
           {categories.length > 0 &&
-            categories.map((c) => (
-              <option key={c._id} value={c.name}>
+            categories.map((c, i) => (
+              <option key={i} value={c.name}>
                 {c.name}
               </option>
             ))}

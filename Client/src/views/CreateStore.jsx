@@ -8,21 +8,33 @@ export default function CreateStore() {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const user = useSelector((state) => state.auth.user);
   const [showRegisterStoreForm, setShowRegisterStoreForm] = useState(false);
+  const themeLocal = useState(localStorage.getItem("theme"));
+  const theme = themeLocal[0];
+  // const theme = 'light';
 
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#272727" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const azulOscuro = theme === "dark" ? "#212121" : "#0069AA";
+  const azulClaro = theme === "dark" ? "#3B82F6" : "#3B82F6";
   useEffect(() => {
     if (isAuth) {
       setShowRegisterStoreForm(true);
     }
   }, [isAuth]);
+  console.log(theme)
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center" style={{ background: backgroundColor }}>
       {!isAuth ? (
         <UserFormLogin title={"First, log in to your account"} />
       ) : showRegisterStoreForm ? (
         // Si está autenticado, mostrar el formulario de registro de tienda
         <>
-          <div className="w-1/2 hidden lg:inline-flex h-screen text-white">
-            <div className="w-[450px] shadow-md shadow-gray-400 h-full bg-primary px-10 flex flex-col gap-6 justify-center">
+          <div className="w-1/2 hidden lg:inline-flex h-screen text-white" >
+            <div className="w-[450px] shadow-md shadow-gray-400 h-full bg-primary px-10 flex flex-col gap-6 justify-center"
+            style={{ background: azulOscuro }}>
               <Link to="/">
                 <img
                   src={"neoshoplogo.jpeg"}

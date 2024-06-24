@@ -1,7 +1,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import React from "react";
 import Slider from "react-slick";
+import { useSelector } from "react-redux";
 
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -40,6 +40,12 @@ export const ProductCard = ({
   id_store,
   onAddToCart,
 }) => {
+  const theme = useSelector((state) => state.themes.theme);
+  const neutralColor = theme === "dark" ? "#2F2F2F" : "#FFFFFF";
+  const blueColor = theme === "dark" ? "#0069AA" : "#3B82F6";
+  const textColorButton = theme === "dark" ? "#b4b4b4" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#d1d1d1" : "#292929";
+
   const settings = {
     dots: true,
     infinite: true,
@@ -78,7 +84,10 @@ export const ProductCard = ({
   };
 
   return (
-    <article className="w-64 h-full rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6">
+    <article className="w-64 h-full rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6"
+    style={{ backgroundColor: neutralColor }}
+
+    >
       <a href={`/product/${id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
           {img_product.length > 1 ? (
@@ -110,36 +119,34 @@ export const ProductCard = ({
         </div>
       </a>
 
-      <div className="mt-1 p-2">
-        <h2 className="text-slate-700">{name}</h2>
-        <p className="mt-1 text-sm text-slate-400">{date_creation}</p>
+        <div className="mt-1 p-2">
+          <h2 className="text-slate-700" style={{ color: textColor  }}>{name}</h2>
+          <p className="mt-1 text-sm text-slate-400">{date_creation}</p>
 
-        <div className="mt-3 flex items-end justify-between">
-          <p className="text-lg font-bold text-blue-500">${price}</p>
+          <div className="mt-3 flex items-end justify-between">
+            <p className="text-lg font-bold text-blue-500" style={{ color: blueColor}}>${price}</p>
 
-          <div
-            onClick={() => onAddToCart()}
-            className="flex cursor-pointer items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-              />
-            </svg>
+            <div onClick={() => onAddToCart()} className="flex cursor-pointer items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
+              style={{ background:blueColor }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-4 w-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
 
-            <button className="text-sm">Add to cart</button>
+              <button className="text-sm" color={textColorButton}>Add to cart</button>
+            </div>
           </div>
         </div>
-      </div>
     </article>
   );
 };

@@ -2,13 +2,21 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { getAllProducts, getProductByName, renderCondition } from "../../Redux/Actions/productActions";
+import {
+  getAllProducts,
+  getProductByName,
+  renderCondition,
+} from "../../Redux/Actions/productActions";
+import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const theme = useSelector((state) => state.themes.theme);
 
   const handleChange = (event) => {
     const searchValue = event.target.value;
@@ -20,38 +28,54 @@ export default function SearchBar() {
       });
     } else {
       setSearchResults([]);
-      dispatch(getAllProducts()); 
+      dispatch(getAllProducts());
       dispatch(renderCondition("allProducts"));
     }
   };
 
   const handleSearch = () => {
     if (!name.trim()) {
-      toast.error('Please enter a search term.'); // Mensaje de error para campo de búsqueda vacío
+      toast.error("Please enter a search term."); // Mensaje de error para campo de búsqueda vacío
       return; // Detener la ejecución si el campo de búsqueda está vacío
     }
     dispatch(getProductByName(name)).then((results) => {
       if (results.length === 0) {
-        toast.error('No products found.'); // Mensaje de error cuando no se encuentran productos
+        toast.error("No products found."); // Mensaje de error cuando no se encuentran productos
       } else {
         dispatch(renderCondition("namedProducts"));
-       
       }
     });
   };
+
+  // const backgroundColor = theme === "dark" ? "#949494" : "#ececec";
+  const textColor = theme === "dark" ? "#f0f0f0" : "#f0f0f0";
+  const orangeColor = theme === "dark" ? "rgb(214, 124, 50)" : "#FF8200";
 
   return (
     <div className="relative flex flex-col">
       <div className="flex gap-4">
         <input
-          className="px-2 py-2 hover:bg-gray-200 text-gray-700 border-none rounded-md"
+          className="px-2 py-2 hover:bg-gray-200 border-none rounded-md"
           placeholder="Search"
           type="search"
           value={name}
           onChange={handleChange}
         />
-        <button className="rounded-full bg-secondary p-3" type="button" onClick={handleSearch}>
-          🔎
+
+        <button
+          className="rounded-full"
+          type="button"
+          onClick={handleSearch}
+          style={{
+            width: "40px",
+            height: "40px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            background: orangeColor,
+          }}
+        >
+          <FontAwesomeIcon icon={faSearch} style={{ fontSize: "18px", color: textColor}} />
         </button>
       </div>
 
@@ -68,7 +92,7 @@ export default function SearchBar() {
                 setSearchResults([]);
                 dispatch(getProductByName(result.name));
                 dispatch(renderCondition("namedProducts"));
-                navigate('/products');
+                navigate("/products");
               }}
             >
               {result.name}

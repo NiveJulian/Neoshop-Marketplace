@@ -11,6 +11,7 @@ export const LOGOUT = "LOGOUT";
 export const UPDATE_USER = "UPDATE_USER";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
+export const RESET_PASS = "RESET_PASS";
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {``
@@ -58,15 +59,17 @@ export const login = (formData) => async (dispatch) => {``
   
   export const register = (formData) => async (dispatch) => {
     const endpoint = `${rutaBack}/user/`;
-  
     try {
+      toast.loading("Waiting...");
       const response = await axios.post(`${endpoint}`, formData);
   
-      toast.loading("Waiting...");
       if (response.status === 200) {
         toast.success("Register successful!");
-  
         dispatch({ type: REGISTER_SUCCESS });
+  
+        // Log in the user after successful registration
+        dispatch(login({ email: formData.email, password: formData.password }));
+        
         setTimeout(() => {
           location.href = "/confirmation";
         }, 2000);
@@ -75,7 +78,6 @@ export const login = (formData) => async (dispatch) => {``
       }
     } catch (error) {
       toast.error("Error while registering");
-  
       console.log(error);
     }
   };
@@ -155,6 +157,10 @@ export const login = (formData) => async (dispatch) => {``
       console.log (response);
       if (response.status === 200){
         toast.success ("We sent you an email, check it please")
+        dispatch({
+          type: RESET_PASS,
+          payload: true,
+        })
       }
     } catch (error) {
       console.log (error.message)
