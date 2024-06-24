@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { CartDetailItem } from "../components/ProductCart/CartDetailItem/CartDetailItem";
@@ -7,13 +6,11 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { cleanCart } from "../Redux/Actions/cartActions";
 import { mailPayOk, paymentOk } from "../Redux/Actions/payActions";
-import { createHtml } from "../components/Mails/createHtml";
 
 export const PayDetail = () => {
-  const cartItems = useSelector((state) => state.cart.cart.cartItems);
-  const user = useSelector((state) => state.auth.auth.user);
-    console.log (user);
-  const ship = useSelector((state) => state.pay.pay.delivery);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const user = useSelector((state) => state.auth.user);
+  const ship = useSelector((state) => state.pay.delivery);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,7 +21,7 @@ export const PayDetail = () => {
   const [paymentDetail, setPaymentDetail] = useState({
     arrayProducts: [],
     id_user: "",
-      name:"",
+    name: "",
     id_payment: "",
     amount: "",
     date: "",
@@ -33,13 +30,12 @@ export const PayDetail = () => {
   const theme = useSelector((state) => state.themes.theme); //todo
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
-  const cartBackGround = theme === "dark" ? "#171717" : "#FFFFFF";
-  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  // const cartBackGround = theme === "dark" ? "#171717" : "#FFFFFF";
+  // const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
   const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
-  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  // const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
   const orangeIntense = theme === "dark" ? "#D67C32" : "#FF8200";
-  const orangeOpaco = theme === "dark" ? "#d17b34" : "#FB923C";
-
+  // const orangeOpaco = theme === "dark" ? "#d17b34" : "#FB923C";
 
   useEffect(() => {
     const calculatedSubtotal = cartItems.reduce((accumulator, item) => {
@@ -60,7 +56,7 @@ export const PayDetail = () => {
     setPaymentDetail({
       arrayProducts: [...cartItems],
       id_user: user.id_user,
-          name: user.name,
+      name: user.name,
       id_payment: "",
       amount: calculatedFinalTotal,
       date: "",
@@ -118,16 +114,18 @@ export const PayDetail = () => {
         console.error("Error creating order:", error);
         throw error;
       });
-    }
-  
-    async function onApprove(data) {
-        setPaymentId(data.orderID);
-        setPaymentDetail(prevDetail => ({
-            ...prevDetail,
-            id_payment: data.orderID,
-            date: new Date().toISOString(),
-        }));
-      return await fetch(`http://localhost:3001/paypal/capture-order/${data.orderID}`, {
+  }
+
+  async function onApprove(data) {
+    setPaymentId(data.orderID);
+    setPaymentDetail((prevDetail) => ({
+      ...prevDetail,
+      id_payment: data.orderID,
+      date: new Date().toISOString(),
+    }));
+    return await fetch(
+      `http://localhost:3001/paypal/capture-order/${data.orderID}`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -136,8 +134,9 @@ export const PayDetail = () => {
           orderID: data.orderID,
           emailAddress: user.email,
         }),
-      })
-      .then(response => {
+      }
+    )
+      .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -155,30 +154,33 @@ export const PayDetail = () => {
         console.error("Error capturing order:", error);
         throw error;
       });
-    }
-   
-    useEffect(() => {
-        const sendPayment = async () => {
-            try {
-                const response = await paymentOk(paymentDetail)();
-                dispatch(mailPayOk(user.email, paymentDetail));
-                dispatch(cleanCart());
- 
+  }
 
-            } catch (error) {
-                console.error("Error sending payment:", error);
-            }
-        };
+  useEffect(() => {
+    const sendPayment = async () => {
+      try {
+        const response = await paymentOk(paymentDetail)();
+        console.log(response)
+        dispatch(mailPayOk(user.email, paymentDetail));
+        dispatch(cleanCart());
+      } catch (error) {
+        console.error("Error sending payment:", error);
+      }
+    };
 
     if (paymentDetail.id_payment !== "") {
       sendPayment();
     }
-  }, [paymentDetail]);
-
-  console.log("Este es el delivery" + ship);
+  }, [dispatch, paymentDetail, user.email]);
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 " style={{ background: backgroundColor}}>
-      <div className="h-[560px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10" style={{ background: backgroundColor, color: textColor}}>
+    <div
+      className="min-h-screen flex justify-center items-center bg-gray-100 "
+      style={{ background: backgroundColor }}
+    >
+      <div
+        className="h-[560px] w-[1100px] bg-white flex shadow-xl rounded-2xl mt-4 mb-4 z-10"
+        style={{ background: backgroundColor, color: textColor }}
+      >
         <div className="order-info h-full w-[60%] p-6 flex justify-center relative box-border">
           <div className="order-info-content w-full table-fixed ">
             <h2 className="mb-0 mt-1 text-center font-light text-lg">
@@ -208,11 +210,19 @@ export const PayDetail = () => {
             </div>
           </div>
         </div>
-        <div className="h-full w-[40%] bg-orange-400 text-black-200 flex flex-col justify-center align-center text-sm p-6 relative rounded-tr-2xl rounded-br-2xl box-border" style={{ background: orangeIntense}}>
-          <div className="h-[300px] w-[300px] bg-white flex shadow-xl rounded-2xl justify-center items-center mt-4 mx-auto"
-           style={{ background: backgroundColor, color: textColor}}>
+        <div
+          className="h-full w-[40%] bg-orange-400 text-black-200 flex flex-col justify-center align-center text-sm p-6 relative rounded-tr-2xl rounded-br-2xl box-border"
+          style={{ background: orangeIntense }}
+        >
+          <div
+            className="h-[300px] w-[300px] bg-white flex shadow-xl rounded-2xl justify-center items-center mt-4 mx-auto"
+            style={{ background: backgroundColor, color: textColor }}
+          >
             <div className="text-center justify-center mt-4">
-              <div className="font-light text-black"  style={{color: textColor}}>
+              <div
+                className="font-light text-black"
+                style={{ color: textColor }}
+              >
                 <div className="mb-4 text-lg">
                   <strong>Buyer Information:</strong>
                 </div>

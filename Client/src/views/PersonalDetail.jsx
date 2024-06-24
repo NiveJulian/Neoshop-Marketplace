@@ -5,7 +5,6 @@ import Nav from "../components/Nav/Nav";
 
 const PersonalDetail = () => {
   const user = useSelector((state) => state.auth.user);
-  const user = useSelector((state) => state.auth.user);
   const [showPassword, setShowPassword] = useState(false);
   const theme = useSelector((state) => state.themes.theme);
 

@@ -4,8 +4,6 @@ import ProductList from "../components/ProductList/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../Redux/Actions/productActions";
-import { getAllProducts } from "../Redux/Actions/productActions";
-// import Categories from "../components/Categories/Categories";
 
 export const Products = () => {
   const dispatch = useDispatch();

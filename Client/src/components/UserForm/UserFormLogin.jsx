@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 import { login } from "../../Redux/Actions/authActions";
-import { login } from "../../Redux/Actions/authActions";
 
 export default function UserFormLogin({ title, onClose }) {
   const [formData, setFormData] = useState({ email: "", password: "" });

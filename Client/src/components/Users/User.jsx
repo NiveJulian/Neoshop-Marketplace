@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { doSignOut } from "../../firebase/auth";
 import { logout } from "../../Redux/Actions/authActions";
 import { useSelector } from "react-redux";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function User({ user, onClose }) {
   const dispatch = useDispatch();

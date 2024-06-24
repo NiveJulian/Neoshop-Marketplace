@@ -47,7 +47,7 @@ export default function SearchBar() {
     });
   };
 
-  const backgroundColor = theme === "dark" ? "#949494" : "#ececec";
+  // const backgroundColor = theme === "dark" ? "#949494" : "#ececec";
   const textColor = theme === "dark" ? "#f0f0f0" : "#f0f0f0";
   const orangeColor = theme === "dark" ? "rgb(214, 124, 50)" : "#FF8200";
 

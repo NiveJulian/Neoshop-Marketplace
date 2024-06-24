@@ -62,7 +62,6 @@ function CartItem({ product }) {
       </div>
       <button
         onClick={() => handleRemove(product.id_product)}
-        onClick={() => handleRemove(product.id_product)}
         className="text-red-500 hover:border hover:rounded-full hover:border-gray-200 p-2 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)] hover:text-red-400"
       >
         {/* Icono para eliminar producto */}

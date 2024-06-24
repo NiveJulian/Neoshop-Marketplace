@@ -1,11 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import validationFormRegisterStore from "./validationformregisterstore"; 
-import validationFormRegisterStore from "./validationformregisterstore"; 
 import toast from "react-hot-toast";
 import { ReactSortable } from "react-sortablejs";
-import { uploadImages } from "../../Redux/Actions/updateImageActions";
-import { createStore } from "../../Redux/Actions/storeActions";
 import { uploadImages } from "../../Redux/Actions/updateImageActions";
 import { createStore } from "../../Redux/Actions/storeActions";
 

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState, useEffect } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
@@ -18,7 +17,7 @@ export default function Nav({ color }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const themeColor = useSelector((state) => state.themes.theme);
+  // const themeColor = useSelector((state) => state.themes.theme);
 
   const dispatch = useDispatch();
 

@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import validationRegister from "./validationRegister";
-import validationRegister from "./validationRegister";
 import toast from "react-hot-toast";
 import { register } from "../../Redux/Actions/authActions";
 import { useSelector } from "react-redux";

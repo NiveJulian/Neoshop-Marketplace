@@ -4,7 +4,6 @@ import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
 import Nav from "../components/Nav/Nav";
 import CardCarousel from "../components/Home/CardCarousel/CardCarousel";
 import { getNewProducts } from "../Redux/Actions/productActions";
-import { getNewProducts } from "../Redux/Actions/productActions";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -12,8 +11,8 @@ const HomePage = () => {
   const theme = useSelector((state) => state.themes.theme);//todo
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
-  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
-  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  // const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  // const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
 
   useEffect(() => {
     dispatch(getNewProducts());
