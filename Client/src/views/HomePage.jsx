@@ -31,7 +31,11 @@ const HomePage = () => {
             <CardCarousel allProducts={newProducts} />
           </div>
         </div>
-        <div className="mt-8" style={{background: backgroundColor}}>
+      <div className="mx-2 flex justify-center items-center flex-col mt-8">        
+        <div className="mt-8 mb-16">
+          <div className="font-bold text-2xl">
+            All recent products
+          </div>
           <CardHomeList allProducts={newProducts} />
         </div>
       </div>

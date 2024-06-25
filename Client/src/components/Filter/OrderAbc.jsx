@@ -23,7 +23,7 @@ export const OrderAbc = () => {
     <div className="flex w-full text-center">
       <button
         type="button"
-        className="w-full text-sm min-h-[3rem] text-center rounded-md bg-stone-100 px-2 py-2 text-stone-800"
+        className="w-full text-sm min-h-[3rem] text-center rounded-md bg-stone-100 px-2 py-2 text-stone-800 mt-1 mb-1"
         onClick={toggleDropdown}
       >
         {selectedOrder === "AZ" ? "A-Z" : "Z-A"}

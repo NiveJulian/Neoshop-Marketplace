@@ -130,8 +130,8 @@ const PersonalDetail = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
   );
 };
 

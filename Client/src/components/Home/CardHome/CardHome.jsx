@@ -7,7 +7,7 @@ export const CardHome = ({
   img_product,
   date_creation,
   quantity,
-  store,
+  onAddToFav,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
 
@@ -17,14 +17,14 @@ export const CardHome = ({
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   return (
-    <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64" style={{ background: backgroundColor, borderColor: bordesPlomos}}>
+    <article className="bg-white p-4 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer relative w-64">
       <div className="relative flex mb-4 rounded-2xl">
         <Link
           to={`/product/${id_product}`}
           className="justify-center items-center"
         >
           <img
-            className="max-h-80 rounded-2xl w-64 object-cover transition-transform duration-300 transform group-hover:scale-105"
+            className="max-h-80 rounded-2xl w-64 object-cover"
             src={img_product}
             alt=""
           />
@@ -32,13 +32,16 @@ export const CardHome = ({
         {/* Esquinero con listón "Nuevo" */}
         <div className="absolute top-0 right-0">
           <div className="relative">
-            <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-30 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
+            <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-20 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
               NEW
             </div>
           </div>
         </div>
-
-        <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
+        {/* Boton de favoritos */}
+        <button 
+          className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-lg hover:shadow-lg transition-transform duration-300 transform hover:scale-110"
+          onClick={() => onAddToFav()}
+          >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
@@ -54,29 +57,14 @@ export const CardHome = ({
             />
           </svg>
           <span className="ml-1 text-sm text-slate-400">{quantity}</span>
-        </div>
+        </button>
       </div>
-
-      <div className="flex justify-between items-center w-full pb-4 mb-auto">
-        <div className="flex items-center">
-          <div className="pr-3">
-            <Link to={`/store/${store.id_store}`}>
-              <img
-                className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
-                src={store.logo}
-                alt=""
-              />
-            </Link>
-          </div>
-        </div>
-        <div className="flex justify-end"></div>
-      </div>
+      
       <h3 className="flex font-medium text-xl leading-8">
         <div className="flex flex-1" style={{ color: textColor}}>
           <div className="">
             <p className="text-sm font-semibold ">{name}</p>
-            <p className="text-sm text-gray-500">
-              Published on {date_creation}2 Days ago
+            <p className="flex text-sm text-gray-500">              
               <svg
                 className="ml-1 w-4 h-4"
                 fill="none"
@@ -91,6 +79,7 @@ export const CardHome = ({
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 ></path>
               </svg>
+              Published 2 Days ago
             </p>
           </div>
         </div>

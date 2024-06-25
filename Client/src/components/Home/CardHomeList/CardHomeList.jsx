@@ -1,5 +1,8 @@
 import { CardHome } from "../CardHome/CardHome";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { addToFavorites } from "../../../Redux/Actions/favoritesActions";
 
 export const CardHomeList = ({ allProducts }) => {
   const theme = useSelector((state) => state.themes.theme);
@@ -10,8 +13,15 @@ export const CardHomeList = ({ allProducts }) => {
   const transparent = "#ffffff00";
 
 
+  const dispatch = useDispatch();
+
+const handleAddToFav = (product) => {
+  toast.success("Add to favorites")
+  dispatch(addToFavorites(product));
+};
+
   return (
-    <div className="max-w-screen mx-4 mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" style={{border:transparent}}>
+    <div className="max-w-screen mx-4 mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {allProducts?.map(product => (
         <CardHome 
           key={product.id_product} 
@@ -20,6 +30,7 @@ export const CardHomeList = ({ allProducts }) => {
           store={product.store}
           img_product={product.img_product[0]}
           price={product.price}
+          onAddToFav={() => handleAddToFav(product)}
         />
       ))}
     </div>

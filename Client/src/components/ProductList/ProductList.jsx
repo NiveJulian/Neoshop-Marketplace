@@ -4,6 +4,7 @@ import Paginate from "../Paginate/Paginate";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "../../Redux/Actions/cartActions";
+import { addToFavorites } from "../../Redux/Actions/favoritesActions";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,22 +27,24 @@ export default function ProductList({ allProducts }) {
     dispatch(addToCart(product));
   };
 
+  const handleAddToFav = (product) => {
+    toast.success("Add to favorites")
+    dispatch(addToFavorites(product));
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [allProducts]);
 
   return (
-    <div>
-      <div className="mb-16">
-        <Paginate
-          productsPerPage={productsPerPage}
-          totalProducts={allProducts.length}
-          page={page}
-          currentPage={currentPage}
-        />
+    <div className="h-screen mb-16">
+    {currentProducts.length === 0 ? (
+      <div className="text-center text-gray-600 font-bold text-2xl mt-16">
+        No se encontraron resultados
       </div>
+    ) : (
       <div className="max-w-screen grid grid-cols-1 ml-12 mb-8 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-        {currentProducts?.map((product) => (
+        {currentProducts.map((product) => (
           <ProductCard
             key={product.id_product}
             id={product.id_product}
@@ -50,15 +53,17 @@ export default function ProductList({ allProducts }) {
             price={product.price}
             onAddToCart={() => handleAddToCart(product)}
             available={product.available}
+            onAddToFav={() => handleAddToFav(product)}
           />
         ))}
       </div>
-      <Paginate 
-        productsPerPage={productsPerPage}
-        totalProducts={allProducts.length}
-        page={page}
-        currentPage={currentPage}
-      />
-    </div>
-  );
+    )}
+    <Paginate 
+      productsPerPage={productsPerPage}
+      totalProducts={allProducts.length}
+      page={page}
+      currentPage={currentPage}
+    />
+  </div>
+);
 }

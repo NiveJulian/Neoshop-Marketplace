@@ -20,7 +20,9 @@ import { PayPreview } from "./views/PayPreview";
 import { getAllBrands, getAllCategories, getAllProducts } from "./Redux/Actions/productActions";
 import { getAllSellers } from "./Redux/Actions/storeActions";
 import { isAuthenticated } from "./Redux/Actions/authActions";
-// import { io } from "socket.io-client";
+import MyShopping from "./views/MyShopping";
+import AccountDetail from "./views/AccountDetail";
+import Favorites from "./views/Favorites";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +54,12 @@ function App() {
         <Route path="/personal" element={<PersonalDetail/>} />
         <Route path="/confirmation" element={<ConfirmationUser/>} />
         <Route path="/createstore" element={<CreateStore/>} />
+        <Route path="/payPreview" element={<PayPreview/>} />
+        <Route path="/adress" element={<AdressUser/>} />
+        <Route path="/pay" element={<PayDetail/>} />
+        <Route path="/myshopping" element={<MyShopping/>} />
+        <Route path="/accountdetail" element={<AccountDetail/>} />
+        <Route path="/favorites" element={<Favorites/>} />
       </Routes>
     </div>
   );

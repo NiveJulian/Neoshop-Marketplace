@@ -177,8 +177,10 @@ export default function Nav({ color }) {
           <div className="tooltip">
             <Link
               to={"/home"}
-              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
-                color === "primary" ? "text-gray-200" : "text-gray-600"
+              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary"
+                  ? "text-gray-200 border-gray-200"
+                  : "text-gray-600 border-gray-600"
               }`}
               style={{ borderColor: bordesPlomos}}
 
@@ -205,10 +207,10 @@ export default function Nav({ color }) {
             <button
               type="button"
               onClick={() => handleShowLogin()}
-              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                 color === "primary"
                   ? "text-gray-200 border-gray-200"
-                  : "text-gray-600 border-gray-200"
+                  : "text-gray-600 border-gray-600"
               }`}
               style={{ borderColor: bordesPlomos}}
             >
@@ -230,6 +232,33 @@ export default function Nav({ color }) {
             <div className="tooltiptext">Login</div>
           </div>
 
+          {isAuth && (
+            <div className="tooltip">
+              <Link
+                to={"/favorites"}
+                className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 flex items-center ${
+                  color === "primary"
+                    ? "text-gray-200 border-gray-200"
+                    : "text-gray-600 border-gray-600"
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5" 
+                    stroke="currentColor" 
+                    class="size-6"
+                  >
+                    <path 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg> 
+              </Link>
+              <div className="tooltiptext">Favorites</div>
+            </div>
+          )}
+          
           {showLogin && (
             <>
               {isAuth ? (
@@ -314,8 +343,10 @@ export default function Nav({ color }) {
           <div className="tooltip">
             <button
               onClick={() => toggleCart()}
-              className={`px-2 py-2 rounded-lg hover:border-secondary hover:text-secondary ${
-                color === "primary" ? "text-gray-200" : "text-gray-600"
+              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary"
+                  ? "text-gray-200 border-gray-200"
+                  : "text-gray-600 border-gray-600"
               }`}
               style={{ borderColor: bordesPlomos}}
             >
