@@ -62,7 +62,7 @@ export const PayDetail = () => {
             date: "",
         });
 
-        setLoading(false); // Set loading to false once everything is ready
+        setLoading(false); // Cambiar loading a false una vez que todo este cargado
 
     }, [cartItems, user]);
 
