@@ -30,6 +30,8 @@ export const PayDetail = () => {
         date: "",
     });
 
+    const [loading, setLoading] = useState(true);
+
     const theme = useSelector((state) => state.themes.theme);
 
     const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
@@ -59,6 +61,8 @@ export const PayDetail = () => {
             amount: calculatedFinalTotal,
             date: "",
         });
+
+        setLoading(false); // Set loading to false once everything is ready
 
     }, [cartItems, user]);
 
@@ -240,17 +244,19 @@ export const PayDetail = () => {
                         </div>
                     </div>
                     <div className="mt-4 flex justify-center w-full">
-                        <PayPalButtons
-                            createOrder={createOrder}
-                            onApprove={onApprove}
-                            style={{
-                                layout: "horizontal",
-                                color: "blue",
-                                shape: "rect",
-                                label: "pay",
-                                height: 40,
-                            }}
-                        />
+                        {!loading && (
+                            <PayPalButtons
+                                createOrder={createOrder}
+                                onApprove={onApprove}
+                                style={{
+                                    layout: "horizontal",
+                                    color: "blue",
+                                    shape: "rect",
+                                    label: "pay",
+                                    height: 40,
+                                }}
+                            />
+                        )}
                     </div>
                     <button
                         className="pay-btn border-none bg-gray-300 leading-8 rounded-lg text-sm text-gray-600 cursor-pointer mt-4 w-1/5 mx-auto transition duration-200 ease-in-out hover:bg-gray-500 hover:text-gray-200"
