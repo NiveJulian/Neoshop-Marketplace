@@ -1,15 +1,20 @@
 import { CardHome } from "../CardHome/CardHome";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { addToFavorites } from "../../../Redux/Actions/favoritesActions";
+import { addToFavorites, sendFavorites } from "../../../Redux/Actions/favoritesActions";
 
 export const CardHomeList = ({ allProducts }) => {
+  const user = useSelector((state) => state.auth.user);
+  const userId = user.id_user
 
   const dispatch = useDispatch();
 
 const handleAddToFav = (product) => {
+  const idProduct = product.id_product
   toast.success("Add to favorites")
   dispatch(addToFavorites(product));
+  dispatch(sendFavorites(userId, idProduct))
+  console.log("usuario enviado:", userId, "producto enviado:", idProduct);
 };
 
   return (

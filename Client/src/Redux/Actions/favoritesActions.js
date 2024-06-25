@@ -18,13 +18,13 @@ export const removeFromFavorites = (productId) => ({
     payload: productId,
   });
 
-export const sendFavorites = (userId, idProduct, productQuantity) => async (dispatch) => {
+export const sendFavorites = (userId, idProduct) => async (dispatch) => {
+    console.log("user ID:", userId);
 try {
-    if (userId && productQuantity !== 0) {
+    if (userId) {
     const data = {
         idUser: userId,
         idProduct,
-        productQuantity
     };
     console.log(data)
 
