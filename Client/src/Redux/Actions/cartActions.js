@@ -10,6 +10,8 @@ export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 export const GET_CART_FAILURE = "GET_CART_FAILURE";
 export const CLEAN_CART = "CLEAN_CART";
 
+export const UPDATE_CART = "UPDATE_CART";
+
 export const DELETE_CART_ITEM_SUCCESS = "DELETE_CART_ITEM_SUCCESS";
 export const DELETE_CART_ITEM_FAILURE = "DELETE_CART_ITEM_FAILURE";
 
@@ -50,7 +52,7 @@ export const sendCart = (userId, cartItems) => async (dispatch) => {
       console.log("No user is logged in.");
     }
   } catch (error) {
-    console.error("Error sending cart:", error);
+    // console.error("Error sending cart:", error);
     dispatch({ type: CART_SENT_FAILURE, error });
   }
 };
@@ -64,7 +66,7 @@ export const getCartByUserId = (userId) => async (dispatch) => {
     dispatch({ type: GET_CART_SUCCESS, payload: response.data.products });
   } catch (error) {
     // En caso de error, despachar una acción de error
-    console.error("Error al obtener el carrito:", error);
+    // console.error("Error al obtener el carrito:", error);
     dispatch({ type: GET_CART_FAILURE, error });
   }
 };
@@ -74,6 +76,7 @@ export const deleteCartItem = (userId, idProduct) => async (dispatch) => {
     const response = await axios.delete(`${rutaBack}/cart/deleteItem`, {
       data: { idUser: userId, idProduct },
     });
+    console.log(response.data)
     dispatch({ type: DELETE_CART_ITEM_SUCCESS, payload: response.data });
 
     // Verifica si el carrito está vacío después de la eliminación
@@ -88,3 +91,8 @@ export const deleteCartItem = (userId, idProduct) => async (dispatch) => {
     });
   }
 };
+
+export const updateCart = (updatedCart) => ({
+  type: UPDATE_CART,
+  payload: updatedCart
+});

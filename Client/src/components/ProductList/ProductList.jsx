@@ -49,6 +49,7 @@ export default function ProductList({ allProducts }) {
             img_product={product.img_product}
             price={product.price}
             onAddToCart={() => handleAddToCart(product)}
+            available={product.available}
           />
         ))}
       </div>

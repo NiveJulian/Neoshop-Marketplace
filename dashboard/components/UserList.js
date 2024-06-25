@@ -18,9 +18,12 @@ export default function UserList() {
   const fetchDataUsers = async () => {
     try {
       const response = await axios.get(`http://localhost:3001/user/`);
-      setUsersData(response.data);
+      const filteredUsers = response.data.filter(
+        (user) => user.user_type.toLowerCase() !== "admin"
+      );
+      setUsersData(filteredUsers);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -50,21 +53,26 @@ export default function UserList() {
 
       if (result.isConfirmed) {
         handleBan(user);
-        Swal.fire("Usuario baneado", "El usuario ha sido banead.", "success");
+        Swal.fire("Usuario baneado", "El usuario ha sido baneado.", "success");
       }
-    }else{
+      setBanned(!banned);
+    } else {
       const result = await Swal.fire({
         title: "¿Estás seguro?",
         text: "No te preocupes, luego podras revertir esta accion",
         icon: "question",
         showCancelButton: true,
-        confirmButtonText: "Yes, unban",
-        cancelButtonText: "Cancel",
+        confirmButtonText: "Sí, desbanear",
+        cancelButtonText: "Cancelar",
       });
 
       if (result.isConfirmed) {
         handleBan(user);
-        Swal.fire("Usuario desbaneado", "El usuario ha sido desbaneado.", "success");
+        Swal.fire(
+          "Usuario desbaneado",
+          "El usuario ha sido desbaneado.",
+          "success"
+        );
       }
     }
   }
@@ -77,7 +85,6 @@ export default function UserList() {
     setSelectedUser(null);
   };
 
-  // Filtrar los usuarios basados en el término de búsqueda
   const filteredUsers = usersData.filter(
     (user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

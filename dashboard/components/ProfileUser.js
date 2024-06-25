@@ -1,7 +1,28 @@
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function ProfileUser({ user, onClose }) {
+  const [dataStore, setDataStore] = useState(null);
+
+  useEffect(() => {
+    if (user.id_user) {
+      fetchStore();
+    }
+  }, [user.id_user]);
+
+  const fetchStore = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/store/user/${user.id_user}`
+      );
+      setDataStore(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-5 rounded-md w-11/12 md:w-8/12 lg:w-6/12">
@@ -9,7 +30,7 @@ export default function ProfileUser({ user, onClose }) {
           <h2 className="text-xl font-bold">User Profile</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 text-3xl"
           >
             &times;
           </button>
@@ -50,7 +71,7 @@ export default function ProfileUser({ user, onClose }) {
                 {user?.name} {user?.lastname}
               </h1>
               <h3 className="text-gray-600 font-lg text-semibold leading-6">
-                {user?.user_type} at Company
+                {user?.user_type === "trader" ? `Trader at company ${dataStore?.name}` : ""}
               </h3>
               <ul className="bg-gray-100 w-40 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                 <li className="flex items-center py-3 px-2">

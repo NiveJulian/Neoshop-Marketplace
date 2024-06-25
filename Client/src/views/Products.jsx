@@ -34,8 +34,8 @@ export const Products = () => {
 
   return (
     <div
-      className={`max-w-screen text-center gap-4 ${theme === 'dark' ? 'text-white' : 'bg-gray-100'}`}
-      style={{ backgroundColor: theme === 'dark' ? '#212121' : 'transparent' }}
+      className={`max-w-screen text-center gap-4 ${theme === 'dark' ? 'text-white' : 'bg-gray-300'}`}
+      style={{ backgroundColor: theme === 'dark' ? '#212121' : 'rgb(243, 244, 246)' }}
     >
       <div className="shadow-sm">
         <Nav color={"primary"} />

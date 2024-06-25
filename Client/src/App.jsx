@@ -20,7 +20,7 @@ import { PayPreview } from "./views/PayPreview";
 import { getAllBrands, getAllCategories, getAllProducts } from "./Redux/Actions/productActions";
 import { getAllSellers } from "./Redux/Actions/storeActions";
 import { isAuthenticated } from "./Redux/Actions/authActions";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,30 +33,6 @@ function App() {
     dispatch(isAuthenticated(jwtToken));
   }, [dispatch]);
 
-  useEffect(() => {
-    const socket = io("http://localhost:3001", {
-      withCredentials: true,
-      extraHeaders: {
-        "my-custom-header": "abcd"
-      }
-    });
-
-    socket.on("connect", () => {
-      console.log("Connected to the server");
-    });
-
-    socket.on("response_event", (data) => {
-      console.log("Response event data:", data);
-    });
-
-    socket.on("disconnect", () => {
-      console.log("Disconnected from the server");
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
 
   return (
     <div>
