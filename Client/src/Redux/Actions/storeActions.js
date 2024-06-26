@@ -9,11 +9,11 @@ export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
 
 
 
-export const createStore = (formData) => async (dispatch) => {
+export const createStore = (formData,t) => async (dispatch) => {
     try {
       const response = await axios.post("http://localhost:3001/store/", formData);
       if (response.status === 200) {
-        toast.success("Your store is create");
+        toast.success(t("toast.storeTrue"));
         dispatch({ type: CREATE_STORE_SUCCESS, payload: response.data });
       }
     } catch (error) {

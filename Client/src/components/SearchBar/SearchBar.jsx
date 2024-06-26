@@ -10,6 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export default function SearchBar() {
   const [name, setName] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
 
   const handleChange = (event) => {
     const searchValue = event.target.value;
@@ -35,17 +37,21 @@ export default function SearchBar() {
 
   const handleSearch = () => {
     if (!name.trim()) {
-      toast.error("Please enter a search term."); // Mensaje de error para campo de búsqueda vacío
+      toast.error(t("toast.emptySearchBar")); // Mensaje de error para campo de búsqueda vacío
       return; // Detener la ejecución si el campo de búsqueda está vacío
     }
     dispatch(getProductByName(name)).then((results) => {
-      if (results.length === 0) {
-        toast.error("No products found."); // Mensaje de error cuando no se encuentran productos
+      console.log(results)
+
+      if (!results) {
+        toast.error(t("toast.noProducts")); // Mensaje de error cuando no se encuentran productos
       } else {
         dispatch(renderCondition("namedProducts"));
       }
     });
   };
+  const backgroundColorInput = theme === "dark" ? "#ececec" : "#ececec";
+  const textColor2 = theme === "dark" ? "#000000" : "#000000";
 
   const backgroundColor = theme === "dark" ? "#949494" : "#ececec";
   const textColor = theme === "dark" ? "#f0f0f0" : "#f0f0f0";
@@ -56,10 +62,11 @@ export default function SearchBar() {
       <div className="flex gap-4">
         <input
           className="px-2 py-2 hover:bg-gray-200 border-none rounded-md"
-          placeholder="Search"
+          placeholder={t("Search")}
           type="search"
           value={name}
           onChange={handleChange}
+          style={{background: backgroundColorInput, color: textColor2}}
         />
 
         <button

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 import { login } from "../../Redux/Actions/authActions";
+import { useTranslation } from "react-i18next";
 
 export default function UserFormLogin({ title, onClose }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -14,6 +15,7 @@ export default function UserFormLogin({ title, onClose }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
   const cartBackGround = theme === "dark" ? "#1a1a1a" : "#FFFFFF";
@@ -66,11 +68,8 @@ export default function UserFormLogin({ title, onClose }) {
     e.preventDefault();
     dispatch(doSignInWithGoogle());
   };
-  console.log(theme);
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <form
         className="bg-white text-center shadow-md p-2 rounded-xl w-full max-w-sm space-y-6"
         onSubmit={handleSubmit}
@@ -94,7 +93,7 @@ export default function UserFormLogin({ title, onClose }) {
               htmlFor="email"
               style={{ color: textColor }}
             >
-              Email
+              {t("login.email")}
             </label>
             <input
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
@@ -117,7 +116,7 @@ export default function UserFormLogin({ title, onClose }) {
               htmlFor="password"
               style={{ color: textColor }}
             >
-              Password
+              {t("login.password")}
             </label>
             <input
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
@@ -140,13 +139,13 @@ export default function UserFormLogin({ title, onClose }) {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Sign In
+            {t("login.signIn")}
           </button>
           <Link
             to="/signup"
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
           >
-            Register
+            {t("login.register")}
           </Link>
         </div>
         <div className="mt-6 flex justify-center gap-2 items-center flex-col">
@@ -164,7 +163,7 @@ export default function UserFormLogin({ title, onClose }) {
                 className="block w-max ml-1 font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
                 style={{ color: textColor }}
               >
-                Continue with Google
+                {t("login.google")}
               </span>
             </div>
           </button>
@@ -182,7 +181,7 @@ export default function UserFormLogin({ title, onClose }) {
                 className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
                 style={{ color: textColor }}
               >
-                Continue with Facebook
+                {t("login.facebook")}
               </span>
             </div>
           </button>

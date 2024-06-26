@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Nav from "../components/Nav/Nav";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 
 export const PayPreview = () => {
@@ -14,6 +15,7 @@ export const PayPreview = () => {
   const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
   const orangeIntense = theme === "dark" ? "#D67C32" : "#FF8200";
+  const { t, i18n } = useTranslation();
 
   const total = cart.reduce(
     (acc, product) => acc + parseFloat(product.price) * product.cartQuantity,
@@ -38,7 +40,8 @@ export const PayPreview = () => {
       <div className="flex justify-between mt-8">
         <div className="w-1/3 mr-2 ml-10 mt-4">
           <div className="bg-white rounded-lg p-4 shadow-md" style={{ background: cartBackGround, color: textColor }}>
-            <p className="font-bold text-lg">Choose delivery method</p>
+            <p className="font-bold text-lg">{t('payPreview.delivery')}
+            </p>
             <label className="flex items-center mt-2" >
               <input
                 type="checkbox"
@@ -46,13 +49,13 @@ export const PayPreview = () => {
                 checked={deliveryMethod === "Standard"}
                 onChange={() => handleCheckboxChange("Standard")}
               />
-              Standard shipping
+              {t('payPreview.standar')}
             </label>
             <button
               className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded"
               onClick={() => (location.href = "/adress")}
             >
-              Edit users data
+              {t('payPreview.edit')}
             </button>
           </div>
           <div className="mt-4 bg-white rounded-lg p-4 shadow-md"style={{ background: cartBackGround, color: textColor }}>
@@ -63,13 +66,13 @@ export const PayPreview = () => {
                 checked={deliveryMethod === "Seller"}
                 onChange={() => handleCheckboxChange("Seller")}
               />
-              Arrange shipping with seller
+              {t('payPreview.arrange')}
             </label>
           </div>
         </div>
         <div className="w-1/3 ml-2" >
           <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg" style={{ background: cartBackGround, color: textColor }}>
-            <strong>Summary</strong>
+            <strong>{t('payPreview.summary')}</strong>
             <div className="line h-px w-1/2 my-2 bg-gray-300 mx-auto"></div>
             {cart.map((product, index) => (
               <div key={index} className="flex justify-between items-center">
@@ -86,7 +89,7 @@ export const PayPreview = () => {
         className="mt-16 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg"
         onClick={() => (navigate("/pay"))}
       >
-        Continue
+        {t('payPreview.continue')}
       </button>
     </div>
   );

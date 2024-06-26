@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import CartItem from "../CartItem/CartItem";
 import { useSelector } from "react-redux";//todo
+import { useTranslation } from "react-i18next";
 
 export default function CartList({ cartItems, calculateTotal }) {
   const navigate = useNavigate()
   const theme = useSelector((state) => state.themes.theme);//todo
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";//todo
   const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
@@ -24,7 +26,7 @@ export default function CartList({ cartItems, calculateTotal }) {
       <div className="mt-4 float-left" style={{ borderColor: bordesPlomos}}>
         <button onClick={() => navigate('/payPreview')} className="border p-2 hover:text-secondary hover:border-secondary hover:shadow-lg active:translate-y-[5%] rounded-md active:shadow-xl"
           style={{ background: backgroundColor, color: textColor, borderColor: bordesPlomos}}>
-          Continue with the purchase
+          {t('continuePurchase')}
         </button>
       </div>
     </div>

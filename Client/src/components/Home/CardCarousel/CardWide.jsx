@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const CardWide = ({
   id_product,
@@ -14,6 +15,7 @@ export const CardWide = ({
   store,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
   const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
@@ -22,9 +24,11 @@ export const CardWide = ({
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   return (
-    <div className="bg-white p-6 shadow-lg transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-r-2xl cursor-pointer border flex w-full max-w-4xl" 
-    style={{background: backgroundColor, borderColor: bordesPlomos}}>
-      <div className="w-1/3" >
+    <div
+      className="bg-white p-6 shadow-lg transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-r-2xl cursor-pointer border flex w-full max-w-4xl"
+      style={{ background: backgroundColor, borderColor: bordesPlomos }}
+    >
+      <div className="w-1/3">
         <Link to={`/product/${id_product}`}>
           <img
             className="w-full h-full object-cover"
@@ -37,14 +41,29 @@ export const CardWide = ({
         <div>
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-2xl font-bold mb-2" style={{color: textColor}}>{name}</h3>
-              <p className="text-sm text-gray-500" style={{color: textColor}}>Published on {date_creation}</p>
+              <h3
+                className="text-2xl font-bold mb-2"
+                style={{ color: textColor }}
+              >
+                {name}
+              </h3>
+              <p className="text-sm text-gray-500" style={{ color: textColor }}>
+                {" "}
+                {t("homePage.published")}    
+                {date_creation}
+              </p>
             </div>
-            <Link to={`/store/${id_store}`} className="text-gray-500 hover:underline" style={{color: textColor}}>
-              Store Info
+            <Link
+              to={`/store/${id_store}`}
+              className="text-gray-500 hover:underline"
+              style={{ color: textColor }}
+            >
+              {t('homePage.storeInfo')}
             </Link>
           </div>
-          <p className="mt-4 text-gray-700" style={{color: descriptionColor}} >{description}</p>
+          <p className="mt-4 text-gray-700" style={{ color: descriptionColor }}>
+            {description}
+          </p>
         </div>
         <div className="flex justify-between items-center mt-4">
           <div className="flex items-center text-gray-500">
@@ -64,7 +83,12 @@ export const CardWide = ({
             </svg>
             <span>{quantity}</span>
           </div>
-          <div className="text-lg font-bold text-gray-900" style={{color: textColor}}>${price}</div>
+          <div
+            className="text-lg font-bold text-gray-900"
+            style={{ color: textColor }}
+          >
+            ${price}
+          </div>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import CartList from "../ProductCart/CartList/CartList";
 import { getCartByUserId, sendCart } from "../../Redux/Actions/cartActions";
 import { renderCondition } from "../../Redux/Actions/productActions";
 import { changeTheme } from "../../Redux/Actions/themeActions";
+import { useTranslation } from "react-i18next";
 
 export default function Nav({ color }) {
   const user = useSelector((state) => state.auth.user);
@@ -18,8 +19,22 @@ export default function Nav({ color }) {
   const [showCart, setShowCart] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const themeColor = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+
+  const naranjaClaro = theme === "dark" ? "#FFDCDC" : "#FFDCDC";
 
   const dispatch = useDispatch();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    // Guardar el idioma seleccionado en localStorage
+    localStorage.setItem("i18nextLng", lng);
+  };
 
   useEffect(() => {
     if (cartItems.length === 0 && user?.id_user) {
@@ -92,14 +107,37 @@ export default function Nav({ color }) {
           </Link>
           <SearchBar className="flex items-center justify-center" />
         </div>
-        <div className="flex items-center gap-4" >
+        <div
+          className="flex items-center gap-4"
+          style={{ color: bordesPlomos }}
+        >
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => changeLanguage("en")}
+              className={` hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
+              }`}
+              style={{ borderColor: bordesPlomos }}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => changeLanguage("es")}
+              className={` hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
+              }`}
+              style={{ borderColor: bordesPlomos }}
+            >
+              ES
+            </button>
+          </div>
           <div className="tooltip">
             <Link
               to={"/products"}
               className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
-              style={{ borderColor: bordesPlomos}}
+              style={{ borderColor: bordesPlomos }}
               onClick={handleProducts}
             >
               <svg
@@ -117,7 +155,7 @@ export default function Nav({ color }) {
                 />
               </svg>
             </Link>
-            <div className="tooltiptext">Products</div>
+            <div className="tooltiptext">{t("Products")}</div>
           </div>
 
           <div className="tooltip">
@@ -126,8 +164,7 @@ export default function Nav({ color }) {
               className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
-              style={{ borderColor: bordesPlomos}}
-
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +181,7 @@ export default function Nav({ color }) {
                 />
               </svg>
             </Link>
-            <div className="tooltiptext">Store</div>
+            <div className="tooltiptext">{t("Store")}</div>
           </div>
 
           <div className="tooltip">
@@ -153,8 +190,7 @@ export default function Nav({ color }) {
               className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
-              style={{ borderColor: bordesPlomos}}
-
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +207,7 @@ export default function Nav({ color }) {
                 />
               </svg>
             </Link>
-            <div className="tooltiptext">Home</div>
+            <div className="tooltiptext">{t("Home")}</div>
           </div>
 
           <div className="tooltip">
@@ -183,7 +219,7 @@ export default function Nav({ color }) {
                   ? "text-gray-200 border-gray-200"
                   : "text-gray-600 border-gray-200"
               }`}
-              style={{ borderColor: bordesPlomos}}
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +236,7 @@ export default function Nav({ color }) {
                 />
               </svg>
             </button>
-            <div className="tooltiptext">Login</div>
+            <div className="tooltiptext">{t("Profile")}</div>
           </div>
 
           {showLogin && (
@@ -220,6 +256,7 @@ export default function Nav({ color }) {
                 className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                   color === "primary" ? "text-gray-200" : "text-gray-600"
                 }`}
+                style={{ borderColor: bordesPlomos }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -236,7 +273,7 @@ export default function Nav({ color }) {
                   />
                 </svg>
               </a>
-              <div className="tooltiptext">Dashboard</div>
+              <div className="tooltiptext" style={{ borderColor: bordesPlomos }}>Dashboard</div>
             </div>
           ) : (
             <></>
@@ -248,7 +285,7 @@ export default function Nav({ color }) {
               className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
-              style={{ borderColor: bordesPlomos}}
+              style={{ borderColor: bordesPlomos }}
             >
               {theme === "light" ? (
                 <svg
@@ -282,7 +319,7 @@ export default function Nav({ color }) {
                 </svg>
               )}
             </button>
-            <div className="tooltiptext">Theme</div>
+            <div className="tooltiptext">{t("Theme")}</div>
           </div>
           <div className="tooltip">
             <button
@@ -290,7 +327,7 @@ export default function Nav({ color }) {
               className={`px-2 py-2 rounded-lg hover:border-secondary hover:text-secondary ${
                 color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
-              style={{ borderColor: bordesPlomos}}
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -312,7 +349,7 @@ export default function Nav({ color }) {
                 {cartItems?.length}
               </span>
             )}
-            <div className="tooltiptext">Cart</div>
+            <div className="tooltiptext">{t("Cart")}</div>
           </div>
           <div className="relative">
             {showCart && (

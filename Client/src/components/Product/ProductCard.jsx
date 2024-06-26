@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const ProductCard = ({
   id,
@@ -20,6 +21,7 @@ export const ProductCard = ({
   const blueColor = theme === "dark" ? "#0069AA" : "#3B82F6";
   const textColorButton = theme === "dark" ? "#b4b4b4" : "#FFFFFF";
   const textColor = theme === "dark" ? "#d1d1d1" : "#292929";
+  const { t, i18n } = useTranslation();
 
   return (
     <article className="w-64 h-full rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 mb-6"
@@ -72,7 +74,7 @@ export const ProductCard = ({
                 />
               </svg>
 
-              <button className="text-sm" color={textColorButton}>Add to cart</button>
+              <button className="text-sm" color={textColorButton}>{t('addToCart')}</button>
             </div>
           </div>
         </div>

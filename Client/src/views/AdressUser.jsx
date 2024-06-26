@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserAddress } from "../Redux/Actions/authActions";
+import { useTranslation } from "react-i18next";
 
 export const AdressUser = () => {
   const user = useSelector((state) => state.auth.user);
@@ -14,6 +15,8 @@ export const AdressUser = () => {
     postalCode: user.postalCode || "",
     phone_number: user.phone_number || "",
   });
+
+  const { t, i18n } = useTranslation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,16 +39,17 @@ export const AdressUser = () => {
       phone_number: formData.phone_number,
     };
     console.log(dataToSend);
-    dispatch(updateUserAddress(dataToSend)); // Asegúrate de tener esta acción configurada para enviar los datos
+    dispatch(updateUserAddress(dataToSend,t)); // Asegúrate de tener esta acción configurada para enviar los datos
   };
 
   return (
     <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
       <div className="container max-w-screen-lg mx-auto">
         <div className="text-center">
-          <h2 className="font-semibold text-xl text-gray-600">Editar domicilio</h2>
-          <p className="font-medium text-lg mt-2">Detalles personales</p>
-          <p>Por favor complete todos los campos.</p>
+          <h2 className="font-semibold text-xl text-gray-600">{t('adress.edit')}
+          </h2>
+          <p className="font-medium text-lg mt-2">{t('adress.details')}</p>
+          <p>{t('adress.please')}</p>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -55,7 +59,7 @@ export const AdressUser = () => {
             <div className="text-gray-600 lg:col-span-2">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                 <div className="md:col-span-5">
-                  <label htmlFor="full_name">Nombre y apellido</label>
+                  <label htmlFor="full_name">{t('adress.name')}</label>
                   <input
                     type="text"
                     name="full_name"
@@ -67,7 +71,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-5">
-                  <label htmlFor="email">Correo electrónico</label>
+                  <label htmlFor="email">{t('adress.email')}</label>
                   <input
                     type="email"
                     name="email"
@@ -79,7 +83,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-3">
-                  <label htmlFor="adress_street">Calle/avenida</label>
+                  <label htmlFor="adress_street">{t('adress.street')}</label>
                   <input
                     type="text"
                     name="adress_street"
@@ -91,7 +95,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="adress_nro">Número</label>
+                  <label htmlFor="adress_nro">{t('adress.number')}</label>
                   <input
                     type="text"
                     name="adress_nro"
@@ -103,7 +107,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="state">Provincia</label>
+                  <label htmlFor="state">{t('adress.state')}</label>
                   <input
                     type="text"
                     name="state"
@@ -115,7 +119,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-3">
-                  <label htmlFor="city">Ciudad</label>
+                  <label htmlFor="city">{t('adress.city')}</label>
                   <input
                     type="text"
                     name="city"
@@ -127,7 +131,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label htmlFor="postalCode">Código postal</label>
+                  <label htmlFor="postalCode">{t('adress.postal')}</label>
                   <input
                     type="text"
                     name="postalCode"
@@ -139,7 +143,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-5">
-                  <label htmlFor="phone_number">Teléfono de contacto</label>
+                  <label htmlFor="phone_number">{t('adress.contact')}</label>
                   <input
                     type="text"
                     name="phone_number"
@@ -156,7 +160,7 @@ export const AdressUser = () => {
                       type="submit"
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
-                      Guardar
+                      {t('adress.save')}
                     </button>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import ProductList from "../components/ProductList/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../Redux/Actions/productActions";
+import { useTranslation } from "react-i18next";
 // import Categories from "../components/Categories/Categories";
 
 export const Products = () => {
@@ -13,6 +14,7 @@ export const Products = () => {
   const namedProducts = useSelector((state) => state.product.namedProducts);
   const condition = useSelector((state) => state.product.condition);
   const theme = useSelector((state) => state.themes.theme) ;
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -26,7 +28,6 @@ export const Products = () => {
         return <ProductList allProducts={filteredProducts} />;
       case "namedProducts":
         return <ProductList allProducts={namedProducts} />;
-
       default:
         return <ProductList allProducts={allProducts} />;
     }
@@ -44,7 +45,7 @@ export const Products = () => {
       <div className="flex justify-center text-center mt-4 mb-8">
         <h1 className="mb-7 text-4xl font-bold pb-2 text-gray-300 hover:drop-shadow-[0_35px_35px_rgba(0,0,0,.6)]"
         style={{ color: textColor}}>
-          Products
+          {t('productTitle')}
         </h1>
         {/* <Categories/>  */}
       </div>

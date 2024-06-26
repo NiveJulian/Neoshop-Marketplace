@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { cleanCart } from "../Redux/Actions/cartActions";
 import { paymentOk } from "../Redux/Actions/payActions";
+import { useTranslation } from "react-i18next";
 
 export const PayDetail = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -25,6 +26,8 @@ export const PayDetail = () => {
     amount: "",
     date: "",
   });
+  const { t, i18n } = useTranslation();
+
 
   const theme = useSelector((state) => state.themes.theme); //todo
 
@@ -180,17 +183,18 @@ export const PayDetail = () => {
         <div className="order-info h-full w-[60%] p-6 flex justify-center relative box-border">
           <div className="order-info-content w-full table-fixed ">
             <h2 className="mb-0 mt-1 text-center font-light text-lg">
-              Order Summary
+            {t('pay.order')}
+
             </h2>
             <CartDetailItem cartItems={cartItems} />
             <div className="line h-px w-full my-2 bg-gray-300"></div>
             <div className="total mt-6 text-lg absolute bottom-5 left-9 right-6">
               <span className="float-left">
                 <div className="dense font-light text-base leading-snug">
-                  COMMISSION 15%
+                {t('pay.commission')} 15%
                 </div>
                 <div className="dense font-light text-base leading-snug">
-                  Delivery
+                {t('pay.delivery')}
                 </div>
                 TOTAL
               </span>
@@ -212,37 +216,37 @@ export const PayDetail = () => {
             <div className="text-center justify-center mt-4">
               <div className="font-light text-black"  style={{color: textColor}}>
                 <div className="mb-4 text-lg">
-                  <strong>Buyer Information:</strong>
+                  <strong>{t('pay.buyer')}</strong>
                 </div>
                 <div>
-                  <strong>Name:</strong> {user.name}
+                  <strong>{t('pay.name')}</strong> {user.name}
                 </div>
                 <div>
-                  <strong>Last Name:</strong> {user.lastname}
+                  <strong>{t('pay.lastName')}</strong> {user.lastname}
                 </div>
                 <div>
-                  <strong>Email:</strong> {user.email}
+                  <strong>{t('pay.email')}</strong> {user.email}
                 </div>
                 <div>
-                  <strong>Phone Number:</strong> {user.phone_number}
+                  <strong>{t('pay.phone')}</strong> {user.phone_number}
                 </div>
                 <div>
-                  <strong>Address Number:</strong> {user.adress_nro}
+                  <strong>{t('pay.adress')}</strong> {user.adress_nro}
                 </div>
                 <div>
-                  <strong>Street:</strong> {user.adress_street}
+                  <strong>{t('pay.street')}</strong> {user.adress_street}
                 </div>
                 <div>
-                  <strong>City:</strong> {user.city}
+                  <strong>{t('pay.city')}</strong> {user.city}
                 </div>
                 <div>
-                  <strong>State:</strong> {user.state}
+                  <strong>{t('pay.state')}</strong> {user.state}
                 </div>
                 <div>
-                  <strong>Postal Code:</strong> {user.postalCode}
+                  <strong>{t('pay.postal')}</strong> {user.postalCode}
                 </div>
                 <div>
-                  <strong>Delivery: </strong>
+                  <strong>{t('pay.delivery')}</strong>
                   {ship}
                 </div>
               </div>
@@ -265,7 +269,7 @@ export const PayDetail = () => {
             className="pay-btn border-none bg-gray-300 leading-8 rounded-lg text-sm text-gray-600 cursor-pointer mt-4 w-1/5 mx-auto transition duration-200 ease-in-out hover:bg-gray-500 hover:text-gray-200"
             onClick={() => navigate("/payPreview")}
           >
-            GoBack
+            {t('pay.goBack')}
           </button>
         </div>
       </div>

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
 export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
 
-export const uploadImages = (formData) => async (dispatch) => {
+export const uploadImages = (formData,t) => async (dispatch) => {
     try {
       const response = await axios.post(
         "http://localhost:3001/images/upload",
@@ -14,7 +14,7 @@ export const uploadImages = (formData) => async (dispatch) => {
         }
       );
       if (response.data) {
-        toast.success("Upload image success");
+        toast.success(t("toast.imageTrue"));
         dispatch({ type: UPLOAD_IMAGES_SUCCESS, payload: response.data.links });
       }
     } catch (error) {

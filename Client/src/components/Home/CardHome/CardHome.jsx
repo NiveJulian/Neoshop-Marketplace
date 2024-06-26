@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const CardHome = ({
   id_product,
@@ -16,6 +17,7 @@ export const CardHome = ({
   id_discounts,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
   const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
@@ -36,7 +38,7 @@ export const CardHome = ({
         <div className="absolute top-0 right-0">
           <div className="relative">
             <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-30 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
-              NEW
+            {t('homePage.new')}
             </div>
           </div>
         </div>
@@ -82,7 +84,7 @@ export const CardHome = ({
             <div className="">
               <p className="text-sm font-semibold ">{name}</p>
               <p className="text-sm text-gray-500">
-                Published on {date_creation}2 Days ago
+              {t('homePage.published2')} {date_creation}2 {t('homePage.ago')}
             <svg
               className="ml-1 w-4 h-4"
               fill="none"
