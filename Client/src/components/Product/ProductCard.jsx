@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -104,26 +105,26 @@ export const ProductCard = ({
       <a href={`/product/${id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
           <Link to={`/product/${id}`}>
-          {img_product.length > 1 ? (
-            <Slider {...settings} className="w-64 h-64">
-              {img_product.map((logo, index) => (
-                <div key={index}>
-                  <img
-                    src={logo}
-                    alt={name}
-                    className="w-64 h-64 object-cover"
-                  />
-                </div>
-              ))}
-            </Slider>
-          ) : (
-            <img
-              src={img_product[0] ? img_product[0] : "neoshoplogo.jpeg"}
-              alt={name}
-              className="w-64 h-64 object-cover"
-            />
-          )}
-          </Link>          
+            {img_product.length > 1 ? (
+              <Slider {...settings} className="w-64 h-64">
+                {img_product.map((logo, index) => (
+                  <div key={index}>
+                    <img
+                      src={logo}
+                      alt={name}
+                      className="w-64 h-64 object-cover"
+                    />
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <img
+                src={img_product[0] ? img_product[0] : "neoshoplogo.jpeg"}
+                alt={name}
+                className="w-64 h-64 object-cover"
+              />
+            )}
+          </Link>
           <div className="absolute top-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -135,26 +136,26 @@ export const ProductCard = ({
             </svg>
             <span className="ml-1 text-sm text-slate-400">{average_mark}</span>
           </div>
-          <button 
-          className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-lg hover:shadow-lg transition-transform duration-300 transform hover:scale-110"
-          onClick={() => onAddToFav()}
+          <button
+            className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-lg hover:shadow-lg transition-transform duration-300 transform hover:scale-110"
+            onClick={() => onAddToFav()}
           >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-5 w-5 text-red-700"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-            />
-          </svg>
-          <span className="ml-1 text-sm text-slate-400">{quantity}</span>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="h-5 w-5 text-red-700"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              />
+            </svg>
+            <span className="ml-1 text-sm text-slate-400">{quantity}</span>
+          </button>
         </div>
       </a>
 
@@ -216,11 +217,11 @@ export const ProductCard = ({
                   d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
                 />
               </svg>
-
-              <button className="text-sm" color={textColorButton}>{t('addToCart')}</button>
-            </div>
-          </div>
+              {t("addToCart")}
+            </button>
+          )}
         </div>
+      </div>
     </article>
   );
 };
