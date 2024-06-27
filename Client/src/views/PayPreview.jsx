@@ -66,7 +66,8 @@ export const PayPreview = () => {
               </button>
             </div>
           </div>
-          <div className="mt-4 bg-white rounded-lg p-4 shadow-md hover:bg-gray-100">
+          <div className="mt-4 bg-white rounded-lg p-4 shadow-md hover:bg-gray-100"
+          style={{ background: cartBackGround, color: textColor }}>
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -79,13 +80,14 @@ export const PayPreview = () => {
           </div>
         </div>
         <div className="w-1/3 justify-center mt-10">
-          <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg">
+          <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg"
+          style={{ background: cartBackGround, color: textColor }}>
             <strong>Summary</strong>
             <div className="h-auto w-1/2 my-2 bg-gray-300 mx-auto"></div>
             {cart.map((product, index) => (
               <div
                 key={index}
-                className="flex justify-between items-center gap-4"
+                className="flex justify-between items-center gap-4 m-4"
               >
                 <div>
                   <img

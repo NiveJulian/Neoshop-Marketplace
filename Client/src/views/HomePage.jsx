@@ -12,26 +12,24 @@ const HomePage = () => {
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
   // const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
-  // const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
 
   useEffect(() => {
     dispatch(getNewProducts());
   }, [dispatch]);
   return (
-    <div style={{background: backgroundColor}}>
+    <div style={{background: backgroundColor}} className="bg-gray-100">
       <Nav color={"primary"} />
-      <div className="mx-2 flex justify-center items-center flex-col mt-8" style={{background: backgroundColor}}>
-        <div className="flex"  style={{background: backgroundColor}}>
-          <div className="w-1/4 text-center bg-gray-100 p-4 rounded-l-2xl" style={{background: backgroundColor}}>
-            <h1 className="mb-4 text-xl font-bold pb-2 text-gray-600" style={{background: backgroundColor}}> 
-              Recent products
-            </h1>
-          </div>
-          <div className="w-3/4" style={{background: backgroundColor}}>
+      <div className="flex">
+          <div className="w-full">
             <CardCarousel allProducts={newProducts} />
           </div>
         </div>
-        <div className="mt-8" style={{background: backgroundColor}}>
+      <div className="mx-2 flex justify-center items-center flex-col mt-8">        
+        <div className="mt-8 mb-16">
+          <div className="font-bold text-2xl" style={{color: textColor}}>
+            All recent products
+          </div>
           <CardHomeList allProducts={newProducts} />
         </div>
       </div>

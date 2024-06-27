@@ -9,6 +9,7 @@ import {
   CLEAN_CART,
   DELETE_CART_ITEM_SUCCESS,
   DELETE_CART_ITEM_FAILURE,
+  UPDATE_CART,
 } from "../Actions/cartActions";
 
 const initialState = {
@@ -92,14 +93,15 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cartError: payload,
       };
-      case DELETE_CART_ITEM_SUCCESS:
-        return {
-          ...state,
-          cartItems: state.cartItems.filter(
-            (item) => item.id_product !== payload.idProduct
-          ),
-        };
-      
+
+    case DELETE_CART_ITEM_SUCCESS:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(
+          (item) => item.id_product !== payload.idProduct
+        ),
+      };
+
     case DELETE_CART_ITEM_FAILURE:
       return {
         ...state,
@@ -111,6 +113,12 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: [],
+      };
+
+    case UPDATE_CART:
+      return {
+        ...state,
+        cartItems: action.payload.cartProducts,
       };
     default:
       return state;

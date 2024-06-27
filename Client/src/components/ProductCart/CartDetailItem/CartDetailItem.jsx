@@ -1,5 +1,4 @@
 export const CartDetailItem = ({ cartItems }) => {
-  console.log(cartItems);
   return (
     <div className="overflow-y-auto max-h-96">
       {cartItems?.map((item, index) => (

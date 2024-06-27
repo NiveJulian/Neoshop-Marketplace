@@ -1,4 +1,5 @@
 import Nav from "../components/Nav/Nav";
+import React from "react";
 import Sidebar from "../components/SideBar/SideBar";
 import ProductList from "../components/ProductList/ProductList";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +10,7 @@ export const Products = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.product.allProducts);
   const filteredProducts = useSelector((state) => state.product.filteredProducts);
+  const filters = useSelector((state) => state.product.filters);
   const namedProducts = useSelector((state) => state.product.namedProducts);
   const condition = useSelector((state) => state.product.condition);
   const theme = useSelector((state) => state.themes.theme) ;
@@ -34,8 +36,8 @@ export const Products = () => {
 
   return (
     <div
-      className={`max-w-screen text-center gap-4 ${theme === 'dark' ? 'text-white' : 'bg-gray-100'}`}
-      style={{ backgroundColor: theme === 'dark' ? '#212121' : 'transparent' }}
+      className={`max-w-screen text-center gap-4 ${theme === 'dark' ? 'text-white' : 'bg-gray-300'}`}
+      style={{ backgroundColor: theme === 'dark' ? '#212121' : 'rgb(243, 244, 246)' }}
     >
       <div className="shadow-sm">
         <Nav color={"primary"} />
@@ -46,14 +48,32 @@ export const Products = () => {
           Products
         </h1>
         {/* <Categories/>  */}
-      </div>
-      
+      </div>      
       <div className="relative -mt-24">
         <Sidebar />
       </div>
-      <div className="flex justify-center items-center">
-        <div className="mt-16">{renderProducts()}</div>
-      </div>
+      <div>
+      <div className="flex mt-24 justify-center">
+          {filters.store && (
+            <p className="flex mr-2 text-center items-center rounded-md bg-white px-4 py-2 text-stone-600 shadow-sm">
+              {filters.store}
+            </p>
+          )}
+          {filters.brand && (
+            <p className="flex mr-2 text-center items-center rounded-md bg-white px-4 py-2 text-stone-600 shadow-sm">
+              {filters.brand}
+            </p>
+          )}
+          {filters.category && (
+            <p className="flex mr-2 text-center items-center rounded-md bg-white px-4 py-2 text-stone-600 shadow-sm">
+              {filters.category}
+            </p>
+          )}
+        </div>
+        <div className="flex justify-center items-center">          
+          <div className="mt-16">{renderProducts()}</div>
+        </div>
+      </div>      
     </div>
   );
 };

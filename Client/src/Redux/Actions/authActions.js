@@ -13,6 +13,7 @@ export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
 export const RESET_PASS = "RESET_PASS";
 
+
 // LOGIN
 export const login = (formData) => async (dispatch) => {``
     const endpoint = `${rutaBack}/login/`;
@@ -127,7 +128,7 @@ export const login = (formData) => async (dispatch) => {``
     }
   };
 
-  export const updateUserAddress = (formUpdate) => async (dispatch) => {
+  export const updateUserAddress = (formUpdate, navigate) => async (dispatch) => {
     const endpoint = `${rutaBack}/user/update`;
   
     try {
@@ -140,8 +141,8 @@ export const login = (formData) => async (dispatch) => {``
           payload: response.data,
         });
         setTimeout(() => {
-          location.href = "/payPreview";
-        }, 5000);
+          navigate(-1);
+        }, 2000);
       }
     } catch (error) {
       toast.error("Error while updating");
