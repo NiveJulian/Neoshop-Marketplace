@@ -1,3 +1,3 @@
 // rutaBack.js
-const rutaBack = "http://localhost:3001";
+const rutaBack = "https://neoshop-back.onrender.com";
 export default rutaBack;
