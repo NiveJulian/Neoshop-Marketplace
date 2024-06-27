@@ -40,7 +40,7 @@ export default function Nav({ color }) {
     if (cartItems.length === 0 && user?.id_user) {
       dispatch(getCartByUserId(user?.id_user));
     }
-  }, [dispatch, user, cartItems]);
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (cartItems.length > 0 && isAuth) {
@@ -50,11 +50,17 @@ export default function Nav({ color }) {
         console.error("Error sending cart:", error);
       }
     }
-  }, [cartItems, user, dispatch, isAuth]);
+  }, [ user, dispatch, isAuth]);
 
   useEffect(() => {
     dispatch(changeTheme(localStorage.getItem("theme") || "light"));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (cartItems.length >= 1 && isAuth && user) {
+      dispatch(sendCart(user.id_user, cartItems));
+    }
+  }, [isAuth, user, dispatch]);
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -89,12 +95,6 @@ export default function Nav({ color }) {
     localStorage.setItem("theme", newTheme);
   };
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
-
-  useEffect(() => {
-    if (cartItems.length >= 1 && isAuth && user) {
-      dispatch(sendCart(user.id_user, cartItems));
-    }
-  }, [cartItems, isAuth, user, dispatch]);
 
   // Socket.io configuration
   // useEffect(() => {
