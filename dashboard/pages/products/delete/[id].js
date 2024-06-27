@@ -27,8 +27,6 @@ export default function DeleteProductPage() {
   function goBack() {
     router.push(`/products/${id}`);
   }
-
-  console.log(storeData);
   async function deleteProduct() {
     const data = {
       id_product: product,
@@ -37,6 +35,9 @@ export default function DeleteProductPage() {
     };
     await axios.put("http://localhost:3001/product/update", data);
     goBack()
+  }
+  if (!storeData) {
+    return <>Loading...</>
   }
   return (
     <Layout userId={id} user={storeData}>

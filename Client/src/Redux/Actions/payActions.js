@@ -1,13 +1,14 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import rutaBack from "./rutaBack"
+import { createHtml } from "../../components/Mails/createHtml";
+import { cleanCart } from "./cartActions";
 
 export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
 
 export const paymentOk = (payment) => {
   return async () => {
     try {
-      console.log(payment);
       const response = await axios.post(
         `${rutaBack}/paying/post-order`,
         payment
@@ -15,6 +16,7 @@ export const paymentOk = (payment) => {
 
       if (response.status === 200) {
         toast.success("Payment Ok");
+        cleanCart()
       }
     } catch (error) {
       toast.error("Error sending payment");
@@ -31,3 +33,19 @@ export const updateDeliveryMethod = (delivery) => {
     });
   };
 };
+
+export const mailPayOk = (userMail, paymentDetail) => {
+  return async () => {
+    const emailContent = {
+      emailUser: userMail,
+      message: createHtml(paymentDetail)
+    };
+
+    try {
+      const response = await axios.post(`${rutaBack}/mails`,emailContent);
+      return response;
+    } catch (error) {
+      console.error("Error al enviar el correo:", error.message);
+    }
+  }
+}

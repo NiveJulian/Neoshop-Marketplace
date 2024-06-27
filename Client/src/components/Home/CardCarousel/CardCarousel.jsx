@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
 import { CardWide } from "./CardWide";
+import { useSelector } from "react-redux";
 
 const CardCarousel = ({ allProducts }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const totalProducts = allProducts.length;
+  const theme = useSelector((state) => state.themes.theme);
+
+  const backgroundColor = theme === "dark" ? "#3f3f3f" : "#b3b3b3";
+  const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+
+  const totalProducts = allProducts.length
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -13,7 +21,8 @@ const CardCarousel = ({ allProducts }) => {
     return () => clearInterval(interval);
   }, [totalProducts]);
   return (
-    <div className="flex flex-col items-center bg-gray-300 relative overflow-hidden w-full p-8 pb-16 pl-40 pr-40">
+    <div className="flex flex-col items-center bg-gray-300 relative overflow-hidden w-full p-8 pb-16 pl-40 pr-40"
+    style={{background: backgroundColor, borderColor: bordesPlomos}}>      
       <div className="text-center text-2xl text-white font-bold mb-4">
       RECENT PRODUCTS
       </div>
@@ -44,7 +53,7 @@ const CardCarousel = ({ allProducts }) => {
           className={`w-1/2 flex-shrink-0 ml-16 mr-16 transform transition-transform duration-1000 ease-in-out ${
             index === currentIndex ? "translate-x-0" : "translate-x-full"
           }`}
-          style={{ display: index === currentIndex ? "block" : "none" }}
+          style={{ display: index === currentIndex ? "block" : "none", }}
         >
           <CardWide
             id_product={product.id_product}

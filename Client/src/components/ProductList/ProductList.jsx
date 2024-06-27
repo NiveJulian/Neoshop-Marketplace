@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { ProductCard } from "../Product/ProductCard";
 import Paginate from "../Paginate/Paginate";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "../../Redux/Actions/cartActions";
-import { addToFavorites } from "../../Redux/Actions/favoritesActions";
+import { addToFavorites, sendFavorites } from "../../Redux/Actions/favoritesActions";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const dispatch = useDispatch();
+  const id_user = useSelector((state) => state.auth.user)
   
   // Calcular los índices de inicio y fin de la página actual
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -28,8 +29,11 @@ export default function ProductList({ allProducts }) {
   };
 
   const handleAddToFav = (product) => {
+    const id_product = product.id_product
     toast.success("Add to favorites")
     dispatch(addToFavorites(product));
+    dispatch(sendFavorites(id_product, id_user))
+
   };
 
   useEffect(() => {
@@ -52,7 +56,8 @@ export default function ProductList({ allProducts }) {
             img_product={product.img_product}
             price={product.price}
             onAddToCart={() => handleAddToCart(product)}
-            onAddToFav={() => handleAddToFav(product)}
+            onAddToFav={() => handleAddToFav(product.id_product)}
+            available={product.available}
           />
         ))}
       </div>

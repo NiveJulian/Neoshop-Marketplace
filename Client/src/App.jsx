@@ -23,11 +23,9 @@ import { isAuthenticated } from "./Redux/Actions/authActions";
 import MyShopping from "./views/MyShopping";
 import AccountDetail from "./views/AccountDetail";
 import Favorites from "./views/Favorites";
+// import { io } from "socket.io-client";
 
 function App() {
- 
-
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,12 +36,12 @@ function App() {
     dispatch(isAuthenticated(jwtToken));
   }, [dispatch]);
 
+
   return (
     <div>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster containerClassName="mt-16" position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/signup" element={<SingUp />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/store" element={<Store />} />

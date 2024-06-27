@@ -21,6 +21,17 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
   const [images, setImages] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const img = useSelector((state) => state.updateImage.images);
+  const themeLocal = useState(localStorage.getItem("theme"));
+  const theme = themeLocal[0];
+  // const theme = 'light';
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#272727" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const azulOscuro = theme === "dark" ? "#212121" : "#0069AA";
+  const azulClaro = theme === "dark" ? "#3B82F6" : "#3B82F6";
 
   useEffect(() => {
     if (img && img.length > 0 && Array.isArray(img[0])) {
@@ -103,17 +114,19 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
     }
   };
   return (
-    <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen">
+    <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen"
+    style={{ background: backgroundColor }}>
       <form
         className="max-w-sm p-4 h-auto bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}
+        style={{ background: backgroundColor }}
       >
         <h1 className="text-center mx-4 mb-4 text-3xl text-primary border-b-2">
           <strong>{title}</strong>
         </h1>
         <div className="flex flex-wrap mx-2 mb-1">
           <div className="rounded-sm w-full py-2 px-4">
-            <label>Photos</label>
+            <label style={{ color: textColor }}>Photos</label>
             <div className="mb-2 flex justify-center items-center gap-1">
               <ReactSortable
                 list={img ? img : images}
@@ -209,6 +222,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="name"
+              style={{ color: textColor }}
             >
               Name
             </label>
@@ -234,6 +248,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="address_cp"
+              style={{ color: textColor }}
             >
               Postal Code
             </label>
@@ -257,6 +272,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
           </div>
           <div className="w-full px-3 mb-1">
             <label
+            style={{ color: textColor }}
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="address_country"
             >
@@ -286,6 +302,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="address_city"
+              style={{ color: textColor }}
             >
               City
             </label>

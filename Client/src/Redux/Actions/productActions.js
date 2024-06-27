@@ -136,9 +136,10 @@ export const getAllCategories = () => {
     const endpoint = "http://localhost:3001/product/filter";
     return async (dispatch) => {
       try {
+        console.log("los filtros que recibe la action:", filters);
         const queryString = new URLSearchParams(filters).toString();
         const response = await axios.get(`${endpoint}?${queryString}`);
-        console.log(response.data);
+        console.log("respuesta del filtrado:", response.data);
         return dispatch({
           type: GET_PRODUCT_FILTER,
           payload: response.data,
