@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 export const PayDetail = () => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const user = useSelector((state) => state.auth.user);
+    console.log(user);
     const ship = useSelector((state) => state.pay.delivery);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -30,8 +31,6 @@ export const PayDetail = () => {
         amount: "",
         date: "",
     });
-  const { t, i18n } = useTranslation();
-
 
     const [loading, setLoading] = useState(true);
 

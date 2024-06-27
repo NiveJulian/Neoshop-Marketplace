@@ -3,6 +3,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useState, useEffect } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector, useDispatch } from "react-redux";
+import rutaBack from "../../Redux/Actions/rutaBack";
 import User from "../Users/User";
 import CartList from "../ProductCart/CartList/CartList";
 import { getCartByUserId, sendCart, updateCart } from "../../Redux/Actions/cartActions";
@@ -40,7 +41,7 @@ export default function Nav({ color }) {
     if (cartItems.length === 0 && user?.id_user) {
       dispatch(getCartByUserId(user?.id_user));
     }
-  }, [dispatch, user, cartItems]);
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (cartItems.length > 0 && isAuth) {
@@ -50,11 +51,17 @@ export default function Nav({ color }) {
         console.error("Error sending cart:", error);
       }
     }
-  }, [cartItems, user, dispatch, isAuth]);
+  }, [ user, dispatch, isAuth]);
 
   useEffect(() => {
     dispatch(changeTheme(localStorage.getItem("theme") || "light"));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (cartItems.length >= 1 && isAuth && user) {
+      dispatch(sendCart(user.id_user, cartItems));
+    }
+  }, [isAuth, user, dispatch]);
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -89,12 +96,6 @@ export default function Nav({ color }) {
     localStorage.setItem("theme", newTheme);
   };
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
-
-  useEffect(() => {
-    if (cartItems.length >= 1 && isAuth && user) {
-      dispatch(sendCart(user.id_user, cartItems));
-    }
-  }, [cartItems, isAuth, user, dispatch]);
 
   // Socket.io configuration
   // useEffect(() => {
@@ -282,11 +283,12 @@ export default function Nav({ color }) {
             <div className="tooltip">
               <Link
                 to={"/favorites"}
-                className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 flex items-center ${
+                className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                   color === "primary"
                     ? "text-gray-200 border-gray-200"
                     : "text-gray-600 border-gray-600"
                 }`}
+                style={{ borderColor: bordesPlomos}}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" 
                     fill="none" 
@@ -317,7 +319,7 @@ export default function Nav({ color }) {
           {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
               <a
-                href={`https://neo-shop-dashboard-neoshopmarketplace.vercel.app/dashboard/${user.id_user}`}
+                href={`${rutaBack}/dashboard/${user.id_user}`}
                 rel="noopener noreferrer"
                 className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                   color === "primary" ? "text-gray-200" : "text-gray-600"

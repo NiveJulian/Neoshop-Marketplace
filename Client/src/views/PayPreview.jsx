@@ -64,7 +64,8 @@ export const PayPreview = () => {
               {t('payPreview.edit')}
             </button>
           </div>
-          <div className="mt-4 bg-white rounded-lg p-4 shadow-md"style={{ background: cartBackGround, color: textColor }}>
+          <div className="mt-4 bg-white rounded-lg p-4 shadow-md hover:bg-gray-100"
+          style={{ background: cartBackGround, color: textColor }}>
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -76,14 +77,15 @@ export const PayPreview = () => {
             </label>
           </div>
         </div>
-        <div className="w-1/3 ml-2" >
-          <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg" style={{ background: cartBackGround, color: textColor }}>
-            <strong>{t('payPreview.summary')}</strong>
-            <div className="line h-px w-1/2 my-2 bg-gray-300 mx-auto"></div>
+        <div className="w-1/3 justify-center mt-10">
+          <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg"
+          style={{ background: cartBackGround, color: textColor }}>
+            <strong>Summary</strong>
+            <div className="h-auto w-1/2 my-2 bg-gray-300 mx-auto"></div>
             {cart.map((product, index) => (
               <div
                 key={index}
-                className="flex justify-between items-center gap-4"
+                className="flex justify-between items-center gap-4 m-4"
               >
                 <div>
                   <img
@@ -104,6 +106,7 @@ export const PayPreview = () => {
               className="mt-8 mb-8 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-lg flex items-center gap-2 justify-between"
               onClick={() => navigate("/pay")}
             >
+              {/* {t('payPreview.continue')} */}
               Continue{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"

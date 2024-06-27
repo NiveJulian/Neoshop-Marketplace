@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export const HistoryCard = ({
+export const FavoriteCard = ({
     brand,
     name,
     price,
     img_product,
     id_product,
-    quantity,
+    description
 }) => {
     const theme = useSelector((state) => state.themes.theme);
 
@@ -26,12 +26,14 @@ export const HistoryCard = ({
                     className="rounded-full border border-gray-400 p-2 w-28 h-28 mr-5"
                     />
                     <div>
-                        <div className="flex mb-4">
+                        <div className="flex mb-2">
                         <p className="text-2xl font-bold text-lg" style={{ color: textColor}}>{brand}</p>
                         <p className="text-2xl font-bold text-lg" style={{ color: textColor}}>{name}</p>
+                        </div>
+                        <div>
+                        <p className="text-2xl text-lg mb-2" style={{ color: textColor}}>{description}</p>
                         </div>    
                     <p className="text-2xl text-lg" style={{ color: textColor}}>Price: ${price}</p>
-                    <p className="text-2xl text-lg" style={{ color: textColor}}>Quantity: {quantity}</p>
                     </div>                   
                 </div>
                 </div>

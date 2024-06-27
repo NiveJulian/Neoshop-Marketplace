@@ -9,18 +9,18 @@ import { useTranslation } from "react-i18next";
 const HomePage = () => {
   const dispatch = useDispatch();
   const newProducts = useSelector((state) => state.product.newProducts);
-  const theme = useSelector((state) => state.themes.theme); //todo
+  const theme = useSelector((state) => state.themes.theme);//todo
   const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
   // const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
-  // const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
 
   useEffect(() => {
     dispatch(getNewProducts());
   }, [dispatch]);
   return (
-    <div style={{ background: backgroundColor }}>
+    <div style={{background: backgroundColor}} className="bg-gray-100">
       <Nav color={"primary"} />
       <div
         className="mx-2 flex justify-center items-center flex-col mt-8"
@@ -42,11 +42,12 @@ const HomePage = () => {
             <CardCarousel allProducts={newProducts} />
           </div>
         </div>
-        <div className="mx-2 flex justify-center items-center flex-col mt-8">
-          <div className="mt-8 mb-16">
-            <div className="font-bold text-2xl">All recent products</div>
-            <CardHomeList allProducts={newProducts} />
+      <div className="mx-2 flex justify-center items-center flex-col mt-8">        
+        <div className="mt-8 mb-16">
+          <div className="font-bold text-2xl" style={{color: textColor}}>
+            All recent products
           </div>
+          <CardHomeList allProducts={newProducts} />
         </div>
       </div>
     </div>

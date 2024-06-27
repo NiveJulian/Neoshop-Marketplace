@@ -44,8 +44,8 @@ export const sendCart = (userId, cartItems) => async (dispatch) => {
           cartQuantity: product.cartQuantity,
         })),
       };
-      // Realizar la petición POST
-      const response = await axios.post("http://localhost:3001/cart/", data);
+      // Realizar la petición POST 
+      const response = await axios.post(`${rutaBack}/cart/`, data);
       // Despachar una acción si es necesario
       dispatch({ type: CART_SENT_SUCCESS, payload: response });
     } else {

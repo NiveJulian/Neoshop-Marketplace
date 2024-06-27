@@ -6,20 +6,22 @@ export const CardHome = ({
   id_product,
   name,
   img_product,
-  date_creation,
   quantity,
   onAddToFav,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
   const { t, i18n } = useTranslation();
+  const favorites = useSelector((state) => state.favorites.favItems);
+  const favoriteIds = favorites.map(fav => fav.id_product);
 
-  const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
-  const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const isFavorite = favoriteIds.includes(id_product);
+
+  const backgroundColor = theme === "dark" ? "#171717" : "#ffffff";
   const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   return (
-    <article className="bg-white p-4 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer relative w-64">
+    <article className="bg-white p-4 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer relative w-64" style={{ background: backgroundColor, borderColor: bordesPlomos}}>
       <div className="relative flex mb-4 rounded-2xl">
         <Link
           to={`/product/${id_product}`}
@@ -42,15 +44,15 @@ export const CardHome = ({
         {/* Boton de favoritos */}
         <button 
           className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-lg hover:shadow-lg transition-transform duration-300 transform hover:scale-110"
-          onClick={() => onAddToFav()}
-          >
+          onClick={onAddToFav}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="h-5 w-5 text-red-700"
+            className={`h-5 w-5 ${isFavorite ? 'text-red-600' : 'bg-white text-gray-400'}`}
           >
             <path
               strokeLinecap="round"
@@ -63,35 +65,29 @@ export const CardHome = ({
       </div>
       
       <h3 className="flex font-medium text-xl leading-8">
-      <div className="flex flex-1" style={{ color: textColor}}>
-            <div className="">
-              <p className="text-sm font-semibold ">{name}</p>
-              <p className="text-sm text-gray-500">
-              {t('homePage.published2')} {date_creation}2 {t('homePage.ago')}
-            <svg
-              className="ml-1 w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-              </p>
-            </div>
+        <div className="flex flex-1" style={{ color: textColor}}>
+          <div className="">
+            <p className="text-sm font-semibold ">{name}</p>
+            <p className="flex text-sm text-gray-500">              
+              <svg
+                className="ml-1 w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+              Published 2 Days ago
+            </p>
           </div>
-          <div className="text-sm flex items-center text-gray-500 ">        
-          </div>
-         {/* <Link
-          to={`/product/${id_product}`}
-          className="block relative group-hover:text-red-700 transition-colors duration-200 "
-        >
-        </Link> */}
+        </div>
+        <div className="text-sm flex items-center text-gray-500 "></div>
       </h3>
     </article>
   );
