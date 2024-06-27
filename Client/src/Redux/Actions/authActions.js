@@ -15,7 +15,7 @@ export const RESET_PASS = "RESET_PASS";
 
 // LOGIN
 export const login = (formData,t) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/login/";
+    const endpoint = `${rutaBack}/login/`;
     try {
       const response = await axios.post(endpoint, formData, {
         withCredentials: true,
@@ -58,7 +58,7 @@ export const login = (formData,t) => async (dispatch) => {
   };
   
   export const register = (formData,t) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/user/";
+    const endpoint = `${rutaBack}/user/`;
   
     try {
       toast.loading("Waiting...");
@@ -132,7 +132,7 @@ export const login = (formData,t) => async (dispatch) => {
   };
 
   export const updateUserAddress = (formUpdate,t) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/user/update";
+    const endpoint = `${rutaBack}/user/update`;
   
     try {
       const response = await axios.put(endpoint, formUpdate);

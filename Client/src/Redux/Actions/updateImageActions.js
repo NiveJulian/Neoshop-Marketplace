@@ -8,7 +8,7 @@ export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
 export const uploadImages = (formData,t) => async (dispatch) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/images/upload",
+        `${rutaBack}/images/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
