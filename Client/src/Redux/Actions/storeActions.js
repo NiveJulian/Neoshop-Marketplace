@@ -61,7 +61,7 @@ export const getAllSellers = () => {
   };
 
   export const getSellerByName = (name) => {
-    const endpoint = "http://localhost:3001/store";
+    const endpoint = `${rutaBack}/store`;
   
     return async (dispatch) => {
       try {
