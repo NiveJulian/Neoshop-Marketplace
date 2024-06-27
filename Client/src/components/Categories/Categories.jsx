@@ -5,15 +5,6 @@ import { filterProducts } from '../../Redux/Actions/productActions';
 
 
 const Categories = () => {
-  // const categorias = [
-  //   "Tecnología", 
-  //   "Hogar y Muebles", 
-  //   "Electrodomésticos", 
-  //   "Herramientas", 
-  //   "Deportes y Fitness", 
-  //   "Ropa", 
-  //   "Juegos y Juguetes"
-  // ];
   const categories = useSelector((state) => state.product.categories);
   const [filters, setFilters] = useState({
     category: '',
@@ -49,6 +40,7 @@ const Categories = () => {
         className="flex overflow-x-auto space-x-4 p-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
         style={{ width: 'calc(100% - 80px)' }}
       >
+        {categories.map((categoria, index) => (
         {categories.map((categoria, index) => (
           <CategoryCard key={index} category={categoria} />
         ))}

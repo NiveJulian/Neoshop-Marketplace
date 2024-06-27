@@ -20,11 +20,11 @@ import { PayPreview } from "./views/PayPreview";
 import { getAllBrands, getAllCategories, getAllProducts } from "./Redux/Actions/productActions";
 import { getAllSellers } from "./Redux/Actions/storeActions";
 import { isAuthenticated } from "./Redux/Actions/authActions";
+import MyShopping from "./views/MyShopping";
+import AccountDetail from "./views/AccountDetail";
+import Favorites from "./views/Favorites";
 
 function App() {
- 
-
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,12 +35,36 @@ function App() {
     dispatch(isAuthenticated(jwtToken));
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   const socket = io("http://localhost:3001", {
+  //     withCredentials: true,
+  //     extraHeaders: {
+  //       "my-custom-header": "abcd"
+  //     }
+  //   });
+
+  //   socket.on("connect", () => {
+  //     console.log("Connected to the server");
+  //   });
+
+  //   socket.on("response_event", (data) => {
+  //     console.log("Response event data:", data);
+  //   });
+
+  //   socket.on("disconnect", () => {
+  //     console.log("Disconnected from the server");
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
+
   return (
     <div>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster containerClassName="mt-16" position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/signup" element={<SingUp />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/store" element={<Store />} />
@@ -54,6 +78,12 @@ function App() {
         <Route path="/personal" element={<PersonalDetail/>} />
         <Route path="/confirmation" element={<ConfirmationUser/>} />
         <Route path="/createstore" element={<CreateStore/>} />
+        <Route path="/payPreview" element={<PayPreview/>} />
+        <Route path="/adress" element={<AdressUser/>} />
+        <Route path="/pay" element={<PayDetail/>} />
+        <Route path="/myshopping" element={<MyShopping/>} />
+        <Route path="/accountdetail" element={<AccountDetail/>} />
+        <Route path="/favorites" element={<Favorites/>} />
       </Routes>
     </div>
   );

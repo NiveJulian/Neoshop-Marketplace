@@ -1,20 +1,21 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import rutaBack from "./rutaBack";
 
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
 export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
 
-export const uploadImages = (formData) => async (dispatch) => {
+export const uploadImages = (formData,t) => async (dispatch) => {
     try {
       const response = await axios.post(
-        "https://neoshop-back.onrender.com/images/upload",
+        "http://localhost:3001/images/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
       if (response.data) {
-        toast.success("Upload image success");
+        toast.success(t("toast.imageTrue"));
         dispatch({ type: UPLOAD_IMAGES_SUCCESS, payload: response.data.links });
       }
     } catch (error) {

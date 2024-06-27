@@ -1,17 +1,39 @@
 import { useState, useEffect } from "react";
-import validationLogin from "./validationLogin";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
-import { login } from "../../Redux/Actions/authActions";
+import { login, resetPassword, sendNewPassword } from "../../Redux/Actions/authActions";
+import validationLogin from "./validationLogin";
+import { useTranslation } from "react-i18next";
 
 export default function UserFormLogin({ title, onClose }) {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    newPassword: "",
+    confirmPassword: "",
+    token: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    newPassword: "",
+    confirmPassword: "",
+    token: "",
+  });
+  const [view, setView] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuth = useSelector(state => state.auth.isAuth);
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const mailExist = useSelector((state) => state.auth.mailExist);
+  const themeLocal = useState(localStorage.getItem("theme"));
+  const theme = themeLocal[0];
+  const { t, i18n } = useTranslation();
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
+  const cartBackGround = theme === "dark" ? "#1a1a1a" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
 
   useEffect(() => {
     if (isAuth) {
@@ -19,13 +41,36 @@ export default function UserFormLogin({ title, onClose }) {
     }
   }, [isAuth, navigate]);
 
+  useEffect(() => {
+    if (view === "forgotPassword" && mailExist) {
+      setTimeout(() => {
+        setView("reset");
+      }, 2000);
+    }
+  }, [mailExist, view]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => {
-      const newFormData = { ...prevState, [name]: value };
-      validationLogin(newFormData, errors, setErrors);
-      return newFormData;
-    });
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    validationLogin({ ...formData, [name]: value }, errors, setErrors, view);
+    
+    if (name === "newPassword" || name === "confirmPassword") {
+      if (name === "newPassword") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          confirmPassword: "",
+        }));
+      }
+      if (name === "confirmPassword") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          confirmPassword: value !== formData.newPassword ? "Passwords do not match" : "",
+        }));
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -33,17 +78,35 @@ export default function UserFormLogin({ title, onClose }) {
     validationLogin(formData, errors, setErrors);
     const noErrors = Object.keys(errors).every((key) => errors[key] === "");
 
-    if (noErrors) {
+    if (noErrors && formData.newPassword === formData.confirmPassword) {
       try {
-        dispatch(login(formData));
-
+        if (view === "login") {
+          dispatch(login(formData));
+        } else if (view === "reset") {
+          dispatch(sendNewPassword(formData));
+        }
+        
         setTimeout(() => {
-          window.location.reload()
+          window.location.reload();
         }, 2000);
       } catch (error) {
-        toast.error("Login failed. Please try again.");
+        toast.error("Operation failed. Please try again.");
         console.log(error.message);
       }
+    } else {
+      toast.error("Please fix the errors before submitting the form.");
+    }
+  };
+
+  const handlePasswordReset = (e) => {
+    e.preventDefault();
+    if (formData.email) {
+      dispatch(resetPassword(formData.email));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Please enter your email.",
+      }));
     }
   };
 
@@ -56,17 +119,18 @@ export default function UserFormLogin({ title, onClose }) {
     e.preventDefault();
     dispatch(doSignInWithGoogle());
   };
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <form
         className="bg-white text-center shadow-md p-2 rounded-xl w-full max-w-sm space-y-6"
         onSubmit={handleSubmit}
+        style={{ background: cartBackGround }}
       >
         <button
           type="button"
           className="flex top-0 right-0 text-3xl text-gray-800 hover:text-gray-600"
           onClick={onClose}
+          style={{ color: textColor }}
         >
           &times;
         </button>
@@ -75,11 +139,17 @@ export default function UserFormLogin({ title, onClose }) {
         </h1>
         <div className="space-y-4">
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+              style={{ color: textColor }}
+            >
+              {t("login.email")}
             </label>
             <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500" : ""}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.email ? "border-red-500" : ""
+              }`}
               id="email"
               type="text"
               placeholder="Email"
@@ -87,14 +157,22 @@ export default function UserFormLogin({ title, onClose }) {
               value={formData.email}
               onChange={handleChange}
             />
-            {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs italic">{errors.email}</p>
+            )}
           </div>
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password"
+              style={{ color: textColor }}
+            >
+              {t("login.password")}
             </label>
             <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "border-red-500" : ""}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.password ? "border-red-500" : ""
+              }`}
               id="password"
               type="password"
               placeholder="******************"
@@ -102,31 +180,59 @@ export default function UserFormLogin({ title, onClose }) {
               value={formData.password}
               onChange={handleChange}
             />
-            {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs italic">{errors.password}</p>
+            )}
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-            Sign In
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            {t("login.signIn")}
           </button>
-          <Link to="/signup" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-            Register
+          <Link
+            to="/signup"
+            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          >
+            {t("login.register")}
           </Link>
         </div>
         <div className="mt-6 flex justify-center gap-2 items-center flex-col">
-          <button onClick={onGoogleSignIn} className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+          <button
+            onClick={onGoogleSignIn}
+            className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
+          >
             <div className="relative flex items-center space-x-4 justify-center">
-              <img src="https://tailus.io/sources/blocks/social/preview/images/google.svg" className="absolute left-0 w-5" alt="google logo" />
-              <span className="block w-max ml-1 font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
-                Continue with Google
+              <img
+                src="https://tailus.io/sources/blocks/social/preview/images/google.svg"
+                className="absolute left-0 w-5"
+                alt="google logo"
+              />
+              <span
+                className="block w-max ml-1 font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
+                style={{ color: textColor }}
+              >
+                {t("login.google")}
               </span>
             </div>
           </button>
-          <button onClick={onFacebookSignIn} className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+          <button
+            onClick={onFacebookSignIn}
+            className="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
+          >
             <div className="relative flex items-center space-x-4 justify-center">
-              <img src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg" className="absolute left-0 w-5" alt="Facebook logo" />
-              <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
-                Continue with Facebook
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"
+                className="absolute left-0 w-5"
+                alt="Facebook logo"
+              />
+              <span
+                className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
+                style={{ color: textColor }}
+              >
+                {t("login.facebook")}
               </span>
             </div>
           </button>

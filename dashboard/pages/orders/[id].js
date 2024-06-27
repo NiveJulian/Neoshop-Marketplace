@@ -1,16 +1,72 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
+import axios from "axios";
+import Link from "next/link";
+import Image from "next/image";
+import wpicon from "../../assets/img/wpicon.png";
 
-export default function OrdersPage({user}) {
+export default function OrdersPage({ user }) {
   const [orders, setOrders] = useState([]);
+  const [storeData, setStoreData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const router = useRouter();
   const { id } = router.query;
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/user/${id}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    if (id && !userData) {
+      fetchUserData();
+    }
+  }, [id, userData]);
+
+  useEffect(() => {
+    const fetchStoreData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/store/user/${id}`
+        );
+        setStoreData(response.data);
+      } catch (error) {
+        console.error("Error fetching store data:", error);
+      }
+    };
+
+    if (id && !storeData) {
+      fetchStoreData();
+    }
+  }, [id, storeData]);
+
+  console.log(orders)
+
+  useEffect(() => {
+    const fetchOrdersData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/paying/store/${storeData.id_store}`
+        );
+        setOrders(response.data);
+      } catch (error) {
+        console.error("Error fetching orders data:", error);
+      }
+    };
+
+    if (storeData && !orders.length) {
+      fetchOrdersData();
+    }
+  }, [storeData, orders.length]);
   return (
     <Layout userId={id} user={user}>
       <h1>Orders Page</h1>
-      <table className="basic">
+      <table className="basic shadow-md">
         <thead>
           <tr>
             <th>Date</th>
@@ -21,50 +77,69 @@ export default function OrdersPage({user}) {
         <tbody>
           {orders.length > 0 &&
             orders.map((order) => (
-              <tr key={order._id}>
-                <td>{new Date(order.createdAt).toLocaleString()}</td>
-                <td>
-                  {order.name} | {order.email} <br />
-                  {order.city} | {order.postalNumber} <br />
-                  {order.address} | {order.country}
-                  <br />
-                  <div>
-                    <a
-                      className="py-2 px-2 border-green-400 bg-green-400 rounded"
-                      href={
-                        "https://wa.me/54" +
-                        order.telefone +
-                        "?text=Hola,%20" +
-                        order.name +
-                        "%20somos%20ShoesHouse%20y%20nos%20comunicabamos%20con%20usted%20por%20la%20compra%20que%20efectuaste%20en%20nuestra%20pagina,%20como%20fue%20la%20experiencia?%20queres%20darnos%20alg%C3%BAn%20feedback%20al%20respecto%20de%20ella,%20te%20quedo%20alguna%20duda.%20Tambien%20avisarte%20que%20apenas%20enviemos%20te%20estaremos%20pasando%20por%20este%20medio%20el%20numero%20de%20envio%20para%20asi%20poder%20hacer%20el%20seguimiento%20del%20mismo"
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 inline-block mr-2"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                        />
-                      </svg>
-                      Whatsapp
-                    </a>
-                  </div>
+              <tr className="border border-gray-400" key={order.id_payment}>
+                <td className="border border-gray-400">
+                  {new Date(order.date).toLocaleString()}
                 </td>
-                <td>
-                  {order.line_items.map((l) => (
-                    <>
-                      {l.name} x {l.quantity} | ${l.unit_price} ARS
-                      <br />
-                    </>
+                <td className="border border-gray-400">
+                  {userData && (
+                    <div className="flex flex-row gap-2 justify-start items-start">
+                      <div>
+                        <strong>Name:</strong>
+                        <p> {userData.name}</p>
+                        <strong>Email:</strong>
+                        <p> {userData.email}</p>
+                      </div>
+                      <div>
+                        <strong>City:</strong>
+                        <p>
+                          {userData.state} {userData.city}
+                        </p>
+                        <strong>Address:</strong>
+                        <p>
+                          {userData.adress_street} {userData.adress_nro}
+                        </p>
+                        <strong>Postal Code:</strong>
+                        <p>{userData.postalCode} </p>
+                      </div>
+
+                      {/* Agrega aquí cualquier otra información del usuario que necesites */}
+                      <div className="flex">
+                        <Link
+                          className="border justify-center items-center border-gray-300 rounded-2xl shadow-md transform transition-transform duration-100 active:translate-y-[5%] hover:shadow-sm active:shadow-2xl"
+                          href={`https://wa.me/54${userData.phone_number}?text=Hola,%20${userData.name}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div className="rounded-full p-0 hover:bg-white">
+                            <Image src={wpicon} width={32} height={32} />
+                          </div>
+                          Whatsapp
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </td>
+                <td className="border border-gray-400">
+                  {order.products.map((product) => (
+                    <div
+                      className="flex flex-col justify-center items-center"
+                      key={product.id_product}
+                    >
+                      <span className="flex justify-center items-center gap-2">
+                        <img
+                          src={product.img_product[0]}
+                          className="rounded-full"
+                          width={64}
+                          height={64}
+                          alt={product.name}
+                        />
+                        <strong>Product:</strong>
+                        {product.name}
+                      </span>
+                      <span>Price: ${product.price}</span>
+                      <span>Quantity: {product.cartQuantity}</span>
+                    </div>
                   ))}
                 </td>
               </tr>

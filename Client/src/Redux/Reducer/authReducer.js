@@ -6,7 +6,8 @@ import {
   LOGIN_WITH_GOOGLE,
   LOGIN_WITH_FACEBOOK,
   LOGOUT,
-  UPDATE_USER
+  UPDATE_USER,
+  RESET_PASS
 } from "../Actions/authActions";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   registering: false,
   registerError: null,
   loginError: null,
+  mailExist: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -51,6 +53,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         user: payload,
       };
+
+    case RESET_PASS:
+      return {
+        ...state,
+        mailExist: payload,
+      }  
     default:
       return state;
   }

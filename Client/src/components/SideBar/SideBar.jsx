@@ -2,21 +2,31 @@ import { useState } from "react";
 import FilterStore from "../Filter/FilterStore";
 import { OrderAbc } from "../Filter/OrderAbc";
 import { OrderPrice } from "../Filter/OrderPrice";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
   const [filterStoreActive, setFilterStoreActive] = useState(false);
   const [orderAbcActive, setOrderAbcActive] = useState(false);
   const [orderPriceActive, setOrderPriceActive] = useState(false);
+  const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
 
   const toggleSidebar = () => {
     setExpanded(!expanded); // Alternar el estado de expansión
   };
 
+  const orangeColor = theme === "dark" ? "#cd7731" : "#e18336";
+
   return (
-    <div className="flex items-start w-64 mt-auto mb-6 fixed z-30">
+    <div
+      className="flex items-start w-64 mt-auto mb-6 fixed z-30"
+    >
       {expanded ? (
-        <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center px-2 w-16 h-full overflow-hidden bg-orange-400 rounded">
+        <div className="flex flex-col transition-all ease-in-out text-gray-100 items-center px-2 w-16 h-full overflow-hidden bg-orange-400 rounded"
+        style={{ backgroundColor: orangeColor }}
+        >
           <a
             className="flex items-center justify-center mt-3 text-gray-200"
             href="#"
@@ -117,7 +127,9 @@ const Sidebar = () => {
           </div>
         </div>
       ) : (
-        <div className="relative flex flex-col transition-all ease-in-out text-gray-100 items-center w-40 h-full overflow-visible bg-orange-400 rounded">
+        <div className="relative flex flex-col transition-all ease-in-out text-gray-100 items-center w-40 h-full overflow-visible bg-orange-400 rounded"
+        style={{ backgroundColor: orangeColor }}
+      >
           <a
             className="flex items-center w-full mt-3 justify-center"
             href="#"
@@ -137,7 +149,7 @@ const Sidebar = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-sm font-bolder">Filters & Orders</span>
+            <span className="text-sm font-bolder">{t('sideBar.title')}</span>
           </a>
           <div className="w-full px-4 py-2">
             <div className="flex flex-col items-center w-full mt-3 border-gray-300">

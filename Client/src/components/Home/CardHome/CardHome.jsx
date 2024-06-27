@@ -1,25 +1,32 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 export const CardHome = ({
   id_product,
   name,
   img_product,
-  description,
   date_creation,
   quantity,
-  price,
-  store,
-  idStore,
-  available,
-  id_review,
-  id_discounts,
+  onAddToFav,
 }) => {
+  const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
+
+  const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
+  const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   return (
-    <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64">
+    <article className="bg-white p-4 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer relative w-64">
       <div className="relative flex mb-4 rounded-2xl">
-        <Link to={`/product/${id_product}`} className="justify-center items-center">
+        <Link
+          to={`/product/${id_product}`}
+          className="justify-center items-center"
+        >
           <img
-            className="max-h-80 rounded-2xl w-64 object-cover transition-transform duration-300 transform group-hover:scale-105"
+            className="max-h-80 rounded-2xl w-64 object-cover"
             src={img_product}
             alt=""
           />
@@ -28,12 +35,15 @@ export const CardHome = ({
         <div className="absolute top-0 right-0">
           <div className="relative">
             <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-30 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
-              NEW
+            {t('homePage.new')}
             </div>
           </div>
         </div>
-
-        <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
+        {/* Boton de favoritos */}
+        <button 
+          className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-lg hover:shadow-lg transition-transform duration-300 transform hover:scale-110"
+          onClick={() => onAddToFav()}
+          >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
@@ -49,32 +59,15 @@ export const CardHome = ({
             />
           </svg>
           <span className="ml-1 text-sm text-slate-400">{quantity}</span>
-        </div>
+        </button>
       </div>
-
-      <div className="flex justify-between items-center w-full pb-4 mb-auto">
-        <div className="flex items-center">
-          <div className="pr-3">
-            <Link to={`/store/${store.id_store}`}>
-              <img
-                className="h-12 w-12 rounded-full object-cover hover:shadow-lg"
-                src={store.logo}
-                alt=""
-              />
-            </Link>
-          </div>
-          
-        </div>
-        <div className="flex justify-end">
-        
-        </div>
-      </div>
+      
       <h3 className="flex font-medium text-xl leading-8">
-      <div className="flex flex-1">
+      <div className="flex flex-1" style={{ color: textColor}}>
             <div className="">
               <p className="text-sm font-semibold ">{name}</p>
               <p className="text-sm text-gray-500">
-                Published on {date_creation}2 Days ago
+              {t('homePage.published2')} {date_creation}2 {t('homePage.ago')}
             <svg
               className="ml-1 w-4 h-4"
               fill="none"

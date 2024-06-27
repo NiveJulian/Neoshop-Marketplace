@@ -5,17 +5,36 @@ import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector, useDispatch } from "react-redux";
 import User from "../Users/User";
 import CartList from "../ProductCart/CartList/CartList";
-import { getCartByUserId, sendCart } from "../../Redux/Actions/cartActions";
+import { getCartByUserId, sendCart, updateCart } from "../../Redux/Actions/cartActions";
 import { renderCondition } from "../../Redux/Actions/productActions";
+import { changeTheme } from "../../Redux/Actions/themeActions";
+import { useTranslation } from "react-i18next";
 
 export default function Nav({ color }) {
   const user = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const cartItems = useSelector((state) => state.cart.cartItems) || 0;
+  const cartItems = useSelector((state) => state.cart.cartItems) || [];
 
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  // const themeColor = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+
+  const naranjaClaro = theme === "dark" ? "#FFDCDC" : "#FFDCDC";
+
   const dispatch = useDispatch();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    // Guardar el idioma seleccionado en localStorage
+    localStorage.setItem("i18nextLng", lng);
+  };
 
   useEffect(() => {
     if (cartItems.length === 0 && user?.id_user) {
@@ -33,38 +52,87 @@ export default function Nav({ color }) {
     }
   }, [cartItems, user, dispatch, isAuth]);
 
+  useEffect(() => {
+    dispatch(changeTheme(localStorage.getItem("theme") || "light"));
+  }, [dispatch]);
+
   const toggleCart = () => {
     setShowCart(!showCart);
   };
 
-  function handleShowLogin() {
+  const handleShowLogin = () => {
     setShowLogin(true);
-  }
+  };
 
-  function handleOnClose() {
+  const handleOnClose = () => {
     setShowLogin(false);
-  }
+  };
 
-  function handleProducts() {
+  const handleProducts = () => {
     dispatch(renderCondition("allProducts"));
-  }
+  };
 
   const calculateTotal = () => {
-    // Calcular el subtotal basado en el precio y la cantidad de cada producto en el carrito
     const total = cartItems.reduce((acc, product) => {
       const price = parseFloat(product.price);
       const quantity = product.cartQuantity || 1;
       return acc + (isNaN(price) ? 0 : price * quantity);
     }, 0);
 
-    // Redondear el total a dos decimales
     return total.toFixed(2);
   };
 
+  const handleThemeChange = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    dispatch(changeTheme(newTheme));
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+
+  useEffect(() => {
+    if (cartItems.length >= 1 && isAuth && user) {
+      dispatch(sendCart(user.id_user, cartItems));
+    }
+  }, [cartItems, isAuth, user, dispatch]);
+
+  // Socket.io configuration
+  // useEffect(() => {
+  //   const socket = io("http://localhost:3001", {
+  //     withCredentials: true,
+  //   });
+
+  //   socket.on("connect", () => {
+  //     console.log("Connected to the server");
+  //   });
+
+  //   socket.on("disconnect", () => {
+  //     console.log("Disconnected from the server");
+  //   });
+
+  //   if (isAuth && user) {
+  //     socket.on("cartUpdated", (updatedCart) => {
+  //       console.log("Cart updated:", updatedCart);
+  //       // Ensure that the updatedCart has the expected format
+  //       if (updatedCart && updatedCart.cartProducts) {
+  //         // Dispatch an action to update the cart in Redux
+  //         dispatch(updateCart(updatedCart));
+  //       } else {
+  //         console.error("Received invalid cart data:", updatedCart);
+  //       }
+  //     });
+  //   }
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [isAuth, user, dispatch]);
   return (
     <div className="w-full z-50 shadow-xl">
       <div
-        className={`flex items-center justify-between px-2 py-2 shadow-md bg-${color}`}
+        className={`flex items-center justify-between px-2 py-2 shadow-md bg-${
+          theme === "dark" ? "#1f1f1f" : color
+        }`}
       >
         <div className="flex gap-2 justify-center items-center">
           <Link to={"/"}>
@@ -76,15 +144,37 @@ export default function Nav({ color }) {
           </Link>
           <SearchBar className="flex items-center justify-center" />
         </div>
-        <div className="flex items-center gap-4">
+        <div
+          className="flex items-center gap-4"
+          style={{ color: bordesPlomos }}
+        >
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => changeLanguage("en")}
+              className={` hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
+              }`}
+              style={{ borderColor: bordesPlomos }}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => changeLanguage("es")}
+              className={` hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
+              }`}
+              style={{ borderColor: bordesPlomos }}
+            >
+              ES
+            </button>
+          </div>
           <div className="tooltip">
             <Link
               to={"/products"}
-              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 flex items-center ${
-                color === "primary"
-                  ? "text-gray-200 border-gray-200"
-                  : "text-gray-600 border-gray-600"
+              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos }}
               onClick={handleProducts}
             >
               <svg
@@ -102,17 +192,16 @@ export default function Nav({ color }) {
                 />
               </svg>
             </Link>
-            <div className="tooltiptext">Products</div>
+            <div className="tooltiptext">{t("Products")}</div>
           </div>
 
           <div className="tooltip">
             <Link
               to={"/store"}
-              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
-                color === "primary"
-                  ? "text-gray-200 border-gray-200"
-                  : "text-gray-600 border-gray-600"
+              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -129,15 +218,18 @@ export default function Nav({ color }) {
                 />
               </svg>
             </Link>
-            <div className="tooltiptext">Store</div>
+            <div className="tooltiptext">{t("Store")}</div>
           </div>
 
           <div className="tooltip">
             <Link
               to={"/home"}
-              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
-                color === "primary" ? "text-gray-200" : "text-gray-600"
+              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary"
+                  ? "text-gray-200 border-gray-200"
+                  : "text-gray-600 border-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -154,18 +246,19 @@ export default function Nav({ color }) {
                 />
               </svg>
             </Link>
-            <div className="tooltiptext">Home</div>
+            <div className="tooltiptext">{t("Home")}</div>
           </div>
 
           <div className="tooltip">
             <button
               type="button"
               onClick={() => handleShowLogin()}
-              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                 color === "primary"
                   ? "text-gray-200 border-gray-200"
-                  : "text-gray-600 border-gray-200"
+                  : "text-gray-600 border-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -182,9 +275,36 @@ export default function Nav({ color }) {
                 />
               </svg>
             </button>
-            <div className="tooltiptext">Login</div>
+            <div className="tooltiptext">{t("Profile")}</div>
           </div>
 
+          {isAuth && (
+            <div className="tooltip">
+              <Link
+                to={"/favorites"}
+                className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2 flex items-center ${
+                  color === "primary"
+                    ? "text-gray-200 border-gray-200"
+                    : "text-gray-600 border-gray-600"
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5" 
+                    stroke="currentColor" 
+                    class="size-6"
+                  >
+                    <path 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg> 
+              </Link>
+              <div className="tooltiptext">Favorites</div>
+            </div>
+          )}
+          
           {showLogin && (
             <>
               {isAuth ? (
@@ -194,7 +314,7 @@ export default function Nav({ color }) {
               )}
             </>
           )}
-          {user?.user_type === "admin" ? (
+          {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
               <a
                 href={`http://localhost:3000/dashboard/${user.id_user}`}
@@ -202,6 +322,7 @@ export default function Nav({ color }) {
                 className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                   color === "primary" ? "text-gray-200" : "text-gray-600"
                 }`}
+                style={{ borderColor: bordesPlomos }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -218,17 +339,63 @@ export default function Nav({ color }) {
                   />
                 </svg>
               </a>
-              <div className="tooltiptext">Dashboard</div>
+              <div className="tooltiptext" style={{ borderColor: bordesPlomos }}>Dashboard</div>
             </div>
           ) : (
             <></>
           )}
+          {/* Toggle Theme Button */}
+          <div className="tooltip">
+            <button
+              onClick={handleThemeChange}
+              className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary" ? "text-gray-200" : "text-gray-600"
+              }`}
+              style={{ borderColor: bordesPlomos }}
+            >
+              {theme === "light" ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 2.25v1.5m0 16.5v1.5m8.25-9h-1.5m-16.5 0h-1.5M18.364 5.636l-1.061-1.061M6.697 17.303l-1.061-1.061m12.728 0l1.061 1.061m-12.728-12.728L5.636 5.636M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75a9.75 9.75 0 0 1-9.75-9.75c0-1.058.17-2.075.502-3.002a9.75 9.75 0 1 0 12.75 12.752z"
+                  />
+                </svg>
+              )}
+            </button>
+            <div className="tooltiptext">{t("Theme")}</div>
+          </div>
           <div className="tooltip">
             <button
               onClick={() => toggleCart()}
-              className={`px-2 py-2 rounded-lg hover:border-secondary hover:text-secondary ${
-                color === "primary" ? "text-gray-200" : "text-gray-600"
+              className={`border  hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
+                color === "primary"
+                  ? "text-gray-200 border-gray-200"
+                  : "text-gray-600 border-gray-600"
               }`}
+              style={{ borderColor: bordesPlomos }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +417,7 @@ export default function Nav({ color }) {
                 {cartItems?.length}
               </span>
             )}
-            <div className="tooltiptext">Cart</div>
+            <div className="tooltiptext">{t("Cart")}</div>
           </div>
           <div className="relative">
             {showCart && (
