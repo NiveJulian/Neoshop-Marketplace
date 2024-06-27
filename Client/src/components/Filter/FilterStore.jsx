@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import style from "./FilterCat.module.css";
+import { useTranslation } from "react-i18next";
 import { filterProducts, renderCondition, setActiveFilters } from '../../Redux/Actions/productActions';
 
 export default function FilterStore() {
@@ -7,6 +9,7 @@ export default function FilterStore() {
   const stores = useSelector((state) => state.store.store);
   const brands = useSelector((state) => state.product.brands);
   const categories = useSelector((state) => state.product.categories);
+  const { t } = useTranslation();
 
   const [filters, setFilters] = useState({
     store: '',
@@ -75,7 +78,7 @@ export default function FilterStore() {
             className="text-center w-full min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
             onClick={() => toggleDropdown('store')}
           >
-            {filters.store || 'Select Store'}
+            {filters.store || t('sideBar.store')}
             <i className="fas fa-angle-down text-stone-700"></i>
           </button>
           {dropdown.store && (
@@ -109,7 +112,7 @@ export default function FilterStore() {
             className="text-center w-full min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
             onClick={() => toggleDropdown('brand')}
           >
-            {filters?.brand || 'Select Brand'}
+            {filters?.brand || t('sideBar.brand')}
             <i className="fas fa-angle-down text-stone-700"></i>
           </button>
           {dropdown?.brand && (
@@ -143,7 +146,7 @@ export default function FilterStore() {
             className="text-center w-full min-h-[3rem] items-center justify-between rounded-md bg-stone-100 px-4 py-2 text-stone-800"
             onClick={() => toggleDropdown('category')}
           >
-            {filters.category || 'Select Category'}
+            {filters.category || t('sideBar.category')}
             <i className="fas fa-angle-down text-stone-700"></i>
           </button>
           {dropdown.category && (
@@ -172,10 +175,10 @@ export default function FilterStore() {
         </div>
 
         <button type="submit" className="bg-gray-200 w-full text-gray-500 rounded px-2 py-2 hover:bg-gray-100 hover:text-gray-600">
-          FILTER
+          FILTER{t('sideBar.filter')}
         </button>
         <button className='bg-red-200 w-full text-gray-500 rounded px-2 py-2 hover:bg-red-100 hover:text-gray-600 mt-3' onClick={() => reset()}>
-          RESET
+          RESET{t('sideBar.filter')}
         </button>
       </form>
     </div>

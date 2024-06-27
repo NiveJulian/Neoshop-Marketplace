@@ -1,8 +1,11 @@
 import { useSelector } from "react-redux";
-import img from "../assets/images/user-default.png"
+import { useState } from "react";
+import { useTranslation } from 'react-i18next';
+import img from "../assets/images/user-default.png";
 import Nav from "../components/Nav/Nav";
 
 const PersonalDetail = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
   const theme = useSelector((state) => state.themes.theme);
 
@@ -54,25 +57,25 @@ const PersonalDetail = () => {
           >
             <div>
               <h2 className="text-xl font-semibold" style={{ color: textColor }}>
-                Personal
+                {t('personalDetails.personal')}
               </h2>
               <p className="text-gray-600" style={{ color: letrasPlomas }}>
-                Name: {user.name}
+                {t('personalDetails.name')}: {user.name}
               </p>
               <p className="text-gray-600" style={{ color: letrasPlomas }}>
-                Lastname: {`${user.lastname || "N/A"}`}
+                {t('personalDetails.lastname')}: {`${user.lastname || t('personalDetails.na')}`}
               </p>
               <p className="text-gray-600" style={{ color: letrasPlomas }}>
-                Document: {`${user.nro_document || "N/A"}`}
+                {t('personalDetails.document')}: {`${user.nro_document || t('personalDetails.na')}`}
               </p>
               <p className="text-gray-600" style={{ color: letrasPlomas }}>
-                State: {`${user.state || "N/A"}`}
+                {t('personalDetails.state')}: {`${user.state || t('personalDetails.na')}`}
               </p>
               <p className="text-gray-600" style={{ color: letrasPlomas }}>
-                City: {`${user.city || "N/A"}`}
+                {t('personalDetails.city')}: {`${user.city || t('personalDetails.na')}`}
               </p>
               <p className="text-gray-600" style={{ color: letrasPlomas }}>
-                Birth Date: {`${user.birthdate || "N/A"}`}
+                {t('personalDetails.birthdate')}: {`${user.birthdate || t('personalDetails.na')}`}
               </p>
             </div>
           </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserAddress } from "../Redux/Actions/authActions";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const AdressUser = () => {
   const user = useSelector((state) => state.auth.user);
@@ -23,6 +24,8 @@ export const AdressUser = () => {
     postalCode: user.postalCode || "",
     phone_number: user.phone_number || "",
   });
+
+  const { t, i18n } = useTranslation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,8 +70,8 @@ export const AdressUser = () => {
           <div className="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div className="lg:col-span-2">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                <div className="md:col-span-5">
-                  <label htmlFor="full_name">Nombre y apellido</label>
+                <div className="md:col-span-5" >
+                  <label htmlFor="full_name"style={{color: textColor}}>{t('adress.name')}</label>
                   <input
                     type="text"
                     name="full_name"
@@ -79,8 +82,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-5">
-                  <label htmlFor="email">Correo electrónico</label>
+                <div className="md:col-span-5" >
+                  <label htmlFor="email"style={{color: textColor}}>{t('adress.email')}</label>
                   <input
                     type="email"
                     name="email"
@@ -91,8 +94,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-3">
-                  <label htmlFor="adress_street">Calle/avenida</label>
+                <div className="md:col-span-3" >
+                  <label htmlFor="adress_street"style={{color: textColor}}>{t('adress.street')}</label>
                   <input
                     type="text"
                     name="adress_street"
@@ -103,8 +106,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2">
-                  <label htmlFor="adress_nro">Número</label>
+                <div className="md:col-span-2" >
+                  <label htmlFor="adress_nro"style={{color: textColor}} >{t('adress.number')}</label>
                   <input
                     type="text"
                     name="adress_nro"
@@ -115,8 +118,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2">
-                  <label htmlFor="state">Provincia</label>
+                <div className="md:col-span-2" >
+                  <label htmlFor="state"style={{color: textColor}}>{t('adress.state')}</label>
                   <input
                     type="text"
                     name="state"
@@ -139,8 +142,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-1">
-                  <label htmlFor="postalCode">Código postal</label>
+                <div className="md:col-span-1" >
+                  <label htmlFor="postalCode"style={{color: textColor}}>{t('adress.postal')}</label>
                   <input
                     type="text"
                     name="postalCode"
@@ -151,8 +154,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-5">
-                  <label htmlFor="phone_number">Teléfono de contacto</label>
+                <div className="md:col-span-5" >
+                  <label htmlFor="phone_number"style={{color: textColor}}>{t('adress.contact')}</label>
                   <input
                     type="text"
                     name="phone_number"
@@ -169,7 +172,7 @@ export const AdressUser = () => {
                       type="submit"
                       className="bg-blue-500 hover:bg-blue-700 mt-6 text-white font-bold py-2 px-4 rounded"
                     >
-                      Guardar
+                      {t('adress.save')}
                     </button>
                   </div>
                 </div>

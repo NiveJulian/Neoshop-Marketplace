@@ -3,15 +3,17 @@ import { Link } from "react-router-dom";
 import { doSignOut } from "../../firebase/auth";
 import { logout } from "../../Redux/Actions/authActions";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function User({ user, onClose }) {
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
 
   const handleLogout = async () => {
     try {
       await doSignOut();
-      dispatch(logout());
+      dispatch(logout(t));
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -109,7 +111,7 @@ export default function User({ user, onClose }) {
               className="text-sm font-medium text-gray-600"
               style={{ color: textColor }}
             >
-              Profile
+              {t('user.profile')}
             </p>
           </Link>
 
@@ -124,7 +126,7 @@ export default function User({ user, onClose }) {
               className="text-sm font-medium text-gray-600"
               style={{ color: textColor }}
             >
-              Contact
+              {t('user.contact')}
             </p>
           </Link>
         </div>
@@ -136,7 +138,7 @@ export default function User({ user, onClose }) {
             onMouseEnter={() => setBgColorLogout(hoverColor)} // Cambia el color al pasar el cursor
             onMouseLeave={() => setBgColorLogout("")} // Restaura el color original al quitar el cursor
           >
-            Logout
+            {t('user.logOut')}
           </button>
         </div>
       </div>

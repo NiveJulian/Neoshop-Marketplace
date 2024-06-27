@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const CardHome = ({
   id_product,
@@ -9,6 +10,7 @@ export const CardHome = ({
   onAddToFav,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
   const favorites = useSelector((state) => state.favorites.favItems);
   const favoriteIds = favorites.map(fav => fav.id_product);
 
@@ -34,8 +36,8 @@ export const CardHome = ({
         {/* Esquinero con listón "Nuevo" */}
         <div className="absolute top-0 right-0">
           <div className="relative">
-            <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-20 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
-              NEW
+            <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-30 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
+            {t('homePage.new')}
             </div>
           </div>
         </div>

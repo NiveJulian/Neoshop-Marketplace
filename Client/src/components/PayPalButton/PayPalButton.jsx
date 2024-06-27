@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import {PaypalButtons} from "@paypal/react-paypal-js"
 
 const PaypalButton = () => {
+
   useEffect(() => {
     window.paypal.Buttons({
       createOrder: (data, actions) => {

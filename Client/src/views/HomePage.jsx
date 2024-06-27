@@ -4,11 +4,13 @@ import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
 import Nav from "../components/Nav/Nav";
 import CardCarousel from "../components/Home/CardCarousel/CardCarousel";
 import { getNewProducts } from "../Redux/Actions/productActions";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const newProducts = useSelector((state) => state.product.newProducts);
   const theme = useSelector((state) => state.themes.theme);//todo
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
   // const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";

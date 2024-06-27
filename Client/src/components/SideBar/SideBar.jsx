@@ -3,6 +3,7 @@ import FilterStore from "../Filter/FilterStore";
 import { OrderAbc } from "../Filter/OrderAbc";
 import { OrderPrice } from "../Filter/OrderPrice";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
@@ -10,6 +11,7 @@ const Sidebar = () => {
   const [orderAbcActive, setOrderAbcActive] = useState(false);
   const [orderPriceActive, setOrderPriceActive] = useState(false);
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
 
   const toggleSidebar = () => {
     setExpanded(!expanded); // Alternar el estado de expansión
@@ -147,7 +149,7 @@ const Sidebar = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-sm font-bolder">Filters & Orders</span>
+            <span className="text-sm font-bolder">{t('sideBar.title')}</span>
           </a>
           <div className="w-full px-4 py-2">
             <div className="flex flex-col items-center w-full mt-3 border-gray-300">
