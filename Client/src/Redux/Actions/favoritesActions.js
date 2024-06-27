@@ -51,10 +51,9 @@ export const cleanFavorites = () => ({
     const endpoint = `${rutaBack}/favorites/`;  
     try {
         if (id_user) {
-            const response = await axios.delete(endpoint, {
-                id_product,
-                id_user
-              });
+            const response = await axios.delete(endpoint,{
+              data: { id_product, id_user }
+            });
             console.log("respuesta del delete:", response)
             dispatch({ type: DELETE_FAVORITE_ITEM_SUCCESS, payload: response.data });
         } else {

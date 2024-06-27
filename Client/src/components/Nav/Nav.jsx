@@ -3,6 +3,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useState, useEffect } from "react";
 import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector, useDispatch } from "react-redux";
+import rutaBack from "../../Redux/Actions/rutaBack";
 import User from "../Users/User";
 import CartList from "../ProductCart/CartList/CartList";
 import { getCartByUserId, sendCart, updateCart } from "../../Redux/Actions/cartActions";
@@ -318,7 +319,7 @@ export default function Nav({ color }) {
           {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
               <a
-                href={`http://localhost:3000/dashboard/${user.id_user}`}
+                href={`${rutaBack}/dashboard/${user.id_user}`}
                 rel="noopener noreferrer"
                 className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                   color === "primary" ? "text-gray-200" : "text-gray-600"
