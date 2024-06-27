@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const CardHome = ({
   id_product,
@@ -10,6 +11,7 @@ export const CardHome = ({
   onAddToFav,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
   const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
@@ -32,8 +34,8 @@ export const CardHome = ({
         {/* Esquinero con listón "Nuevo" */}
         <div className="absolute top-0 right-0">
           <div className="relative">
-            <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-20 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
-              NEW
+            <div className="transform rotate-45 rounded-t-3xl rounded-b-sm translate-x-1/2 -translate-y-1/2 w-30 bg-red-500 text-white text-center text-xs font-bold px-8 py-1 shadow-lg">
+            {t('homePage.new')}
             </div>
           </div>
         </div>
@@ -61,30 +63,31 @@ export const CardHome = ({
       </div>
       
       <h3 className="flex font-medium text-xl leading-8">
-        <div className="flex flex-1" style={{ color: textColor}}>
-          <div className="">
-            <p className="text-sm font-semibold ">{name}</p>
-            <p className="flex text-sm text-gray-500">              
-              <svg
-                className="ml-1 w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1"
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path>
-              </svg>
-              Published 2 Days ago
-            </p>
+      <div className="flex flex-1" style={{ color: textColor}}>
+            <div className="">
+              <p className="text-sm font-semibold ">{name}</p>
+              <p className="text-sm text-gray-500">
+              {t('homePage.published2')} {date_creation}2 {t('homePage.ago')}
+            <svg
+              className="ml-1 w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="text-sm flex items-center text-gray-500 "></div>
-        {/* <Link
+          <div className="text-sm flex items-center text-gray-500 ">        
+          </div>
+         {/* <Link
           to={`/product/${id_product}`}
           className="block relative group-hover:text-red-700 transition-colors duration-200 "
         >

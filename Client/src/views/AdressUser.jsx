@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserAddress } from "../Redux/Actions/authActions";
+import { useTranslation } from "react-i18next";
 
 export const AdressUser = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const themeLocal = useState(localStorage.getItem("theme"));
+  const theme = themeLocal[0];
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const cartBackGround = theme === "dark" ? "#272727" : "#FFFFFF";
+  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#383838";
+  const detallesPersonales = theme === "dark" ? "#a5a5a5" : "#000000";
+  const editarDomicilio = theme === "dark" ? "#b8b8b8" : "#4B5563";
 
   const [formData, setFormData] = useState({
     adress_street: user.adress_street || "",
@@ -14,6 +24,8 @@ export const AdressUser = () => {
     postalCode: user.postalCode || "",
     phone_number: user.phone_number || "",
   });
+
+  const { t, i18n } = useTranslation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,26 +48,32 @@ export const AdressUser = () => {
       phone_number: formData.phone_number,
     };
     console.log(dataToSend);
-    dispatch(updateUserAddress(dataToSend)); // Asegúrate de tener esta acción configurada para enviar los datos
+    dispatch(updateUserAddress(dataToSend,t)); // Asegúrate de tener esta acción configurada para enviar los datos
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+    <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center"
+    style={{background: backgroundColor}}
+>
       <div className="container max-w-screen-lg mx-auto">
         <div className="text-center">
-          <h2 className="font-semibold text-xl text-gray-600">Editar domicilio</h2>
-          <p className="font-medium text-lg mt-2">Detalles personales</p>
-          <p>Por favor complete todos los campos.</p>
+          <h2 className="font-semibold text-xl text-gray-600"
+          style={{color: editarDomicilio}}>{t('adress.edit')}
+          </h2>
+          <p className="font-medium text-lg mt-2"
+          style={{color: detallesPersonales}}>{t('adress.details')}</p>
+          <p style={{color: detallesPersonales}}>{t('adress.please')}</p>
         </div>
         <form
           onSubmit={handleSubmit}
           className="bg-white rounded shadow-lg p-2 px-4 md:p-8 mt-6 mb-6 mx-auto max-w-3xl"
+          style={{background: cartBackGround, color: textColor}}
         >
           <div className="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div className="text-gray-600 lg:col-span-2">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                <div className="md:col-span-5">
-                  <label htmlFor="full_name">Nombre y apellido</label>
+                <div className="md:col-span-5" >
+                  <label htmlFor="full_name"style={{color: textColor}}>{t('adress.name')}</label>
                   <input
                     type="text"
                     name="full_name"
@@ -66,8 +84,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-5">
-                  <label htmlFor="email">Correo electrónico</label>
+                <div className="md:col-span-5" >
+                  <label htmlFor="email"style={{color: textColor}}>{t('adress.email')}</label>
                   <input
                     type="email"
                     name="email"
@@ -78,8 +96,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-3">
-                  <label htmlFor="adress_street">Calle/avenida</label>
+                <div className="md:col-span-3" >
+                  <label htmlFor="adress_street"style={{color: textColor}}>{t('adress.street')}</label>
                   <input
                     type="text"
                     name="adress_street"
@@ -90,8 +108,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2">
-                  <label htmlFor="adress_nro">Número</label>
+                <div className="md:col-span-2" >
+                  <label htmlFor="adress_nro"style={{color: textColor}} >{t('adress.number')}</label>
                   <input
                     type="text"
                     name="adress_nro"
@@ -102,8 +120,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2">
-                  <label htmlFor="state">Provincia</label>
+                <div className="md:col-span-2" >
+                  <label htmlFor="state"style={{color: textColor}}>{t('adress.state')}</label>
                   <input
                     type="text"
                     name="state"
@@ -114,8 +132,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-3">
-                  <label htmlFor="city">Ciudad</label>
+                <div className="md:col-span-3" >
+                  <label htmlFor="city"style={{color: textColor}}>{t('adress.city')}</label>
                   <input
                     type="text"
                     name="city"
@@ -126,8 +144,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-1">
-                  <label htmlFor="postalCode">Código postal</label>
+                <div className="md:col-span-1" >
+                  <label htmlFor="postalCode"style={{color: textColor}}>{t('adress.postal')}</label>
                   <input
                     type="text"
                     name="postalCode"
@@ -138,8 +156,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-5">
-                  <label htmlFor="phone_number">Teléfono de contacto</label>
+                <div className="md:col-span-5" >
+                  <label htmlFor="phone_number"style={{color: textColor}}>{t('adress.contact')}</label>
                   <input
                     type="text"
                     name="phone_number"
@@ -155,8 +173,9 @@ export const AdressUser = () => {
                     <button
                       type="submit"
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+
                     >
-                      Guardar
+                      {t('adress.save')}
                     </button>
                   </div>
                 </div>

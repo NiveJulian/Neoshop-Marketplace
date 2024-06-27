@@ -11,23 +11,24 @@ export const LOGOUT = "LOGOUT";
 export const UPDATE_USER = "UPDATE_USER";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
+export const RESET_PASS = "RESET_PASS";
 
 // LOGIN
-export const login = (formData) => async (dispatch) => {``
-    const endpoint = `${rutaBack}/login/`;
+export const login = (formData,t) => async (dispatch) => {
+    const endpoint = "http://localhost:3001/login/";
     try {
       const response = await axios.post(endpoint, formData, {
         withCredentials: true,
       });
-      toast.loading("Waiting...");
+      toast.loading(t("toast.waiting"));
       if (response.data.correctLogin) {
-        toast.success("Login successful!");
+        toast.success(t("toast.loginTrue"));
   
         dispatch({ type: LOGIN_SUCCESS, payload: response.data.user });
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error al ingresar");
+      toast.error(t("toast.loginFalse"));
       localStorage.setItem("isAuth", "false");
     }
   };
@@ -43,10 +44,10 @@ export const login = (formData) => async (dispatch) => {``
     payload: userInfo,
   });
   
-  export const logout = () => async (dispatch) => {
+  export const logout = (t) => async (dispatch) => {
     try {
       dispatch({ type: LOGOUT, payload: false });
-      toast.loading("Waiting...");
+      toast.loading(t("toast.waiting"));
       deleteSessionToken();
       localStorage.setItem("authToken", "false");
   
@@ -56,14 +57,17 @@ export const login = (formData) => async (dispatch) => {``
     }
   };
   
-  export const register = (formData) => async (dispatch) => {
-    const endpoint = `${rutaBack}/user/`;
+  export const register = (formData,t) => async (dispatch) => {
+    const endpoint = "http://localhost:3001/user/";
+  
     try {
       toast.loading("Waiting...");
       const response = await axios.post(`${endpoint}`, formData);
   
+      toast.loading(t("toast.waiting"));
       if (response.status === 200) {
-        toast.success("Register successful!");
+        toast.success(t("toast.registerTrue"));
+  
         dispatch({ type: REGISTER_SUCCESS });
   
         // Log in the user after successful registration
@@ -73,10 +77,11 @@ export const login = (formData) => async (dispatch) => {``
           location.href = "/confirmation";
         }, 2000);
       } else {
-        toast.error("Error while registering");
+        toast.error(t("toast.registerFalse"));
       }
     } catch (error) {
-      toast.error("Error while registering");
+      toast.error(t("toast.registerFalse"));
+  
       console.log(error);
     }
   };
@@ -126,14 +131,14 @@ export const login = (formData) => async (dispatch) => {``
     }
   };
 
-  export const updateUserAddress = (formUpdate) => async (dispatch) => {
-    const endpoint = `${rutaBack}/user/update`;
+  export const updateUserAddress = (formUpdate,t) => async (dispatch) => {
+    const endpoint = "http://localhost:3001/user/update";
   
     try {
       const response = await axios.put(endpoint, formUpdate);
   
       if (response.status === 200) {
-        toast.success("Update successful!");
+        toast.success(t("toast.updateTrue"));
         dispatch({
           type: UPDATE_USER,
           payload: response.data,
@@ -143,7 +148,40 @@ export const login = (formData) => async (dispatch) => {``
         }, 5000);
       }
     } catch (error) {
-      toast.error("Error while updating");
+      toast.error(t("toast.updateFalse"));
       console.log(error);
     }
   };
+
+  export const resetPassword = (email) => async (dispatch) => {
+    const endpoint = `${rutaBack}/user/forgot-password`;
+
+    try {
+      const response = await axios.post(endpoint, {email});
+      console.log (response);
+      if (response.status === 200){
+        toast.success ("We sent you an email, check it please")
+        dispatch({
+          type: RESET_PASS,
+          payload: true,
+        })
+      }
+    } catch (error) {
+      console.log (error.message)
+      toast.error("Error email doesn't exist")
+    }
+  }
+
+  export const sendNewPassword = (formData) => async (dispatch) => {
+    const endpoint = `${rutaBack}/user/reset-password`;
+
+    try {
+      const response = await axios.post(endpoint, {password: formData.newPassword, token: formData.token});
+      if (response.status === 200){
+        toast.success ("Password changed with success")}
+    } catch (error) {
+      console.log (error.message)
+      toast.error("Error: the password could not be replaced, please try again")
+      
+    }
+  }

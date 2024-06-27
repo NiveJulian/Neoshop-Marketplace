@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import ListCardProductByStore from "../components/ProductByStore/ListCardProductByStore.jsx";
 import { getSellerById } from "../Redux/Actions/storeActions.js";
 import { getProductByStore } from "../Redux/Actions/productActions.js";
+import { useTranslation } from "react-i18next";
 
 const StoreDetail = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,8 @@ const StoreDetail = () => {
   // const newProducts = useSelector((state) => state.newProducts);
   const productsByStore = useSelector((state) => state.product.productsByStore);
   const seller = useSelector((state) => state.store.seller);
-  const theme = useSelector((state) => state.themes.theme);
+  const theme = useSelector((state) => state.themes.theme);//todo
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
   // const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
@@ -52,21 +54,20 @@ const StoreDetail = () => {
               </p>
               <p className="seller-stats-text"></p>
               <p className="seller-stats-text">
-                reputación: {seller.average_mark} / 5
+              {t('storeDetail.reputation')}
+               {seller.average_mark} / 5
               </p>
             </div>
             <div className="seller-info">
-              <p>Vendiendo desde: {seller.date_creation}</p>
+              <p>{t('storeDetail.since')} {seller.date_creation}</p>
               <p>
                 {seller.adress_city}, {seller.adress_country}
               </p>
-              <p>{seller.quantity_review} reviews totales</p>
+              <p>{seller.quantity_review} {t('storeDetail.totalReviews')}</p>
             </div>
           </div>
           {/* <Categories/> */}
-          <div className="banner" style={{ background: orangeIntense }}>
-            Products
-          </div>
+          <div className="banner" style={{ background: orangeIntense}}>{t('storeDetail.products')}</div>
           <div className="mt-8">
             <ListCardProductByStore productByStore={productsByStore} />
           </div>

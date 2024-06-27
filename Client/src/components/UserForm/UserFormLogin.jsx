@@ -1,27 +1,39 @@
 import { useState, useEffect } from "react";
-import validationLogin from "./validationLogin";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
-import { login } from "../../Redux/Actions/authActions";
+import { login, resetPassword, sendNewPassword } from "../../Redux/Actions/authActions";
+import validationLogin from "./validationLogin";
+import { useTranslation } from "react-i18next";
 
 export default function UserFormLogin({ title, onClose }) {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    newPassword: "",
+    confirmPassword: "",
+    token: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    newPassword: "",
+    confirmPassword: "",
+    token: "",
+  });
+  const [view, setView] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuth = useSelector((state) => state.auth.isAuth);
+  const mailExist = useSelector((state) => state.auth.mailExist);
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
+  const { t, i18n } = useTranslation();
 
-  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
   const cartBackGround = theme === "dark" ? "#1a1a1a" : "#FFFFFF";
-  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
   const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
-  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
-  const azulOscuro = theme === "dark" ? "#0069AA" : "#0069AA";
-  const azulClaro = theme === "dark" ? "#3B82F6" : "#3B82F6";
 
   useEffect(() => {
     if (isAuth) {
@@ -29,13 +41,36 @@ export default function UserFormLogin({ title, onClose }) {
     }
   }, [isAuth, navigate]);
 
+  useEffect(() => {
+    if (view === "forgotPassword" && mailExist) {
+      setTimeout(() => {
+        setView("reset");
+      }, 2000);
+    }
+  }, [mailExist, view]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => {
-      const newFormData = { ...prevState, [name]: value };
-      validationLogin(newFormData, errors, setErrors);
-      return newFormData;
-    });
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    validationLogin({ ...formData, [name]: value }, errors, setErrors, view);
+    
+    if (name === "newPassword" || name === "confirmPassword") {
+      if (name === "newPassword") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          confirmPassword: "",
+        }));
+      }
+      if (name === "confirmPassword") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          confirmPassword: value !== formData.newPassword ? "Passwords do not match" : "",
+        }));
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -43,17 +78,35 @@ export default function UserFormLogin({ title, onClose }) {
     validationLogin(formData, errors, setErrors);
     const noErrors = Object.keys(errors).every((key) => errors[key] === "");
 
-    if (noErrors) {
+    if (noErrors && formData.newPassword === formData.confirmPassword) {
       try {
-        dispatch(login(formData));
-
+        if (view === "login") {
+          dispatch(login(formData));
+        } else if (view === "reset") {
+          dispatch(sendNewPassword(formData));
+        }
+        
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       } catch (error) {
-        toast.error("Login failed. Please try again.");
+        toast.error("Operation failed. Please try again.");
         console.log(error.message);
       }
+    } else {
+      toast.error("Please fix the errors before submitting the form.");
+    }
+  };
+
+  const handlePasswordReset = (e) => {
+    e.preventDefault();
+    if (formData.email) {
+      dispatch(resetPassword(formData.email));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Please enter your email.",
+      }));
     }
   };
 
@@ -66,11 +119,8 @@ export default function UserFormLogin({ title, onClose }) {
     e.preventDefault();
     dispatch(doSignInWithGoogle());
   };
-  console.log(theme);
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <form
         className="bg-white text-center shadow-md p-2 rounded-xl w-full max-w-sm space-y-6"
         onSubmit={handleSubmit}
@@ -94,7 +144,7 @@ export default function UserFormLogin({ title, onClose }) {
               htmlFor="email"
               style={{ color: textColor }}
             >
-              Email
+              {t("login.email")}
             </label>
             <input
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
@@ -117,7 +167,7 @@ export default function UserFormLogin({ title, onClose }) {
               htmlFor="password"
               style={{ color: textColor }}
             >
-              Password
+              {t("login.password")}
             </label>
             <input
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
@@ -140,13 +190,13 @@ export default function UserFormLogin({ title, onClose }) {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Sign In
+            {t("login.signIn")}
           </button>
           <Link
             to="/signup"
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
           >
-            Register
+            {t("login.register")}
           </Link>
         </div>
         <div className="mt-6 flex justify-center gap-2 items-center flex-col">
@@ -164,7 +214,7 @@ export default function UserFormLogin({ title, onClose }) {
                 className="block w-max ml-1 font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
                 style={{ color: textColor }}
               >
-                Continue with Google
+                {t("login.google")}
               </span>
             </div>
           </button>
@@ -182,7 +232,7 @@ export default function UserFormLogin({ title, onClose }) {
                 className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
                 style={{ color: textColor }}
               >
-                Continue with Facebook
+                {t("login.facebook")}
               </span>
             </div>
           </button>

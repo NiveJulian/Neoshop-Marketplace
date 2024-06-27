@@ -4,12 +4,14 @@ import Paginate from "../Paginate/Paginate";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "../../Redux/Actions/cartActions";
-import { addToFavorites } from "../../Redux/Actions/favoritesActions";
+import { useTranslation } from "react-i18next";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
+
   
   // Calcular los índices de inicio y fin de la página actual
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -23,7 +25,7 @@ export default function ProductList({ allProducts }) {
   const page = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleAddToCart = (product) => {
-    toast.success("Add to cart")
+    toast.success(t("toast.cartTrue"))
     dispatch(addToCart(product));
   };
 

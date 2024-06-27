@@ -1,12 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import validationFormRegisterStore from "./validationformregisterstore"; 
+import validationFormRegisterStore from "./validationformregisterstore";
 import toast from "react-hot-toast";
 import { ReactSortable } from "react-sortablejs";
 import { uploadImages } from "../../Redux/Actions/updateImageActions";
 import { createStore } from "../../Redux/Actions/storeActions";
+import { useTranslation } from "react-i18next";
 
-export default function FormRegisterStore({ title = "Create Store", user }) {
+export default function FormRegisterStore({  user }) {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     address_cp: "",
@@ -23,6 +24,8 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
   const img = useSelector((state) => state.updateImage.images);
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
+  const { t, i18n } = useTranslation();
+
   // const theme = 'light';
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
@@ -42,7 +45,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
       }));
     }
   }, [img]);
-  
+
   const handleImageUpload = async (event) => {
     setIsUploading(true);
     const files = event.target.files;
@@ -54,7 +57,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
         formData.append("file", image);
       });
 
-      dispatch(uploadImages(formData));
+      dispatch(uploadImages(formData,t));
 
       setImages((oldImages) => [...oldImages, ...img]);
 
@@ -100,33 +103,35 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
     e.preventDefault();
     if (Object.keys(memoizedErrors).length === 0) {
       try {
-        dispatch(createStore(formData));
-        toast.loading("Waiting...");
+        dispatch(createStore(formData,t));
+        toast.loading(t("toast.waiting"));
         setTimeout(() => {
           window.location.reload();
           Navigate("/Home")
         }, 2000);
       } catch (error) {
-        toast.error("Register failed. Please try again.");
+        toast.error(t("toast.registerFalse"));
       }
     } else {
-      toast.error("Please fix the errors before submitting.");
+      toast.error(t("toast.registerFalse"));
     }
   };
   return (
-    <div className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen"
-    style={{ background: backgroundColor }}>
+    <div
+      className="flex relative top-0 left-0 bg-opacity-100 md:w-screen sm:w-screen sm:h-screen items-center justify-center w-full h-screen"
+      style={{ background: backgroundColor }}
+    >
       <form
         className="max-w-sm p-4 h-auto bg-white rounded-lg shadow-md"
         onSubmit={handleSubmit}
         style={{ background: backgroundColor }}
       >
         <h1 className="text-center mx-4 mb-4 text-3xl text-primary border-b-2">
-          <strong>{title}</strong>
+          <strong>{t('storeRegister.title')}</strong>
         </h1>
         <div className="flex flex-wrap mx-2 mb-1">
           <div className="rounded-sm w-full py-2 px-4">
-            <label style={{ color: textColor }}>Photos</label>
+            <label style={{ color: textColor }}>{t("storeRegister.photos")}</label>
             <div className="mb-2 flex justify-center items-center gap-1">
               <ReactSortable
                 list={img ? img : images}
@@ -208,7 +213,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
                   />
                 </svg>
 
-                <div>Add image</div>
+                <div>{t("storeRegister.addImage")}</div>
                 <input
                   type="file"
                   onChange={handleImageUpload}
@@ -224,7 +229,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
               htmlFor="name"
               style={{ color: textColor }}
             >
-              Name
+              {t("storeRegister.name")}
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
@@ -234,7 +239,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
               }`}
               id="name"
               type="text"
-              placeholder="Store Name"
+              placeholder={t("storeRegister.namePlaceHolder")}
               name="name"
               value={formData.name}
               onChange={handleChange}
@@ -250,7 +255,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
               htmlFor="address_cp"
               style={{ color: textColor }}
             >
-              Postal Code
+              {t("storeRegister.postalCode")}
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
@@ -260,7 +265,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
               }`}
               id="address_cp"
               type="text"
-              placeholder="Postal Code"
+              placeholder={t("storeRegister.postalCode")}
               name="address_cp"
               value={formData.address_cp}
               onChange={handleChange}
@@ -272,11 +277,11 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
           </div>
           <div className="w-full px-3 mb-1">
             <label
-            style={{ color: textColor }}
+              style={{ color: textColor }}
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
               htmlFor="address_country"
             >
-              Country
+              {t("storeRegister.country")}
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
@@ -286,7 +291,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
               }`}
               id="address_country"
               type="text"
-              placeholder="Country"
+              placeholder={t("storeRegister.country")}
               name="address_country"
               value={formData.address_country}
               onChange={handleChange}
@@ -304,7 +309,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
               htmlFor="address_city"
               style={{ color: textColor }}
             >
-              City
+              {t("storeRegister.city")}
             </label>
             <input
               className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${
@@ -314,7 +319,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
               }`}
               id="address_city"
               type="text"
-              placeholder="City"
+              placeholder={t("storeRegister.city")}
               name="address_city"
               value={formData.address_city}
               onChange={handleChange}
@@ -332,7 +337,7 @@ export default function FormRegisterStore({ title = "Create Store", user }) {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Register
+            {t("storeRegister.button")}
           </button>
         </div>
       </form>

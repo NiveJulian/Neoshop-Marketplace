@@ -31,17 +31,24 @@ export const UPDATE_CART_ITEM_QUANTITY = "UPDATE_CART_ITEM_QUANTITY";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
 import { deleteSessionToken } from "../../components/delCookie";
+// import { auth } from "../../firebase/firebase";
+// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";export const CART_SENT_SUCCESS = "CART_SENT_SUCCESS";
 export const CART_SENT_SUCCESS = "CART_SENT_SUCCESS";
 export const CART_SENT_FAILURE = "CART_SENT_FAILURE";
 export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 export const GET_CART_FAILURE = "GET_CART_FAILURE";
 export const CREATE_STORE_SUCCESS = "CREATE_STORE_SUCCESS";
 export const CREATE_STORE_FAILURE = "CREATE_STORE_FAILURE";
+
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
 export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
 export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
 export const CLEAN_CART = "CLEAN_CART";
-export const MY_SHOPPING = "MY_SHOPPING";
+
+import { useTranslation } from "react-i18next";
+
+const { t, i18n } = useTranslation();
 
 // LOGIN
 export const login = (formData) => async (dispatch) => {
@@ -50,15 +57,14 @@ export const login = (formData) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
-    toast.loading("Waiting...");
+    toast.loading(t("toast.waiting"));
     if (response.data.correctLogin) {
-      toast.success("Login successful!");
-
+      toast.success(t("toast.loginTrue"));
       dispatch({ type: LOGIN_SUCCESS, payload: response.data.user });
     }
   } catch (error) {
     console.log(error);
-    toast.error("Error al ingresar");
+    toast.error(t("toast.loginFalse"));
     localStorage.setItem("isAuth", "false");
   }
 };
@@ -131,7 +137,7 @@ export const loginWithFacebook = (userInfo) => ({
 export const logout = () => async (dispatch) => {
   try {
     dispatch({ type: LOGOUT, payload: false });
-    toast.loading("Waiting...");
+    toast.loading(t("toast.waiting"));
     deleteSessionToken();
     localStorage.setItem("authToken", "false");
 
@@ -147,19 +153,19 @@ export const register = (formData) => async (dispatch) => {
   try {
     const response = await axios.post(`${endpoint}`, formData);
 
-    toast.loading("Waiting...");
+    toast.loading(t("toast.waiting"));
     if (response.status === 200) {
-      toast.success("Register successful!");
+      toast.success(t("toast.registerTrue"));
 
       dispatch({ type: REGISTER_SUCCESS });
       setTimeout(() => {
         location.href = "/confirmation";
       }, 2000);
     } else {
-      toast.error("Error while registering");
+      toast.error(t("toast.registerFalse"));
     }
   } catch (error) {
-    toast.error("Error while registering");
+    toast.error(t("toast.registerFalse"));
 
     console.log(error);
   }
@@ -217,17 +223,17 @@ export const updateUserAddress = (formUpdate) => async (dispatch) => {
     const response = await axios.put(endpoint, formUpdate);
 
     if (response.status === 200) {
-      toast.success("Update successful!");
+      toast.success(t("toast.updateTrue"));
       dispatch({
         type: UPDATE_USER,
         payload: response.data,
       });
       setTimeout(() => {
-        window.history.go(-1);
-      }, 2000);
+        location.href = "/payPreview";
+      }, 5000);
     }
   } catch (error) {
-    toast.error("Error while updating");
+    toast.error(t("toast.updateFalse"));
     console.log(error);
   }
 };
@@ -280,7 +286,7 @@ export const getNewProducts = () => {
 };
 
 export const getProductByName = (name) => {
-  const endpoint = `http://localhost:3001/product/name/${name}`;
+  const endpoint = `http://localhost:3001/product/global/${name}`;
   return async (dispatch) => {
     try {
       let response = await axios.get(endpoint);
@@ -383,7 +389,7 @@ export const createStore = (formData) => async (dispatch) => {
   try {
     const response = await axios.post("http://localhost:3001/store/", formData);
     if (response.status === 200) {
-      toast.success("Your store is create");
+      toast.success(t("toast.storeTrue"));
       dispatch({ type: CREATE_STORE_SUCCESS, payload: response.data });
     }
   } catch (error) {
@@ -401,7 +407,7 @@ export const uploadImages = (formData) => async (dispatch) => {
       }
     );
     if (response.data) {
-      toast.success("Upload image success");
+      toast.success(t("toast.uploadTrue"));
       dispatch({ type: UPLOAD_IMAGES_SUCCESS, payload: response.data.links });
     }
   } catch (error) {
@@ -527,10 +533,10 @@ export const paymentOk = (payment) => {
       console.log(response);
 
       if (response.status === 200) {
-        toast.success("Payment Ok")
+        toast.success(t("toast.paymentTrue"))
       } 
     } catch (error) {
-      toast.error("Error sending payment");
+      toast.error(t("toast.toastPaymentFalse"));
       console.log(error.message);
     }
   };
@@ -546,13 +552,3 @@ export const updateDeliveryMethod = (delivery) => {
   };
 };
 
-export const myShopping = async (userId) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/paying/user/${userId}`); 
-    dispatch({ type: MY_SHOPPING, payload: response });
-    
-  } catch (error) {
-    console.error("Error al obtener las compras:", error);
-    dispatch({ type: MY_SHOPPING, error });
-  }
-};
