@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import rutaBack from "./rutaBack";
 
 export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
 export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";

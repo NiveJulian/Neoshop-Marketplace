@@ -6,15 +6,9 @@ export const CardHome = ({
   id_product,
   name,
   img_product,
-  description,
   date_creation,
   quantity,
-  price,
   store,
-  idStore,
-  available,
-  id_review,
-  id_discounts,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
   const { t, i18n } = useTranslation();
@@ -27,7 +21,10 @@ export const CardHome = ({
   return (
     <article className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border relative w-64" style={{ background: backgroundColor, borderColor: bordesPlomos}}>
       <div className="relative flex mb-4 rounded-2xl">
-        <Link to={`/product/${id_product}`} className="justify-center items-center">
+        <Link
+          to={`/product/${id_product}`}
+          className="justify-center items-center"
+        >
           <img
             className="max-h-80 rounded-2xl w-64 object-cover transition-transform duration-300 transform group-hover:scale-105"
             src={img_product}
@@ -73,11 +70,8 @@ export const CardHome = ({
               />
             </Link>
           </div>
-          
         </div>
-        <div className="flex justify-end">
-        
-        </div>
+        <div className="flex justify-end"></div>
       </div>
       <h3 className="flex font-medium text-xl leading-8">
       <div className="flex flex-1" style={{ color: textColor}}>

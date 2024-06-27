@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { deleteSessionToken } from "../../components/delCookie";
-
+import rutaBack from "./rutaBack"
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const IS_AUTH = "IS_AUTH";
 export const ISNT_AUTH = "ISNT_AUTH";
@@ -11,6 +11,7 @@ export const LOGOUT = "LOGOUT";
 export const UPDATE_USER = "UPDATE_USER";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const LOGIN_WITH_FACEBOOK = "LOGIN_WITH_FACEBOOK";
+export const RESET_PASS = "RESET_PASS";
 
 // LOGIN
 export const login = (formData,t) => async (dispatch) => {
@@ -60,6 +61,7 @@ export const login = (formData,t) => async (dispatch) => {
     const endpoint = "http://localhost:3001/user/";
   
     try {
+      toast.loading("Waiting...");
       const response = await axios.post(`${endpoint}`, formData);
   
       toast.loading(t("toast.waiting"));
@@ -67,6 +69,10 @@ export const login = (formData,t) => async (dispatch) => {
         toast.success(t("toast.registerTrue"));
   
         dispatch({ type: REGISTER_SUCCESS });
+  
+        // Log in the user after successful registration
+        dispatch(login({ email: formData.email, password: formData.password }));
+        
         setTimeout(() => {
           location.href = "/confirmation";
         }, 2000);
@@ -81,7 +87,7 @@ export const login = (formData,t) => async (dispatch) => {
   };
   
   export const getUserById = (id) => {
-    const endpoint = "http://localhost:3001/user";
+    const endpoint = `${rutaBack}/user/`;
     return async (dispatch) => {
       try {
         let response = await axios.get(`${endpoint}/${id}`);
@@ -96,7 +102,7 @@ export const login = (formData,t) => async (dispatch) => {
   };
   
   export const isAuthenticated = (jwtToken) => async (dispatch) => {
-    const endpoint = "http://localhost:3001/login/auth";
+    const endpoint = `${rutaBack}/login/auth`;
     try {
       if (jwtToken) {
         const response = await axios.post(endpoint, {
@@ -146,3 +152,36 @@ export const login = (formData,t) => async (dispatch) => {
       console.log(error);
     }
   };
+
+  export const resetPassword = (email) => async (dispatch) => {
+    const endpoint = `${rutaBack}/user/forgot-password`;
+
+    try {
+      const response = await axios.post(endpoint, {email});
+      console.log (response);
+      if (response.status === 200){
+        toast.success ("We sent you an email, check it please")
+        dispatch({
+          type: RESET_PASS,
+          payload: true,
+        })
+      }
+    } catch (error) {
+      console.log (error.message)
+      toast.error("Error email doesn't exist")
+    }
+  }
+
+  export const sendNewPassword = (formData) => async (dispatch) => {
+    const endpoint = `${rutaBack}/user/reset-password`;
+
+    try {
+      const response = await axios.post(endpoint, {password: formData.newPassword, token: formData.token});
+      if (response.status === 200){
+        toast.success ("Password changed with success")}
+    } catch (error) {
+      console.log (error.message)
+      toast.error("Error: the password could not be replaced, please try again")
+      
+    }
+  }

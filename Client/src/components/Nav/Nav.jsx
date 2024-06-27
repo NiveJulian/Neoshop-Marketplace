@@ -13,12 +13,12 @@ import { useTranslation } from "react-i18next";
 export default function Nav({ color }) {
   const user = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const cartItems = useSelector((state) => state.cart.cartItems) || 0;
+  const cartItems = useSelector((state) => state.cart.cartItems) || [];
 
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const themeColor = useSelector((state) => state.themes.theme);
+  // const themeColor = useSelector((state) => state.themes.theme);
   const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
@@ -60,17 +60,17 @@ export default function Nav({ color }) {
     setShowCart(!showCart);
   };
 
-  function handleShowLogin() {
+  const handleShowLogin = () => {
     setShowLogin(true);
-  }
+  };
 
-  function handleOnClose() {
+  const handleOnClose = () => {
     setShowLogin(false);
-  }
+  };
 
-  function handleProducts() {
+  const handleProducts = () => {
     dispatch(renderCondition("allProducts"));
-  }
+  };
 
   const calculateTotal = () => {
     const total = cartItems.reduce((acc, product) => {
@@ -90,6 +90,11 @@ export default function Nav({ color }) {
   };
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
+  useEffect(() => {
+    if (cartItems.length > 0 && isAuth && user) {
+        dispatch(sendCart(user.id_user, cartItems));
+    }
+  }, [cartItems, isAuth, user, dispatch]);
   return (
     <div className="w-full z-50 shadow-xl">
       <div
@@ -248,8 +253,8 @@ export default function Nav({ color }) {
               )}
             </>
           )}
-          {user?.user_type === "admin" ? (
-            <div className="tooltip" >
+          {user?.user_type === "admin" || user?.user_type === "trader" ? (
+            <div className="tooltip">
               <a
                 href={`http://localhost:3000/dashboard/${user.id_user}`}
                 rel="noopener noreferrer"

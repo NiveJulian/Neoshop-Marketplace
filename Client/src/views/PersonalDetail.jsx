@@ -24,19 +24,17 @@ const PersonalDetail = () => {
         style={{ background: cartBackGround }}
       >
         <div className="flex items-center mb-6">
-          {user.picture === "" ? (
+          {!user.picture === "" ? (
             <img
               src={img}
               alt={user.name}
-              className="rounded-full border p-2 hover:border-secondary w-28 h-28 mr-5"
-              style={{ borderColor: bordesPlomos }}
+              className="rounded-full border border-gray-400 p-2 hover:border-secondary w-28 h-28 mr-5"
             />
           ) : (
             <img
               src={user.picture}
               alt={user.name}
-              className="rounded-full border p-2 hover:border-secondary w-28 h-28 mr-5"
-              style={{ borderColor: bordesPlomos }}
+              className="rounded-full border border-gray-400 p-2 hover:border-secondary w-28 h-28 mr-5"
             />
           )}
 

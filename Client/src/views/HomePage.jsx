@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CardHomeList } from "../components/Home/CardHomeList/CardHomeList";
 import Nav from "../components/Nav/Nav";
@@ -13,13 +13,12 @@ const HomePage = () => {
   const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
-  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
-  const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
+  // const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
+  // const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
 
   useEffect(() => {
     dispatch(getNewProducts());
   }, [dispatch]);
-
   return (
     <div style={{background: backgroundColor}}>
       <Nav color={"primary"} />

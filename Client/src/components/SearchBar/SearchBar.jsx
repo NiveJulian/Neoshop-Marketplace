@@ -53,7 +53,7 @@ export default function SearchBar() {
   const backgroundColorInput = theme === "dark" ? "#ececec" : "#ececec";
   const textColor2 = theme === "dark" ? "#000000" : "#000000";
 
-  const backgroundColor = theme === "dark" ? "#949494" : "#ececec";
+  // const backgroundColor = theme === "dark" ? "#949494" : "#ececec";
   const textColor = theme === "dark" ? "#f0f0f0" : "#f0f0f0";
   const orangeColor = theme === "dark" ? "rgb(214, 124, 50)" : "#FF8200";
 
