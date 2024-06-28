@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Nav from "../components/Nav/Nav";
+import toast from "react-hot-toast";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ import { updateDeliveryMethod } from "../Redux/Actions/payActions";
 export const PayPreview = () => {
   const cart = useSelector((state) => state.cart.cartItems);
   const theme = useSelector((state) => state.themes.theme); //todo
+  const user= useSelector((state) => state.auth.user)
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
   const cartBackGround = theme === "dark" ? "#171717" : "#FFFFFF";
@@ -34,6 +36,15 @@ export const PayPreview = () => {
     setDeliveryMethod(method);
     dispatch(updateDeliveryMethod(method));
   };
+
+  const handleContinue = () =>{
+    if (!user.name){
+      toast.error (("User not logged in")) 
+    }else{
+      
+      navigate("/pay")
+    }
+  }
 
   return (
     <div
@@ -104,9 +115,9 @@ export const PayPreview = () => {
           <div className="flex justify-end mx-16">
             <button
               className="mt-8 mb-8 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-lg flex items-center gap-2 justify-between"
-              onClick={() => navigate("/pay")}
+              onClick={handleContinue}
             >
-              {/* {t('payPreview.continue')} */}
+            
               Continue{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -126,12 +137,6 @@ export const PayPreview = () => {
           </div>
         </div>
       </div>
-      <button
-        className="mt-16 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg"
-        onClick={() => (navigate("/pay"))}
-      >
-        {t('payPreview.continue')}
-      </button>
     </div>
   );
 };

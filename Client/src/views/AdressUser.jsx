@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserAddress } from "../Redux/Actions/authActions";
 import { useNavigate } from "react-router-dom";
@@ -8,24 +8,35 @@ export const AdressUser = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.themes.theme);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
   const cartBackGround = theme === "dark" ? "#1c1c1c" : "#FFFFFF";
-  const letrasPlomas = theme === "dark" ? "#bcbcbc" : "#434343";
   const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
-  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   const [formData, setFormData] = useState({
-    adress_street: user.adress_street || "",
-    adress_nro: user.adress_nro || "",
-    city: user.city || "",
-    state: user.state || "",
-    postalCode: user.postalCode || "",
-    phone_number: user.phone_number || "",
+    adress_street: "",
+    adress_nro: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    phone_number: "",
   });
 
-  const { t, i18n } = useTranslation();
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        adress_street: user.adress_street || "",
+        adress_nro: user.adress_nro || "",
+        city: user.city || "",
+        state: user.state || "",
+        postalCode: user.postalCode || "",
+        phone_number: user.phone_number || "",
+      });
+    }
+  }, [user]);
+
+  const { t } = useTranslation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,12 +63,9 @@ export const AdressUser = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center"
-    style={{ background: backgroundColor }}>
-      <div className="container rounded-2xl max-w-4xl mx-auto"
-      style={{ background: cartBackGround }}>
-        <div className="text-center m-8"
-        style={{ color: textColor }}>
+    <div className="min-h-screen bg-black flex items-center justify-center" style={{ background: backgroundColor }}>
+      <div className="container rounded-2xl max-w-4xl mx-auto" style={{ background: cartBackGround }}>
+        <div className="text-center m-8" style={{ color: textColor }}>
           <h2 className="font-semibold text-3xl">Editar domicilio</h2>
           <p className="font-medium text-lg mt-2">Detalles personales</p>
           <p>Por favor complete todos los campos.</p>
@@ -70,20 +78,20 @@ export const AdressUser = () => {
           <div className="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div className="lg:col-span-2">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                <div className="md:col-span-5" >
-                  <label htmlFor="full_name"style={{color: textColor}}>{t('adress.name')}</label>
+                <div className="md:col-span-5">
+                  <label htmlFor="full_name" style={{color: textColor}}>{t('adress.name')}</label>
                   <input
                     type="text"
                     name="full_name"
                     id="full_name"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-200 text-gray-600 cursor-not-allowed"
-                    value={user.name + " " + user.lastname}
+                    value={user.name + " " + (user.lastname || "")}
                     disabled
                   />
                 </div>
 
-                <div className="md:col-span-5" >
-                  <label htmlFor="email"style={{color: textColor}}>{t('adress.email')}</label>
+                <div className="md:col-span-5">
+                  <label htmlFor="email" style={{color: textColor}}>{t('adress.email')}</label>
                   <input
                     type="email"
                     name="email"
@@ -94,8 +102,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-3" >
-                  <label htmlFor="adress_street"style={{color: textColor}}>{t('adress.street')}</label>
+                <div className="md:col-span-3">
+                  <label htmlFor="adress_street" style={{color: textColor}}>{t('adress.street')}</label>
                   <input
                     type="text"
                     name="adress_street"
@@ -106,8 +114,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2" >
-                  <label htmlFor="adress_nro"style={{color: textColor}} >{t('adress.number')}</label>
+                <div className="md:col-span-2">
+                  <label htmlFor="adress_nro" style={{color: textColor}}>{t('adress.number')}</label>
                   <input
                     type="text"
                     name="adress_nro"
@@ -118,8 +126,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2" >
-                  <label htmlFor="state"style={{color: textColor}}>{t('adress.state')}</label>
+                <div className="md:col-span-2">
+                  <label htmlFor="state" style={{color: textColor}}>{t('adress.state')}</label>
                   <input
                     type="text"
                     name="state"
@@ -131,7 +139,7 @@ export const AdressUser = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="city">Ciudad</label>
+                  <label htmlFor="city" style={{color: textColor}}>Ciudad</label>
                   <input
                     type="text"
                     name="city"
@@ -142,8 +150,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-1" >
-                  <label htmlFor="postalCode"style={{color: textColor}}>{t('adress.postal')}</label>
+                <div className="md:col-span-1">
+                  <label htmlFor="postalCode" style={{color: textColor}}>{t('adress.postal')}</label>
                   <input
                     type="text"
                     name="postalCode"
@@ -154,8 +162,8 @@ export const AdressUser = () => {
                   />
                 </div>
 
-                <div className="md:col-span-5" >
-                  <label htmlFor="phone_number"style={{color: textColor}}>{t('adress.contact')}</label>
+                <div className="md:col-span-5">
+                  <label htmlFor="phone_number" style={{color: textColor}}>{t('adress.contact')}</label>
                   <input
                     type="text"
                     name="phone_number"

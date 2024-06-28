@@ -21,7 +21,7 @@ export const login = (formData,t) => async (dispatch) => {
       const response = await axios.post(endpoint, formData, {
         withCredentials: true,
       });
-      toast.loading(t("toast.waiting"));
+      toast.loading(("toast.waiting"));
       if (response.data.correctLogin) {
         toast.success(t("toast.loginTrue"));
   
@@ -29,7 +29,7 @@ export const login = (formData,t) => async (dispatch) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(t("toast.loginFalse"));
+      toast.error(("toast.loginFalse"));
       localStorage.setItem("isAuth", "false");
     }
   };
@@ -139,17 +139,17 @@ export const login = (formData,t) => async (dispatch) => {
       const response = await axios.put(endpoint, formUpdate);
   
       if (response.status === 200) {
-        toast.success(t("toast.updateTrue"));
+        toast.success(("toast.updateTrue"));
         dispatch({
           type: UPDATE_USER,
           payload: response.data,
         });
         setTimeout(() => {
           navigate(-1);
-        }, 2000);
+        }, 3000);
       }
     } catch (error) {
-      toast.error(t("toast.updateFalse"));
+      toast.error(("toast.updateFalse"));
       console.log(error);
     }
   };
