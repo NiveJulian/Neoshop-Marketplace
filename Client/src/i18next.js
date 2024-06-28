@@ -442,7 +442,7 @@ const resources = {
       },
       homePage: {
         recent: "PRODUCTOS RECIENTES",
-        published: "Publicado el ",
+        published: "Publicado hace ",
         published2: "Publicado hace ",
         storeInfo: "Informacion de la tienda",
         new: "Nuevo",

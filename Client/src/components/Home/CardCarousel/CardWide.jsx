@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { formatDistanceToNow } from "date-fns";
 
 export const CardWide = ({
   id_product,
@@ -9,10 +10,7 @@ export const CardWide = ({
   img_product,
   description,
   date_creation,
-  quantity,
   price,
-  id_store,
-  store,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
   const { t, i18n } = useTranslation();
@@ -21,6 +19,10 @@ export const CardWide = ({
   const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
   const descriptionColor = theme === "dark" ? "#b3b3b3" : "#2B2B2B";
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+
+  const timePublished = date_creation
+  ? formatDistanceToNow(new Date(date_creation))
+  : "";
 
   return (
     <div className="bg-white p-6 shadow-lg transition duration-300 group transform hover:shadow-2xl rounded-2xl cursor-pointer border flex h-80" 
@@ -34,6 +36,7 @@ export const CardWide = ({
           />
         </Link>
       </div>
+      <Link to={`/product/${id_product}`}>
       <div className="w-2/3 p-6 flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-center">
@@ -44,10 +47,8 @@ export const CardWide = ({
               >
                 {name}
               </h3>
-              <p className="text-sm text-gray-500" style={{ color: textColor }}>
-                {" "}
-                {t("homePage.published")}    
-                {date_creation}
+              <p className="text-sm text-gray-500" style={{ color: textColor }}>  
+              Published {timePublished} ago.
               </p>
             </div>
           </div>
@@ -59,6 +60,7 @@ export const CardWide = ({
           <div className="text-lg font-bold text-gray-900" style={{color: textColor}}>${price}</div>
         </div>
       </div>
+      </Link>
     </div>
   );
 };

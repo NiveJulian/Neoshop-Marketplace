@@ -129,7 +129,7 @@ export default function Nav({ color }) {
   //   };
   // }, [isAuth, user, dispatch]);
   return (
-    <div className="w-full z-50 shadow-xl">
+    <div className="w-full z-50 shadow-2xl">
       <div
         className={`flex items-center justify-between px-2 py-2 shadow-md bg-${
           theme === "dark" ? "#1f1f1f" : color
