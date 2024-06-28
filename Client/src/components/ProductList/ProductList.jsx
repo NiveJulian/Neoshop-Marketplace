@@ -30,8 +30,14 @@ export default function ProductList({ allProducts }) {
   const page = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleAddToCart = (product) => {
-    toast.success(t("toast.cartTrue"))
-    dispatch(addToCart(product));
+    const available = product.available
+    if (available) {
+      toast.success(t("toast.cartTrue"))
+      dispatch(addToCart(product));
+    } else {
+      toast.error("Product not available")
+    }
+    
   };
 
   const handleAddToFav = (product) => {

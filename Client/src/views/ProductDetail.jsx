@@ -80,6 +80,7 @@ const ProductDetail = () => {
   const favoriteIds = favorites.map(fav => fav.id_product);
   const isFavorite = favoriteIds.includes(id);
   const { t, i18n } = useTranslation();
+  const isAvailable = product.available
   
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
@@ -109,9 +110,14 @@ const ProductDetail = () => {
     );
   };
 
-  const handleAddToCart = (product) => {
-    toast.success("Add to cart");
-    dispatch(addToCart(product));
+  const handleAddToCart = (product) => {  
+    if (isAvailable) {
+      toast.success("Add to cart");
+      dispatch(addToCart(product));
+    } else {
+      toast.error("Product not available");
+    }
+    
   };
 
   const handleAddToFav = (product) => {
@@ -296,7 +302,7 @@ const ProductDetail = () => {
             <div className="flex">
             <button
               onClick={() => handleAddToCart(product)}
-              className="buy-button"
+              className={`buy-button ${isAvailable ? '' : 'bg-gray-200 text-gray-600 hover:bg-gray-300 cursor-not-allowed'}`}
             >
               {t('productDetail.addToCart')}
             </button>

@@ -27,6 +27,7 @@ export default function FormRegisterStore({  user }) {
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate()
 
   // const theme = 'light';
 
