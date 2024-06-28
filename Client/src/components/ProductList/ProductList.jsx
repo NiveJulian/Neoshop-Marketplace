@@ -4,14 +4,17 @@ import Paginate from "../Paginate/Paginate";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "../../Redux/Actions/cartActions";
-import { addToFavorites, sendFavorites } from "../../Redux/Actions/favoritesActions";
+import { addToFavorites, sendFavorites, removeFromFavorites, deleteFavoriteItem } from "../../Redux/Actions/favoritesActions";
 import { useTranslation } from "react-i18next";
 
 export default function ProductList({ allProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const dispatch = useDispatch();
-  const id_user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user)
+  const id_user = user.id_user
+  const favorites = useSelector((state) => state.favorites.favItems);
+  const favoriteIds = favorites.map(fav => fav.id_product);
   const { t, i18n } = useTranslation();
 
   
@@ -32,11 +35,20 @@ export default function ProductList({ allProducts }) {
   };
 
   const handleAddToFav = (product) => {
-    const id_product = product.id_product
-    toast.success("Add to favorites")
-    dispatch(addToFavorites(product));
-    dispatch(sendFavorites(id_product, id_user))
-
+    const id_product = product.id_product;
+    const isFavorite = favoriteIds.includes(id_product);
+    if (!id_user) {
+      toast.error("User not logged in")
+    }
+    else if (id_user, isFavorite) {
+      toast.success("Removed from favorites");
+      dispatch(removeFromFavorites(product));
+      dispatch(deleteFavoriteItem(id_product, id_user));
+    } else {
+      toast.success("Added to favorites");
+      dispatch(addToFavorites(product));
+      dispatch(sendFavorites(id_product, id_user));
+    }
   };
 
   useEffect(() => {
@@ -54,12 +66,12 @@ export default function ProductList({ allProducts }) {
         {currentProducts.map((product) => (
           <ProductCard
             key={product.id_product}
-            id={product.id_product}
+            id_product={product.id_product}
             name={product.name}
             img_product={product.img_product}
             price={product.price}
             onAddToCart={() => handleAddToCart(product)}
-            onAddToFav={() => handleAddToFav(product.id_product)}
+            onAddToFav={() => handleAddToFav(product)}
             available={product.available}
           />
         ))}
