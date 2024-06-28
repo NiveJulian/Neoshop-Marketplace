@@ -41,7 +41,7 @@ export default function Nav({ color }) {
     if (cartItems.length === 0 && user?.id_user) {
       dispatch(getCartByUserId(user?.id_user));
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, cartItems.length]);
 
   useEffect(() => {
     if (cartItems.length > 0 && isAuth) {
@@ -51,7 +51,7 @@ export default function Nav({ color }) {
         console.error("Error sending cart:", error);
       }
     }
-  }, [ user, dispatch, isAuth]);
+  }, [ user, dispatch, isAuth, cartItems]);
 
   useEffect(() => {
     dispatch(changeTheme(localStorage.getItem("theme") || "light"));
@@ -61,7 +61,7 @@ export default function Nav({ color }) {
     if (cartItems.length >= 1 && isAuth && user) {
       dispatch(sendCart(user.id_user, cartItems));
     }
-  }, [isAuth, user, dispatch]);
+  }, [isAuth, user, dispatch, cartItems]);
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -146,7 +146,7 @@ export default function Nav({ color }) {
           <SearchBar className="flex items-center justify-center" />
         </div>
         <div
-          className="flex items-center gap-4"
+          className="flex items-center gap-2"
           style={{ color: bordesPlomos }}
         >
           <div className="flex items-center gap-2">
@@ -318,8 +318,8 @@ export default function Nav({ color }) {
           )}
           {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
-              <a
-                href={`${rutaBack}/dashboard/${user.id_user}`}
+              <Link
+                to={`http://localhost:3000/dashboard/${user.id_user}`}
                 rel="noopener noreferrer"
                 className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                   color === "primary" ? "text-gray-200" : "text-gray-600"
@@ -340,7 +340,7 @@ export default function Nav({ color }) {
                     d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
                   />
                 </svg>
-              </a>
+              </Link>
               <div className="tooltiptext" style={{ borderColor: bordesPlomos }}>Dashboard</div>
             </div>
           ) : (

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
 
 export const CardWide = ({
   id_product,
@@ -15,7 +14,6 @@ export const CardWide = ({
   store,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
-  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
   const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
@@ -38,22 +36,11 @@ export const CardWide = ({
         <div>
           <div className="flex justify-between items-center">
             <div>
-              <h3
-                className="text-2xl font-bold mb-2"
-                style={{ color: textColor }}
-              >
-                {name}
-              </h3>
-              <p className="text-sm text-gray-500" style={{ color: textColor }}>
-                {" "}
-                {t("homePage.published")}    
-                {date_creation}
-              </p>
+              <h3 className="text-2xl font-bold mb-2" style={{color: textColor}}>{name}</h3>
+              <p className="text-sm text-gray-500" style={{color: textColor}}>Published on {date_creation}</p>
             </div>
           </div>
-          <p className="mt-4 text-gray-700" style={{ color: descriptionColor }}>
-            {description}
-          </p>
+          <p className="mt-4 text-gray-700" style={{color: descriptionColor}} >{description}</p>
         </div>
         <div className="flex justify-between items-center mt-4">
           <div className="text-lg font-bold text-gray-900" style={{color: textColor}}>${price}</div>

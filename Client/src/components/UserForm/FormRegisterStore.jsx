@@ -25,7 +25,6 @@ export default function FormRegisterStore({  user }) {
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
   const { t, i18n } = useTranslation();
-
   // const theme = 'light';
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
@@ -96,9 +95,6 @@ export default function FormRegisterStore({  user }) {
     setErrors(memoizedErrors);
   }, [memoizedErrors]);
 
-  console.log(formData);
-  console.log(img);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(memoizedErrors).length === 0) {
@@ -106,8 +102,7 @@ export default function FormRegisterStore({  user }) {
         dispatch(createStore(formData,t));
         toast.loading(t("toast.waiting"));
         setTimeout(() => {
-          window.location.reload();
-          Navigate("/Home")
+          window.location.href = "/"
         }, 2000);
       } catch (error) {
         toast.error(t("toast.registerFalse"));

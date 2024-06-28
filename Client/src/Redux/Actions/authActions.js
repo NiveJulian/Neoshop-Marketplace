@@ -2,6 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { deleteSessionToken } from "../../components/delCookie";
 import rutaBack from "./rutaBack"
+import { t } from "i18next";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const IS_AUTH = "IS_AUTH";
 export const ISNT_AUTH = "ISNT_AUTH";

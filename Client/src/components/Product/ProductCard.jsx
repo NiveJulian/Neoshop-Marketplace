@@ -2,6 +2,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -144,7 +145,7 @@ export const ProductCard = ({
                 />
               </svg>
 
-              <button className="text-sm" color={textColorButton}>Add to cart</button>
+              <button className="text-sm" color={textColorButton}>{t('addToCart')}</button>
             </div>
           </div>
         </div>
