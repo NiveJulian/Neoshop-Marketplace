@@ -81,7 +81,7 @@ export default function UserFormLogin({ title, onClose }) {
     if (noErrors && formData.newPassword === formData.confirmPassword) {
       try {
         if (view === "login") {
-          dispatch(login(formData));
+          dispatch(login(formData, t));
         } else if (view === "reset") {
           dispatch(sendNewPassword(formData));
         }

@@ -126,14 +126,14 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
   }
 };
 
-export const updateUserAddress = (formUpdate, navigate) => async (dispatch) => {
+export const updateUserAddress = (formUpdate, navigate, t) => async (dispatch) => {
   const endpoint = `${rutaBack}/user/update`;
 
   try {
     const response = await axios.put(endpoint, formUpdate);
 
     if (response.status === 200) {
-      toast.success("toast.updateTrue");
+      toast.success(t("toast.updateTrue"));
       dispatch({
         type: UPDATE_USER,
         payload: response.data,
@@ -143,7 +143,7 @@ export const updateUserAddress = (formUpdate, navigate) => async (dispatch) => {
       }, 3000);
     }
   } catch (error) {
-    toast.error("toast.updateFalse");
+    toast.error(t("toast.updateFalse"));
     console.log(error);
   }
 };
