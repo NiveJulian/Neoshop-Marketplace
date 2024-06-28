@@ -2,14 +2,7 @@ import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from "fireb
 import { auth } from "./firebase";
 import store from "../Redux/Store/Store";
 import { loginWithFacebook, loginWithGoogle } from "../Redux/Actions/authActions";
-
-// export const doCreateUserWithEmailAndPassword = async (email, password) => {
-//   return createUserWithEmailAndPassword(auth, email, password);
-// };
-
-// export const doSignInWithEmailAndPassowrd = async (email, password) => {
-//   return signInWithEmailAndPassword(auth, email, password);
-// };
+import rutaBack from "../Redux/Actions/rutaBack";
 
 export const doSignInWithGoogle = async () => {
   try {
@@ -17,7 +10,7 @@ export const doSignInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken();
 
-    const response = await fetch("http://localhost:3001/login/auth/third", {
+    const response = await fetch(`${rutaBack}/login/auth/third`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +47,7 @@ export const doSignWithFacebook = async () => {
     const result = await signInWithPopup(auth, provider);
     const token = await result.user.getIdToken()
 
-    const response = await fetch("http://localhost:3001/login/auth/third", {
+    const response = await fetch(`${rutaBack}/login/auth/third`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

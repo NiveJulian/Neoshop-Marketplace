@@ -323,13 +323,6 @@ const resources = {
     },
   },
 
-
-
-
-
-
-
-
   es: {
     translation: {
       Products: "Productos",

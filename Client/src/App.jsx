@@ -29,7 +29,6 @@ import { getFavoritesByUserId } from "./Redux/Actions/favoritesActions";
 function App() {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.auth.user.id_user);
-  console.log("id:", id);
 
   useEffect(() => {
     dispatch(getAllProducts());

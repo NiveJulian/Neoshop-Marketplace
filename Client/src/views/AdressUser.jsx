@@ -60,7 +60,7 @@ export const AdressUser = () => {
       state: formData.state,
       postalCode: formData.postalCode,
       phone_number: formData.phone_number,
-      picture: img ? img[0][0] : user.picture, // Si hay una imagen nueva, usarla; de lo contrario, mantener la actual del usuario
+      picture: user.picture ? user.picture : img[0][0], // Si hay una imagen nueva, usarla; de lo contrario, mantener la actual del usuario
     };
     console.log(dataToSend);
     dispatch(updateUserAddress(dataToSend, navigate));
@@ -185,7 +185,7 @@ export const AdressUser = () => {
                     name="adress_street"
                     id="adress_street"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-600"
-                    value={formData.adress_street}
+                    value={user?.adress_street ? user?.adress_street : formData.adress_street}
                     onChange={handleChange}
                   />
                 </div>
@@ -199,7 +199,7 @@ export const AdressUser = () => {
                     name="adress_nro"
                     id="adress_nro"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-600"
-                    value={formData.adress_nro}
+                    value={user?.adress_nro ? user?.adress_nro : formData.adress_nro}
                     onChange={handleChange}
                   />
                 </div>
@@ -213,7 +213,7 @@ export const AdressUser = () => {
                     name="state"
                     id="state"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-600"
-                    value={formData.state}
+                    value={user?.state ? user?.state : formData.state}
                     onChange={handleChange}
                   />
                 </div>
@@ -227,7 +227,7 @@ export const AdressUser = () => {
                     name="city"
                     id="city"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-600"
-                    value={formData.city}
+                    value={user?.city ? user?.city : formData.city}
                     onChange={handleChange}
                   />
                 </div>
@@ -241,7 +241,7 @@ export const AdressUser = () => {
                     name="postalCode"
                     id="postalCode"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-600"
-                    value={formData.postalCode}
+                    value={user?.postalCode ? user?.postalCode : formData.postalCode}
                     onChange={handleChange}
                   />
                 </div>
@@ -255,7 +255,7 @@ export const AdressUser = () => {
                     name="phone_number"
                     id="phone_number"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-600"
-                    value={formData.phone_number}
+                    value={user?.phone_number ? user?.phone_number :formData.phone_number}
                     onChange={handleChange}
                   />
                 </div>
