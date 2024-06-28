@@ -5,6 +5,7 @@ import { logout } from "../../Redux/Actions/authActions";
 import { useSelector } from "react-redux";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { cleanFavorites } from "../../Redux/Actions/favoritesActions";
 
 export default function User({ user, onClose }) {
   const dispatch = useDispatch();
@@ -12,8 +13,9 @@ export default function User({ user, onClose }) {
 
   const handleLogout = async () => {
     try {
+      dispatch(cleanFavorites())
       await doSignOut();
-      dispatch(logout(t));
+      dispatch(logout(t)); 
     } catch (error) {
       console.error("Logout failed:", error);
     }

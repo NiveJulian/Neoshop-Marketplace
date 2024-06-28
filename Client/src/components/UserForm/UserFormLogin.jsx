@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 import { login, resetPassword, sendNewPassword } from "../../Redux/Actions/authActions";
@@ -87,6 +87,7 @@ export default function UserFormLogin({ title, onClose }) {
         setTimeout(() => {
           window.location.reload();
         }, 2000);
+        
       } catch (error) {
         toast.error("Operation failed. Please try again.");
         console.log(error.message);

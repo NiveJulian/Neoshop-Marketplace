@@ -32,7 +32,6 @@ const Favorites = () => {
   //   favorite.name.toLowerCase().includes(searchTerm.toLowerCase())
   // );
 
-
   return (
     <div className="bg-gray-100 pb-10 min-h-screen" style={{ background: backgroundColor }}>
         <Nav />

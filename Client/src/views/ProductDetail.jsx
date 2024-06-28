@@ -9,6 +9,7 @@ import { getSellerById } from "../Redux/Actions/storeActions";
 import { addToCart } from "../Redux/Actions/cartActions";
 import { getPaymentsByUserId } from "../Redux/Actions/reviewActions";
 import { sendReview } from "../Redux/Actions/reviewActions";
+import { addToFavorites, sendFavorites, removeFromFavorites, deleteFavoriteItem } from "../Redux/Actions/favoritesActions";
 
 function betterAverageMark(average_mark) {
   const formattedNumber = average_mark.toFixed(1);
@@ -70,22 +71,21 @@ const ProductDetail = () => {
   const product = useSelector((state) => state.product.product);
   const seller = useSelector((state) => state.store.seller);
   const user = useSelector((state) => state.auth.user);
+  const id_user = user.id_user
   const payments = useSelector((state) => state.reviews.allPayments) || [];
   const [newReview, setNewReview] = useState({ text: "", rating: 0 });
-  const theme = useSelector((state) => state.themes.theme);//todo
-
-  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";//todo
-  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
-  const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
-  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
-  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
-  const naranjaClaro = theme === "dark" ? "#FFDCDC" : "#FFDCDC";
-
+  const theme = useSelector((state) => state.themes.theme);
+  const favorites = useSelector((state) => state.favorites.favItems);
+  const favoriteIds = favorites.map(fav => fav.id_product);
+  const isFavorite = favoriteIds.includes(id);
   
 
-  // En useEffect de ProductDetail
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
+  const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
+  const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+
   useEffect(() => {
-    // Lógica para obtener datos del producto, vendedor, etc.
     dispatch(getProductById(id));
     dispatch(getSellerById(product.storeIdStore));
     dispatch(getPaymentsByUserId(user.id_user));
@@ -100,7 +100,7 @@ const ProductDetail = () => {
     e.target.style.height = `${currentRows * textareaLineHeight}px`;
     setNewReview({ ...newReview, text: e.target.value });
   };
-
+  
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? product?.images.length - 1 : prevIndex - 1
@@ -110,6 +110,23 @@ const ProductDetail = () => {
   const handleAddToCart = (product) => {
     toast.success("Add to cart");
     dispatch(addToCart(product));
+  };
+
+  const handleAddToFav = (product) => {
+    const id_product = product.id_product;
+    const isFavorite = favoriteIds.includes(id_product);
+    if (!id_user) {
+      toast.error("User not logged in")
+    }
+    else if (id_user, isFavorite) {
+      toast.success("Removed from favorites");
+      dispatch(removeFromFavorites(product));
+      dispatch(deleteFavoriteItem(id_product, id_user));
+    } else {
+      toast.success("Added to favorites");
+      dispatch(addToFavorites(product));
+      dispatch(sendFavorites(id_product, id_user));
+    }
   };
 
   const handleNextImage = () => {
@@ -274,12 +291,33 @@ const ProductDetail = () => {
                 ({product?.quantity} available)
               </span>
             </div>
+            <div className="flex">
             <button
               onClick={() => handleAddToCart(product)}
               className="buy-button"
             >
               Add to cart
             </button>
+            <button 
+              className="fav-button"
+              onClick={() => handleAddToFav(product)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className={`h-10 w-10 ${isFavorite ? 'text-red-600' : 'text-gray-400'}`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                />
+              </svg>
+            </button>
+            </div>
             <p className="brand">Seller:</p>
             <div className="seller-cont"style={{ borderColor: bordesPlomos}} >
               <img
