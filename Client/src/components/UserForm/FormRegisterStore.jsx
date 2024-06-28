@@ -6,9 +6,11 @@ import { ReactSortable } from "react-sortablejs";
 import { uploadImages } from "../../Redux/Actions/updateImageActions";
 import { createStore } from "../../Redux/Actions/storeActions";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function FormRegisterStore({  user }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     address_cp: "",
     address_country: "",
@@ -106,8 +108,7 @@ export default function FormRegisterStore({  user }) {
         dispatch(createStore(formData,t));
         toast.loading(t("toast.waiting"));
         setTimeout(() => {
-          window.location.reload();
-          Navigate("/Home")
+          navigate("/Home")
         }, 2000);
       } catch (error) {
         toast.error(t("toast.registerFalse"));
