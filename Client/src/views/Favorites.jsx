@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Nav from "../components/Nav/Nav";
 import { getFavoritesByUserId } from "../Redux/Actions/favoritesActions";
 import { FavoritesList } from "../components/Favorites/FavoritesList";
+import { useTranslation } from "react-i18next";
 
 const Favorites = () => {
   const user = useSelector((state) => state.auth.user);
@@ -10,6 +11,7 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState(""); // Estado local para la búsqueda
   const theme = useSelector((state) => state.themes.theme);
+  const { t } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
   const cartBackGround = theme === "dark" ? "#1c1c1c" : "#FFFFFF";
@@ -52,19 +54,19 @@ const Favorites = () => {
             </div>
           </div>
           <div className="mr-6 text-2xl font-bold text-gray-400">
-            Your favorite products
+          {t("favorites.title")}
           </div>
         </div>
         <div className="flex items-center ml-8">
           <input
             type="text"
-            placeholder="Search for products..."
+            placeholder={t("favorites.search")}
             value={searchTerm}
             onChange={handleSearch}
             className="px-4 py-2 border border-gray-400 rounded-lg"
           />
           <div className="ml-4" style={{ color: textColor }}>
-          You have {total} products on favorites
+          {t("favorites.youHave")} {total} {t("favorites.youHave2")}
           </div>       
         </div>
         <div className="mt-2">

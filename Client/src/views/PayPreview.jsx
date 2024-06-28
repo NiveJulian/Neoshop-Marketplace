@@ -80,7 +80,7 @@ export const PayPreview = () => {
         <div className="w-1/3 justify-center mt-10">
           <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg"
           style={{ background: cartBackGround, color: textColor }}>
-            <strong>Summary</strong>
+            <strong>{t("payPreview.summary")}</strong>
             <div className="h-auto w-1/2 my-2 bg-gray-300 mx-auto"></div>
             {cart.map((product, index) => (
               <div
@@ -107,7 +107,7 @@ export const PayPreview = () => {
               onClick={() => navigate("/pay")}
             >
               {/* {t('payPreview.continue')} */}
-              Continue{" "}
+              {t("payPreview.continue")}{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

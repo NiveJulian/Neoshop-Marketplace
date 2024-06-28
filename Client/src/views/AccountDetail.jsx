@@ -2,8 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import Nav from "../components/Nav/Nav";
+import { useTranslation } from "react-i18next";
 
 const AccountDetail = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
   const [showPassword, setShowPassword] = useState(false);
   const theme = useSelector((state) => state.themes.theme);
@@ -33,18 +35,18 @@ const AccountDetail = () => {
           </div>
           </div>
           <div className="mr-6 text-2xl font-bold text-gray-400">
-          Your account details
+          {t('accountDetail.yourAccountDetails')}
         </div>
         </div>
         <div className="space-y-4 mb-4" >
           <div className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow" style={{ borderColor: bordesPlomos }}>
             <div className="flex items-center">
               <div>
-                <h2 className="text-xl font-semibold" style={{ color: textColor }}>Account Data</h2>
-                <p className="text-gray-600" style={{ color: letrasPlomas }}>Email: {user.email}</p>
-                <p className="text-gray-600" style={{ color: letrasPlomas }}>Phone number: {`${user.phone_number || "N/A"}`}</p>
-                <p className="text-gray-600" style={{ color: letrasPlomas }}>Creation Date: {`${user.date_creation || "N/A"}`}</p>
-                <p className="text-gray-600" style={{ color: letrasPlomas }}>Account Type: {`${user.user_type || "N/A"}`}</p>
+                <h2 className="text-xl font-semibold" style={{ color: textColor }}>{t('accountDetail.accountData')}</h2>
+                <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('accountDetail.email')}: {user.email}</p>
+                <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('accountDetail.phoneNumber')}: {`${user.phone_number || "N/A"}`}</p>
+                <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('accountDetail.creationDate')}: {`${user.date_creation || "N/A"}`}</p>
+                <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('accountDetail.accountType')}: {`${user.user_type || "N/A"}`}</p>
               </div>
             </div>
           </div>
@@ -52,9 +54,9 @@ const AccountDetail = () => {
         <div className="flex items-center text-left p-4 border border-gray-300 rounded-lg justify-between w-full flex-grow" style={{ borderColor: bordesPlomos }} >
             <div className="flex items-center">
               <div>
-                <h2 className="text-xl font-semibold" style={{ color: textColor }}>Security</h2>
+                <h2 className="text-xl font-semibold" style={{ color: textColor }}>{t('accountDetail.security')}</h2>
                 <p className="text-gray-600 mr-4" style={{ color: letrasPlomas }}>
-                Password:
+                {t('accountDetail.password')}:
                     <button
                         onClick={() => setShowPassword(!showPassword)}
                         className="ml-2 mr-4 border border-gray-300 rounded-lg pl-1 pr-1 hover:border-secondary"
@@ -63,9 +65,9 @@ const AccountDetail = () => {
                     </button>
                 </p>
                     
-                <p className="text-gray-600" style={{ color: letrasPlomas }}>Phone number: {`${user.phone_number || "N/A"}`}</p>
-                <p className="text-gray-600" style={{ color: letrasPlomas }}>Email verified: {`${user.email_verified || "Awaiting verification"}`}</p>
-                <p className="text-gray-600" style={{ color: letrasPlomas }}>Creation Date: {`${user.date_creation || "N/A"}`}</p>
+                <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('accountDetail.phoneNumber')}: {`${user.phone_number || "N/A"}`}</p>
+                <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('accountDetail.emailVerified')}: {`${user.email_verified || t('awaitingVerification')}`}</p>
+                <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('accountDetail.creationDate')}: {`${user.date_creation || "N/A"}`}</p>
               </div>
             </div>
           </div>
