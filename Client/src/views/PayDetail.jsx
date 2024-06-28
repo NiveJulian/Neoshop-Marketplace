@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { cleanCart } from "../Redux/Actions/cartActions";
 import { mailPayOk, paymentOk } from "../Redux/Actions/payActions";
 import { useTranslation } from "react-i18next";
+import SuccessMessage from "../components/PaySuccessButton/SuccessMessage";
+// import { useTranslation } from "react-i18next";
 
 export const PayDetail = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -16,6 +18,7 @@ export const PayDetail = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
+  const [paySuccess, setPaySuccess] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
   const [comission, setComission] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
@@ -31,7 +34,6 @@ export const PayDetail = () => {
     amount: "",
     date: "",
   });
-
   const [loading, setLoading] = useState(true);
 
   const themeLocal = useState(localStorage.getItem("theme"));
@@ -68,9 +70,20 @@ export const PayDetail = () => {
       amount: calculatedFinalTotal,
       date: "",
     });
+    setPaymentDetail({
+      arrayProducts: [...cartItems],
+      id_user: user.id_user,
+      name: user.name,
+      id_payment: "",
+      comission: calculatedComission,
+      deliveryPrice: 4.95,
+      delivery: ship,
+      amount: calculatedFinalTotal,
+      date: "",
+    });
 
     setLoading(false); // Cambiar loading a false una vez que todo este cargado
-  }, [cartItems, user]);
+  }, [cartItems, user, ship]);
 
   async function createOrder() {
     const purchaseUnits = cartItems.map((item) => ({
@@ -82,7 +95,58 @@ export const PayDetail = () => {
         value: parseFloat(item.price).toFixed(2),
       },
     }));
+  async function createOrder() {
+    const purchaseUnits = cartItems.map((item) => ({
+      name: item.name,
+      description: item.description,
+      quantity: item.cartQuantity.toString(),
+      unit_amount: {
+        currency_code: "USD",
+        value: parseFloat(item.price).toFixed(2),
+      },
+    }));
 
+    return await fetch("http://localhost:3001/paypal/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        intent: "CAPTURE",
+        purchase_units: [
+          {
+            amount: {
+              currency_code: "USD",
+              value: finalTotal,
+              breakdown: {
+                item_total: {
+                  currency_code: "USD",
+                  value: subtotal.toFixed(2),
+                },
+                shipping: { currency_code: "USD", value: "4.95" },
+                tax_total: {
+                  currency_code: "USD",
+                  value: comission.toFixed(2),
+                },
+              },
+            },
+            items: purchaseUnits,
+          },
+        ],
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => data.id)
+      .catch((error) => {
+        console.error("Error creating order:", error);
+        throw error;
+      });
+  }
     return await fetch("http://localhost:3001/paypal/create-order", {
       method: "POST",
       headers: {
@@ -153,10 +217,8 @@ export const PayDetail = () => {
       })
       .then((orderData) => {
         const name = orderData.payer.name.given_name;
-        // toast.success(t("toast.paymentTrue") + name);
-        setTimeout(() => {
-          location.href = "/";
-        }, 2000);
+        toast.success("Success Payment Sent! " + name);
+        setPaySuccess(!paySuccess);
       })
       .catch((error) => {
         console.error("Error capturing order:", error);
@@ -167,8 +229,7 @@ export const PayDetail = () => {
   useEffect(() => {
     const sendPayment = async () => {
       try {
-        const response = await paymentOk(paymentDetail,t)();
-        console.log(response);
+        await paymentOk(paymentDetail)();
         dispatch(mailPayOk(user.email, paymentDetail));
         dispatch(cleanCart());
       } catch (error) {
@@ -180,6 +241,9 @@ export const PayDetail = () => {
       sendPayment();
     }
   }, [dispatch, paymentDetail, user.email]);
+  if (paySuccess) {
+    return <SuccessMessage />;
+  }
 
   return (
     <div
@@ -294,3 +358,4 @@ export const PayDetail = () => {
     </div>
   );
 };
+

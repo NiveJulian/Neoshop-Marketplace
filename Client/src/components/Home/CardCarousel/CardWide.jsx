@@ -13,7 +13,6 @@ export const CardWide = ({
   price,
 }) => {
   const theme = useSelector((state) => state.themes.theme);
-  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
   const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
@@ -52,9 +51,7 @@ export const CardWide = ({
               </p>
             </div>
           </div>
-          <p className="mt-4 text-gray-700" style={{ color: descriptionColor }}>
-            {description}
-          </p>
+          <p className="mt-4 text-gray-700" style={{color: descriptionColor}} >{description}</p>
         </div>
         <div className="flex justify-between items-center mt-4">
           <div className="text-lg font-bold text-gray-900" style={{color: textColor}}>${price}</div>

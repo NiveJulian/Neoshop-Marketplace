@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { doSignOut } from "../../firebase/auth";
 import { logout } from "../../Redux/Actions/authActions";
 import { useSelector } from "react-redux";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cleanFavorites } from "../../Redux/Actions/favoritesActions";
 
@@ -60,25 +60,29 @@ export default function User({ user, onClose }) {
             style={{ background: backgroundPerfil }}
           >
             {!user?.picture ? (
-              <svg
-                aria-hidden="true"
-                role="img"
-                className="h-32 w-32 text-white rounded-full mx-auto border border-gray-200 p-2 hover:border-secondary"
-                width="32"
-                height="32"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  fill="currentColor"
-                  d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"
-                ></path>
-              </svg>
+              <Link to={"/adress"}>
+                <svg
+                  aria-hidden="true"
+                  role="img"
+                  className="h-32 w-32 text-white rounded-full mx-auto border border-gray-200 p-2 hover:border-secondary"
+                  width="32"
+                  height="32"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"
+                  ></path>
+                </svg>
+              </Link>
             ) : (
-              <img
-                className="rounded-full border border-gray-200 p-2 hover:border-secondary w-32 h-32"
-                src={user?.picture}
-              ></img>
+              <Link to={"/adress"}>
+                <img
+                  className="rounded-full border border-gray-200 p-2 hover:border-secondary w-32 h-32"
+                  src={user?.picture}
+                ></img>
+              </Link>
             )}
           </div>
 
@@ -113,7 +117,7 @@ export default function User({ user, onClose }) {
               className="text-sm font-medium text-gray-600"
               style={{ color: textColor }}
             >
-              {t('user.profile')}
+              {t("user.profile")}
             </p>
           </Link>
 
@@ -128,7 +132,7 @@ export default function User({ user, onClose }) {
               className="text-sm font-medium text-gray-600"
               style={{ color: textColor }}
             >
-              {t('user.contact')}
+              {t("user.contact")}
             </p>
           </Link>
         </div>
@@ -140,7 +144,7 @@ export default function User({ user, onClose }) {
             onMouseEnter={() => setBgColorLogout(hoverColor)} // Cambia el color al pasar el cursor
             onMouseLeave={() => setBgColorLogout("")} // Restaura el color original al quitar el cursor
           >
-            {t('user.logOut')}
+            {t("user.logOut")}
           </button>
         </div>
       </div>

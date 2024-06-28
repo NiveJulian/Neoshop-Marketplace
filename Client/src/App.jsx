@@ -46,30 +46,6 @@ function App() {
   }, [dispatch, id])
   
 
-  // useEffect(() => {
-  //   const socket = io("http://localhost:3001", {
-  //     withCredentials: true,
-  //     extraHeaders: {
-  //       "my-custom-header": "abcd"
-  //     }
-  //   });
-
-  //   socket.on("connect", () => {
-  //     console.log("Connected to the server");
-  //   });
-
-  //   socket.on("response_event", (data) => {
-  //     console.log("Response event data:", data);
-  //   });
-
-  //   socket.on("disconnect", () => {
-  //     console.log("Disconnected from the server");
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   return (
     <div>

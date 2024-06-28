@@ -160,19 +160,23 @@ const ProductDetail = () => {
     const reviewText = newReview.text.trim();
     if (!reviewText) {
       toast.error(t("toast.empty")); // Validación de texto de reseña no vacío
+      toast.error(t("toast.empty")); // Validación de texto de reseña no vacío
       return;
     }
     if (reviewText.length > 500) {
+      toast.error(t("toast.tooLong")); // Validación de longitud máxima del texto
       toast.error(t("toast.tooLong")); // Validación de longitud máxima del texto
       return;
     }
     const suspiciousPattern = /[<*-+)({}|><^%$#@)>]/; // Validación de caracteres sospechosos utilizando una expresión regular
     if (suspiciousPattern.test(reviewText)) {
       toast.error(t("toast.ilegal"));
+      toast.error(t("toast.ilegal"));
       return;
     }
     if (newReview.rating < 1 || newReview.rating > 5) {
       // Validación de rating en el rango válido (1 a 5)
+      toast.error(t("toast.rating"));
       toast.error(t("toast.rating"));
       return;
     }
@@ -185,15 +189,19 @@ const ProductDetail = () => {
     try {
       dispatch(sendReview(reviewInfo));
       toast.loading(t("toast.waiting"));
+      toast.loading(t("toast.waiting"));
       setTimeout(() => {
         window.location.reload();
       }, 1000);
+      
     } catch (error) {
+      toast.error(t("toast.reviewFalse"));
       toast.error(t("toast.reviewFalse"));
     }
     e.target.previousElementSibling.value = ""; // Limpiar el textarea y resetear la calificación después del envío
     e.target.previousElementSibling.style.height = "auto";
     setNewReview({ text: "", rating: 0 });
+    toast.success(t("toast.reviewTrue"));
     toast.success(t("toast.reviewTrue"));
   };
   
@@ -249,6 +257,7 @@ const ProductDetail = () => {
               <p className="product-description"  style={{ color: textColor}}>{product.description}</p>
               <ul className="specifications-list" style={{ borderColor: bordesPlomos }}>
                 <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>{t('productDetail.characteristics')}</p>
+                <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>{t('productDetail.characteristics')}</p>
                 {/* {Object.entries(product.specifics).map(([key, value]) => (
                   <li key={key}>
                     <span className="spec-name">{key}:</span>{" "}
@@ -262,8 +271,10 @@ const ProductDetail = () => {
           <div className="info-container" style={{ borderColor: bordesPlomos}}>
             <p className="product-date" style={{ color: textColor}}>
             {t('productDetail.published')}: {product ? formatDate(product.date_creation) : null}
+            {t('productDetail.published')}: {product ? formatDate(product.date_creation) : null}
             </p>
             <h1 className="product-name" style={{ color: textColor}}>{product?.name}</h1>
+            <p className="brand" >{t('productDetail.category')}: {product?.category}</p>
             <p className="brand" >{t('productDetail.category')}: {product?.category}</p>
             <div className="content-flex">
               <p className="product-average-mark" style={{ color: textColor }}>
@@ -284,6 +295,7 @@ const ProductDetail = () => {
             <p className="product-price" style={{ color: textColor}}>${product?.price}</p>
             <div className="product-quantity">
               <label htmlFor="quantity-select" style={{ color: textColor}}>{t('productDetail.quantity')}: </label>
+              <label htmlFor="quantity-select" style={{ color: textColor}}>{t('productDetail.quantity')}: </label>
               <select
                 id="quantity-select"
                 value={selectedQuantity}
@@ -296,6 +308,7 @@ const ProductDetail = () => {
                 ))}
               </select>
               <span className="total-available">
+                ({product?.quantity} {t('productDetail.avaliable')})
                 ({product?.quantity} {t('productDetail.avaliable')})
               </span>
             </div>

@@ -49,7 +49,6 @@ export const Products = () => {
         style={{ color: textColor}}>
           {t('productTitle')}
         </h1>
-        {/* <Categories/>  */}
       </div>      
       <div className="relative -mt-24">
         <Sidebar />

@@ -99,9 +99,6 @@ export default function FormRegisterStore({  user }) {
     setErrors(memoizedErrors);
   }, [memoizedErrors]);
 
-  console.log(formData);
-  console.log(img);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(memoizedErrors).length === 0) {

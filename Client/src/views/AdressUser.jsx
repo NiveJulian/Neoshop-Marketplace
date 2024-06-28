@@ -3,18 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUserAddress } from "../Redux/Actions/authActions";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { uploadImages } from "../Redux/Actions/updateImageActions";
 
 export const AdressUser = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-  const themeLocal = useState(localStorage.getItem("theme"));
-  const theme = themeLocal[0];
-  const navigate = useNavigate();
+  const theme = useSelector((state) => state.themes.theme);
+  const navigate = useNavigate()
+  const img = useSelector((state) => state.updateImage.images); // Obtener la imagen del store
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
   const cartBackGround = theme === "dark" ? "#1c1c1c" : "#FFFFFF";
   const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
 
+  const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
     adress_street: "",
     adress_nro: "",
@@ -58,9 +60,31 @@ export const AdressUser = () => {
       state: formData.state,
       postalCode: formData.postalCode,
       phone_number: formData.phone_number,
+      picture: img ? img[0][0] : user.picture, // Si hay una imagen nueva, usarla; de lo contrario, mantener la actual del usuario
     };
     console.log(dataToSend);
     dispatch(updateUserAddress(dataToSend, navigate));
+  };
+
+  const handleImageUpload = async (event) => {
+    setIsUploading(true);
+    const file = event.target.files[0];
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      dispatch(uploadImages(formData, t));
+
+      setIsUploading(false);
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      setIsUploading(false);
+    }
+  };
+
+  const handleImageClick = () => {
+    document.getElementById("imageUploadInput").click();
   };
 
   return (
@@ -82,6 +106,45 @@ export const AdressUser = () => {
           className="bg-white rounded p-2 px-4 md:p-8 mt-6 mb-6 mx-auto max-w-3xl"
           style={{ background: cartBackGround, color: textColor }}
         >
+          <div className="flex justify-center items-center">
+            <div className="rounded-sm w-full py-2 px-4">
+              <div className="mb-2 flex justify-center items-center gap-1">
+                {isUploading && <p>{t("storeRegister.uploading")}</p>}
+                {img && img.length > 0 ? (
+                  <div
+                    className="mt-4"
+                    onClick={handleImageClick}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img
+                      src={img[0][0]} // Mostrar la imagen del estado global img si está disponible
+                      alt="User"
+                      className="w-24 h-24 rounded-full mx-auto"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="mt-4"
+                    onClick={handleImageClick}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img
+                      src={user.picture} // Mostrar la imagen actual del usuario si img está vacío
+                      alt="User"
+                      className="w-24 h-24 rounded-full mx-auto"
+                    />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  id="imageUploadInput"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  multiple={false}
+                />
+              </div>
+            </div>
+          </div>
           <div className="grid gap-4 gap-y-2 text-sm grid-cols-1">
             <div className="lg:col-span-2">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
