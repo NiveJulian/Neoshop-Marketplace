@@ -116,12 +116,14 @@ const resources = {
         reviewdOn:"Reviewd on"
       },
       homePage:{
-        recent:"Recent products",
+        recent:"RECENT PRODUCTS",
         published:"Published on ",
         published2:"Published ",
         storeInfo:"Store Info",
         new:"New",
-        ago:"Days ago"
+        ago:"Days ago",
+        allRecent:"All recent products",
+
       },
       storeDetail:{
         since:"Selling since: ",
@@ -137,11 +139,11 @@ const resources = {
         continue:"Continue",
         edit:"Edit users data"
       },
-      adress:{
-        edit:"Edit address",
+      adressUser:{
+        edit:"Edit Address",
         details:"Personal data",
         please:"Please complete all the fields.",
-        name:"Name LastName",
+        name:"Name and lastname",
         email:"E-mail",
         street:"Street/Avenue",
         number:"Number",
@@ -204,7 +206,9 @@ const resources = {
         communications: "Communications",
         communicationsDescription: "Choose what type of information you want to receive.",
         myShopping: "My shopping",
-        myShoppingDescription: "Your history of shopping on the app."
+        myShoppingDescription: "Your history of shopping on the app.",
+        favorites:"Favorites",
+        favoritesDetail:"List of your favorite products."
       },
       confirmation:{
         question:"What will you do within NeoShop?",
@@ -249,13 +253,49 @@ const resources = {
         updateFalse:"Error while updating",
         storeTrue:"Your store is created",
         imageTrue:"Upload image success",
-        paymentTrue:"Payment Ok",
+        paymentTrue:"Payment Ok! ",
         paymentFalse:"Error sending payment",
         cartTrue:"Add to cart"
+      },
+      forgot:"Forgot your password?",
+      favorites:{
+        title:"Your favorite products",
+        youHave:"You have ",
+        youHave2:"products on Favorites",
+        search:"Search for products...",
+      },
+      accountDetail:{
+        yourAccountDetails: "Your account details",
+        accountData: "Account Data",
+        email: "Email",
+        phoneNumber: "Phone number",
+        creationDate: "Creation Date",
+        accountType: "Account Type",
+        security: "Security",
+        password: "Password",
+        emailVerified: "Email verified",
+        awaitingVerification: "Awaiting verification",
+        favorites: {
+          title: "Your favorite products",
+          youHave: "You have ",
+          youHave2: "products on Favorites",
+          search: "Search for products..."
+        }
+      },
+      shoppingHistory:{
+        yourShoppingHistory: "Your shopping history",
+        searchForProducts: "Search for products...",
+        youHaveProductsInHistory: "You have {total} products in your history"
       }
-
+      
+      
+      
+      
     },
   },
+
+
+
 
 
 
@@ -371,12 +411,13 @@ const resources = {
         reviewdOn:"Comentado el"
       },
       homePage:{
-        recent:"Productos recientes",
+        recent:"PRODUCTOS RECIENTES",
         published:"Publicado el ",
         published2:"Publicado hace ",
         storeInfo:"Informacion de la tienda",
         new:"Nuevo",
-        ago:"dias"
+        ago:"dias",
+        allRecent:"Todos los productos recientes",
       },
       storeDetail:{
         since:"Vendiendo desde: ",
@@ -392,7 +433,7 @@ const resources = {
         continue:"Continuar",
         edit:"Editar info del usuario"
       },
-      adress:{
+      adressUser:{
         edit:"Editar domicilio",
         details:"Detalles personales",
         please:"Por favor complete los campos.",
@@ -459,7 +500,9 @@ const resources = {
         communications: "Comunicaciones",
         communicationsDescription: "Elige qué tipo de información deseas recibir.",
         myShopping: "Mis compras",
-        myShoppingDescription: "Tu historial de compras en la aplicación."
+        myShoppingDescription: "Tu historial de compras en la aplicación.",
+        favorites:"Favoritos",
+        favoritesDetail:"Una lista de tus productos favoritos."
       },
       confirmation:{
         question:"¿Qué harás dentro de NeoShop?",
@@ -504,10 +547,45 @@ const resources = {
         updateFalse:"Error al actualizar",
         storeTrue:"Tu tienda se creo exitosamente",
         imageTrue:"Se subio la imagen",
-        paymentTrue:"Pago completado",
+        paymentTrue:"Pago completado! ",
         paymentFalse:"Error al enviar el pago",
         cartTrue:"Se añadio al carrito"
+      },
+      forgot:"¿Te olvidaste tu contraseña?",
+      favorites:{
+        title:"Tus productos favoritos",
+        youHave:"Tienes ",
+        youHave2:"productos en tu lista de favoritos",
+        search:"Buscar productos...",
+      },
+      accountDetail:{
+        yourAccountDetails: "Detalles de tu cuenta",
+        accountData: "Datos de la cuenta",
+        email: "Correo electrónico",
+        phoneNumber: "Número de teléfono",
+        creationDate: "Fecha de creación",
+        accountType: "Tipo de cuenta",
+        security: "Seguridad",
+        password: "Contraseña",
+        emailVerified: "Correo verificado",
+        awaitingVerification: "En espera de verificación",
+        favorites: {
+          title: "Tus productos favoritos",
+          youHave: "Tienes ",
+          youHave2: " productos en Favoritos",
+          search: "Buscar productos..."
+        }
+      },
+      shoppingHistory:{
+        yourShoppingHistory: "Tu historial de compras",
+        searchForProducts: "Buscar productos...",
+        youHaveProductsInHistory: "Tienes ",
+        youHaveProductsInHistory2: " productos en tu historial"
       }
+      
+      
+      
+      
     },
   },
 };
