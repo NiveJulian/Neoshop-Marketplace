@@ -11,11 +11,13 @@ import { useTranslation } from "react-i18next";
 export const Products = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.product.allProducts);
-  const filteredProducts = useSelector((state) => state.product.filteredProducts);
+  const filteredProducts = useSelector(
+    (state) => state.product.filteredProducts
+  );
   const filters = useSelector((state) => state.product.filters);
   const namedProducts = useSelector((state) => state.product.namedProducts);
   const condition = useSelector((state) => state.product.condition);
-  const theme = useSelector((state) => state.themes.theme) ;
+  const theme = useSelector((state) => state.themes.theme);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {

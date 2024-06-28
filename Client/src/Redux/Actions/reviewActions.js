@@ -24,6 +24,7 @@ export const sendReview = (reviewInfo) => async (dispatch) => {
 
   export const getPaymentsByUserId = (id_user) => {
     const endpoint = `${rutaBack}/paying/user/${id_user}`;
+    const endpoint = `${rutaBack}/paying/user/${id_user}`;
     return async (dispatch) => {
       try {
         let response = await axios.get(endpoint);

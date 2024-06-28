@@ -5,7 +5,11 @@ import UserFormLogin from "../UserForm/UserFormLogin";
 import { useSelector, useDispatch } from "react-redux";
 import User from "../Users/User";
 import CartList from "../ProductCart/CartList/CartList";
-import { getCartByUserId, sendCart, updateCart } from "../../Redux/Actions/cartActions";
+import {
+  getCartByUserId,
+  sendCart,
+  updateCart,
+} from "../../Redux/Actions/cartActions";
 import { renderCondition } from "../../Redux/Actions/productActions";
 import { changeTheme } from "../../Redux/Actions/themeActions";
 import { useTranslation } from "react-i18next";
@@ -15,6 +19,7 @@ export default function Nav({ color }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const cartItems = useSelector((state) => state.cart.cartItems) || [];
 
+  const [showNav, setShowNav] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -129,10 +134,31 @@ export default function Nav({ color }) {
   return (
     <div className="w-full z-50 shadow-xl">
       <div
-        className={`flex items-center justify-between px-2 py-2 shadow-md bg-${
-          theme === "dark" ? "#1f1f1f" : color
-        }`}
+        className={`flex items-center justify-between px-2 py-2 shadow-md md:static md:w-auto transition-all ${
+          showNav ? "left-0" : "-left-full"
+        } bg-${theme === "dark" ? "#1f1f1f" : color}`}
       >
+        <div className="md:hidden flex items-center justify-center p-4">
+          <button
+            style={{ color: textColor }}
+            onClick={() => setShowNav(!showNav)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
         <div className="flex gap-2 justify-center items-center">
           <Link to={"/"}>
             <img
@@ -147,6 +173,17 @@ export default function Nav({ color }) {
           className="flex items-center gap-2"
           style={{ color: bordesPlomos }}
         >
+          {showNav ? (
+            <button
+              type="button"
+              className="flex ml-2 top-0 right-0 text-3xl text-gray-800 hover:text-gray-600"
+              onClick={() => setShowNav(!showNav)}
+            >
+              &times;
+            </button>
+          ) : (
+            <></>
+          )}
           <div className="flex items-center gap-2">
             <button
               onClick={() => changeLanguage("en")}
@@ -288,23 +325,25 @@ export default function Nav({ color }) {
                 }`}
                 style={{ borderColor: bordesPlomos}}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    strokeWidth="1.5" 
-                    stroke="currentColor" 
-                    className="size-6"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                </svg> 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                  />
+                </svg>
               </Link>
               <div className="tooltiptext">{t("nav.favorites")}</div>
             </div>
           )}
-          
+
           {showLogin && (
             <>
               {isAuth ? (

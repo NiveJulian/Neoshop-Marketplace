@@ -18,6 +18,7 @@ export const RESET_PASS = "RESET_PASS";
 
 export const login = (formData,t) => async (dispatch) => {
     const endpoint = `${rutaBack}/login/`;
+    const endpoint = `${rutaBack}/login/`;
     try {
       const response = await axios.post(endpoint, formData, {
         withCredentials: true,
@@ -60,6 +61,7 @@ export const login = (formData,t) => async (dispatch) => {
   };
   
   export const register = (formData,t) => async (dispatch) => {
+    const endpoint = `${rutaBack}/user/`;
     const endpoint = `${rutaBack}/user/`;
   
     try {

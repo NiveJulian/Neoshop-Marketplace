@@ -23,6 +23,7 @@ export const CLEAR_FILTER_CATEGORY = 'CLEAR_FILTER_CATEGORY';
 
 export const getAllProducts = () => {
     const endpoint = `${rutaBack}/product/`;
+    const endpoint = `${rutaBack}/product/`;
     return async (dispatch) => {
       try {
         let response = await axios.get(`${endpoint}`);
@@ -53,6 +54,7 @@ export const getAllProducts = () => {
   };
   
   export const getNewProducts = () => {
+    const endpoint = `${rutaBack}/product/latest`;
     const endpoint = `${rutaBack}/product/latest`;
     return async (dispatch) => {
       try {
@@ -86,6 +88,7 @@ export const getAllProducts = () => {
   
   export const getProductByStore = (id) => {
     const endpoint = `${rutaBack}/product/allProductsStore/${id}`;
+    const endpoint = `${rutaBack}/product/allProductsStore/${id}`;
     return async (dispatch) => {
       try {
         let response = await axios.get(endpoint);
@@ -106,7 +109,7 @@ export const getAllCategories = () => {
   
     return async (dispatch) => {
       try {
-        const response = await axios.get(`${endpoint}`);
+        const response = await axios.get(`${rutaBack}/category`);
         return dispatch({
           type: GET_ALL_CATEGORIES,
           payload: response.data,
@@ -122,7 +125,7 @@ export const getAllCategories = () => {
   
     return async (dispatch) => {
       try {
-        const response = await axios.get(`${endpoint}`);
+        const response = await axios.get(`${rutaBack}/brand`);
         return dispatch({
           type: GET_ALL_BRANDS,
           payload: response.data,
@@ -161,6 +164,7 @@ export const getAllCategories = () => {
   export const myShopping = (userId) => {
     return async (dispatch) => {
       try {
+        const response = await axios.get(`${rutaBack}/paying/user/${userId}`);
         const response = await axios.get(`${rutaBack}/paying/user/${userId}`);
         console.log("repsuesta:", response.data); 
         dispatch({ type: MY_SHOPPING, payload: response.data });
