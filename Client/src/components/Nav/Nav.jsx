@@ -319,7 +319,7 @@ export default function Nav({ color }) {
           {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
               <a
-                href={`${rutaBack}/dashboard/${user.id_user}`}
+                href={`http://localhost:3000/dashboard/${user.id_user}`}
                 rel="noopener noreferrer"
                 className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
                   color === "primary" ? "text-gray-200" : "text-gray-600"

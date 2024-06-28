@@ -6,6 +6,7 @@ import { ReactSortable } from "react-sortablejs";
 import { uploadImages } from "../../Redux/Actions/updateImageActions";
 import { createStore } from "../../Redux/Actions/storeActions";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function FormRegisterStore({  user }) {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function FormRegisterStore({  user }) {
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate()
 
   // const theme = 'light';
 
@@ -106,8 +108,7 @@ export default function FormRegisterStore({  user }) {
         dispatch(createStore(formData,t));
         toast.loading(t("toast.waiting"));
         setTimeout(() => {
-          window.location.reload();
-          Navigate("/Home")
+          navigate("/Home")
         }, 2000);
       } catch (error) {
         toast.error(t("toast.registerFalse"));

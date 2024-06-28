@@ -157,8 +157,7 @@ export const ProductCard = ({
           <div className="mt-3 flex items-end justify-between">
             <p className="text-lg font-bold text-blue-500" style={{ color: blueColor}}>${price}</p>
 
-            <div onClick={() => onAddToCart()} className="flex cursor-pointer items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
-              style={{ background:blueColor }}>
+            <div onClick={() => onAddToCart()} className={`flex items-center space-x-1.5 rounded-lg ${available ? ' bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600 cursor-pointer' : ' bg-gray-200 px-4 py-1.5 text-gray-600 duration-100 hover:bg-gray-400 cursor-not-allowed'}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -174,7 +173,7 @@ export const ProductCard = ({
                 />
               </svg>
 
-              <button className="text-sm" color={textColorButton}>{t("addToCart")}</button>
+              <button className={`text-sm ${available ? 'cursor-pointer' : 'cursor-not-allowed'}`} color={textColorButton}>{t("addToCart")}</button>
             </div>
           </div>
         </div>
