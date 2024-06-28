@@ -123,6 +123,7 @@ const resources = {
         new:"New",
         ago:"Days ago",
         allRecent:"All recent products",
+        dayss:"Published 2 days ago"
 
       },
       storeDetail:{
@@ -255,7 +256,15 @@ const resources = {
         imageTrue:"Upload image success",
         paymentTrue:"Payment Ok! ",
         paymentFalse:"Error sending payment",
-        cartTrue:"Add to cart"
+        cartTrue:"Add to cart",
+        emptyUser:"Operation failed. Please try again.",
+        badSubmmit:"Please fix the errors before submitting the form.",
+        empty:"Please write your opinion before submitting.",
+        tooLong:"The review cannot be more than 500 characters.",
+        ilegal:"The review contains illegal characters.",
+        rating:"The rating must be between 1 and 5.",
+        reviewTrue:"Review submitted successfully!",
+        reviewFalse:"Review Failed. Please try again.",
       },
       forgot:"Forgot your password?",
       favorites:{
@@ -286,8 +295,11 @@ const resources = {
         yourShoppingHistory: "Your shopping history",
         searchForProducts: "Search for products...",
         youHaveProductsInHistory: "You have {total} products in your history"
+      },
+      addTocart:"Add to cart",
+      nav:{
+        favorites:"Favorites"
       }
-      
       
       
       
@@ -418,6 +430,7 @@ const resources = {
         new:"Nuevo",
         ago:"dias",
         allRecent:"Todos los productos recientes",
+        dayss:"Publicado hace 2 dias"
       },
       storeDetail:{
         since:"Vendiendo desde: ",
@@ -549,7 +562,15 @@ const resources = {
         imageTrue:"Se subio la imagen",
         paymentTrue:"Pago completado! ",
         paymentFalse:"Error al enviar el pago",
-        cartTrue:"Se añadio al carrito"
+        cartTrue:"Se añadio al carrito",
+        emptyUser:"Algo fallo, por favor intentelo denuevo",
+        badSubmmit:"Arregle los errores antes de enviar",
+        empty:"Por favor escriba algo antes de enviar.",
+        tooLong:"No mas de 500 carcteres.",
+        ilegal:"La review tiene caracteres sospechosos.",
+        rating:"La calificacion debe estar entre 1 y 5",
+        reviewTrue:"Review publicada",
+        reviewFalse:"Por favor intentelo denuevo",
       },
       forgot:"¿Te olvidaste tu contraseña?",
       favorites:{
@@ -581,6 +602,10 @@ const resources = {
         searchForProducts: "Buscar productos...",
         youHaveProductsInHistory: "Tienes ",
         youHaveProductsInHistory2: " productos en tu historial"
+      },
+      addToCart:"Añadir carrito",
+      nav:{
+        favorites:"Favoritos"
       }
       
       

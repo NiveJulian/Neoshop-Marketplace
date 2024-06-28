@@ -90,11 +90,11 @@ export default function UserFormLogin({ title, onClose }) {
           window.location.reload();
         }, 2000);
       } catch (error) {
-        toast.error("Operation failed. Please try again.");
+        toast.error(t("toast.emptyUser"));
         console.log(error.message);
       }
     } else {
-      toast.error("Please fix the errors before submitting the form.");
+      toast.error(t("toast.badSubmmit"));
     }
   };
 
