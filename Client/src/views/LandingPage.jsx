@@ -1,4 +1,5 @@
 import Nav from "../components/Nav/Nav";
+import Footer from '../components/Footer/Footer'
 import Testimonials from "../components/Testimonials/Testimonials";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,8 +9,6 @@ const LandingPage = () => {
   const store = useSelector((state) => state.store.store);
   const theme = useSelector((state) => state.themes.theme);
   const { t, i18n } = useTranslation();
-
-  
 
   const backgroundColor = theme === "dark" ? "#171717" : "#F3F4F6";
   const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
@@ -186,21 +185,7 @@ const LandingPage = () => {
       <section id="testimonials" className="py-6 px-6">
         <Testimonials />
       </section>
-      <footer
-        id="github"
-        className="w-full py-4 bg-gray-800 text-white text-center"
-        style={{ background: backgroundColor }}
-      >
-        <button
-          className="px-6 py-2 bg-gray-900 border border-white rounded-lg transition-colors duration-300 hover:bg-gray-700"
-          onClick={() =>
-            (window.location.href =
-              "https://github.com/Proyecto-final-organization")
-          }
-        >
-          <strong>{t("gitHubButton")}</strong>
-        </button>
-      </footer>
+      <Footer />
     </div>
   );
 };
