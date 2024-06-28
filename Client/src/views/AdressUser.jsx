@@ -101,7 +101,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-5">
                   <label htmlFor="email" style={{ color: textColor }}>
-                    {t('adress.email')}
+                    {t('adressUser.email')}
                   </label>
                   <input
                     type="email"
@@ -115,7 +115,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-3">
                   <label htmlFor="adress_street" style={{ color: textColor }}>
-                    {t('adress.street')}
+                    {t('adressUser.street')}
                   </label>
                   <input
                     type="text"
@@ -129,7 +129,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-2">
                   <label htmlFor="adress_nro" style={{ color: textColor }}>
-                    {t('adress.number')}
+                    {t('adressUser.number')}
                   </label>
                   <input
                     type="text"
@@ -143,7 +143,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-2">
                   <label htmlFor="state" style={{ color: textColor }}>
-                    {t('adress.state')}
+                    {t('adressUser.state')}
                   </label>
                   <input
                     type="text"
@@ -157,7 +157,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-2">
                   <label htmlFor="city" style={{ color: textColor }}>
-                    Ciudad
+                  {t('adressUser.city')}
                   </label>
                   <input
                     type="text"
@@ -171,7 +171,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-1">
                   <label htmlFor="postalCode" style={{ color: textColor }}>
-                    {t('adress.postal')}
+                    {t('adressUser.postal')}
                   </label>
                   <input
                     type="text"
@@ -185,7 +185,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-5">
                   <label htmlFor="phone_number" style={{ color: textColor }}>
-                    {t('adress.contact')}
+                    {t('adressUser.contact')}
                   </label>
                   <input
                     type="text"

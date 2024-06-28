@@ -117,10 +117,9 @@ export const PayPreview = () => {
               className="mt-8 mb-8 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-lg flex items-center gap-2 justify-between"
               onClick={handleContinue}
             >
-              {/* {t('payPreview.continue')} */}
+              
               {t("payPreview.continue")}{" "}
             
-              Continue{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
