@@ -99,7 +99,7 @@ import {
           };
     
         case CLEAN_FAVORITES:
-          localStorage.removeItem("favItems");
+          localStorage.removeItem("favoritesItems");
           return {
             ...state,
             favItems: [],

@@ -16,10 +16,12 @@ export const CardHomeList = ({ allProducts }) => {
   const handleAddToFav = (product) => {
     const id_product = product.id_product;
     const isFavorite = favoriteIds.includes(id_product);
-  
-    if (isFavorite) {
+    if (!id_user) {
+      toast.error("User not logged in")
+    }
+    else if (id_user, isFavorite) {
       toast.success("Removed from favorites");
-      dispatch(removeFromFavorites(id_product));
+      dispatch(removeFromFavorites(product));
       dispatch(deleteFavoriteItem(id_product, id_user));
     } else {
       toast.success("Added to favorites");
