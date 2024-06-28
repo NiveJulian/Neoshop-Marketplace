@@ -45,8 +45,10 @@ export default function Products({ user }) {
       <table className="basic mt-2">
         <thead>
           <tr>
+            <td>Image</td>
             <td>Product Name</td>
-            <td></td>
+            <td>Stock</td>
+            <td>Actions</td>
           </tr>
         </thead>
         <tbody>
@@ -57,7 +59,9 @@ export default function Products({ user }) {
           ) : products.length > 0 ? (
             products.map((product) => (
               <tr key={product?.id_product}>
+                <td><img src={product?.img_product[0]} width={64} height={64} /></td>
                 <td>{product?.name}</td>
+                <td>{product?.quantity}</td>
                 <td>
                   {storeData && (
                     <>

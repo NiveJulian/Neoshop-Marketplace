@@ -11,11 +11,13 @@ import { useTranslation } from "react-i18next";
 export const Products = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.product.allProducts);
-  const filteredProducts = useSelector((state) => state.product.filteredProducts);
+  const filteredProducts = useSelector(
+    (state) => state.product.filteredProducts
+  );
   const filters = useSelector((state) => state.product.filters);
   const namedProducts = useSelector((state) => state.product.namedProducts);
   const condition = useSelector((state) => state.product.condition);
-  const theme = useSelector((state) => state.themes.theme) ;
+  const theme = useSelector((state) => state.themes.theme);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export const Products = () => {
 
   return (
     <div
-      className={`max-w-screen text-center gap-4 ${theme === 'dark' ? 'text-white' : 'bg-gray-300'}`}
+      className={`w-full text-center gap-2 ${theme === 'dark' ? 'text-white' : 'bg-gray-300'}`}
       style={{ backgroundColor: theme === 'dark' ? '#212121' : 'rgb(243, 244, 246)' }}
     >
       <div className="shadow-sm">
@@ -49,7 +51,6 @@ export const Products = () => {
         style={{ color: textColor}}>
           {t('productTitle')}
         </h1>
-        {/* <Categories/>  */}
       </div>      
       <div className="relative -mt-24">
         <Sidebar />

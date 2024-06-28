@@ -6,9 +6,11 @@ import { ReactSortable } from "react-sortablejs";
 import { uploadImages } from "../../Redux/Actions/updateImageActions";
 import { createStore } from "../../Redux/Actions/storeActions";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function FormRegisterStore({  user }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     address_cp: "",
     address_country: "",
@@ -25,6 +27,7 @@ export default function FormRegisterStore({  user }) {
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
   const { t, i18n } = useTranslation();
+
 
   // const theme = 'light';
 
@@ -96,18 +99,13 @@ export default function FormRegisterStore({  user }) {
     setErrors(memoizedErrors);
   }, [memoizedErrors]);
 
-  console.log(formData);
-  console.log(img);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(memoizedErrors).length === 0) {
       try {
         dispatch(createStore(formData,t));
-        toast.loading(t("toast.waiting"));
         setTimeout(() => {
-          window.location.reload();
-          Navigate("/Home")
+          navigate("/Home")
         }, 2000);
       } catch (error) {
         toast.error(t("toast.registerFalse"));

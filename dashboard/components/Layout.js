@@ -31,7 +31,7 @@ export default function Layout({ children, userId, user }) {
 
   useEffect(() => {
     if (userData && userData.user_type !== "admin" && userData.user_type !== "trader") {
-      router.push("/not-authorized"); // Redirigir a una página de "No autorizado"
+      router.push("/not-authorized"); 
     }
   }, [userData, router]);
 

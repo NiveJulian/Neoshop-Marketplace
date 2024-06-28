@@ -7,8 +7,6 @@ const Testimonials = () => {
   const { t } = useTranslation(); // Usa el hook useTranslation para acceder a las traducciones
   
   const testimonialData = t('testimonials', { returnObjects: true });
-  console.log(testimonialData);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleIndex(prevIndex => (prevIndex + 1) % testimonialData.length);

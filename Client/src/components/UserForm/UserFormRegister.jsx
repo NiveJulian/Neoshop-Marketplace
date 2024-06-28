@@ -59,8 +59,6 @@ export default function UserFormRegister({ title = "Register" }) {
       } catch (error) {
         toast.error(t('signUp.registerFailed')); // Traduce el mensaje de error de registro
       }
-    } else {
-      toast.error(t('signUp.fixErrors')); // Traduce el mensaje de corregir errores
     }
   };
 

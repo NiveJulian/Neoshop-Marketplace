@@ -5,7 +5,7 @@ import ProductDetail from "./views/ProductDetail";
 import StoreDetail from "./views/StoreDetail";
 import { Store } from "./views/Store";
 import { Products } from "./views/Products";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
@@ -23,42 +23,28 @@ import { isAuthenticated } from "./Redux/Actions/authActions";
 import MyShopping from "./views/MyShopping";
 import AccountDetail from "./views/AccountDetail";
 import Favorites from "./views/Favorites";
+import { getFavoritesByUserId } from "./Redux/Actions/favoritesActions";
+// import { io } from "socket.io-client";
 
 function App() {
   const dispatch = useDispatch();
+  const id = useSelector((state) => state.auth.user.id_user);
 
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllSellers());
     dispatch(getAllBrands());
     dispatch(getAllCategories());
-    dispatch(isAuthenticated(jwtToken));
+    dispatch(isAuthenticated(jwtToken)); 
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const socket = io("http://localhost:3001", {
-  //     withCredentials: true,
-  //     extraHeaders: {
-  //       "my-custom-header": "abcd"
-  //     }
-  //   });
+  useEffect(() => {
+    if (id) {
+      dispatch(getFavoritesByUserId(id))
+    }
+  }, [dispatch, id])
+  
 
-  //   socket.on("connect", () => {
-  //     console.log("Connected to the server");
-  //   });
-
-  //   socket.on("response_event", (data) => {
-  //     console.log("Response event data:", data);
-  //   });
-
-  //   socket.on("disconnect", () => {
-  //     console.log("Disconnected from the server");
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   return (
     <div>
@@ -78,9 +64,9 @@ function App() {
         <Route path="/personal" element={<PersonalDetail/>} />
         <Route path="/confirmation" element={<ConfirmationUser/>} />
         <Route path="/createstore" element={<CreateStore/>} />
-        <Route path="/payPreview" element={<PayPreview/>} />
-        <Route path="/adress" element={<AdressUser/>} />
-        <Route path="/pay" element={<PayDetail/>} />
+        <Route path="/myshopping" element={<MyShopping/>} />
+        <Route path="/accountdetail" element={<AccountDetail/>} />
+        <Route path="/favorites" element={<Favorites/>} />
         <Route path="/myshopping" element={<MyShopping/>} />
         <Route path="/accountdetail" element={<AccountDetail/>} />
         <Route path="/favorites" element={<Favorites/>} />

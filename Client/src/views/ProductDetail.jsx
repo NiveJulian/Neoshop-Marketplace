@@ -7,9 +7,10 @@ import toast from "react-hot-toast";
 import { getProductById } from "../Redux/Actions/productActions";
 import { getSellerById } from "../Redux/Actions/storeActions";
 import { addToCart } from "../Redux/Actions/cartActions";
-import { addToFavorites } from "../Redux/Actions/favoritesActions";import { getPaymentsByUserId } from "../Redux/Actions/reviewActions";
+import { getPaymentsByUserId } from "../Redux/Actions/reviewActions";
 import { sendReview } from "../Redux/Actions/reviewActions";
 import { useTranslation } from "react-i18next";
+import { addToFavorites, sendFavorites, removeFromFavorites, deleteFavoriteItem } from "../Redux/Actions/favoritesActions";
 
 function betterAverageMark(average_mark) {
   const formattedNumber = average_mark.toFixed(1);
@@ -71,21 +72,23 @@ const ProductDetail = () => {
   const product = useSelector((state) => state.product.product);
   const seller = useSelector((state) => state.store.seller);
   const user = useSelector((state) => state.auth.user);
+  const id_user = user.id_user
   const payments = useSelector((state) => state.reviews.allPayments) || [];
   const [newReview, setNewReview] = useState({ text: "", rating: 0 });
-  const theme = useSelector((state) => state.themes.theme);//todo
+  const theme = useSelector((state) => state.themes.theme);
+  const favorites = useSelector((state) => state.favorites.favItems);
+  const favoriteIds = favorites.map(fav => fav.id_product);
+  const isFavorite = favoriteIds.includes(id);
   const { t, i18n } = useTranslation();
+  const isAvailable = product.available
+  
 
-  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
   const cartBackGround = theme === "dark" ? "#212121" : "#FFFFFF";
-  // const letrasFondoClaro = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
   const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
-  // const naranjaClaro = theme === "dark" ? "#FFDCDC" : "#FFDCDC";
 
-  // En useEffect de ProductDetail
   useEffect(() => {
-    // Lógica para obtener datos del producto, vendedor, etc.
     dispatch(getProductById(id));
     dispatch(getSellerById(product.storeIdStore));
     dispatch(getPaymentsByUserId(user.id_user));
@@ -100,21 +103,43 @@ const ProductDetail = () => {
     e.target.style.height = `${currentRows * textareaLineHeight}px`;
     setNewReview({ ...newReview, text: e.target.value });
   };
-
+  
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? product?.img_product.length - 1 : prevIndex - 1
+      prevIndex === 0 ? product?.images.length - 1 : prevIndex - 1
     );
   };
 
-  const handleAddToCart = (product) => {
-    toast.success(t("toast.cartTrue"));
-    dispatch(addToCart(product,t));
+  const handleAddToCart = (product) => {  
+    if (isAvailable) {
+      toast.success("Add to cart");
+      dispatch(addToCart(product));
+    } else {
+      toast.error("Product not available");
+    }
+    
+  };
+
+  const handleAddToFav = (product) => {
+    const id_product = product.id_product;
+    const isFavorite = favoriteIds.includes(id_product);
+    if (!id_user) {
+      toast.error("User not logged in")
+    }
+    else if (id_user, isFavorite) {
+      toast.success("Removed from favorites");
+      dispatch(removeFromFavorites(product));
+      dispatch(deleteFavoriteItem(id_product, id_user));
+    } else {
+      toast.success("Added to favorites");
+      dispatch(addToFavorites(product));
+      dispatch(sendFavorites(id_product, id_user));
+    }
   };
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === product?.img_product.length - 1 ? 0 : prevIndex + 1
+      prevIndex === product?.images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -134,21 +159,25 @@ const ProductDetail = () => {
     e.preventDefault();
     const reviewText = newReview.text.trim();
     if (!reviewText) {
-      toast.error("Please write your opinion before submitting."); // Validación de texto de reseña no vacío
+      toast.error(t("toast.empty")); // Validación de texto de reseña no vacío
+      toast.error(t("toast.empty")); // Validación de texto de reseña no vacío
       return;
     }
     if (reviewText.length > 500) {
-      toast.error(`The review cannot be more than ${500} characters.`); // Validación de longitud máxima del texto
+      toast.error(t("toast.tooLong")); // Validación de longitud máxima del texto
+      toast.error(t("toast.tooLong")); // Validación de longitud máxima del texto
       return;
     }
     const suspiciousPattern = /[<*-+)({}|><^%$#@)>]/; // Validación de caracteres sospechosos utilizando una expresión regular
     if (suspiciousPattern.test(reviewText)) {
-      toast.error("The review contains illegal characters.");
+      toast.error(t("toast.ilegal"));
+      toast.error(t("toast.ilegal"));
       return;
     }
     if (newReview.rating < 1 || newReview.rating > 5) {
       // Validación de rating en el rango válido (1 a 5)
-      toast.error("The rating must be between 1 and 5.");
+      toast.error(t("toast.rating"));
+      toast.error(t("toast.rating"));
       return;
     }
     const reviewInfo = {
@@ -159,76 +188,49 @@ const ProductDetail = () => {
     };
     try {
       dispatch(sendReview(reviewInfo));
-      toast.loading("Waiting...");
+      toast.loading(t("toast.waiting"));
+      toast.loading(t("toast.waiting"));
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
+      
     } catch (error) {
-      toast.error("Register failed. Please try again.");
+      toast.error(t("toast.reviewFalse"));
+      toast.error(t("toast.reviewFalse"));
     }
     e.target.previousElementSibling.value = ""; // Limpiar el textarea y resetear la calificación después del envío
     e.target.previousElementSibling.style.height = "auto";
     setNewReview({ text: "", rating: 0 });
-    toast.success("Review submitted successfully!");
+    toast.success(t("toast.reviewTrue"));
+    toast.success(t("toast.reviewTrue"));
   };
-
+  
   return (
-    <div style={{ background: backgroundColor }}>
+    <div style={{ background: backgroundColor}}>
       <Nav color={"primary"} />
       {/* <div className="detail-container"> */}
-      <div
-        className="detail-container"
-        style={{ background: cartBackGround, border: "none" }}
-      >
-        <div className="detail-cont">
+      <div className="detail-container" style={{ background: cartBackGround, border: "none" }}>
+      <div className="detail-cont">
           <div>
             <div className="image-container">
-              {product?.img_product?.length > 1 && (
-                <button className="mr-2" onClick={handlePrevImage}>
-                  <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke-width="1.5" 
-                  stroke="currentColor" 
-                  class="size-6"
-                  >
-                    <path 
-                      stroke-linecap="round" 
-                      stroke-linejoin="round" 
-                      d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                  </svg>
-                </button>
+              {product.img_product > 1 && (
+                <button onClick={handlePrevImage}>&lt;</button>
               )}
               <img
                 src={
                   product?.img_product
-                    ? product?.img_product[currentImageIndex]
+                    ? product?.img_product
                     : "neoshoplogo.jpeg"
                 }
                 alt={`Product Image ${currentImageIndex + 1}`}
               />
-              {product?.img_product?.length > 1 && (
-                <button className="ml-2" onClick={handleNextImage}>
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke-width="1.5" 
-                    stroke="currentColor" 
-                    class="size-6"
-                    >
-                      <path 
-                        stroke-linecap="round" 
-                        stroke-linejoin="round" 
-                        d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                  </svg>
-                </button>
+              {product.img_product > 1 && (
+                <button onClick={handleNextImage}>&gt;</button>
               )}
             </div>
-            <div className="thumbnail-container">
-              {product?.img_product?.length > 0 ? (
-                product?.img_product?.map((image, index) => (
+            <div className="thumbnail-container" style={{ borderColor: bordesPlomos }}>
+              {product.length > 0 ? (
+                product.images.map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -255,6 +257,7 @@ const ProductDetail = () => {
               <p className="product-description"  style={{ color: textColor}}>{product.description}</p>
               <ul className="specifications-list" style={{ borderColor: bordesPlomos }}>
                 <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>{t('productDetail.characteristics')}</p>
+                <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>{t('productDetail.characteristics')}</p>
                 {/* {Object.entries(product.specifics).map(([key, value]) => (
                   <li key={key}>
                     <span className="spec-name">{key}:</span>{" "}
@@ -268,8 +271,10 @@ const ProductDetail = () => {
           <div className="info-container" style={{ borderColor: bordesPlomos}}>
             <p className="product-date" style={{ color: textColor}}>
             {t('productDetail.published')}: {product ? formatDate(product.date_creation) : null}
+            {t('productDetail.published')}: {product ? formatDate(product.date_creation) : null}
             </p>
             <h1 className="product-name" style={{ color: textColor}}>{product?.name}</h1>
+            <p className="brand" >{t('productDetail.category')}: {product?.category}</p>
             <p className="brand" >{t('productDetail.category')}: {product?.category}</p>
             <div className="content-flex">
               <p className="product-average-mark" style={{ color: textColor }}>
@@ -287,10 +292,9 @@ const ProductDetail = () => {
                 {product?.available ? "Available" : "Not available"}
               </p>
             </div>
-            <p className="product-price" style={{ color: textColor }}>
-              ${product?.price}
-            </p>
+            <p className="product-price" style={{ color: textColor}}>${product?.price}</p>
             <div className="product-quantity">
+              <label htmlFor="quantity-select" style={{ color: textColor}}>{t('productDetail.quantity')}: </label>
               <label htmlFor="quantity-select" style={{ color: textColor}}>{t('productDetail.quantity')}: </label>
               <select
                 id="quantity-select"
@@ -305,24 +309,46 @@ const ProductDetail = () => {
               </select>
               <span className="total-available">
                 ({product?.quantity} {t('productDetail.avaliable')})
+                ({product?.quantity} {t('productDetail.avaliable')})
               </span>
             </div>
+            <div className="flex">
             <button
               onClick={() => handleAddToCart(product)}
-              className="buy-button"
+              className={`buy-button ${isAvailable ? '' : 'bg-gray-200 text-gray-600 hover:bg-gray-300 cursor-not-allowed'}`}
             >
               {t('productDetail.addToCart')}
             </button>
-            <p className="brand">{t('productDetail.seller')}:</p>
+            <button 
+              className="fav-button"
+              onClick={() => handleAddToFav(product)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className={`h-10 w-10 ${isFavorite ? 'text-red-600' : 'text-gray-400'}`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                />
+              </svg>
+            </button>
+            </div>
+            <p className="brand">Seller:</p>
             <div className="seller-cont"style={{ borderColor: bordesPlomos}} >
               <img
                 className="seller-image"
                 src={seller.logo}
-                alt={`Imagen del vendedor ${seller.name}`}
+                alt={`Imagen del vendedor ${seller.name}`
+              
+              }
               />
-              <p className="sellers-name" style={{ color: textColor }}>
-                {seller.name}
-              </p>
+              <p className="sellers-name" style={{ color: textColor}}>{seller.name}</p>
               <div className="sellers-stats">
                 <p className="sellers-stats-text">
                   {formatVentasText(seller.ventas)}
@@ -341,7 +367,7 @@ const ProductDetail = () => {
                   theme === "dark"
                     ? "seller-button seller-button-dark"
                     : "seller-button"
-                }
+                }            
               >
                 {t('productDetail.goStore')}
               </Link>
@@ -350,11 +376,9 @@ const ProductDetail = () => {
               <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>{t('productDetail.reviews')}</p>
               <div className="review-overflow">
                 {hasUserPurchasedProduct(payments, id) ? (
-                  <div
-                    className="write-review-box"
-                    style={{ background: backgroundColor }}
-                  >
+                  <div className="write-review-box" style={{ background: backgroundColor}}>
                     <textarea
+                    
                       className="review-textarea"
                       value={newReview.text}
                       onChange={handleTextareaChange}
@@ -396,12 +420,7 @@ const ProductDetail = () => {
                       product.reviews.map((review, index) => (
                         <div key={index} className="review-item">
                           <div className="review-item-top">
-                            <p
-                              className="review-author"
-                              style={{ color: textColor }}
-                            >
-                              {review.user.name}
-                            </p>
+                            <p className="review-author" style={{ color: textColor}}>{review.user.name}</p>
                             <StarRating
                               rating={review.rating}
                               color="#ffc107"
@@ -410,12 +429,7 @@ const ProductDetail = () => {
                           <p className="review-date" style={{ color: textColor}}>
                           {t('productDetail.reviewdOn')} {formatDate(review.date)}
                           </p>
-                          <p
-                            className="review-text"
-                            style={{ color: textColor }}
-                          >
-                            "{review.comment}"
-                          </p>
+                          <p className="review-text" style={{ color: textColor}}>"{review.comment}"</p>
                         </div>
                       ))
                     ) : (

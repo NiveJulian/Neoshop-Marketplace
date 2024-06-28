@@ -23,14 +23,13 @@
   }
   .fav-button {
     display: inline-block;
-    background-color: rgb(255, 235, 235);
-    color: rgb(255, 130, 0);
+    background-color: white;
     font-size: 1.2em;
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
-    padding: 15px 30px;
+    padding: 10px 10px;
     border: none;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -46,7 +45,6 @@
   }
 
   .fav-button:hover {
-    background-color: rgb(255, 220, 220);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
   

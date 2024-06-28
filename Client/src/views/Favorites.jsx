@@ -1,90 +1,46 @@
 import React, { useState, useEffect } from "react"; // Asegúrate de importar useState y useEffect
 import { useSelector, useDispatch } from "react-redux";
 import Nav from "../components/Nav/Nav";
-import { myShopping, setHistory } from "../Redux/Actions/productActions";
-import { MyShoppingList } from "../components/MySopping/MyShoppingList";
-import Sidebar from "../components/SideBar/SideBar";
+import { getFavoritesByUserId } from "../Redux/Actions/favoritesActions";
+import { FavoritesList } from "../components/Favorites/FavoritesList";
+import { useTranslation } from "react-i18next";
 
 const Favorites = () => {
   const user = useSelector((state) => state.auth.user);
   const id = user.id_user;
   const dispatch = useDispatch();
-  const filteredShopping = useSelector((state) => state.product.filteredShopping);
-  const condition = useSelector((state) => state.product.condition);
-
   const [searchTerm, setSearchTerm] = useState(""); // Estado local para la búsqueda
+  const theme = useSelector((state) => state.themes.theme);
+  const { t } = useTranslation();
+
+  const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
+  const cartBackGround = theme === "dark" ? "#1c1c1c" : "#FFFFFF";
+  const textColor = theme === "dark" ? "#ECECEC" : "#2b2b2b";
 
   useEffect(() => {
-    if (id) {
-      dispatch(myShopping(id));
+    if (user) {
+      dispatch(getFavoritesByUserId(id))
     }
   }, [dispatch, id]);
 
-  const shopping = useSelector((state) => state.product.myShopping);
-
-  const extractPaymentProducts = (shopping) => {
-    return shopping.reduce((acc, payment) => {
-      payment.paymentProducts.forEach((product) => {
-        acc.push({
-          brand: product.brand,
-          name: product.name,
-          price: product.price,
-          img_product: product.img_product[0],
-          id_product: product.id_product,
-          quantity: product.quantity,
-        });
-      });
-      return acc;
-    }, []);
-  };
-
-  const history = extractPaymentProducts(shopping);
-
-  const total = history.length
-
-  useEffect(() => {
-    if (history.length > 0) {
-      dispatch(setHistory(history));
-    }
-  }, [history, dispatch]);
+  const favorites = useSelector((state) => state.favorites.favItems);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const filterProducts = (products) => {
-    return products.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  };
-
-  const renderProducts = () => {
-    let productsToRender = history;
-
-    switch (condition) {
-      case "filteredProducts":
-        productsToRender = filteredShopping;
-        break;
-      // case "namedProducts":
-      //   productsToRender = namedProducts;
-      //   break;
-      default:
-        productsToRender = history;
-    }
-
-    const filtered = filterProducts(productsToRender); // Filtrar productos en función del término de búsqueda
-    return <MyShoppingList history={filtered} />;
-  };
+  const total = favorites.length
+  // const filteredFavs = favorites.filter((favorite) =>
+  //   favorite.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   return (
-    <div className="bg-gray-100 pb-10 min-h-screen">
+    <div className="bg-gray-100 pb-10 min-h-screen" style={{ background: backgroundColor }}>
         <Nav />
-      <div className="mt-10">
-        <Sidebar />
-      </div>
-
-      <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg border border-gray-300">
-        <div className="flex items-center justify-between mb-10">
+      <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg"
+      style={{ background: cartBackGround }}>
+        <div className="flex items-center justify-between mb-10"
+        style={{ background: cartBackGround }}>
           <div className="flex items-center">
             <img
               src={user.picture}
@@ -92,27 +48,29 @@ const Favorites = () => {
               className="rounded-full border border-gray-400 p-2 w-28 h-28 mr-5"
             />
             <div>
-              <h1 className="text-2xl font-bold">{`${user.name} ${user.lastname || ''}`}</h1>
+              <h1 className="text-2xl font-bold" style={{ color: textColor }}>{`${user.name} ${user.lastname || ''}`}</h1>
               <p className="text-gray-600">{user.email}</p>
             </div>
           </div>
           <div className="mr-6 text-2xl font-bold text-gray-400">
-            Your favorite products
+          {t("favorites.title")}
           </div>
         </div>
         <div className="flex items-center ml-8">
           <input
             type="text"
-            placeholder="Search for products..."
+            placeholder={t("favorites.search")}
             value={searchTerm}
             onChange={handleSearch}
             className="px-4 py-2 border border-gray-400 rounded-lg"
           />
-          <div className="ml-6 text-gray-400">
-            You have {total} products in your favorite list
-          </div>
+          <div className="ml-4" style={{ color: textColor }}>
+          {t("favorites.youHave")} {total} {t("favorites.youHave2")}
+          </div>       
         </div>
-        <div className="mt-2">{renderProducts()}</div>
+        <div className="mt-2">
+          <FavoritesList favorites={favorites}/>
+        </div>
       </div>
     </div>
   );
