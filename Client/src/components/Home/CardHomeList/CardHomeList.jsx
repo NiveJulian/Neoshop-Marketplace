@@ -16,10 +16,12 @@ export const CardHomeList = ({ allProducts }) => {
   const handleAddToFav = (product) => {
     const id_product = product.id_product;
     const isFavorite = favoriteIds.includes(id_product);
-  
-    if (isFavorite) {
+    if (!id_user) {
+      toast.error("User not logged in")
+    }
+    else if (id_user, isFavorite) {
       toast.success("Removed from favorites");
-      dispatch(removeFromFavorites(id_product));
+      dispatch(removeFromFavorites(product));
       dispatch(deleteFavoriteItem(id_product, id_user));
     } else {
       toast.success("Added to favorites");
@@ -29,7 +31,7 @@ export const CardHomeList = ({ allProducts }) => {
   };
 
   return (
-    <div className="max-w-screen mx-4 mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" style={{border:transparent}}>
+    <div className="max-w-screen mx-4 mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12" style={{border:transparent}}>
       {allProducts?.map(product => (
         <CardHome 
           key={product.id_product} 
@@ -38,6 +40,7 @@ export const CardHomeList = ({ allProducts }) => {
           store={product.store}
           img_product={product.img_product[0]}
           price={product.price}
+          date_creation={product.date_creation}
           onAddToFav={() => handleAddToFav(product)}
         />
       ))}

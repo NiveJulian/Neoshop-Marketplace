@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserAddress } from "../Redux/Actions/authActions";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ export const AdressUser = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.themes.theme);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const img = useSelector((state) => state.updateImage.images); // Obtener la imagen del store
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
@@ -18,13 +18,26 @@ export const AdressUser = () => {
 
   const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
-    adress_street: user.adress_street || "",
-    adress_nro: user.adress_nro || "",
-    city: user.city || "",
-    state: user.state || "",
-    postalCode: user.postalCode || "",
-    phone_number: user.phone_number || "",
+    adress_street: "",
+    adress_nro: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    phone_number: "",
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        adress_street: user.adress_street || "",
+        adress_nro: user.adress_nro || "",
+        city: user.city || "",
+        state: user.state || "",
+        postalCode: user.postalCode || "",
+        phone_number: user.phone_number || "",
+      });
+    }
+  }, [user]);
 
   const { t } = useTranslation();
 
@@ -49,6 +62,7 @@ export const AdressUser = () => {
       phone_number: formData.phone_number,
       picture: img ? img[0][0] : user.picture, // Si hay una imagen nueva, usarla; de lo contrario, mantener la actual del usuario
     };
+    console.log(dataToSend);
     dispatch(updateUserAddress(dataToSend, navigate));
   };
 
@@ -83,9 +97,9 @@ export const AdressUser = () => {
         style={{ background: cartBackGround }}
       >
         <div className="text-center m-8" style={{ color: textColor }}>
-          <h2 className="font-semibold text-3xl">Editar domicilio</h2>
-          <p className="font-medium text-lg mt-2">Detalles personales</p>
-          <p>Por favor complete todos los campos.</p>
+          <h2 className="font-semibold text-3xl">{t('adressUser.edit')}</h2>
+          <p className="font-medium text-lg mt-2">{t('adressUser.details')}</p>
+          <p>{t('adressUser.please')}</p>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -136,21 +150,21 @@ export const AdressUser = () => {
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                 <div className="md:col-span-5">
                   <label htmlFor="full_name" style={{ color: textColor }}>
-                    {t("adress.name")}
+                    {t('adressUser.name')}
                   </label>
                   <input
                     type="text"
                     name="full_name"
                     id="full_name"
                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-200 text-gray-600 cursor-not-allowed"
-                    value={user.name}
+                    value={user.name + " " + (user.lastname || "")}
                     disabled
                   />
                 </div>
 
                 <div className="md:col-span-5">
                   <label htmlFor="email" style={{ color: textColor }}>
-                    {t("adress.email")}
+                    {t('adressUser.email')}
                   </label>
                   <input
                     type="email"
@@ -164,7 +178,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-3">
                   <label htmlFor="adress_street" style={{ color: textColor }}>
-                    {t("adress.street")}
+                    {t('adressUser.street')}
                   </label>
                   <input
                     type="text"
@@ -178,7 +192,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-2">
                   <label htmlFor="adress_nro" style={{ color: textColor }}>
-                    {t("adress.number")}
+                    {t('adressUser.number')}
                   </label>
                   <input
                     type="text"
@@ -192,7 +206,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-2">
                   <label htmlFor="state" style={{ color: textColor }}>
-                    {t("adress.state")}
+                    {t('adressUser.state')}
                   </label>
                   <input
                     type="text"
@@ -206,7 +220,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-2">
                   <label htmlFor="city" style={{ color: textColor }}>
-                    {t("adress.city")}
+                  {t('adressUser.city')}
                   </label>
                   <input
                     type="text"
@@ -220,7 +234,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-1">
                   <label htmlFor="postalCode" style={{ color: textColor }}>
-                    {t("adress.postal")}
+                    {t('adressUser.postal')}
                   </label>
                   <input
                     type="text"
@@ -234,7 +248,7 @@ export const AdressUser = () => {
 
                 <div className="md:col-span-5">
                   <label htmlFor="phone_number" style={{ color: textColor }}>
-                    {t("adress.contact")}
+                    {t('adressUser.contact')}
                   </label>
                   <input
                     type="text"
@@ -252,7 +266,7 @@ export const AdressUser = () => {
                       type="submit"
                       className="bg-blue-500 hover:bg-blue-700 mt-6 text-white font-bold py-2 px-4 rounded"
                     >
-                      {t("adress.save")}
+                      {t('adressUser.save')}
                     </button>
                   </div>
                 </div>

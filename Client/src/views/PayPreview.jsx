@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Nav from "../components/Nav/Nav";
+import toast from "react-hot-toast";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,12 @@ import { updateDeliveryMethod } from "../Redux/Actions/payActions";
 export const PayPreview = () => {
   const cart = useSelector((state) => state.cart.cartItems);
   const theme = useSelector((state) => state.themes.theme); //todo
+  const user = useSelector((state) => state.auth.user)
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6"; //todo
   const cartBackGround = theme === "dark" ? "#171717" : "#FFFFFF";
@@ -35,6 +42,18 @@ export const PayPreview = () => {
     dispatch(updateDeliveryMethod(method));
   };
 
+  const handleContinue = () => {
+    if (!user.name) {
+      toast.error("User not logged in");
+    } else {
+      navigate("/pay");
+    }
+  };
+
+  if (!isMounted) {
+    return null; // or a loading spinner
+  }
+
   return (
     <div
       className="min-h-screen text-center bg-gray-100 gap-4"
@@ -46,9 +65,8 @@ export const PayPreview = () => {
       <div className="flex justify-between mt-8">
         <div className="w-1/3 mr-2 ml-10 mt-4">
           <div className="bg-white rounded-lg p-4 shadow-md" style={{ background: cartBackGround, color: textColor }}>
-            <p className="font-bold text-lg">{t('payPreview.delivery')}
-            </p>
-            <label className="flex items-center mt-2" >
+            <p className="font-bold text-lg">{t('payPreview.delivery')}</p>
+            <label className="flex items-center mt-2">
               <input
                 type="checkbox"
                 className="mr-2"
@@ -65,7 +83,7 @@ export const PayPreview = () => {
             </button>
           </div>
           <div className="mt-4 bg-white rounded-lg p-4 shadow-md hover:bg-gray-100"
-          style={{ background: cartBackGround, color: textColor }}>
+            style={{ background: cartBackGround, color: textColor }}>
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -79,8 +97,8 @@ export const PayPreview = () => {
         </div>
         <div className="w-1/3 justify-center mt-10">
           <div className="bg-white rounded-lg p-4 shadow-md mr-10 mt-4 text-lg"
-          style={{ background: cartBackGround, color: textColor }}>
-            <strong>Summary</strong>
+            style={{ background: cartBackGround, color: textColor }}>
+            <strong>{t("payPreview.summary")}</strong>
             <div className="h-auto w-1/2 my-2 bg-gray-300 mx-auto"></div>
             {cart.map((product, index) => (
               <div
@@ -104,10 +122,9 @@ export const PayPreview = () => {
           <div className="flex justify-end mx-16">
             <button
               className="mt-8 mb-8 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-lg flex items-center gap-2 justify-between"
-              onClick={() => navigate("/pay")}
+              onClick={handleContinue}
             >
-              {/* {t('payPreview.continue')} */}
-              Continue{" "}
+              {t("payPreview.continue")}{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -126,12 +143,6 @@ export const PayPreview = () => {
           </div>
         </div>
       </div>
-      <button
-        className="mt-16 ml-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg"
-        onClick={() => (navigate("/pay"))}
-      >
-        {t('payPreview.continue')}
-      </button>
     </div>
   );
 };

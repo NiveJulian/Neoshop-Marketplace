@@ -18,9 +18,9 @@ export const addToFavorites = (product) => ({
     payload: product,
   });
 
-export const removeFromFavorites = (id_product) => ({
+export const removeFromFavorites = (product) => ({
     type: REMOVE_FROM_FAVORITES,
-    payload: id_product,
+    payload: product,
   });
 
 export const cleanFavorites = () => ({
@@ -47,13 +47,14 @@ export const cleanFavorites = () => ({
   export const deleteFavoriteItem = (id_product, id_user) => async (dispatch) => {
     // Para seguir mañana: los datos acá llegan bien, pero en el controller deleteFavorite llegan ambos como undefined,
     // hasta donde vi se manda todo bien asi que no se por que puede ser, por otro lado el post y get funcionan perfectamente.
-    console.log("asi le llegan los datos al delete:", id_product, id_user);
     const endpoint = `${rutaBack}/favorites/`;  
+    
     try {
         if (id_user) {
-            const response = await axios.delete(endpoint,{
-              data: { id_product, id_user }
-            });
+          console.log("asi le llegan los datos al delete:", "product:", id_product, "user:", id_user);
+          const response = await axios.delete(endpoint,{
+            data: { id_product, id_user }
+          });
             console.log("respuesta del delete:", response)
             dispatch({ type: DELETE_FAVORITE_ITEM_SUCCESS, payload: response.data });
         } else {
@@ -70,6 +71,7 @@ export const cleanFavorites = () => ({
 
   export const getFavoritesByUserId = (userId) => async (dispatch) => {
     try {
+      console.log('id en el action:', userId);
       const response = await axios.get(`${rutaBack}/favorites/${userId}`);
       console.log("la respuesta del get de favoritos:", response);
       dispatch({ type: GET_FAVORITES_SUCCESS, payload: response.data });

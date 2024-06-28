@@ -5,7 +5,7 @@ import ProductDetail from "./views/ProductDetail";
 import StoreDetail from "./views/StoreDetail";
 import { Store } from "./views/Store";
 import { Products } from "./views/Products";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import SingUp from "./views/SingUp";
 import { Toaster } from "react-hot-toast";
@@ -23,18 +23,30 @@ import { isAuthenticated } from "./Redux/Actions/authActions";
 import MyShopping from "./views/MyShopping";
 import AccountDetail from "./views/AccountDetail";
 import Favorites from "./views/Favorites";
+import { getFavoritesByUserId } from "./Redux/Actions/favoritesActions";
 // import { io } from "socket.io-client";
 
 function App() {
   const dispatch = useDispatch();
+  const id = useSelector((state) => state.auth.user.id_user);
+  console.log("id:", id);
 
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllSellers());
     dispatch(getAllBrands());
     dispatch(getAllCategories());
-    dispatch(isAuthenticated(jwtToken));
+    dispatch(isAuthenticated(jwtToken)); 
   }, [dispatch]);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getFavoritesByUserId(id))
+    }
+  }, [dispatch, id])
+  
+
+
   return (
     <div>
       <Toaster containerClassName="mt-16" position="top-right" reverseOrder={false} />

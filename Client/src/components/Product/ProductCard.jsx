@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -27,7 +28,7 @@ const PrevArrow = (props) => {
 };
 
 export const ProductCard = ({
-  id,
+  id_product,
   name,
   img_product = [],
   date_creation,
@@ -40,13 +41,19 @@ export const ProductCard = ({
   id_discounts,
   id_store,
   onAddToCart,
+  onAddToFav
 }) => {
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
+
   const neutralColor = theme === "dark" ? "#2F2F2F" : "#FFFFFF";
   const blueColor = theme === "dark" ? "#0069AA" : "#3B82F6";
   const textColorButton = theme === "dark" ? "#b4b4b4" : "#FFFFFF";
   const textColor = theme === "dark" ? "#d1d1d1" : "#292929";
-  const { t, i18n } = useTranslation();
+
+  const favorites = useSelector((state) => state.favorites.favItems);
+  const favoriteIds = favorites.map(fav => fav.id_product);
+  const isFavorite = favoriteIds.includes(id_product);
 
   const settings = {
     dots: true,
@@ -90,8 +97,9 @@ export const ProductCard = ({
     style={{ backgroundColor: neutralColor }}
 
     >
-      <a href={`/product/${id}`}>
+      <a>
         <div className="relative flex items-end overflow-hidden rounded-xl">
+          <Link to={`/product/${id_product}`}>
           {img_product.length > 1 ? (
             <Slider {...settings} className="w-64 h-64">
               {img_product.map((logo, index) => (
@@ -107,6 +115,7 @@ export const ProductCard = ({
               className="w-64 h-64 object-cover"
             />
           )}
+          </Link>          
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,6 +127,26 @@ export const ProductCard = ({
             </svg>
             <span className="ml-1 text-sm text-slate-400">{average_mark}</span>
           </div>
+          <button 
+          className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-lg hover:shadow-lg transition-transform duration-300 transform hover:scale-110"
+          onClick={onAddToFav}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className={`h-5 w-5 ${isFavorite ? 'text-red-600' : 'bg-white text-gray-400'}`}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+            />
+          </svg>
+          <span className="ml-1 text-sm text-slate-400">{quantity}</span>
+        </button>
         </div>
       </a>
 
@@ -128,8 +157,7 @@ export const ProductCard = ({
           <div className="mt-3 flex items-end justify-between">
             <p className="text-lg font-bold text-blue-500" style={{ color: blueColor}}>${price}</p>
 
-            <div onClick={() => onAddToCart()} className="flex cursor-pointer items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
-              style={{ background:blueColor }}>
+            <div onClick={() => onAddToCart()} className={`flex items-center space-x-1.5 rounded-lg ${available ? ' bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600 cursor-pointer' : ' bg-gray-200 px-4 py-1.5 text-gray-600 duration-100 hover:bg-gray-400 cursor-not-allowed'}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -145,7 +173,7 @@ export const ProductCard = ({
                 />
               </svg>
 
-              <button className="text-sm" color={textColorButton}>{t('addToCart')}</button>
+              <button className={`text-sm ${available ? 'cursor-pointer' : 'cursor-not-allowed'}`} color={textColorButton}>{t("addToCart")}</button>
             </div>
           </div>
         </div>
