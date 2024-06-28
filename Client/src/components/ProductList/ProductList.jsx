@@ -56,7 +56,7 @@ export default function ProductList({ allProducts }) {
   }, [allProducts]);
 
   return (
-    <div className="h-screen mb-16">
+    <div className="h-full mb-16">
     {currentProducts.length === 0 ? (
       <div className="text-center text-gray-600 font-bold text-2xl mt-16">
         No se encontraron resultados

@@ -35,7 +35,8 @@ const ProfileDetail = () => {
               className="flex items-center text-left p-2 border rounded-lg justify-between text-gray-600 hover:border-secondary"
               style={{ color: letrasPlomas, borderColor: bordesPlomos }}
             >
-              Edit account
+              {t("profileDetail.editAccount")}
+              
             </button>
           </Link>
         </div>
@@ -47,8 +48,8 @@ const ProfileDetail = () => {
             >
               <div className="flex items-center">
                 <div>
-                  <h2 className="text-xl font-semibold" style={{ color: textColor }}>Personal information</h2>
-                  <p className="text-gray-600" style={{ color: letrasPlomas }}>Information from your identity document and your tax activities.</p>
+                  <h2 className="text-xl font-semibold" style={{ color: textColor }}>{t("profileDetail.personalInformation")}</h2>
+                  <p className="text-gray-600" style={{ color: letrasPlomas }}>{t("profileDetail.personalInfoDescription")}</p>
                 </div>
               </div>
             </button>
@@ -73,8 +74,8 @@ const ProfileDetail = () => {
             >
               <div className="flex items-center">
                 <div>
-                  <h2 className="text-xl font-semibold" style={{ color: textColor }}>My shopping</h2>
-                  <p className="text-gray-600" style={{ color: letrasPlomas }}>Your history of shopping on the app.</p>
+                  <h2 className="text-xl font-semibold" style={{ color: textColor }}>{t('profileDetail.myShopping')}</h2>
+                  <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('profileDetail.myShoppingDescription')}</p>
                 </div>
               </div>
             </button>
@@ -86,8 +87,8 @@ const ProfileDetail = () => {
             >
               <div className="flex items-center">
                 <div>
-                  <h2 className="text-xl font-semibold" style={{ color: textColor }}>Favorites</h2>
-                  <p className="text-gray-600" style={{ color: letrasPlomas }}>List of your favorite products.</p>
+                  <h2 className="text-xl font-semibold" style={{ color: textColor }}>{t('profileDetail.favorites')}</h2>
+                  <p className="text-gray-600" style={{ color: letrasPlomas }}>{t('profileDetail.favoritesDetail')}</p>
                 </div>
               </div>
             </button>

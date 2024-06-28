@@ -9,6 +9,7 @@ import { getSellerById } from "../Redux/Actions/storeActions";
 import { addToCart } from "../Redux/Actions/cartActions";
 import { getPaymentsByUserId } from "../Redux/Actions/reviewActions";
 import { sendReview } from "../Redux/Actions/reviewActions";
+import { useTranslation } from "react-i18next";
 import { addToFavorites, sendFavorites, removeFromFavorites, deleteFavoriteItem } from "../Redux/Actions/favoritesActions";
 
 function betterAverageMark(average_mark) {
@@ -78,6 +79,7 @@ const ProductDetail = () => {
   const favorites = useSelector((state) => state.favorites.favItems);
   const favoriteIds = favorites.map(fav => fav.id_product);
   const isFavorite = favoriteIds.includes(id);
+  const { t, i18n } = useTranslation();
   
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
@@ -151,21 +153,21 @@ const ProductDetail = () => {
     e.preventDefault();
     const reviewText = newReview.text.trim();
     if (!reviewText) {
-      toast.error("Please write your opinion before submitting."); // Validación de texto de reseña no vacío
+      toast.error(t("toast.empty")); // Validación de texto de reseña no vacío
       return;
     }
     if (reviewText.length > 500) {
-      toast.error(`The review cannot be more than ${500} characters.`); // Validación de longitud máxima del texto
+      toast.error(t("toast.tooLong")); // Validación de longitud máxima del texto
       return;
     }
     const suspiciousPattern = /[<*-+)({}|><^%$#@)>]/; // Validación de caracteres sospechosos utilizando una expresión regular
     if (suspiciousPattern.test(reviewText)) {
-      toast.error("The review contains illegal characters.");
+      toast.error(t("toast.ilegal"));
       return;
     }
     if (newReview.rating < 1 || newReview.rating > 5) {
       // Validación de rating en el rango válido (1 a 5)
-      toast.error("The rating must be between 1 and 5.");
+      toast.error(t("toast.rating"));
       return;
     }
     const reviewInfo = {
@@ -176,17 +178,17 @@ const ProductDetail = () => {
     };
     try {
       dispatch(sendReview(reviewInfo));
-      toast.loading("Waiting...");
+      toast.loading(t("toast.waiting"));
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1000);
     } catch (error) {
-      toast.error("Register failed. Please try again.");
+      toast.error(t("toast.reviewFalse"));
     }
     e.target.previousElementSibling.value = ""; // Limpiar el textarea y resetear la calificación después del envío
     e.target.previousElementSibling.style.height = "auto";
     setNewReview({ text: "", rating: 0 });
-    toast.success("Review submitted successfully!");
+    toast.success(t("toast.reviewTrue"));
   };
   
   return (
@@ -240,7 +242,7 @@ const ProductDetail = () => {
             <div className="description-container" >
               <p className="product-description"  style={{ color: textColor}}>{product.description}</p>
               <ul className="specifications-list" style={{ borderColor: bordesPlomos }}>
-                <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>Characterístics</p>
+                <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>{t('productDetail.characteristics')}</p>
                 {/* {Object.entries(product.specifics).map(([key, value]) => (
                   <li key={key}>
                     <span className="spec-name">{key}:</span>{" "}
@@ -253,10 +255,10 @@ const ProductDetail = () => {
 
           <div className="info-container" style={{ borderColor: bordesPlomos}}>
             <p className="product-date" style={{ color: textColor}}>
-              Published: {product ? formatDate(product.date_creation) : null}
+            {t('productDetail.published')}: {product ? formatDate(product.date_creation) : null}
             </p>
             <h1 className="product-name" style={{ color: textColor}}>{product?.name}</h1>
-            <p className="brand" >Category: {product?.category}</p>
+            <p className="brand" >{t('productDetail.category')}: {product?.category}</p>
             <div className="content-flex">
               <p className="product-average-mark" style={{ color: textColor }}>
                 {product.average_mark
@@ -275,7 +277,7 @@ const ProductDetail = () => {
             </div>
             <p className="product-price" style={{ color: textColor}}>${product?.price}</p>
             <div className="product-quantity">
-              <label htmlFor="quantity-select" style={{ color: textColor}}>quantity: </label>
+              <label htmlFor="quantity-select" style={{ color: textColor}}>{t('productDetail.quantity')}: </label>
               <select
                 id="quantity-select"
                 value={selectedQuantity}
@@ -288,7 +290,7 @@ const ProductDetail = () => {
                 ))}
               </select>
               <span className="total-available">
-                ({product?.quantity} available)
+                ({product?.quantity} {t('productDetail.avaliable')})
               </span>
             </div>
             <div className="flex">
@@ -296,7 +298,7 @@ const ProductDetail = () => {
               onClick={() => handleAddToCart(product)}
               className="buy-button"
             >
-              Add to cart
+              {t('productDetail.addToCart')}
             </button>
             <button 
               className="fav-button"
@@ -333,7 +335,7 @@ const ProductDetail = () => {
                   {formatVentasText(seller.ventas)}
                 </p>
                 <p className="sellers-stats-text">
-                  Scrore: {seller.average_mark} / 5
+                {t('productDetail.score')}: {seller.average_mark} / 5
                 </p>
               </div>
               {/* <Link
@@ -348,11 +350,11 @@ const ProductDetail = () => {
                     : "seller-button"
                 }            
               >
-                Go to Store
+                {t('productDetail.goStore')}
               </Link>
             </div>
             <div className="review-container" style={{ background: backgroundColor, borderColor: bordesPlomos}}>
-              <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>Reviews</p>
+              <p className="spec-title" style={{ color: textColor, borderColor: bordesPlomos}}>{t('productDetail.reviews')}</p>
               <div className="review-overflow">
                 {hasUserPurchasedProduct(payments, id) ? (
                   <div className="write-review-box" style={{ background: backgroundColor}}>
@@ -361,12 +363,12 @@ const ProductDetail = () => {
                       className="review-textarea"
                       value={newReview.text}
                       onChange={handleTextareaChange}
-                      placeholder="Write your opinion here..."
+                      placeholder={t('productDetail.placeHolderReviews')}
                       rows={1}
                       style={{ minHeight: "50px" }}
                     />
                     <div className="star-rating-container">
-                      <p className="star-rating-title" style={{ color: textColor}}>Qualification:</p>
+                      <p className="star-rating-title" style={{ color: textColor}}>{t('productDetail.qualification')}:</p>
                       <div className="star-rating-input">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <span
@@ -389,7 +391,7 @@ const ProductDetail = () => {
                       className="submit-review-button"
                       onClick={handleReviewSubmit}
                     >
-                      Send Opinion
+                      {t('productDetail.submitReview')}
                     </button>
                   </div>
                 ) : null}
@@ -406,13 +408,13 @@ const ProductDetail = () => {
                             />{" "}
                           </div>
                           <p className="review-date" style={{ color: textColor}}>
-                            Reviewed on {formatDate(review.date)}
+                          {t('productDetail.reviewdOn')} {formatDate(review.date)}
                           </p>
                           <p className="review-text" style={{ color: textColor}}>"{review.comment}"</p>
                         </div>
                       ))
                     ) : (
-                      <p style={{ color: textColor}}>No reviews available</p>
+                      <p style={{ color: textColor}}>{t('productDetail.noReviews')}</p>
                     )}
                   </div>
                 </div>

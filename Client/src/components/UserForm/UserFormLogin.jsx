@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { doSignWithFacebook, doSignInWithGoogle } from "../../firebase/auth";
 import { login, resetPassword, sendNewPassword } from "../../Redux/Actions/authActions";
 import validationLogin from "./validationLogin";
+import { useTranslation } from "react-i18next";
 
 export default function UserFormLogin({ title, onClose }) {
   const [formData, setFormData] = useState({
@@ -28,6 +29,7 @@ export default function UserFormLogin({ title, onClose }) {
   const mailExist = useSelector((state) => state.auth.mailExist);
   const themeLocal = useState(localStorage.getItem("theme"));
   const theme = themeLocal[0];
+  const { t, i18n } = useTranslation();
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
   const cartBackGround = theme === "dark" ? "#1a1a1a" : "#FFFFFF";
@@ -89,11 +91,11 @@ export default function UserFormLogin({ title, onClose }) {
         }, 2000);
         
       } catch (error) {
-        toast.error("Operation failed. Please try again.");
+        toast.error(t("toast.emptyUser"));
         console.log(error.message);
       }
     } else {
-      toast.error("Please fix the errors before submitting the form.");
+      toast.error(t("toast.badSubmmit"));
     }
   };
 
@@ -145,7 +147,7 @@ export default function UserFormLogin({ title, onClose }) {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="email"
                 >
-                  Email
+                  {t("login.email")}
                 </label>
                 <input
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
@@ -167,7 +169,7 @@ export default function UserFormLogin({ title, onClose }) {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="password"
                 >
-                  Password
+                  {t("login.password")}
                 </label>
                 <input
                   className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
@@ -192,20 +194,20 @@ export default function UserFormLogin({ title, onClose }) {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Sign In
+                {t("login.signIn")}
               </button>
               <button
                 type="button"
                 onClick={() => setView("forgotPassword")}
                 className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               >
-                Forgot your password?
+                {t("forgot")}
               </button>
               <Link
                 to="/signup"
                 className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               >
-                Register
+                {t("login.register")}
               </Link>
             </div>
             <div className="mt-6 flex justify-center gap-2 items-center flex-col">
@@ -220,7 +222,7 @@ export default function UserFormLogin({ title, onClose }) {
                     alt="google logo"
                   />
                   <span className="block w-max ml-1 font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
-                    Continue with Google
+                  {t("login.google")}
                   </span>
                 </div>
               </button>
@@ -235,7 +237,7 @@ export default function UserFormLogin({ title, onClose }) {
                     alt="Facebook logo"
                   />
                   <span className="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">
-                    Continue with Facebook
+                  {t("login.facebook")}
                   </span>
                 </div>
               </button>

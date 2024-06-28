@@ -2,6 +2,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const NextArrow = (props) => {
@@ -43,6 +44,8 @@ export const ProductCard = ({
   onAddToFav
 }) => {
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
+
   const neutralColor = theme === "dark" ? "#2F2F2F" : "#FFFFFF";
   const blueColor = theme === "dark" ? "#0069AA" : "#3B82F6";
   const textColorButton = theme === "dark" ? "#b4b4b4" : "#FFFFFF";
@@ -171,7 +174,7 @@ export const ProductCard = ({
                 />
               </svg>
 
-              <button className="text-sm" color={textColorButton}>Add to cart</button>
+              <button className="text-sm" color={textColorButton}>{t("addToCart")}</button>
             </div>
           </div>
         </div>

@@ -30,7 +30,7 @@ const HomePage = () => {
       <div className="mx-2 flex justify-center items-center flex-col mt-8">        
         <div className="mt-8 mb-16">
           <div className="font-bold text-2xl" style={{color: textColor}}>
-            All recent products
+            {t("homePage.allRecent")}
           </div>
           <CardHomeList allProducts={newProducts} />
         </div>
