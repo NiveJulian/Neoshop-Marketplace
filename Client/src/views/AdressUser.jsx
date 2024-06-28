@@ -62,7 +62,6 @@ export const AdressUser = () => {
       phone_number: formData.phone_number,
       picture: user.picture ? user.picture : img[0][0], // Si hay una imagen nueva, usarla; de lo contrario, mantener la actual del usuario
     };
-    console.log(dataToSend);
     dispatch(updateUserAddress(dataToSend, navigate));
   };
 
