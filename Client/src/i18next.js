@@ -116,12 +116,15 @@ const resources = {
         reviewdOn:"Reviewd on"
       },
       homePage:{
-        recent:"Recent products",
+        recent:"RECENT PRODUCTS",
         published:"Published on ",
         published2:"Published ",
         storeInfo:"Store Info",
         new:"New",
-        ago:"Days ago"
+        ago:"Days ago",
+        allRecent:"All recent products",
+        dayss:"Published 2 days ago"
+
       },
       storeDetail:{
         since:"Selling since: ",
@@ -137,11 +140,11 @@ const resources = {
         continue:"Continue",
         edit:"Edit users data"
       },
-      adress:{
-        edit:"Edit address",
+      adressUser:{
+        edit:"Edit Address",
         details:"Personal data",
         please:"Please complete all the fields.",
-        name:"Name LastName",
+        name:"Name and lastname",
         email:"E-mail",
         street:"Street/Avenue",
         number:"Number",
@@ -204,7 +207,9 @@ const resources = {
         communications: "Communications",
         communicationsDescription: "Choose what type of information you want to receive.",
         myShopping: "My shopping",
-        myShoppingDescription: "Your history of shopping on the app."
+        myShoppingDescription: "Your history of shopping on the app.",
+        favorites:"Favorites",
+        favoritesDetail:"List of your favorite products."
       },
       confirmation:{
         question:"What will you do within NeoShop?",
@@ -249,13 +254,60 @@ const resources = {
         updateFalse:"Error while updating",
         storeTrue:"Your store is created",
         imageTrue:"Upload image success",
-        paymentTrue:"Payment Ok",
+        paymentTrue:"Payment Ok! ",
         paymentFalse:"Error sending payment",
-        cartTrue:"Add to cart"
+        cartTrue:"Add to cart",
+        emptyUser:"Operation failed. Please try again.",
+        badSubmmit:"Please fix the errors before submitting the form.",
+        empty:"Please write your opinion before submitting.",
+        tooLong:"The review cannot be more than 500 characters.",
+        ilegal:"The review contains illegal characters.",
+        rating:"The rating must be between 1 and 5.",
+        reviewTrue:"Review submitted successfully!",
+        reviewFalse:"Review Failed. Please try again.",
+      },
+      forgot:"Forgot your password?",
+      favorites:{
+        title:"Your favorite products",
+        youHave:"You have ",
+        youHave2:"products on Favorites",
+        search:"Search for products...",
+      },
+      accountDetail:{
+        yourAccountDetails: "Your account details",
+        accountData: "Account Data",
+        email: "Email",
+        phoneNumber: "Phone number",
+        creationDate: "Creation Date",
+        accountType: "Account Type",
+        security: "Security",
+        password: "Password",
+        emailVerified: "Email verified",
+        awaitingVerification: "Awaiting verification",
+        favorites: {
+          title: "Your favorite products",
+          youHave: "You have ",
+          youHave2: "products on Favorites",
+          search: "Search for products..."
+        }
+      },
+      shoppingHistory:{
+        yourShoppingHistory: "Your shopping history",
+        searchForProducts: "Search for products...",
+        youHaveProductsInHistory: "You have {total} products in your history"
+      },
+      addTocart:"Add to cart",
+      nav:{
+        favorites:"Favorites"
       }
-
+      
+      
+      
     },
   },
+
+
+
 
 
 
@@ -371,12 +423,14 @@ const resources = {
         reviewdOn:"Comentado el"
       },
       homePage:{
-        recent:"Productos recientes",
+        recent:"PRODUCTOS RECIENTES",
         published:"Publicado el ",
         published2:"Publicado hace ",
         storeInfo:"Informacion de la tienda",
         new:"Nuevo",
-        ago:"dias"
+        ago:"dias",
+        allRecent:"Todos los productos recientes",
+        dayss:"Publicado hace 2 dias"
       },
       storeDetail:{
         since:"Vendiendo desde: ",
@@ -392,7 +446,7 @@ const resources = {
         continue:"Continuar",
         edit:"Editar info del usuario"
       },
-      adress:{
+      adressUser:{
         edit:"Editar domicilio",
         details:"Detalles personales",
         please:"Por favor complete los campos.",
@@ -459,7 +513,9 @@ const resources = {
         communications: "Comunicaciones",
         communicationsDescription: "Elige qué tipo de información deseas recibir.",
         myShopping: "Mis compras",
-        myShoppingDescription: "Tu historial de compras en la aplicación."
+        myShoppingDescription: "Tu historial de compras en la aplicación.",
+        favorites:"Favoritos",
+        favoritesDetail:"Una lista de tus productos favoritos."
       },
       confirmation:{
         question:"¿Qué harás dentro de NeoShop?",
@@ -504,10 +560,57 @@ const resources = {
         updateFalse:"Error al actualizar",
         storeTrue:"Tu tienda se creo exitosamente",
         imageTrue:"Se subio la imagen",
-        paymentTrue:"Pago completado",
+        paymentTrue:"Pago completado! ",
         paymentFalse:"Error al enviar el pago",
-        cartTrue:"Se añadio al carrito"
+        cartTrue:"Se añadio al carrito",
+        emptyUser:"Algo fallo, por favor intentelo denuevo",
+        badSubmmit:"Arregle los errores antes de enviar",
+        empty:"Por favor escriba algo antes de enviar.",
+        tooLong:"No mas de 500 carcteres.",
+        ilegal:"La review tiene caracteres sospechosos.",
+        rating:"La calificacion debe estar entre 1 y 5",
+        reviewTrue:"Review publicada",
+        reviewFalse:"Por favor intentelo denuevo",
+      },
+      forgot:"¿Te olvidaste tu contraseña?",
+      favorites:{
+        title:"Tus productos favoritos",
+        youHave:"Tienes ",
+        youHave2:"productos en tu lista de favoritos",
+        search:"Buscar productos...",
+      },
+      accountDetail:{
+        yourAccountDetails: "Detalles de tu cuenta",
+        accountData: "Datos de la cuenta",
+        email: "Correo electrónico",
+        phoneNumber: "Número de teléfono",
+        creationDate: "Fecha de creación",
+        accountType: "Tipo de cuenta",
+        security: "Seguridad",
+        password: "Contraseña",
+        emailVerified: "Correo verificado",
+        awaitingVerification: "En espera de verificación",
+        favorites: {
+          title: "Tus productos favoritos",
+          youHave: "Tienes ",
+          youHave2: " productos en Favoritos",
+          search: "Buscar productos..."
+        }
+      },
+      shoppingHistory:{
+        yourShoppingHistory: "Tu historial de compras",
+        searchForProducts: "Buscar productos...",
+        youHaveProductsInHistory: "Tienes ",
+        youHaveProductsInHistory2: " productos en tu historial"
+      },
+      addToCart:"Añadir carrito",
+      nav:{
+        favorites:"Favoritos"
       }
+      
+      
+      
+      
     },
   },
 };

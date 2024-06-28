@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react"; // Asegúrate de importar useState y useEffect
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Nav from "../components/Nav/Nav";
 import { myShopping, setHistory } from "../Redux/Actions/productActions";
 import { MyShoppingList } from "../components/MySopping/MyShoppingList";
 import Sidebar from "../components/SideBar/SideBar";
+import { useTranslation } from "react-i18next";
 
 const MyShopping = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
   const id = user.id_user;
   const dispatch = useDispatch();
   const filteredShopping = useSelector((state) => state.product.filteredShopping);
   const condition = useSelector((state) => state.product.condition);
-  const [searchTerm, setSearchTerm] = useState(""); // Estado local para la búsqueda
+  const [searchTerm, setSearchTerm] = useState("");
   const theme = useSelector((state) => state.themes.theme);
 
   const backgroundColor = theme === "dark" ? "#212121" : "#F3F4F6";
@@ -46,7 +48,7 @@ const MyShopping = () => {
 
   const history = extractPaymentProducts(shopping);
 
-  const total = history.length
+  const total = history.length;
 
   useEffect(() => {
     if (history.length > 0) {
@@ -71,20 +73,17 @@ const MyShopping = () => {
       case "filteredProducts":
         productsToRender = filteredShopping;
         break;
-      // case "namedProducts":
-      //   productsToRender = namedProducts;
-      //   break;
       default:
         productsToRender = history;
     }
 
-    const filtered = filterProducts(productsToRender); // Filtrar productos en función del término de búsqueda
+    const filtered = filterProducts(productsToRender);
     return <MyShoppingList history={filtered} />;
   };
 
   return (
     <div className="bg-gray-100 pb-10 min-h-screen" style={{ background: backgroundColor }}>
-        <Nav />
+      <Nav />
       <div className="mt-10">
         <Sidebar />
       </div>
@@ -105,24 +104,23 @@ const MyShopping = () => {
             </div>
           </div>
           <div className="mr-6 text-2xl font-bold text-gray-400">
-            Your shopping history
+            {t('shoppingHistory.yourShoppingHistory')}
           </div>
         </div>
         <div className="flex items-center ml-8">
           <input
             type="text"
-            placeholder="Search for products..."
+            placeholder={t('shoppingHistory.searchForProducts')}
             value={searchTerm}
             onChange={handleSearch}
             className="px-4 py-2 border border-gray-400 rounded-lg"
           />
           <div className="ml-6 text-gray-400" style={{ color: textColor }}>
-            You have {total} products in your history
+            {t('shoppingHistory.youHaveProductsInHistory')}{total}{t('shoppingHistory.youHaveProductsInHistory2')}
           </div>
         </div>
         <div className="mt-2">{renderProducts()}</div>
       </div>
-
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { cleanCart } from "./cartActions";
 
 export const UPDATE_DELIVERY = "UPDATE_DELIVERY";
 
-export const paymentOk = (payment) => {
+export const paymentOk = (payment,t) => {
   return async () => {
     try {
       const response = await axios.post(
@@ -15,7 +15,7 @@ export const paymentOk = (payment) => {
       );
 
       if (response.status === 200) {
-        toast.success("Payment Ok");
+        toast.success(t("toast.paymentTrue"));
         cleanCart()
       }
     } catch (error) {

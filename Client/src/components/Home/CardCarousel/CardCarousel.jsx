@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CardWide } from "./CardWide";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const CardCarousel = ({ allProducts }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,6 +11,7 @@ const CardCarousel = ({ allProducts }) => {
   const textColorH1 = theme === "dark" ? "#b3b3b3" : "#FFFFFF";
   const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
+  const { t, i18n } = useTranslation();
 
   const totalProducts = allProducts.length
 
@@ -24,7 +26,7 @@ const CardCarousel = ({ allProducts }) => {
     <div className="flex flex-col items-center bg-gray-300 relative overflow-hidden w-full p-8 pb-16 pl-40 pr-40"
     style={{background: backgroundColor, borderColor: bordesPlomos}}>      
       <div className="text-center text-2xl text-white font-bold mb-4">
-      RECENT PRODUCTS
+        {t("homePage.recent")}      
       </div>
       <div className="flex justify-center w-full">
       {allProducts?.map((product, index) => (
