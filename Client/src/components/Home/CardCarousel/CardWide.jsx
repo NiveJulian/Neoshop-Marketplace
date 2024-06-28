@@ -36,7 +36,7 @@ export const CardWide = ({
         </Link>
       </div>
       <Link to={`/product/${id_product}`}>
-      <div className="w-2/3 p-6 flex flex-col justify-between">
+      <div className="w-full p-6 flex flex-col">
         <div>
           <div className="flex justify-between items-center">
             <div>

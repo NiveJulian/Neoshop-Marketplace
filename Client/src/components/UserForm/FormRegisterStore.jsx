@@ -104,7 +104,6 @@ export default function FormRegisterStore({  user }) {
     if (Object.keys(memoizedErrors).length === 0) {
       try {
         dispatch(createStore(formData,t));
-        toast.loading(t("toast.waiting"));
         setTimeout(() => {
           navigate("/Home")
         }, 2000);

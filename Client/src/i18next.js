@@ -300,7 +300,8 @@ const resources = {
       shoppingHistory: {
         yourShoppingHistory: "Your shopping history",
         searchForProducts: "Search for products...",
-        youHaveProductsInHistory: "You have {total} products in your history",
+        youHaveProductsInHistory: "You have ",
+        youHaveProductsInHistory2: " products in your history"
       },
       addTocart: "Add to cart",
       nav: {
