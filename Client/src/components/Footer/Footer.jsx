@@ -1,50 +1,67 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 function Footer() {
   const theme = useSelector((state) => state.themes.theme);
+  const { t, i18n } = useTranslation();
   const backgroundColor = theme === "dark" ? "#2b2b2b" : "#0069AA";
   const textColorH1 = theme === "dark" ? "#ff8000" : "#2b2b2b";
   const textColor = theme === "dark" ? "#b3b3b3" : "#2b2b2b";
 
   return (
-    <footer className="w-full py-8 bg-gray-800 text-white" style={{ background: backgroundColor }}>
+    <footer
+      className="w-full py-8 bg-gray-800 text-white"
+      style={{ background: backgroundColor }}
+    >
       <div className="container mx-auto px-6">
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/4">
-            <h5 className="uppercase mb-6 font-bold" style={{ color: textColorH1 }}>NeoShop</h5>
-            <p className="mb-4">
-              Tu tienda en línea para productos increíbles. Encuentra lo mejor
-              en tecnología, moda, y más.
-            </p>
+            <h5
+              className="uppercase mb-6 font-bold"
+              style={{ color: textColorH1 }}
+            >
+              NeoShop
+            </h5>
+            <p className="mb-4">{t("footer.tutienda")}</p>
           </div>
           <div className="w-full md:w-1/4">
-            <h5 className="uppercase mb-6 font-bold" style={{ color: textColorH1 }}>Enlaces Rápidos</h5>
+            <h5
+              className="uppercase mb-6 font-bold"
+              style={{ color: textColorH1 }}
+            >
+              {t("footer.enlaces")}
+            </h5>
             <ul className="mx-3 mb-4">
               <li>
                 <a href="#" className="hover:underline">
-                  Inicio
+                  {t("footer.inicio")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:underline">
-                  Tienda
+                  {t("footer.Tienda")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:underline">
-                  Sobre Nosotros
+                  {t("footer.sobren")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:underline">
-                  Contacto
+                  {t("footer.contacto")}
                 </a>
               </li>
             </ul>
           </div>
           <div className="w-full md:w-1/4">
-            <h5 className="uppercase mb-6 font-bold" style={{ color: textColorH1 }}>Contacto</h5>
+            <h5
+              className="uppercase mb-6 font-bold"
+              style={{ color: textColorH1 }}
+            >
+              {t("footer.contacto")}
+            </h5>
             <ul className="mx-3 mb-4">
               <li>
                 Email:{" "}
@@ -56,16 +73,21 @@ function Footer() {
                 </a>
               </li>
               <li>
-                Teléfono:{" "}
+                {t("footer.tel")}:{" "}
                 <a href="tel:+123456789" className="hover:underline">
                   +123 456 789
                 </a>
               </li>
-              <li>Dirección: Calle Falsa 123, Ciudad, País</li>
+              <li>{t("footer.dir")}</li>
             </ul>
           </div>
           <div className="w-full md:w-1/4">
-            <h5 className="uppercase mb-6 font-bold" style={{ color: textColorH1 }}>Proyecto hecho por</h5>
+            <h5
+              className="uppercase mb-6 font-bold"
+              style={{ color: textColorH1 }}
+            >
+              {t("footer.hechopor")}
+            </h5>
             <ul className="mx-3 mb-4">
               <li>
                 <a
@@ -119,7 +141,12 @@ function Footer() {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <h5 className="uppercase mb-6 font-bold" style={{ color: textColorH1 }}>Síguenos</h5>
+          <h5
+            className="uppercase mb-6 font-bold"
+            style={{ color: textColorH1 }}
+          >
+            {t("footer.sigue")}
+          </h5>
           <ul className="mx-3 flex justify-center">
             <li className="mx-3">
               <a href="#">

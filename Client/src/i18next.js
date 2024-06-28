@@ -1,6 +1,6 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 // import Backend from 'i18next-http-backend';
 
 // Traducciones
@@ -78,8 +78,8 @@ const resources = {
         terms: "Terms",
         privacy: "Privacy",
         security: "Security",
-        fixErrors:"Please fix the errors before submitting.",
-        registerFailed:"Register failed. Please try again."
+        fixErrors: "Please fix the errors before submitting.",
+        registerFailed: "Register failed. Please try again.",
       },
       testimonials: [
         "Neo Shop made it so easy to set up my online store. The process was seamless and secure! - Happy Customer",
@@ -109,93 +109,94 @@ const resources = {
         reviews: "Reviews",
         noReviews: "No reviews avaliable",
         characteristics: "Characterístics",
-        score:"Score",
-        placeHolderReviews:"Write your opinion here...",
-        qualification:"Qualification",
-        submitReview:"Send Opinion",
-        reviewdOn:"Reviewd on"
+        score: "Score",
+        placeHolderReviews: "Write your opinion here...",
+        qualification: "Qualification",
+        submitReview: "Send Opinion",
+        reviewdOn: "Reviewd on",
       },
-      homePage:{
-        recent:"RECENT PRODUCTS",
-        published:"Published on ",
-        published2:"Published ",
-        storeInfo:"Store Info",
-        new:"New",
-        ago:"Days ago",
-        allRecent:"All recent products",
-        dayss:"Published 2 days ago"
-
+      homePage: {
+        recent: "RECENT PRODUCTS",
+        published: "Published on ",
+        published2: "Published ",
+        storeInfo: "Store Info",
+        new: "New",
+        ago: "Days ago",
+        allRecent: "All recent products",
+        dayss: "Published 2 days ago",
       },
-      storeDetail:{
-        since:"Selling since: ",
-        totalReviews:"Total Reviews: ",
-        reputation:"Reputation: ",
-        products:"Products",
+      storeDetail: {
+        since: "Selling since: ",
+        totalReviews: "Total Reviews: ",
+        reputation: "Reputation: ",
+        products: "Products",
       },
-      payPreview:{
-        delivery:"Choose delivery method",
-        standar:"Standar Shipping",
-        arrange:"Arrage shipping with seller",
-        summary:"Summary",
-        continue:"Continue",
-        edit:"Edit users data"
+      payPreview: {
+        delivery: "Choose delivery method",
+        standar: "Standar Shipping",
+        arrange: "Arrage shipping with seller",
+        summary: "Summary",
+        continue: "Continue",
+        edit: "Edit users data",
       },
-      adressUser:{
-        edit:"Edit Address",
-        details:"Personal data",
-        please:"Please complete all the fields.",
-        name:"Name and lastname",
-        email:"E-mail",
-        street:"Street/Avenue",
-        number:"Number",
-        state:"State",
-        city:"City",
-        postal:"Postal Code",
-        contact:"Contact",
-        save:"Save"
+      adressUser: {
+        edit: "Edit Address",
+        details: "Personal data",
+        please: "Please complete all the fields.",
+        name: "Name and lastname",
+        email: "E-mail",
+        street: "Street/Avenue",
+        number: "Number",
+        state: "State",
+        city: "City",
+        postal: "Postal Code",
+        contact: "Contact",
+        save: "Save",
       },
-      pay:{
-        order:"Order summary",
-        commission:"COMMISSION",
-        delivery:"Delivery",
-        total:"TOTAL",
-        buyer:"Buyer Information: ",
-        name:"Name: ",
-        lastName:"Lastname: ",
-        email:"Email: ",
-        phone:"Phone Number: ",
-        adress:"Adress Number: ",
-        street:"Street: ",
-        city:"City: ",
-        state:"State: ",
-        postal:"Postal Code: ",
-        delivery:"Delivery",
-        goBack:"GoBack",
-        payButton:"Pay with PayPal"
+      pay: {
+        order: "Order summary",
+        commission: "COMMISSION",
+        delivery: "Delivery",
+        total: "TOTAL",
+        buyer: "Buyer Information: ",
+        name: "Name: ",
+        lastName: "Lastname: ",
+        email: "Email: ",
+        phone: "Phone Number: ",
+        adress: "Adress Number: ",
+        street: "Street: ",
+        city: "City: ",
+        state: "State: ",
+        postal: "Postal Code: ",
+        delivery: "Delivery",
+        goBack: "GoBack",
+        payButton: "Pay with PayPal",
       },
-      login:{
-        login:"Login",
-        email:"Email",
-        password:"Password",
-        signIn:"Sign In",
-        register:"Register",
-        google:"Continue with Google",
-        facebook:"Continue with Facebook"
+      login: {
+        login: "Login",
+        email: "Email",
+        password: "Password",
+        signIn: "Sign In",
+        register: "Register",
+        google: "Continue with Google",
+        facebook: "Continue with Facebook",
       },
-      user:{
-        profile:"Profile",
-        contact:"Contact",
-        logOut:"Logout",        
+      user: {
+        profile: "Profile",
+        contact: "Contact",
+        logOut: "Logout",
       },
-      profileDetail:{
+      profileDetail: {
         profile: "Profile",
         contact: "Contact",
         logOut: "Logout",
         editAccount: "Edit account",
         personalInformation: "Personal information",
-        personalInfoDescription: "Information from your identity document and your tax activities.",
+        personalInfoDescription:
+          "Information from your identity document and your tax activities.",
         accountDetails: "Your account details",
-        accountDetailsDescription: "Data that represents the account you signed in.",
+        accountDetailsDescription:
+          "Data that represents the account you signed in.",
         security: "Security",
         securityDescription: "Security configuration for your account.",
         cards: "Cards",
@@ -203,77 +204,82 @@ const resources = {
         addresses: "Addresses",
         addressesDescription: "Data from your addresses saved in your account.",
         privacy: "Privacy",
-        privacyDescription: "Preferences and control over the use of your data.",
+        privacyDescription:
+          "Preferences and control over the use of your data.",
         communications: "Communications",
-        communicationsDescription: "Choose what type of information you want to receive.",
+        communicationsDescription:
+          "Choose what type of information you want to receive.",
         myShopping: "My shopping",
         myShoppingDescription: "Your history of shopping on the app.",
-        favorites:"Favorites",
-        favoritesDetail:"List of your favorite products."
+        favorites: "Favorites",
+        favoritesDetail: "List of your favorite products.",
       },
-      confirmation:{
-        question:"What will you do within NeoShop?",
-        client:"Client",
-        store:"Store",
-        clientDetail:"You can see stores and buy products",
-        storeDetail:"You can sell products by creating your own store",
+      confirmation: {
+        question: "What will you do within NeoShop?",
+        client: "Client",
+        store: "Store",
+        clientDetail: "You can see stores and buy products",
+        storeDetail: "You can sell products by creating your own store",
       },
-      storeRegister:{
-        title:"Create Store",
-        photos:"Photos",
-        addImage:"Add image",
-        name:"Name",
-        namePlaceHolder:"Store Name",
-        postalCode:"Postal Code",
-        country:"Country",
-        city:"City",
-        button:"Register",
+      storeRegister: {
+        title: "Create Store",
+        photos: "Photos",
+        addImage: "Add image",
+        name: "Name",
+        namePlaceHolder: "Store Name",
+        postalCode: "Postal Code",
+        country: "Country",
+        city: "City",
+        button: "Register",
         firstLogIn: "First, log in to your account",
         registerAndAccess: "Register and access your favorite stores!",
         bestOffers: "Enjoy the best offers and prices in one place.",
         quickStart: "Quick start with NeoShop",
-        easyAccess: "Easily access all your favorite stores and discover new offers every day.",
+        easyAccess:
+          "Easily access all your favorite stores and discover new offers every day.",
         accessAllServices: "Access all NeoShop services",
-        exclusiveAccess: "Get exclusive access to promotions, discounts and much more.",
+        exclusiveAccess:
+          "Get exclusive access to promotions, discounts and much more.",
         trustedBy: "Trusted by online shoppers",
-        joinThousands: "Join thousands of users who already enjoy the advantages of NeoShop.",
+        joinThousands:
+          "Join thousands of users who already enjoy the advantages of NeoShop.",
         terms: "Terms",
         privacy: "Privacy",
         security: "Security",
-        neoShop: "© NeoShop"
+        neoShop: "© NeoShop",
       },
       toast: {
-        emptySearchBar:"Please enter a search term.",
-        noProducts:"No Products Found.",
-        waiting:"Waiting...",
-        loginTrue:"Login successful!",
-        loginFalse:"Login error",
-        registerTrue:"Register successful!",        
-        registerFalse:"Error while registering",
-        updateTrue:"Update successful!",
-        updateFalse:"Error while updating",
-        storeTrue:"Your store is created",
-        imageTrue:"Upload image success",
-        paymentTrue:"Payment Ok! ",
-        paymentFalse:"Error sending payment",
-        cartTrue:"Add to cart",
-        emptyUser:"Operation failed. Please try again.",
-        badSubmmit:"Please fix the errors before submitting the form.",
-        empty:"Please write your opinion before submitting.",
-        tooLong:"The review cannot be more than 500 characters.",
-        ilegal:"The review contains illegal characters.",
-        rating:"The rating must be between 1 and 5.",
-        reviewTrue:"Review submitted successfully!",
-        reviewFalse:"Review Failed. Please try again.",
+        emptySearchBar: "Please enter a search term.",
+        noProducts: "No Products Found.",
+        waiting: "Waiting...",
+        loginTrue: "Login successful!",
+        loginFalse: "Login error",
+        registerTrue: "Register successful!",
+        registerFalse: "Error while registering",
+        updateTrue: "Update successful!",
+        updateFalse: "Error while updating",
+        storeTrue: "Your store is created",
+        imageTrue: "Upload image success",
+        paymentTrue: "Payment Ok! ",
+        paymentFalse: "Error sending payment",
+        cartTrue: "Add to cart",
+        emptyUser: "Operation failed. Please try again.",
+        badSubmmit: "Please fix the errors before submitting the form.",
+        empty: "Please write your opinion before submitting.",
+        tooLong: "The review cannot be more than 500 characters.",
+        ilegal: "The review contains illegal characters.",
+        rating: "The rating must be between 1 and 5.",
+        reviewTrue: "Review submitted successfully!",
+        reviewFalse: "Review Failed. Please try again.",
       },
-      forgot:"Forgot your password?",
-      favorites:{
-        title:"Your favorite products",
-        youHave:"You have ",
-        youHave2:"products on Favorites",
-        search:"Search for products...",
+      forgot: "Forgot your password?",
+      favorites: {
+        title: "Your favorite products",
+        youHave: "You have ",
+        youHave2: "products on Favorites",
+        search: "Search for products...",
       },
-      accountDetail:{
+      accountDetail: {
         yourAccountDetails: "Your account details",
         accountData: "Account Data",
         email: "Email",
@@ -288,23 +294,35 @@ const resources = {
           title: "Your favorite products",
           youHave: "You have ",
           youHave2: "products on Favorites",
-          search: "Search for products..."
-        }
+          search: "Search for products...",
+        },
       },
-      shoppingHistory:{
+      shoppingHistory: {
         yourShoppingHistory: "Your shopping history",
         searchForProducts: "Search for products...",
-        youHaveProductsInHistory: "You have {total} products in your history"
+        youHaveProductsInHistory: "You have {total} products in your history",
       },
-      addTocart:"Add to cart",
-      nav:{
-        favorites:"Favorites"
-      }
-      
-      
-      
+      addTocart: "Add to cart",
+      nav: {
+        favorites: "Favorites",
+      },
+      footer: {
+        contacto: "Contact",
+        tutienda:
+          "Your online store for amazing products. Find the best in technology, fashion, and more.",
+        inicio: "Home",
+        Tienda: "Shop",
+        sobren: "About Us",
+        tel: "Phone",
+        dir: "Address: Fake Street 123, City, Country",
+        enlaces: "Quick Links",
+        hechopor: "Project made by",
+        sigue: "Follow Us"
+      }      
     },
   },
+
+
 
 
 
@@ -385,8 +403,8 @@ const resources = {
         terms: "Términos",
         privacy: "Privacidad",
         security: "Seguridad",
-        fixErrors:"Porfavor corrija los errores antes de enviar.",
-        registerFailed:"Error en el registro. Porfavor Inténtalo de nuevo."
+        fixErrors: "Porfavor corrija los errores antes de enviar.",
+        registerFailed: "Error en el registro. Porfavor Inténtalo de nuevo.",
       },
       testimonials: [
         "Neo Shop hizo que configurar mi tienda en línea fuera muy fácil. ¡El proceso fue fluido y seguro! - Cliente feliz",
@@ -416,170 +434,178 @@ const resources = {
         reviews: "Reseñas",
         noReviews: "No hay reseñas disponibles",
         characteristics: "Caracteristicas",
-        score:"Puntuacion",
-        placeHolderReviews:"Escribe tu opinion aqui...",
-        qualification:"Calificacion",
-        submitReview:"Enviar opinion",
-        reviewdOn:"Comentado el"
+        score: "Puntuacion",
+        placeHolderReviews: "Escribe tu opinion aqui...",
+        qualification: "Calificacion",
+        submitReview: "Enviar opinion",
+        reviewdOn: "Comentado el",
       },
-      homePage:{
-        recent:"PRODUCTOS RECIENTES",
-        published:"Publicado el ",
-        published2:"Publicado hace ",
-        storeInfo:"Informacion de la tienda",
-        new:"Nuevo",
-        ago:"dias",
-        allRecent:"Todos los productos recientes",
-        dayss:"Publicado hace 2 dias"
+      homePage: {
+        recent: "PRODUCTOS RECIENTES",
+        published: "Publicado el ",
+        published2: "Publicado hace ",
+        storeInfo: "Informacion de la tienda",
+        new: "Nuevo",
+        ago: "dias",
+        allRecent: "Todos los productos recientes",
+        dayss: "Publicado hace 2 dias",
       },
-      storeDetail:{
-        since:"Vendiendo desde: ",
-        totalReviews:"Cantidad de reseñas: ",
-        reputation:"Reputacion: ",
-        products:"Productos",
+      storeDetail: {
+        since: "Vendiendo desde: ",
+        totalReviews: "Cantidad de reseñas: ",
+        reputation: "Reputacion: ",
+        products: "Productos",
       },
-      payPreview:{
-        delivery:"Elegir metodo de envio",
-        standar:"Envio normal",
-        arrange:"Acordar compra con el comprador",
-        summary:"Sumatoria",
-        continue:"Continuar",
-        edit:"Editar info del usuario"
+      payPreview: {
+        delivery: "Elegir metodo de envio",
+        standar: "Envio normal",
+        arrange: "Acordar compra con el comprador",
+        summary: "Sumatoria",
+        continue: "Continuar",
+        edit: "Editar info del usuario",
       },
-      adressUser:{
-        edit:"Editar domicilio",
-        details:"Detalles personales",
-        please:"Por favor complete los campos.",
-        name:"Nombre y apellido",
-        email:"Correo electronico",
-        street:"Calle/Avenida",
-        number:"Numero",
-        state:"Estado",
-        city:"Ciudad",
-        postal:"Codigo postal",
-        contact:"Telefono de contacto",
-        save:"Guardar"          
+      adressUser: {
+        edit: "Editar domicilio",
+        details: "Detalles personales",
+        please: "Por favor complete los campos.",
+        name: "Nombre y apellido",
+        email: "Correo electronico",
+        street: "Calle/Avenida",
+        number: "Numero",
+        state: "Estado",
+        city: "Ciudad",
+        postal: "Codigo postal",
+        contact: "Telefono de contacto",
+        save: "Guardar",
       },
-      pay:{
-        order:"Suma de la orden",
-        commission:"COMMISION",
-        delivery:"Entrega",
-        total:"TOTAL",
-        buyer:"Informacion del comprador: ",
-        name:"Nombre: ",
-        lastName:"Apellido: ",
-        email:"Correo electronico: ",
-        phone:"Numero de telefono: ",
-        adress:"Direccion: ",
-        street:"Calle: ",
-        city:"Ciudad: ",
-        state:"Estado: ",
-        postal:"Codigo postal: ",
-        delivery:"Entrega",
-        goBack:"Volver",
-        payButton:"Pagar con PayPal"
+      pay: {
+        order: "Suma de la orden",
+        commission: "COMMISION",
+        delivery: "Entrega",
+        total: "TOTAL",
+        buyer: "Informacion del comprador: ",
+        name: "Nombre: ",
+        lastName: "Apellido: ",
+        email: "Correo electronico: ",
+        phone: "Numero de telefono: ",
+        adress: "Direccion: ",
+        street: "Calle: ",
+        city: "Ciudad: ",
+        state: "Estado: ",
+        postal: "Codigo postal: ",
+        delivery: "Entrega",
+        goBack: "Volver",
+        payButton: "Pagar con PayPal",
       },
-      login:{
-        login:"Login",
-        email:"Correo electronico",
-        password:"Contraseña",
-        signIn:"Entrar",
-        register:"Registrase",
-        google:"Entrar con Google",
-        facebook:"Entrar con Facebook"
+      login: {
+        login: "Login",
+        email: "Correo electronico",
+        password: "Contraseña",
+        signIn: "Entrar",
+        register: "Registrase",
+        google: "Entrar con Google",
+        facebook: "Entrar con Facebook",
       },
-      user:{
-        profile:"Perfil",
-        contact:"Contacto",
-        logOut:"Salir",        
+      user: {
+        profile: "Perfil",
+        contact: "Contacto",
+        logOut: "Salir",
       },
-      profileDetail:{
+      profileDetail: {
         profile: "Perfil",
         contact: "Contacto",
         logOut: "Cerrar sesión",
         editAccount: "Editar cuenta",
         personalInformation: "Información personal",
-        personalInfoDescription: "Información de tu documento de identidad y tus actividades fiscales.",
+        personalInfoDescription:
+          "Información de tu documento de identidad y tus actividades fiscales.",
         accountDetails: "Detalles de tu cuenta",
-        accountDetailsDescription: "Datos que representan la cuenta con la que iniciaste sesión.",
+        accountDetailsDescription:
+          "Datos que representan la cuenta con la que iniciaste sesión.",
         security: "Seguridad",
         securityDescription: "Configuración de seguridad para tu cuenta.",
         cards: "Tarjetas",
         cardsDescription: "Datos de tus tarjetas guardadas en tu cuenta.",
         addresses: "Direcciones",
-        addressesDescription: "Datos de tus direcciones guardadas en tu cuenta.",
+        addressesDescription:
+          "Datos de tus direcciones guardadas en tu cuenta.",
         privacy: "Privacidad",
         privacyDescription: "Preferencias y control sobre el uso de tus datos.",
         communications: "Comunicaciones",
-        communicationsDescription: "Elige qué tipo de información deseas recibir.",
+        communicationsDescription:
+          "Elige qué tipo de información deseas recibir.",
         myShopping: "Mis compras",
         myShoppingDescription: "Tu historial de compras en la aplicación.",
-        favorites:"Favoritos",
-        favoritesDetail:"Una lista de tus productos favoritos."
+        favorites: "Favoritos",
+        favoritesDetail: "Una lista de tus productos favoritos.",
       },
-      confirmation:{
-        question:"¿Qué harás dentro de NeoShop?",
-        client:"Cliente",
-        store:"Tienda",
-        clientDetail:"Puedes ver tiendas y comprar productos",
-        storeDetail:"Puedes vender productos creando tu propia tienda",
+      confirmation: {
+        question: "¿Qué harás dentro de NeoShop?",
+        client: "Cliente",
+        store: "Tienda",
+        clientDetail: "Puedes ver tiendas y comprar productos",
+        storeDetail: "Puedes vender productos creando tu propia tienda",
       },
-      storeRegister:{
-        title:"Crear Tienda",
-        photos:"Fotos",
-        addImage:"Añadir imagen",
-        name:"Nombre",
-        namePlaceHolder:"Nombre de la tienda",
-        postalCode:"Codigo postal",
-        country:"Pais",
-        city:"Ciudad",
-        button:"Registro",
+      storeRegister: {
+        title: "Crear Tienda",
+        photos: "Fotos",
+        addImage: "Añadir imagen",
+        name: "Nombre",
+        namePlaceHolder: "Nombre de la tienda",
+        postalCode: "Codigo postal",
+        country: "Pais",
+        city: "Ciudad",
+        button: "Registro",
         firstLogIn: "Primero, inicia sesión en tu cuenta",
         registerAndAccess: "¡Regístrate y accede a tus tiendas favoritas!",
-        bestOffers: "Disfruta de las mejores ofertas y precios en un solo lugar.",
+        bestOffers:
+          "Disfruta de las mejores ofertas y precios en un solo lugar.",
         quickStart: "Empieza rápido con NeoShop",
-        easyAccess: "Accede fácilmente a todas tus tiendas favoritas y descubre nuevas ofertas cada día.",
+        easyAccess:
+          "Accede fácilmente a todas tus tiendas favoritas y descubre nuevas ofertas cada día.",
         accessAllServices: "Acceso a todos los servicios de NeoShop",
-        exclusiveAccess: "Obtén acceso exclusivo a promociones, descuentos y mucho más.",
+        exclusiveAccess:
+          "Obtén acceso exclusivo a promociones, descuentos y mucho más.",
         trustedBy: "Confiado por compradores en línea",
-        joinThousands: "Únete a miles de usuarios que ya disfrutan de las ventajas de NeoShop.",
+        joinThousands:
+          "Únete a miles de usuarios que ya disfrutan de las ventajas de NeoShop.",
         terms: "Términos",
         privacy: "Privacidad",
         security: "Seguridad",
-        neoShop: "© NeoShop"
+        neoShop: "© NeoShop",
       },
       toast: {
-        emptySearchBar:"Porfavor ingresa algo.",
-        noProducts:"No se encontraron productos.",
-        waiting:"Esperando...",
-        loginTrue:"Ingreso exitoso!",
-        loginFalse:"Error al ingresar",
-        registerTrue:"Registro exitoso!",        
-        registerFalse:"Error al registrarse",
-        updateTrue:"Actualizacion exitosa!",
-        updateFalse:"Error al actualizar",
-        storeTrue:"Tu tienda se creo exitosamente",
-        imageTrue:"Se subio la imagen",
-        paymentTrue:"Pago completado! ",
-        paymentFalse:"Error al enviar el pago",
-        cartTrue:"Se añadio al carrito",
-        emptyUser:"Algo fallo, por favor intentelo denuevo",
-        badSubmmit:"Arregle los errores antes de enviar",
-        empty:"Por favor escriba algo antes de enviar.",
-        tooLong:"No mas de 500 carcteres.",
-        ilegal:"La review tiene caracteres sospechosos.",
-        rating:"La calificacion debe estar entre 1 y 5",
-        reviewTrue:"Review publicada",
-        reviewFalse:"Por favor intentelo denuevo",
+        emptySearchBar: "Porfavor ingresa algo.",
+        noProducts: "No se encontraron productos.",
+        waiting: "Esperando...",
+        loginTrue: "Ingreso exitoso!",
+        loginFalse: "Error al ingresar",
+        registerTrue: "Registro exitoso!",
+        registerFalse: "Error al registrarse",
+        updateTrue: "Actualizacion exitosa!",
+        updateFalse: "Error al actualizar",
+        storeTrue: "Tu tienda se creo exitosamente",
+        imageTrue: "Se subio la imagen",
+        paymentTrue: "Pago completado! ",
+        paymentFalse: "Error al enviar el pago",
+        cartTrue: "Se añadio al carrito",
+        emptyUser: "Algo fallo, por favor intentelo denuevo",
+        badSubmmit: "Arregle los errores antes de enviar",
+        empty: "Por favor escriba algo antes de enviar.",
+        tooLong: "No mas de 500 carcteres.",
+        ilegal: "La review tiene caracteres sospechosos.",
+        rating: "La calificacion debe estar entre 1 y 5",
+        reviewTrue: "Review publicada",
+        reviewFalse: "Por favor intentelo denuevo",
       },
-      forgot:"¿Te olvidaste tu contraseña?",
-      favorites:{
-        title:"Tus productos favoritos",
-        youHave:"Tienes ",
-        youHave2:"productos en tu lista de favoritos",
-        search:"Buscar productos...",
+      forgot: "¿Te olvidaste tu contraseña?",
+      favorites: {
+        title: "Tus productos favoritos",
+        youHave: "Tienes ",
+        youHave2: "productos en tu lista de favoritos",
+        search: "Buscar productos...",
       },
-      accountDetail:{
+      accountDetail: {
         yourAccountDetails: "Detalles de tu cuenta",
         accountData: "Datos de la cuenta",
         email: "Correo electrónico",
@@ -594,23 +620,32 @@ const resources = {
           title: "Tus productos favoritos",
           youHave: "Tienes ",
           youHave2: " productos en Favoritos",
-          search: "Buscar productos..."
-        }
+          search: "Buscar productos...",
+        },
       },
-      shoppingHistory:{
+      shoppingHistory: {
         yourShoppingHistory: "Tu historial de compras",
         searchForProducts: "Buscar productos...",
         youHaveProductsInHistory: "Tienes ",
-        youHaveProductsInHistory2: " productos en tu historial"
+        youHaveProductsInHistory2: " productos en tu historial",
       },
-      addToCart:"Añadir carrito",
-      nav:{
-        favorites:"Favoritos"
-      }
-      
-      
-      
-      
+      addToCart: "Añadir carrito",
+      nav: {
+        favorites: "Favoritos",
+      },
+      footer: {
+        contacto: "Contacto",
+        tutienda:
+          "Tu tienda en línea para productos increíbles. Encuentra lo mejoren tecnología, moda, y más.",
+        inicio: "Inicio",
+        Tienda: "Tienda",
+        sobren: "Sobre Nosotros",
+        tel: "Telefono",
+        dir: "Dirección: Calle Falsa 123, Ciudad, País",
+        enlaces: "Enlaces Rapidos",
+        hechopor: "Proyecto hecho por",
+        sigue: "Siguenos"
+      },
     },
   },
 };
@@ -621,15 +656,15 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: "en",
     debug: true,
     detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage']
+      order: ["localStorage", "navigator"],
+      caches: ["localStorage"],
     },
     interpolation: {
-      escapeValue: false // React ya hace el escape
-    }
+      escapeValue: false, // React ya hace el escape
+    },
   });
 
 export default i18n;
