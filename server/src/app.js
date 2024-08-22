@@ -32,6 +32,6 @@ server.use((req, res, next) => {
   cors(corsOptions)(req, res, next);
 });
 server.use("/api", router);
-server.use("/api", invalidRoute);
+server.use("/api/*", invalidRoute);
 
 module.exports = server;
