@@ -19,7 +19,7 @@ export default function StoreList({ id }) {
 
   const fetchDatastores = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/store/`);
+      const response = await axios.get(`https://neoshop-marketplace.vercel.app/store/`);
       setStoresData(response.data);
     } catch (error) {
       console.log(error);
@@ -28,7 +28,7 @@ export default function StoreList({ id }) {
 
   async function handleBan(store) {
     try {
-      await axios.put("http://localhost:3001/store/update", {
+      await axios.put("https://neoshop-marketplace.vercel.app/store/update", {
         id_store: store.id_store,
         is_active: !store.is_active, // Alternar el estado
       });

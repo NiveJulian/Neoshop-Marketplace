@@ -18,7 +18,7 @@ export default function Dashboard({ user }) {
     const fetchDataUser = async () => {
       if (id) {
         try {
-          const response = await axios.get(`http://localhost:3001/user/${id}`);
+          const response = await axios.get(`https://neoshop-marketplace.vercel.app/user/${id}`);
           setUserData(response.data);
           if (response.data.user_type === "admin") {
             setIsAdmin(true);
@@ -40,7 +40,7 @@ export default function Dashboard({ user }) {
     if (isAdmin === false) {
       try {
         const response = await axios.get(
-          `http://localhost:3001/store/user/${id}`
+          `https://neoshop-marketplace.vercel.app/store/user/${id}`
         );
         setStoreData(response.data);
       } catch (error) {
@@ -51,7 +51,7 @@ export default function Dashboard({ user }) {
 
   const fetchDataPaying = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/paying/all`);
+      const response = await axios.get(`https://neoshop-marketplace.vercel.app/paying/all`);
       setDataPaying(response.data);
     } catch (error) {
       console.log(error);
@@ -60,7 +60,7 @@ export default function Dashboard({ user }) {
 
   const fetchDataProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/product/`);
+      const response = await axios.get(`https://neoshop-marketplace.vercel.app/product/`);
       setDataProduct(response.data);
     } catch (error) {
       console.log(error);
@@ -69,7 +69,7 @@ export default function Dashboard({ user }) {
 
   const fetchDatastores = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/store/`);
+      const response = await axios.get(`https://neoshop-marketplace.vercel.app/store/`);
       setStoresData(response.data);
     } catch (error) {
       console.log(error);

@@ -17,7 +17,7 @@ export default function UserList() {
 
   const fetchDataUsers = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/user/`);
+      const response = await axios.get(`https://neoshop-marketplace.vercel.app/user/`);
       const filteredUsers = response.data.filter(
         (user) => user.user_type.toLowerCase() !== "admin"
       );
@@ -29,7 +29,7 @@ export default function UserList() {
 
   async function handleBan(user) {
     try {
-      await axios.put("http://localhost:3001/user/update", {
+      await axios.put("https://neoshop-marketplace.vercel.app/user/update", {
         id_user: user.id_user,
         is_active: !user.is_active,
       });

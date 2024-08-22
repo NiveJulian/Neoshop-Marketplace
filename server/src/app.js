@@ -10,7 +10,7 @@ const whitelist = [
   "https://neoshop-front-client.vercel.app/",
   "https://neoshop-dashboard.vercel.app/",
   "http://localhost:5173",
-  "http://localhost:3000"
+  "http://localhost:3000",
 ];
 
 const corsOptions = {
@@ -18,10 +18,10 @@ const corsOptions = {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true // Habilitar el envío de cookies
+  credentials: true, // Habilitar el envío de cookies
 };
 
 server.name = "API";
@@ -31,10 +31,7 @@ server.use(cookieParser());
 server.use((req, res, next) => {
   cors(corsOptions)(req, res, next);
 });
-server.use(router);
+server.use("/api", router);
 server.use(invalidRoute);
 
 module.exports = server;
-
-
-

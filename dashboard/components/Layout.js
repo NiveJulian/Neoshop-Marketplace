@@ -15,7 +15,7 @@ export default function Layout({ children, userId, user }) {
       if (userId) {
         try {
           const response = await axios.get(
-            `http://localhost:3001/user/${userId}`
+            `https://neoshop-marketplace.vercel.app/user/${userId}`
           );
           setUserData(response.data);
           if(response.data.user_type === "admin"){

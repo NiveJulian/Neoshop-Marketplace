@@ -12,7 +12,7 @@ export default function InfoPayStore({ store, onClose, id }) {
   const fetchDataSales = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/paying/store/${store.id_store}`
+        `https://neoshop-marketplace.vercel.app/paying/store/${store.id_store}`
       );
       setSales(response.data);
       setTotalSales(calculateTotalSales(response.data));
