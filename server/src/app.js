@@ -7,8 +7,8 @@ const cookieParser = require("cookie-parser");
 const invalidRoute = require("./middleware/invalidRoute");
 
 const whitelist = [
-  "https://neoshop-front-client.vercel.app/",
-  "https://neoshop-dashboard.vercel.app/",
+  "https://neoshop-front-client.vercel.app",
+  "https://neoshop-dashboard.vercel.app",
   "http://localhost:5173",
   "http://localhost:3000",
 ];
@@ -32,6 +32,6 @@ server.use((req, res, next) => {
   cors(corsOptions)(req, res, next);
 });
 server.use("/api", router);
-server.use(invalidRoute);
+server.use("/api", invalidRoute);
 
 module.exports = server;
