@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
-const { DB_DEPLOY } = process.env;
 const userModel = require("./models/User");
 const productModel = require("./models/Product");
 const orderModel = require("./models/Order");
@@ -14,7 +13,7 @@ const storeModel = require("./models/Store");
 const brandModel = require("./models/Brand");
 const favoritesModel = require("./models/Favorites");
 
-const sequelize = new Sequelize(DB_DEPLOY, {
+const sequelize = new Sequelize(process.env.DB_DEPLOY, {
   logging: false,
   native: false,
 });
