@@ -52,7 +52,7 @@
 
 // // LOGIN
 // export const login = (formData) => async (dispatch) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/login/";
+//   const endpoint = "https://neoshop-backend.vercel.app/login/";
 //   try {
 //     const response = await axios.post(endpoint, formData, {
 //       withCredentials: true,
@@ -88,7 +88,7 @@
 // //     const token = await result.user.getIdToken();
 
 // //     // Send the token to the backend
-// //     const response = await fetch("https://neoshop-marketplace.vercel.app/login/auth/google", {
+// //     const response = await fetch("https://neoshop-backend.vercel.app/login/auth/google", {
 // //       method: "POST",
 // //       headers: {
 // //         "Content-Type": "application/json",
@@ -119,7 +119,7 @@
 
 // // export const authWithGoogle = () => async (dispatch) => {
 // //   try {
-// //     const response = await axios.post("https://neoshop-marketplace.vercel.app/login/auth/google", {
+// //     const response = await axios.post("https://neoshop-backend.vercel.app/login/auth/google", {
 // //     });
 // //     console.log(response);
 // //     if (response.data) {
@@ -148,7 +148,7 @@
 // };
 
 // export const register = (formData) => async (dispatch) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/user/";
+//   const endpoint = "https://neoshop-backend.vercel.app/user/";
 
 //   try {
 //     const response = await axios.post(`${endpoint}`, formData);
@@ -172,7 +172,7 @@
 // };
 
 // export const getUserById = (id) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/user";
+//   const endpoint = "https://neoshop-backend.vercel.app/user";
 //   return async (dispatch) => {
 //     try {
 //       let response = await axios.get(`${endpoint}/${id}`);
@@ -187,7 +187,7 @@
 // };
 
 // export const isAuthenticated = (jwtToken) => async (dispatch) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/login/auth";
+//   const endpoint = "https://neoshop-backend.vercel.app/login/auth";
 //   try {
 //     if (jwtToken) {
 //       const response = await axios.post(endpoint, {
@@ -217,7 +217,7 @@
 // };
 
 // export const updateUserAddress = (formUpdate) => async (dispatch) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/user/update";
+//   const endpoint = "https://neoshop-backend.vercel.app/user/update";
 
 //   try {
 //     const response = await axios.put(endpoint, formUpdate);
@@ -240,7 +240,7 @@
 
 // //PRODUCTS
 // export const getAllProducts = () => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/product/";
+//   const endpoint = "https://neoshop-backend.vercel.app/product/";
 //   return async (dispatch) => {
 //     try {
 //       let response = await axios.get(`${endpoint}`);
@@ -255,7 +255,7 @@
 // };
 
 // export const getProductById = (id) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/product";
+//   const endpoint = "https://neoshop-backend.vercel.app/product";
 
 //   return async (dispatch) => {
 //     try {
@@ -271,7 +271,7 @@
 // };
 
 // export const getNewProducts = () => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/product/latest";
+//   const endpoint = "https://neoshop-backend.vercel.app/product/latest";
 //   return async (dispatch) => {
 //     try {
 //       const response = await axios.get(endpoint);
@@ -286,7 +286,7 @@
 // };
 
 // export const getProductByName = (name) => {
-//   const endpoint = `https://neoshop-marketplace.vercel.app/product/global/${name}`;
+//   const endpoint = `https://neoshop-backend.vercel.app/product/global/${name}`;
 //   return async (dispatch) => {
 //     try {
 //       let response = await axios.get(endpoint);
@@ -302,7 +302,7 @@
 // };
 
 // export const getProductByStore = (id) => {
-//   const endpoint = `https://neoshop-marketplace.vercel.app/product/allProductsStore/${id}`;
+//   const endpoint = `https://neoshop-backend.vercel.app/product/allProductsStore/${id}`;
 //   return async (dispatch) => {
 //     try {
 //       let response = await axios.get(endpoint);
@@ -319,7 +319,7 @@
 // };
 
 // export const getAllSellers = () => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/store/";
+//   const endpoint = "https://neoshop-backend.vercel.app/store/";
 
 //   return async (dispatch) => {
 //     try {
@@ -335,7 +335,7 @@
 // };
 
 // export const getSellerById = (id) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/store";
+//   const endpoint = "https://neoshop-backend.vercel.app/store";
 
 //   return async (dispatch) => {
 //     try {
@@ -351,7 +351,7 @@
 // };
 
 // export const getAllCategories = () => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/category";
+//   const endpoint = "https://neoshop-backend.vercel.app/category";
 
 //   return async (dispatch) => {
 //     try {
@@ -367,7 +367,7 @@
 // };
 
 // export const getAllBrands = () => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/brand";
+//   const endpoint = "https://neoshop-backend.vercel.app/brand";
 
 //   return async (dispatch) => {
 //     try {
@@ -387,7 +387,7 @@
 // export const createStore = (formData) => async (dispatch) => {
 //   console.log(formData);
 //   try {
-//     const response = await axios.post("https://neoshop-marketplace.vercel.app/store/", formData);
+//     const response = await axios.post("https://neoshop-backend.vercel.app/store/", formData);
 //     if (response.status === 200) {
 //       toast.success(t("toast.storeTrue"));
 //       dispatch({ type: CREATE_STORE_SUCCESS, payload: response.data });
@@ -400,7 +400,7 @@
 // export const uploadImages = (formData) => async (dispatch) => {
 //   try {
 //     const response = await axios.post(
-//       "https://neoshop-marketplace.vercel.app/images/upload",
+//       "https://neoshop-backend.vercel.app/images/upload",
 //       formData,
 //       {
 //         headers: { "Content-Type": "multipart/form-data" },
@@ -421,7 +421,7 @@
 // //FILTER
 
 // export const filterProducts = (filters) => {
-//   const endpoint = "https://neoshop-marketplace.vercel.app/product/filter";
+//   const endpoint = "https://neoshop-backend.vercel.app/product/filter";
 //   return async (dispatch) => {
 //     try {
 //       const queryString = new URLSearchParams(filters).toString();
@@ -493,7 +493,7 @@
 //         })),
 //       };
 //       // Realizar la petición POST
-//       const response = await axios.post("https://neoshop-marketplace.vercel.app/cart/", data);
+//       const response = await axios.post("https://neoshop-backend.vercel.app/cart/", data);
 //       // Despachar una acción si es necesario
 //       console.log(response);
 //       dispatch({ type: CART_SENT_SUCCESS, payload: response });
@@ -510,7 +510,7 @@
 //   console.log(userId);
 //   try {
 //     // Realizar la petición GET para obtener la información del carrito del usuario
-//     const response = await axios.get(`https://neoshop-marketplace.vercel.app/cart/id/${userId}`);
+//     const response = await axios.get(`https://neoshop-backend.vercel.app/cart/id/${userId}`);
 //     console.log(response.data.products);
 //     // Despachar una acción con la información del carrito obtenida
 //     dispatch({ type: GET_CART_SUCCESS, payload: response.data.products });
@@ -527,7 +527,7 @@
 //     try {
 //       console.log(payment);
 //       const response = await axios.post(
-//         "https://neoshop-marketplace.vercel.app/paying/post-order",
+//         "https://neoshop-backend.vercel.app/paying/post-order",
 //         payment
 //       );
 //       console.log(response);

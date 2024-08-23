@@ -15,12 +15,12 @@ export default function Products({ user }) {
     const fetchData = async () => {
       if (id) {
         try {
-          const storeResponse = await axios.get(`https://neoshop-marketplace.vercel.app/store/user/${id}`);
+          const storeResponse = await axios.get(`https://neoshop-backend.vercel.app/store/user/${id}`);
           setStoreData(storeResponse.data);
           setLoading(false); // Marcar como no cargando una vez que se recibe la respuesta
 
           if (storeResponse.status === 200 && storeResponse.data?.id_store) {
-            const productsResponse = await axios.get(`https://neoshop-marketplace.vercel.app/product/allProductsStore/` + storeResponse.data.id_store);
+            const productsResponse = await axios.get(`https://neoshop-backend.vercel.app/product/allProductsStore/` + storeResponse.data.id_store);
             
             // Filtrar productos disponibles
             const availableProducts = productsResponse.data.filter(product => product.available);

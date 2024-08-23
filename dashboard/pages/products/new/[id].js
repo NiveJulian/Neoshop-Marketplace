@@ -15,7 +15,7 @@ export default function NewProduct() {
       if (id) {
         try {
           const response = await axios.get(
-            `https://neoshop-marketplace.vercel.app/store/user/${id}`
+            `https://neoshop-backend.vercel.app/store/user/${id}`
           );
           setStoreData(response.data);
         } catch (error) {

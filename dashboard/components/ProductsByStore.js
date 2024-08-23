@@ -12,7 +12,7 @@ export default function ProductsByStore({ store, onClose }) {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        `https://neoshop-marketplace.vercel.app/product/allProductsStore/${id_store}`
+        `https://neoshop-backend.vercel.app/product/allProductsStore/${id_store}`
       );
       setDataProduct(response.data);
     } catch (error) {
@@ -27,7 +27,7 @@ export default function ProductsByStore({ store, onClose }) {
 
   const handleBanProduct = async (product) => {
     try {
-      await axios.put("https://neoshop-marketplace.vercel.app/product/update", {
+      await axios.put("https://neoshop-backend.vercel.app/product/update", {
         id_product: product.id_product,
         id_store,
         available: !product.available,

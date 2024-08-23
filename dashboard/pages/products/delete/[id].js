@@ -16,11 +16,11 @@ export default function DeleteProductPage() {
       return;
     }
     axios
-      .get("https://neoshop-marketplace.vercel.app/product/id/" + product)
+      .get("https://neoshop-backend.vercel.app/product/id/" + product)
       .then((response) => {
         setProductInfo(response.data);
       });
-    axios.get(`https://neoshop-marketplace.vercel.app/store/user/${id}`).then((response) => {
+    axios.get(`https://neoshop-backend.vercel.app/store/user/${id}`).then((response) => {
       setStoreData(response.data);
     });
   }, [id]);
@@ -33,7 +33,7 @@ export default function DeleteProductPage() {
       id_store: storeData.id_store,
       available: false,
     };
-    await axios.put("https://neoshop-marketplace.vercel.app/product/update", data);
+    await axios.put("https://neoshop-backend.vercel.app/product/update", data);
     goBack()
   }
   if (!storeData) {

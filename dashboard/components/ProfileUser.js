@@ -15,7 +15,7 @@ export default function ProfileUser({ user, onClose }) {
   const fetchStore = async () => {
     try {
       const response = await axios.get(
-        `https://neoshop-marketplace.vercel.app/store/user/${user.id_user}`
+        `https://neoshop-backend.vercel.app/store/user/${user.id_user}`
       );
       setDataStore(response.data);
     } catch (error) {

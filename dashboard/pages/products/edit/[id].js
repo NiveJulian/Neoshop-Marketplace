@@ -13,7 +13,7 @@ export default function EditProductPage(){
         if(!product){
             return;
         }
-            axios.get('https://neoshop-marketplace.vercel.app/product/id/'+product).then(response => {
+            axios.get('https://neoshop-backend.vercel.app/product/id/'+product).then(response => {
             setProductInfo(response.data)
         })
     },[product])

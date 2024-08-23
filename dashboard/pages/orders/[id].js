@@ -16,7 +16,7 @@ export default function OrdersPage({ user }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`https://neoshop-marketplace.vercel.app/user/${id}`);
+        const response = await axios.get(`https://neoshop-backend.vercel.app/user/${id}`);
         setUserData(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -32,7 +32,7 @@ export default function OrdersPage({ user }) {
     const fetchStoreData = async () => {
       try {
         const response = await axios.get(
-          `https://neoshop-marketplace.vercel.app/store/user/${id}`
+          `https://neoshop-backend.vercel.app/store/user/${id}`
         );
         setStoreData(response.data);
       } catch (error) {
@@ -51,7 +51,7 @@ export default function OrdersPage({ user }) {
     const fetchOrdersData = async () => {
       try {
         const response = await axios.get(
-          `https://neoshop-marketplace.vercel.app/paying/store/${storeData.id_store}`
+          `https://neoshop-backend.vercel.app/paying/store/${storeData.id_store}`
         );
         setOrders(response.data);
       } catch (error) {

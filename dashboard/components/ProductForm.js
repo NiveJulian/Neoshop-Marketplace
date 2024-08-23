@@ -40,7 +40,7 @@ export default function ProductForm({
 
   async function fetchCategories() {
     try {
-      const result = await axios.get(`https://neoshop-marketplace.vercel.app/category/`);
+      const result = await axios.get(`https://neoshop-backend.vercel.app/category/`);
       setCategories(result.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -51,7 +51,7 @@ export default function ProductForm({
     if (id) {
       try {
         const response = await axios.get(
-          `https://neoshop-marketplace.vercel.app/store/user/${id}`
+          `https://neoshop-backend.vercel.app/store/user/${id}`
         );
         setStoreData(response.data);
       } catch (error) {
@@ -75,7 +75,7 @@ export default function ProductForm({
         storeIdStore,
         brand: brand,
       };
-      await axios.put(`https://neoshop-marketplace.vercel.app/product/update`, {
+      await axios.put(`https://neoshop-backend.vercel.app/product/update`, {
         ...data,
         id_store: storeIdStore,
         id_product,
@@ -92,7 +92,7 @@ export default function ProductForm({
         storeIdStore,
         brand: brand,
       };
-      await axios.post("https://neoshop-marketplace.vercel.app/product/", data);
+      await axios.post("https://neoshop-backend.vercel.app/product/", data);
     }
     setGoToProduct(true);
   }
@@ -109,7 +109,7 @@ export default function ProductForm({
       for (const file of files) {
         data.append("file", file);
       }
-      const res = await axios.post("https://neoshop-marketplace.vercel.app/images/upload", data);
+      const res = await axios.post("https://neoshop-backend.vercel.app/images/upload", data);
 
       setImages((oldImages) => [...oldImages, ...res.data.links]);
       setIsUploading(false);

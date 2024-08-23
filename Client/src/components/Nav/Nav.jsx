@@ -102,7 +102,7 @@ export default function Nav({ color }) {
   const bordesPlomos = theme === "dark" ? "#4a4a4a" : "#DDDDDD";
 
   // useEffect(() => {
-  //   const socket = io("https://neoshop-marketplace.vercel.app", {
+  //   const socket = io("https://neoshop-backend.vercel.app", {
   //     withCredentials: true,
   //   });
 

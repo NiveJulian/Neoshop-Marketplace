@@ -106,7 +106,7 @@ export const PayDetail = () => {
       },
     }));
 
-    return await fetch("https://neoshop-marketplace.vercel.app/paypal/create-order", {
+    return await fetch("https://neoshop-backend.vercel.app/paypal/create-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -147,7 +147,7 @@ export const PayDetail = () => {
         throw error;
       });
   }
-    return await fetch("https://neoshop-marketplace.vercel.app/paypal/create-order", {
+    return await fetch("https://neoshop-backend.vercel.app/paypal/create-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -197,7 +197,7 @@ export const PayDetail = () => {
       date: new Date().toISOString(),
     }));
     return await fetch(
-      `https://neoshop-marketplace.vercel.app/paypal/capture-order/${data.orderID}`,
+      `https://neoshop-backend.vercel.app/paypal/capture-order/${data.orderID}`,
       {
         method: "POST",
         headers: {
