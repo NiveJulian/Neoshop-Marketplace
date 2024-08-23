@@ -17,15 +17,6 @@ const sequelize = new Sequelize(process.env.DB_DEPLOY, {
   logging: false,
   native: false,
 });
-
-// Descomentar esto para trabajar localmente
-//const sequelize = new Sequelize(
-  //`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
-  //{
-    //logging: false,
-    //native: false,
-  //}
-//);<
 userModel(sequelize);
 productModel(sequelize);
 orderModel(sequelize);
