@@ -37,11 +37,11 @@ export const getAllProducts = () => {
   };
   
   export const getProductById = (id) => {
-    const endpoint = `${rutaBack}/product/`;
   
     return async (dispatch) => {
       try {
-        const response = await axios.get(`${endpoint}/id/${id}`);
+        const response = await axios.get(`${rutaBack}/product/id/${id}`);
+        console.log(response)
         dispatch({
           type: GET_PRODUCT_BY_ID,
           payload: response.data,
