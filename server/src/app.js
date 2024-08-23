@@ -9,6 +9,7 @@ const invalidRoute = require("./middleware/invalidRoute");
 const whitelist = [
   "https://neoshop-front-client.vercel.app",
   "https://neoshop-dashboard.vercel.app",
+  "https://neoshop.techwebstudio.com.ar",
   "http://localhost:5173",
   "http://localhost:3000",
 ];
