@@ -31,7 +31,7 @@ server.use(cookieParser());
 server.use((req, res, next) => {
   cors(corsOptions)(req, res, next);
 });
-server.use("/api", router);
-server.use("/api/*", invalidRoute);
+server.use(router);
+server.use(invalidRoute);
 
 module.exports = server;
