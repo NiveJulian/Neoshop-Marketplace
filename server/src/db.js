@@ -16,6 +16,7 @@ const favoritesModel = require("./models/Favorites");
 const sequelize = new Sequelize(process.env.DB_DEPLOY, {
   logging: false,
   native: false,
+  dialectModule: require('pg')
 });
 userModel(sequelize);
 productModel(sequelize);
