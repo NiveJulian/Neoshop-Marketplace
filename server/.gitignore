@@ -104,11 +104,5 @@ dist
 # TernJS port file
 .tern-port
 
-# package-lock.json
-package-lock.json
-
-# Ignorar archivos index.js y db.js en la raíz y en el directorio src
-
-
 # Ignorar keys auth firebase
 neoshop-firebase-adminsdk.json
