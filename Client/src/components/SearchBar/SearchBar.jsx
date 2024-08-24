@@ -89,9 +89,9 @@ export default function SearchBar() {
       {/* Cuadro emergente de resultados de búsqueda */}
       {searchResults?.length > 0 && (
         <div className="absolute top-full mt-2 w-full bg-gray-400 border border-gray-200 rounded-md shadow-lg z-10">
-          {searchResults?.map((result) => (
+          {searchResults?.map((result, i) => (
             <div
-              key={result.id}
+              key={i}
               className="px-4 py-2 text-white hover:bg-gray-500 cursor-pointer"
               onClick={() => {
                 // Manejar la selección de un resultado de búsqueda (opcional)

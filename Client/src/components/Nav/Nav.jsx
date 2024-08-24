@@ -134,9 +134,7 @@ export default function Nav({ color }) {
   return (
     <div className="w-full z-50 shadow-xl">
       <div
-        className={`flex items-center justify-between px-2 py-2 shadow-md md:static md:w-auto transition-all ${
-          showNav ? "left-0" : "-left-full"
-        } bg-${theme === "dark" ? "#1f1f1f" : color}`}
+        className={`flex items-center justify-between px-2 py-2 shadow-md md:static md:w-auto transition-all bg-${theme === "dark" ? "#1f1f1f" : color}`}
       >
         <div className="md:hidden flex items-center justify-center p-4">
           <button
@@ -170,13 +168,13 @@ export default function Nav({ color }) {
           <SearchBar className="flex items-center justify-center" />
         </div>
         <div
-          className="flex items-center gap-2"
+          className={`flex-col md:flex-row md:flex items-center gap-2 transition-all duration-300 ${showNav ? 'absolute flex left-0 top-4 bg-white h-screen w-full z-10' : 'hidden'} md:flex`}
           style={{ color: bordesPlomos }}
         >
           {showNav ? (
             <button
               type="button"
-              className="flex ml-2 top-0 right-0 text-3xl text-gray-800 hover:text-gray-600"
+              className="absolute top-0 left-0 mx-2 my-2 p-2 text-3xl text-gray-800 hover:text-gray-600"
               onClick={() => setShowNav(!showNav)}
             >
               &times;
