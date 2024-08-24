@@ -354,7 +354,7 @@ export default function Nav({ color }) {
           {user?.user_type === "admin" || user?.user_type === "trader" ? (
             <div className="tooltip">
               <Link
-                to={`http://localhost:3000/dashboard/${user.id_user}`}
+                to={`https://neoshopdashboard.techwebstudio.com.ar/dashboard/${user.id_user}`}
               
                 rel="noopener noreferrer"
                 className={`border hover:shadow-lg hover:border-secondary hover:text-secondary rounded-lg w-auto p-2  flex items-center ${
