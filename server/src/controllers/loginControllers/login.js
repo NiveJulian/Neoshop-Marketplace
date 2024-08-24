@@ -32,11 +32,13 @@ const login = async (email, password) => {
         sameSite: "Lax", // Asegúrate de que sea 'None' si estás usando cookies entre dominios
         secure: false
     };
+    console.log(theUser)
     
     return {
         correctLogin,
         token,
-        cookieOption
+        cookieOption,
+        user: theUser
     };
 };
 

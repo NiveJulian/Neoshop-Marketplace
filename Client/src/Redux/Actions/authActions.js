@@ -19,6 +19,7 @@ export const login = (formData, t) => async (dispatch) => {
     const response = await axios.post(endpoint, formData, {
       withCredentials: true,
     });
+    console.log(response)
     if (response.data.correctLogin) {
       toast.success(t("toast.loginTrue"));
       dispatch({ type: LOGIN_SUCCESS, payload: response.data.user });
@@ -64,8 +65,7 @@ export const register = (formData, t) => async (dispatch) => {
       toast.success(t("toast.registerTrue"));
 
       dispatch({ type: REGISTER_SUCCESS });
-
-      // Log in the user after successful registration
+      console.log(formData)
       dispatch(login({ email: formData.email, password: formData.password }));
 
       setTimeout(() => {
@@ -126,7 +126,7 @@ export const isAuthenticated = (jwtToken) => async (dispatch) => {
   }
 };
 
-export const updateUserAddress = (formUpdate, navigate, t) => async (dispatch) => {
+export const updateUserAddress = (formUpdate, t) => async (dispatch) => {
   const endpoint = `${rutaBack}/user/update`;
 
   try {
@@ -138,9 +138,6 @@ export const updateUserAddress = (formUpdate, navigate, t) => async (dispatch) =
         type: UPDATE_USER,
         payload: response.data,
       });
-      setTimeout(() => {
-        navigate(-1);
-      }, 3000);
     }
   } catch (error) {
     toast.error(t("toast.updateFalse"));

@@ -17,7 +17,11 @@ import CreateStore from "./views/CreateStore";
 import { PayDetail } from "./views/PayDetail";
 import { AdressUser } from "./views/AdressUser";
 import { PayPreview } from "./views/PayPreview";
-import { getAllBrands, getAllCategories, getAllProducts } from "./Redux/Actions/productActions";
+import {
+  getAllBrands,
+  getAllCategories,
+  getAllProducts,
+} from "./Redux/Actions/productActions";
 import { getAllSellers } from "./Redux/Actions/storeActions";
 import { isAuthenticated } from "./Redux/Actions/authActions";
 import MyShopping from "./views/MyShopping";
@@ -28,27 +32,30 @@ import { getFavoritesByUserId } from "./Redux/Actions/favoritesActions";
 
 function App() {
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.auth.user.id_user);
+  const { user } = useSelector((state) => state.auth);
+  const id = user?.id_user;
 
   useEffect(() => {
     dispatch(getAllProducts());
     dispatch(getAllSellers());
     dispatch(getAllBrands());
     dispatch(getAllCategories());
-    dispatch(isAuthenticated(jwtToken)); 
+    dispatch(isAuthenticated(jwtToken));
   }, [dispatch]);
 
   useEffect(() => {
     if (id) {
-      dispatch(getFavoritesByUserId(id))
+      dispatch(getFavoritesByUserId(id));
     }
-  }, [dispatch, id])
-  
-
+  }, [dispatch, id]);
 
   return (
     <div>
-      <Toaster containerClassName="mt-16" position="top-right" reverseOrder={false} />
+      <Toaster
+        containerClassName="mt-16"
+        position="top-right"
+        reverseOrder={false}
+      />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SingUp />} />
@@ -56,20 +63,20 @@ function App() {
         <Route path="/store" element={<Store />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/store/:id" element={<StoreDetail />} /> 
-        <Route path="/payPreview" element={<PayPreview/>} />
-        <Route path="/adress" element={<AdressUser/>} />
-        <Route path="/pay" element={<PayDetail/>} />
-        <Route path="/profile" element={<ProfileDetail/>} />
-        <Route path="/personal" element={<PersonalDetail/>} />
-        <Route path="/confirmation" element={<ConfirmationUser/>} />
-        <Route path="/createstore" element={<CreateStore/>} />
-        <Route path="/myshopping" element={<MyShopping/>} />
-        <Route path="/accountdetail" element={<AccountDetail/>} />
-        <Route path="/favorites" element={<Favorites/>} />
-        <Route path="/myshopping" element={<MyShopping/>} />
-        <Route path="/accountdetail" element={<AccountDetail/>} />
-        <Route path="/favorites" element={<Favorites/>} />
+        <Route path="/store/:id" element={<StoreDetail />} />
+        <Route path="/payPreview" element={<PayPreview />} />
+        <Route path="/adress" element={<AdressUser />} />
+        <Route path="/pay" element={<PayDetail />} />
+        <Route path="/profile" element={<ProfileDetail />} />
+        <Route path="/personal" element={<PersonalDetail />} />
+        <Route path="/confirmation" element={<ConfirmationUser />} />
+        <Route path="/createstore" element={<CreateStore />} />
+        <Route path="/myshopping" element={<MyShopping />} />
+        <Route path="/accountdetail" element={<AccountDetail />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/myshopping" element={<MyShopping />} />
+        <Route path="/accountdetail" element={<AccountDetail />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </div>
   );

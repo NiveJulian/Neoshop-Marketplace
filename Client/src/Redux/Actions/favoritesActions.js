@@ -1,5 +1,6 @@
 import axios from "axios";
 import rutaBack from "./rutaBack"
+import toast from "react-hot-toast";
 
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
@@ -51,17 +52,16 @@ export const cleanFavorites = () => ({
     
     try {
         if (id_user) {
-          console.log("asi le llegan los datos al delete:", "product:", id_product, "user:", id_user);
           const response = await axios.delete(endpoint,{
             data: { id_product, id_user }
           });
-            console.log("respuesta del delete:", response)
             dispatch({ type: DELETE_FAVORITE_ITEM_SUCCESS, payload: response.data });
         } else {
-            console.log("No user is logged in.");
+            // console.log("No user is logged in.");
+            toast.error("No user is logged in.")
         }  
     } catch (error) {
-        console.log("error del delete:", error);
+        toast.error(`Error al borrar de favoritos ${{error: error.message}}`);
       dispatch({
         type: DELETE_FAVORITE_ITEM_FAILURE,
         error: error.response?.data || error.message,
@@ -71,12 +71,9 @@ export const cleanFavorites = () => ({
 
   export const getFavoritesByUserId = (userId) => async (dispatch) => {
     try {
-      console.log('id en el action:', userId);
       const response = await axios.get(`${rutaBack}/favorites/${userId}`);
-      console.log("la respuesta del get de favoritos:", response);
       dispatch({ type: GET_FAVORITES_SUCCESS, payload: response.data });
     } catch (error) {
-      console.log('error del get de favoritos:', error);
       dispatch({ type: GET_FAVORITES_FAILURE, error });
     }
   };

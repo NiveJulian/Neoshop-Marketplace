@@ -152,6 +152,7 @@ const resources = {
         postal: "Postal Code",
         contact: "Contact",
         save: "Save",
+        phone: "Phone",
       },
       pay: {
         order: "Order summary",
@@ -459,7 +460,7 @@ const resources = {
         edit: "Editar info del usuario",
       },
       adressUser: {
-        edit: "Editar domicilio",
+        edit: "Editar informacion de envio",
         details: "Detalles personales",
         please: "Por favor complete los campos.",
         name: "Nombre y apellido",
@@ -471,6 +472,7 @@ const resources = {
         postal: "Codigo postal",
         contact: "Telefono de contacto",
         save: "Guardar",
+        phone: "Celular",
       },
       pay: {
         order: "Suma de la orden",
@@ -645,7 +647,6 @@ const resources = {
 };
 
 i18n
-  // .use(Backend) // Si usas un backend para cargar traducciones
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({

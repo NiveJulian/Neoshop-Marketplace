@@ -57,7 +57,6 @@ export const getAllProducts = () => {
     return async (dispatch) => {
       try {
         const response = await axios.get(endpoint);
-        console.log(response );
         return dispatch({
           type: GET_NEW,
           payload: response.data,
