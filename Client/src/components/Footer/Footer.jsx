@@ -15,7 +15,7 @@ function Footer() {
         theme === "dark" ? `${backgroundColor}` : "bg-blue-900"
       }`}
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 flex justify-center items-center flex-col">
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/4">
             <h5
@@ -72,8 +72,8 @@ function Footer() {
           </div>
           <div className="w-full md:w-1/4">
             <h5 className="uppercase mb-6 font-bold">{t("footer.contacto")}</h5>
-            <ul className="mx-3 mb-4 flex flex-col gap-4 hf border p-2 rounded-md">
-              <li className="mt-2">
+            <ul className="mx-3 flex flex-col gap-2 ">
+              <li className="border p-2 rounded-md">
                 Email:{" "}
                 <a
                   href="mailto:contacto@neoshop.com"
@@ -82,13 +82,13 @@ function Footer() {
                   neoshop.henry@gmail.com
                 </a>
               </li>
-              <li className="border-t border-gray-300">
+              <li className="border-gray-300 border p-2 rounded-md">
                 {t("footer.tel")}:{" "}
                 <a href="tel:+123456789" className="hover:shadow-md">
                   +123 456 789
                 </a>
               </li>
-              <li className="border-t border-gray-300">{t("footer.dir")}</li>
+              <li className="border-gray-300 border p-2 rounded-md">{t("footer.dir")}</li>
             </ul>
           </div>
           <div className="w-full md:w-1/4">
