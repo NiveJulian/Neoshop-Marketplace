@@ -166,7 +166,7 @@
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 80px; /* Reducir el ancho del tooltip */
+  width: 77px; /* Reducir el ancho del tooltip */
   background-color: #FF8200;
   color: #dfdfdf;
   text-align: center;
